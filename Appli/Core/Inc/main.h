@@ -75,10 +75,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define DEBUG_TX_Pin GPIO_PIN_5
-#define DEBUG_TX_GPIO_Port GPIOD
-#define DEBUG_RX_Pin GPIO_PIN_6
-#define DEBUG_RX_GPIO_Port GPIOF
+#define VCOM_RX_Pin GPIO_PIN_6
+#define VCOM_RX_GPIO_Port GPIOE
+#define VCOM_TX_Pin GPIO_PIN_5
+#define VCOM_TX_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
 
