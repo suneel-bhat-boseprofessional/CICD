@@ -1,0 +1,5 @@
+../Drivers/i2cCustomeDriver/src/LCD_Touch.c:13:11:TS_IO_Init	8	static
+../Drivers/i2cCustomeDriver/src/LCD_Touch.c:21:11:TS_IO_Write	32	static
+../Drivers/i2cCustomeDriver/src/LCD_Touch.c:26:11:TS_IO_Read	40	static
+../Drivers/i2cCustomeDriver/src/LCD_Touch.c:33:11:TS_IO_ReadMultiple	32	static
+../Drivers/i2cCustomeDriver/src/LCD_Touch.c:38:11:TS_IO_Delay	16	static

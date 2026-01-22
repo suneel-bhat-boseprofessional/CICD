@@ -9,6 +9,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Drivers/i2cCustomeDriver/src/subdir.mk
 -include Drivers/STM32N6xx_HAL_Driver/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -63,8 +64,8 @@ all: main-build
 main-build: touchUI_BringUP_Appli.elf secondary-outputs
 
 # Tool invocations
-touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.map: $(OBJS) $(USER_OBJS) C:\Users\SuneelBhat\OneDrive\ -\ Bose\ Professional\Documents\touchUI_BringUP\Appli\STM32N645L0HXQ_LRUN.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "touchUI_BringUP_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\Users\SuneelBhat\OneDrive - Bose Professional\Documents\touchUI_BringUP\Appli\STM32N645L0HXQ_LRUN.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_Appli.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\touchUIPCB\touchUI_Bringup\Appli\STM32N645L0HXQ_LRUN.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "touchUI_BringUP_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\touchUIPCB\touchUI_Bringup\Appli\STM32N645L0HXQ_LRUN.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_Appli.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

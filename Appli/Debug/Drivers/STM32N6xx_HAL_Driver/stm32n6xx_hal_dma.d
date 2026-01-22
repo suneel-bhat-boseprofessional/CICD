@@ -1,5 +1,5 @@
 Drivers/STM32N6xx_HAL_Driver/stm32n6xx_hal_dma.o: \
- C:/Users/SuneelBhat/OneDrive\ -\ Bose\ Professional/Documents/touchUI_BringUP/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma.c \
+ C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_dma.c \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal.h \
  ../Core/Inc/stm32n6xx_hal_conf.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_rcc.h \
@@ -25,6 +25,8 @@ Drivers/STM32N6xx_HAL_Driver/stm32n6xx_hal_dma.o: \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma_ex.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cortex.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_exti.h \
+ ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_i2c.h \
+ ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_i2c_ex.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_pwr.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_pwr_ex.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart.h \
@@ -54,6 +56,8 @@ Drivers/STM32N6xx_HAL_Driver/stm32n6xx_hal_dma.o: \
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma_ex.h:
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cortex.h:
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_exti.h:
+../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_i2c.h:
+../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_i2c_ex.h:
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_pwr.h:
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_pwr_ex.h:
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart.h:

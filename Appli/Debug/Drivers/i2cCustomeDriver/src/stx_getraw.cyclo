@@ -1,0 +1,12 @@
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:44:6:STX_report_touch_one_sync	1
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:49:5:stx_i2c_read_bytes	3
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:77:5:stx_i2c_write_bytes	2
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:95:6:st_msleep	1
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:102:5:stx_i2c_read	1
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:108:5:STX_RD_Reg	2
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:117:5:STX_WR_Reg_direct	2
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:131:12:sitronix_get_xy_chs	4
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:169:5:stx_get_mutualRaw_value	5
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:223:5:stx_get_algorithmRaw_value	5
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:259:12:sitronix_get_max_touches	2
+../Drivers/i2cCustomeDriver/src/stx_getraw.c:279:5:STX_thread	8

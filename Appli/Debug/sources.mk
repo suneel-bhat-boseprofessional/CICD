@@ -26,4 +26,5 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32N6xx_HAL_Driver \
+Drivers/i2cCustomeDriver/src \
 

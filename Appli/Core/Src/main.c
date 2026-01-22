@@ -18,15 +18,21 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "../../Drivers/i2cCustomeDriver/inc/stx_getraw.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include "stx_getraw.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+// Typedefs for compatibility
+typedef uint8_t u8;
+typedef uint16_t u16;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -41,22 +47,61 @@
 
 /* Private variables ---------------------------------------------------------*/
 
+I2C_HandleTypeDef hi2c1;
+
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-
+// External declarations for touch processing variables (defined in stx_getraw.c)
+extern int max_touches;
+extern struct coop_data finger[];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_I2C1_Init(void);
 static void SystemIsolation_Config(void);
 /* USER CODE BEGIN PFP */
-
+HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t dataSize);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+/**
+ * @brief Read register from I2C device at address 0x55
+ * @param regAddr Register address to read from
+ * @param data Pointer to buffer for received data
+ * @param dataSize Number of bytes to read
+ * @retval HAL status
+ */
+HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t dataSize)
+{
+    HAL_StatusTypeDef status;
+    uint16_t deviceAddr = 0x55 << 1; // Left shift for HAL (0xAA for write, 0xAB for read)
+    
+    // Step 1: Write register address (0xAA = write address)
+    status = HAL_I2C_Master_Transmit(&hi2c1, deviceAddr, &regAddr, 1, HAL_MAX_DELAY);
+    if (status != HAL_OK)
+    {
+        printf("I2C Write failed: 0x%02X\r\n", status);
+        return status;
+    }
+    
+    // Step 2: Add delay as specified
+    HAL_Delay(1);
+    
+    // Step 3: Read data (0xAB = read address, automatically handled by HAL)
+    status = HAL_I2C_Master_Receive(&hi2c1, deviceAddr, data, dataSize, HAL_MAX_DELAY);
+    if (status != HAL_OK)
+    {
+        printf("I2C Read failed: 0x%02X\r\n", status);
+        return status;
+    }
+    
+    return HAL_OK;
+}
 
 /* USER CODE END 0 */
 
@@ -85,9 +130,34 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+  MX_I2C1_Init();
   SystemIsolation_Config();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Transmit(&huart1, (uint8_t*)"APPLICATION STARTED\r\n", sizeof("APPLICATION STARTED\r\n")-1, HAL_MAX_DELAY);
+  printf("APPLICATION STARTED\r\n");
+  HAL_StatusTypeDef result;
+  uint8_t i;
+
+  printf("Scanning I2C devices...\r\n");
+  for (i=1; i<128; i++)
+  {
+    /*
+     * the HAL wants a left aligned i2c address
+     * &hi2c1 is the handle
+     * (uint16_t)(i<<1) is the i2c address left aligned
+     * retries 2
+     * timeout 2
+     */
+    result = HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t)(i<<1), 2, 2);
+    if (result != HAL_OK) // HAL_ERROR or HAL_BUSY or HAL_TIMEOUT
+    {
+      printf(".");
+    }
+    if (result == HAL_OK)
+    {
+      printf("0x%02X ", i);
+    }
+  }
+  printf("\r\nI2C scan complete\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -97,8 +167,136 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+     //I2C Read from device at address 0x55
+     uint8_t regAddr = 0x12; // Register address to read from
+     uint8_t readData[40];   // Buffer for read data
+     uint16_t bytesToRead = 40; // Number of bytes to read
+    
+     printf("Reading from I2C device 0x55, register 0x%02X...\r\n", regAddr);
+    
+     HAL_StatusTypeDef result = I2C_ReadRegister_0x55(regAddr, readData, bytesToRead);
+    
+     if (result == HAL_OK)
+     {
+         printf("I2C Read successful: ");
+         for (int i = 0; i < bytesToRead; i++)
+         {
+            printf("0x%02X ", readData[i]);
+         }
+         printf("\r\n");
+
+         for (i = 0; i < max_touches; i++)
+        {
+            if (readData[i * 4] & 0x80)
+            {
+                finger[i].x = (u16)((readData[i * 4] & 0x70) << 4 | readData[i * 4 + 1]);
+                finger[i].y = (u16)((readData[i * 4] & 0x07) << 8 | readData[i * 4 + 2]);
+                if(finger[i].per_valuebit == 0)
+                {
+                    finger[i].status = KEY_DOWN;
+                    finger[i].per_x = finger[i].x;
+                    finger[i].per_y = finger[i].y;
+                }
+                else if((abs(finger[i].per_x - finger[i].x) > MOVE_LIMIT)||(abs(finger[i].per_y - finger[i].y) > MOVE_LIMIT))
+                {
+                    finger[i].status = KEY_MOVE;
+                    finger[i].per_x = finger[i].x;
+                    finger[i].per_y = finger[i].y;
+                }
+                else
+                {
+                    finger[i].status = KEY_PRESS;
+                }
+                finger[i].per_valuebit = 1;
+				      printf(" touch down X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
+            }
+            else
+            {
+                finger[i].x = 0;
+                finger[i].y = 0;
+                finger[i].per_x = 0;
+                finger[i].per_y = 0;
+                if(finger[i].per_valuebit == 0)
+                {
+                    finger[i].status = NO_TOUCH;
+                }
+                else
+                {
+                    finger[i].status = KEY_UP;
+                }
+                finger[i].per_valuebit = 0;
+				printf(" touch up  X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
+            }
+        }
+        //STX_report_touch_one_sync(finger);
+    
+     }
+     else
+     {
+         printf("I2C Read failed with status: 0x%02X\r\n", result);
+     }
+    
+     printf("Waiting 2 seconds...\r\n\r\n");
+     HAL_Delay(2000);
+    
+    // Uncomment below for original touch screen functions
+//     stx_get_mutualRaw_value();
+//     HAL_Delay(2000);
+//     stx_get_algorithmRaw_value();
+//     HAL_Delay(2000);
+//     STX_thread();
+//     HAL_Delay(2000);
+    
+    /* USER CODE END 3 */
   }
-  /* USER CODE END 3 */
+}
+
+/**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.Timing = 0x00707CBB;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Analogue filter
+  */
+  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Digital filter
+  */
+  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c1, 0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
+
 }
 
 /**
@@ -119,8 +317,11 @@ int main(void)
   /* RIF-Aware IPs Config */
 
   /* set up GPIO configuration */
+  HAL_GPIO_ConfigPinAttributes(GPIOC,GPIO_PIN_1,GPIO_PIN_SEC|GPIO_PIN_NPRIV);
   HAL_GPIO_ConfigPinAttributes(GPIOE,GPIO_PIN_5,GPIO_PIN_SEC|GPIO_PIN_NPRIV);
   HAL_GPIO_ConfigPinAttributes(GPIOE,GPIO_PIN_6,GPIO_PIN_SEC|GPIO_PIN_NPRIV);
+  HAL_GPIO_ConfigPinAttributes(GPIOE,GPIO_PIN_8,GPIO_PIN_SEC|GPIO_PIN_NPRIV);
+  HAL_GPIO_ConfigPinAttributes(GPIOH,GPIO_PIN_9,GPIO_PIN_SEC|GPIO_PIN_NPRIV);
 
   /* USER CODE BEGIN RIF_Init 1 */
 
@@ -186,12 +387,25 @@ static void MX_USART1_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
 
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(CTP_RESET_GPIO_Port, CTP_RESET_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : CTP_RESET_Pin */
+  GPIO_InitStruct.Pin = CTP_RESET_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(CTP_RESET_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -199,6 +413,56 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+// Retarget printf to UART
+#ifdef __GNUC__
+// For GCC toolchain
+int _write(int file, char *ptr, int len)
+{
+    HAL_UART_Transmit(&huart1, (uint8_t*)ptr, len, HAL_MAX_DELAY);
+    return len;
+}
+#endif
+
+#ifdef __ICCARM__
+// For IAR toolchain  
+int fputc(int ch, FILE *f)
+{
+    HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, HAL_MAX_DELAY);
+    return ch;
+}
+#endif
+
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+// For Keil MDK-ARM toolchain
+int fputc(int ch, FILE *f)
+{
+    HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, HAL_MAX_DELAY);
+    return ch;
+}
+#endif
+
+// Alternative function-style implementation for manual printf redirection
+void uart_printf(const char* format, ...)
+{
+    char buffer[256];
+    va_list args;
+    va_start(args, format);
+    int len = vsnprintf(buffer, sizeof(buffer), format, args);
+    va_end(args);
+    
+    if(len > 0)
+    {
+        HAL_UART_Transmit(&huart1, (uint8_t*)buffer, len, HAL_MAX_DELAY);
+    }
+}
+
+// __putchar implementation for some compilers
+int __putchar(int ch)
+{
+    HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, HAL_MAX_DELAY);
+    return ch;
+}
 
 /* USER CODE END 4 */
 
