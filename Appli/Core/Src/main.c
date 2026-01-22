@@ -64,6 +64,7 @@ static void MX_I2C1_Init(void);
 static void SystemIsolation_Config(void);
 /* USER CODE BEGIN PFP */
 HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t dataSize);
+void process_touch_data(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -101,6 +102,74 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
     }
     
     return HAL_OK;
+}
+
+/**
+ * @brief Process touch data from I2C device
+ * @retval None
+ */
+void process_touch_data(void)
+{
+    uint8_t regAddr = 0x12; // Register address to read from
+    uint8_t readData[40];   // Buffer for read data
+    uint16_t bytesToRead = 40; // Number of bytes to read
+    uint8_t i;
+    
+    //printf("Reading from I2C device 0x55, register 0x%02X...\r\n", regAddr);
+    
+    HAL_StatusTypeDef result = I2C_ReadRegister_0x55(regAddr, readData, bytesToRead);
+    
+    if (result == HAL_OK)
+    {
+        // Process touch data
+        for (i = 0; i < max_touches; i++)
+        {
+            if (readData[i * 4] & 0x80)
+            {
+                finger[i].x = (u16)((readData[i * 4] & 0x70) << 4 | readData[i * 4 + 1]);
+                finger[i].y = (u16)((readData[i * 4] & 0x07) << 8 | readData[i * 4 + 2]);
+                if(finger[i].per_valuebit == 0)
+                {
+                    finger[i].status = KEY_DOWN;
+                    finger[i].per_x = finger[i].x;
+                    finger[i].per_y = finger[i].y;
+                }
+                else if((abs(finger[i].per_x - finger[i].x) > MOVE_LIMIT)||(abs(finger[i].per_y - finger[i].y) > MOVE_LIMIT))
+                {
+                    finger[i].status = KEY_MOVE;
+                    finger[i].per_x = finger[i].x;
+                    finger[i].per_y = finger[i].y;
+                }
+                else
+                {
+                    finger[i].status = KEY_PRESS;
+                }
+                finger[i].per_valuebit = 1;
+                printf(" touch down X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
+            }
+            else
+            {
+                finger[i].x = 0;
+                finger[i].y = 0;
+                finger[i].per_x = 0;
+                finger[i].per_y = 0;
+                if(finger[i].per_valuebit == 0)
+                {
+                    finger[i].status = NO_TOUCH;
+                }
+                else
+                {
+                    finger[i].status = KEY_UP;
+                }
+                finger[i].per_valuebit = 0;
+                //printf(" touch up  X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
+            }
+        }
+    }
+    else
+    {
+        printf("I2C Read failed with status: 0x%02X\r\n", result);
+    }
 }
 
 /* USER CODE END 0 */
@@ -167,77 +236,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-     //I2C Read from device at address 0x55
-     uint8_t regAddr = 0x12; // Register address to read from
-     uint8_t readData[40];   // Buffer for read data
-     uint16_t bytesToRead = 40; // Number of bytes to read
+    // Process touch data
+    process_touch_data();
     
-     printf("Reading from I2C device 0x55, register 0x%02X...\r\n", regAddr);
-    
-     HAL_StatusTypeDef result = I2C_ReadRegister_0x55(regAddr, readData, bytesToRead);
-    
-     if (result == HAL_OK)
-     {
-         printf("I2C Read successful: ");
-         for (int i = 0; i < bytesToRead; i++)
-         {
-            printf("0x%02X ", readData[i]);
-         }
-         printf("\r\n");
-
-         for (i = 0; i < max_touches; i++)
-        {
-            if (readData[i * 4] & 0x80)
-            {
-                finger[i].x = (u16)((readData[i * 4] & 0x70) << 4 | readData[i * 4 + 1]);
-                finger[i].y = (u16)((readData[i * 4] & 0x07) << 8 | readData[i * 4 + 2]);
-                if(finger[i].per_valuebit == 0)
-                {
-                    finger[i].status = KEY_DOWN;
-                    finger[i].per_x = finger[i].x;
-                    finger[i].per_y = finger[i].y;
-                }
-                else if((abs(finger[i].per_x - finger[i].x) > MOVE_LIMIT)||(abs(finger[i].per_y - finger[i].y) > MOVE_LIMIT))
-                {
-                    finger[i].status = KEY_MOVE;
-                    finger[i].per_x = finger[i].x;
-                    finger[i].per_y = finger[i].y;
-                }
-                else
-                {
-                    finger[i].status = KEY_PRESS;
-                }
-                finger[i].per_valuebit = 1;
-				      printf(" touch down X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
-            }
-            else
-            {
-                finger[i].x = 0;
-                finger[i].y = 0;
-                finger[i].per_x = 0;
-                finger[i].per_y = 0;
-                if(finger[i].per_valuebit == 0)
-                {
-                    finger[i].status = NO_TOUCH;
-                }
-                else
-                {
-                    finger[i].status = KEY_UP;
-                }
-                finger[i].per_valuebit = 0;
-				printf(" touch up  X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
-            }
-        }
-        //STX_report_touch_one_sync(finger);
-    
-     }
-     else
-     {
-         printf("I2C Read failed with status: 0x%02X\r\n", result);
-     }
-    
-     printf("Waiting 2 seconds...\r\n\r\n");
-     HAL_Delay(2000);
+    //printf("Waiting 1 second...\r\n\r\n");
+    HAL_Delay(100);
     
     // Uncomment below for original touch screen functions
 //     stx_get_mutualRaw_value();
