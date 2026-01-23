@@ -18,14 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "../../Drivers/i2cCustomeDriver/inc/stx_getraw.h"
+extern int notifyTouch;
+#include "stm32n6xx_it.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include "stx_getraw.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,9 +52,8 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-// External declarations for touch processing variables (defined in stx_getraw.c)
-extern int max_touches;
-extern struct coop_data finger[];
+int max_touches = MAX_NUM_TOUCHES;  
+struct coop_data finger[MAX_NUM_TOUCHES];  
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,13 +114,10 @@ void process_touch_data(void)
     uint16_t bytesToRead = 40; // Number of bytes to read
     uint8_t i;
     
-    //printf("Reading from I2C device 0x55, register 0x%02X...\r\n", regAddr);
-    
     HAL_StatusTypeDef result = I2C_ReadRegister_0x55(regAddr, readData, bytesToRead);
     
     if (result == HAL_OK)
     {
-        // Process touch data
         for (i = 0; i < max_touches; i++)
         {
             if (readData[i * 4] & 0x80)
@@ -162,7 +158,6 @@ void process_touch_data(void)
                     finger[i].status = KEY_UP;
                 }
                 finger[i].per_valuebit = 0;
-                //printf(" touch up  X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
             }
         }
     }
@@ -170,6 +165,7 @@ void process_touch_data(void)
     {
         printf("I2C Read failed with status: 0x%02X\r\n", result);
     }
+    notifyTouch = 0; 
 }
 
 /* USER CODE END 0 */
@@ -237,22 +233,12 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     // Process touch data
-    process_touch_data();
-    
-    //printf("Waiting 1 second...\r\n\r\n");
-    HAL_Delay(100);
-    
-    // Uncomment below for original touch screen functions
-//     stx_get_mutualRaw_value();
-//     HAL_Delay(2000);
-//     stx_get_algorithmRaw_value();
-//     HAL_Delay(2000);
-//     STX_thread();
-//     HAL_Delay(2000);
-    
-    /* USER CODE END 3 */
+    if(notifyTouch == 1)
+      process_touch_data();
+  /* USER CODE END 3 */
   }
 }
+
 
 /**
   * @brief I2C1 Initialization Function
@@ -400,15 +386,15 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(CTP_RESET_GPIO_Port, CTP_RESET_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : CTP_RESET_Pin */
-  GPIO_InitStruct.Pin = CTP_RESET_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  /*Configure GPIO pin : PE8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(CTP_RESET_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI8_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI8_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

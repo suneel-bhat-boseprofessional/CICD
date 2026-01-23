@@ -30,8 +30,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_pwr_ex.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart.h \
  ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart_ex.h \
- ../Core/Src/../../Drivers/i2cCustomeDriver/inc/stx_getraw.h \
- C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Appli/Drivers/i2cCustomeDriver/inc/stx_getraw.h
+ ../Core/Inc/stm32n6xx_it.h
 ../Core/Inc/main.h:
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal.h:
 ../Core/Inc/stm32n6xx_hal_conf.h:
@@ -64,5 +63,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_pwr_ex.h:
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart.h:
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart_ex.h:
-../Core/Src/../../Drivers/i2cCustomeDriver/inc/stx_getraw.h:
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Appli/Drivers/i2cCustomeDriver/inc/stx_getraw.h:
+../Core/Inc/stm32n6xx_it.h:

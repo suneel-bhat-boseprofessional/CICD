@@ -46,11 +46,16 @@ extern UART_HandleTypeDef huart1;
 // Touch processing constants
 #define MAX_NUM_TOUCHES 10
 #define MOVE_LIMIT 2
+
 #define NO_TOUCH 0
 #define KEY_DOWN 1
 #define KEY_UP 2
-#define KEY_MOVE 3
-#define KEY_PRESS 4
+#define KEY_MOVE 4
+
+#define KEY_PRESS 3
+#ifndef KEY_MOVE
+#define KEY_MOVE KEY_PRESS
+#endif
 
 // Touch processing structure (matches stx_getraw.c)
 struct coop_data
@@ -112,8 +117,6 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define CTP_RESET_Pin GPIO_PIN_8
-#define CTP_RESET_GPIO_Port GPIOE
 #define VCOM_RX_Pin GPIO_PIN_6
 #define VCOM_RX_GPIO_Port GPIOE
 #define VCOM_TX_Pin GPIO_PIN_5
