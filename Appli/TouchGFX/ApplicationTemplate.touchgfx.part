@@ -1,0 +1,30 @@
+
+{
+  "Application": {
+    "Name": "touchUI_BringUP",
+    "TouchGfxPath": "../Middlewares/ST/touchgfx",
+    "AvailableColorDepths": [ 32 ],
+    "AvailableLCDs":
+    {
+      "32": "LCD32bpp"
+    },
+    "AvailableResolutions": [
+      {
+        "Width": 800,
+        "Height": 480
+      }
+    ],
+    "PostGenerateTargetCommand": "touchgfx update_project",
+    "Family": "STM32N6",
+    "SubFamily": "STM32N6x5",
+    "Platform": "m55",
+    "Toolchain": "STM32CubeIDE",
+    "ProjectFile": "../../touchUI_BringUP.ioc",
+    "OptionalComponentsRoot": "../Middlewares/ST/touchgfx_components",
+    "OptionalComponents": [
+    ],
+    "AdditionalFeatures": [
+    ]
+  },
+  "Version": "4.26.0"
+}

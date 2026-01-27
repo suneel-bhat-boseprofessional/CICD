@@ -94,7 +94,7 @@ int main(void)
   MX_HPDMA1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Transmit(&huart1, (uint8_t*)"FSBL STARTED\r\n", sizeof("FSBL STARTED\r\n")-1, HAL_MAX_DELAY);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
