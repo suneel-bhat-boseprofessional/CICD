@@ -41,6 +41,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 
+DMA_HandleTypeDef handle_HPDMA1_Channel1;
+DMA_HandleTypeDef handle_HPDMA1_Channel0;
+
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
@@ -50,6 +53,7 @@ UART_HandleTypeDef huart1;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_HPDMA1_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -87,6 +91,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_HPDMA1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_UART_Transmit(&huart1, (uint8_t*)"FSBL STARTED\r\n", sizeof("FSBL STARTED\r\n")-1, HAL_MAX_DELAY);
@@ -189,6 +194,78 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief HPDMA1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_HPDMA1_Init(void)
+{
+
+  /* USER CODE BEGIN HPDMA1_Init 0 */
+
+  /* USER CODE END HPDMA1_Init 0 */
+
+  DMA_IsolationConfigTypeDef IsolationConfiginput = {0};
+
+  /* Peripheral clock enable */
+  __HAL_RCC_HPDMA1_CLK_ENABLE();
+
+  /* USER CODE BEGIN HPDMA1_Init 1 */
+
+  /* USER CODE END HPDMA1_Init 1 */
+  handle_HPDMA1_Channel1.Instance = HPDMA1_Channel1;
+  handle_HPDMA1_Channel1.Init.Request = DMA_REQUEST_SW;
+  handle_HPDMA1_Channel1.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+  handle_HPDMA1_Channel1.Init.Direction = DMA_MEMORY_TO_MEMORY;
+  handle_HPDMA1_Channel1.Init.SrcInc = DMA_SINC_FIXED;
+  handle_HPDMA1_Channel1.Init.DestInc = DMA_DINC_FIXED;
+  handle_HPDMA1_Channel1.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_BYTE;
+  handle_HPDMA1_Channel1.Init.DestDataWidth = DMA_DEST_DATAWIDTH_BYTE;
+  handle_HPDMA1_Channel1.Init.Priority = DMA_LOW_PRIORITY_LOW_WEIGHT;
+  handle_HPDMA1_Channel1.Init.SrcBurstLength = 1;
+  handle_HPDMA1_Channel1.Init.DestBurstLength = 1;
+  handle_HPDMA1_Channel1.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT0;
+  handle_HPDMA1_Channel1.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+  handle_HPDMA1_Channel1.Init.Mode = DMA_NORMAL;
+  if (HAL_DMA_Init(&handle_HPDMA1_Channel1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  IsolationConfiginput.CidFiltering = DMA_ISOLATION_OFF;
+  IsolationConfiginput.StaticCid = DMA_CHANNEL_STATIC_CID_0;
+  if (HAL_DMA_SetIsolationAttributes(&handle_HPDMA1_Channel1, &IsolationConfiginput) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  handle_HPDMA1_Channel0.Instance = HPDMA1_Channel0;
+  handle_HPDMA1_Channel0.Init.Request = DMA_REQUEST_SW;
+  handle_HPDMA1_Channel0.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+  handle_HPDMA1_Channel0.Init.Direction = DMA_MEMORY_TO_MEMORY;
+  handle_HPDMA1_Channel0.Init.SrcInc = DMA_SINC_FIXED;
+  handle_HPDMA1_Channel0.Init.DestInc = DMA_DINC_FIXED;
+  handle_HPDMA1_Channel0.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_BYTE;
+  handle_HPDMA1_Channel0.Init.DestDataWidth = DMA_DEST_DATAWIDTH_BYTE;
+  handle_HPDMA1_Channel0.Init.Priority = DMA_LOW_PRIORITY_LOW_WEIGHT;
+  handle_HPDMA1_Channel0.Init.SrcBurstLength = 1;
+  handle_HPDMA1_Channel0.Init.DestBurstLength = 1;
+  handle_HPDMA1_Channel0.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT0;
+  handle_HPDMA1_Channel0.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+  handle_HPDMA1_Channel0.Init.Mode = DMA_NORMAL;
+  if (HAL_DMA_Init(&handle_HPDMA1_Channel0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_DMA_SetIsolationAttributes(&handle_HPDMA1_Channel0, &IsolationConfiginput) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN HPDMA1_Init 2 */
+
+  /* USER CODE END HPDMA1_Init 2 */
+
 }
 
 /**

@@ -20,9 +20,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32n6xx_it.h"
-int notifyTouch = 0;
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+int notifyTouch = 0;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -223,9 +223,8 @@ void EXTI8_IRQHandler(void)
 
   /* USER CODE END EXTI8_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
-  notifyTouch = 1;
   /* USER CODE BEGIN EXTI8_IRQn 1 */
-
+  notifyTouch = 1;
   /* USER CODE END EXTI8_IRQn 1 */
 }
 

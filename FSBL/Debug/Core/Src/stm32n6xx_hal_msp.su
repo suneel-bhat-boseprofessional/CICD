@@ -2,5 +2,5 @@
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:2909:22:LL_APB2_GRP1_EnableClock	24	static
 ../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:2997:22:LL_APB2_GRP1_DisableClock	16	static
 ../Core/Src/stm32n6xx_hal_msp.c:63:6:HAL_MspInit	8	static
-../Core/Src/stm32n6xx_hal_msp.c:85:6:HAL_UART_MspInit	440	static
-../Core/Src/stm32n6xx_hal_msp.c:133:6:HAL_UART_MspDeInit	16	static
+../Core/Src/stm32n6xx_hal_msp.c:89:6:HAL_UART_MspInit	440	static
+../Core/Src/stm32n6xx_hal_msp.c:137:6:HAL_UART_MspDeInit	16	static
