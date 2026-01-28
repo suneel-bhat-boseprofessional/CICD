@@ -1,9 +1,0 @@
-../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1407:22:LL_AHB4_GRP1_EnableClock	1
-../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1755:22:LL_AHB5_GRP1_EnableClock	1
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:75:5:main	1
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:123:6:SystemClock_Config	10
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:220:13:MX_HPDMA1_Init	5
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:292:13:MX_USART1_UART_Init	5
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:340:13:MX_XSPI2_Init	3
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:391:13:MX_GPIO_Init	1
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:414:6:Error_Handler	1

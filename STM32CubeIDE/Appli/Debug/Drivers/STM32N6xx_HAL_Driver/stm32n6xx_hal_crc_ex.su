@@ -1,3 +1,0 @@
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_crc_ex.c:89:19:HAL_CRCEx_Polynomial_Set	32	static
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_crc_ex.c:168:19:HAL_CRCEx_Input_Data_Reverse	16	static
-C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_crc_ex.c:194:19:HAL_CRCEx_Output_Data_Reverse	16	static
