@@ -50,6 +50,16 @@ void touchgfx_taskEntry(void);
 
 /* USER CODE BEGIN PFP */
 
+void MX_TouchGFX_PreOSInit(void)
+{
+}
+
+void TouchGFX_Task(void* argument)
+{
+    // Calling forward to touchgfx_taskEntry in C++ domain
+    touchgfx_taskEntry();
+}
+
 /* USER CODE END PFP */
 
 /**

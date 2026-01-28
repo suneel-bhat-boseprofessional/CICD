@@ -1,0 +1,9 @@
+../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1407:22:LL_AHB4_GRP1_EnableClock	24	static
+../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1755:22:LL_AHB5_GRP1_EnableClock	24	static
+C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:75:5:main	8	static
+C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:123:6:SystemClock_Config	624	static
+C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:220:13:MX_HPDMA1_Init	16	static
+C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:292:13:MX_USART1_UART_Init	8	static
+C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:340:13:MX_XSPI2_Init	24	static
+C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:391:13:MX_GPIO_Init	8	static
+C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/FSBL/Core/Src/main.c:414:6:Error_Handler	4	static,ignoring_inline_asm

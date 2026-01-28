@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os2.h"
 #include "app_touchgfx.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -64,6 +65,11 @@ JPEG_HandleTypeDef hjpeg;
 
 LTDC_HandleTypeDef hltdc;
 
+RAMCFG_HandleTypeDef hramcfg_SRAM3;
+RAMCFG_HandleTypeDef hramcfg_SRAM4;
+RAMCFG_HandleTypeDef hramcfg_SRAM5;
+RAMCFG_HandleTypeDef hramcfg_SRAM6;
+
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
@@ -73,6 +79,7 @@ struct coop_data finger[MAX_NUM_TOUCHES];
 
 /* Private function prototypes -----------------------------------------------*/
 static void MPU_Config(void);
+void MX_FREERTOS_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_HPDMA1_Init(void);
 static void MX_USART1_UART_Init(void);
@@ -83,6 +90,7 @@ static void MX_LTDC_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_ICACHE_Init(void);
 static void MX_CRC_Init(void);
+static void MX_RAMCFG_Init(void);
 static void SystemIsolation_Config(void);
 /* USER CODE BEGIN PFP */
 HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t dataSize);
@@ -237,11 +245,24 @@ int main(void)
   MX_I2C1_Init();
   MX_ICACHE_Init();
   MX_CRC_Init();
+  MX_RAMCFG_Init();
   MX_TouchGFX_Init();
   SystemIsolation_Config();
+  /* Call PreOsInit function */
+  MX_TouchGFX_PreOSInit();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+  /* Call init function for freertos objects (in app_freertos.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -249,7 +270,6 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-  MX_TouchGFX_Process();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -579,6 +599,59 @@ static void MX_LTDC_Init(void)
 }
 
 /**
+  * @brief RAMCFG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_RAMCFG_Init(void)
+{
+
+  /* USER CODE BEGIN RAMCFG_Init 0 */
+
+  /* USER CODE END RAMCFG_Init 0 */
+
+  /* USER CODE BEGIN RAMCFG_Init 1 */
+
+  /* USER CODE END RAMCFG_Init 1 */
+
+  /** Initialize RAMCFG SRAM3
+  */
+  hramcfg_SRAM3.Instance = RAMCFG_SRAM3_AXI;
+  if (HAL_RAMCFG_Init(&hramcfg_SRAM3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initialize RAMCFG SRAM4
+  */
+  hramcfg_SRAM4.Instance = RAMCFG_SRAM4_AXI;
+  if (HAL_RAMCFG_Init(&hramcfg_SRAM4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initialize RAMCFG SRAM5
+  */
+  hramcfg_SRAM5.Instance = RAMCFG_SRAM5_AXI;
+  if (HAL_RAMCFG_Init(&hramcfg_SRAM5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initialize RAMCFG SRAM6
+  */
+  hramcfg_SRAM6.Instance = RAMCFG_SRAM6_AXI;
+  if (HAL_RAMCFG_Init(&hramcfg_SRAM6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN RAMCFG_Init 2 */
+
+  /* USER CODE END RAMCFG_Init 2 */
+
+}
+
+/**
   * @brief RIF Initialization Function
   * @param None
   * @retval None
@@ -818,6 +891,28 @@ void MPU_Config(void)
   /* Exit critical section to lock the system and avoid any issue around MPU mechanism */
   __set_PRIMASK(primask_bit);
 
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM2 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM2)
+  {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
 }
 
 /**

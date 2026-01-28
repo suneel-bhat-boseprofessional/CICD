@@ -1,0 +1,36 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+# Toolchain: GNU Tools for STM32 (13.3.rel1)
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables 
+CPP_SRCS += \
+../TouchGFX/target/generated/OSWrappers.cpp \
+../TouchGFX/target/generated/STM32DMA.cpp \
+../TouchGFX/target/generated/TouchGFXConfiguration.cpp \
+../TouchGFX/target/generated/TouchGFXGeneratedHAL.cpp 
+
+OBJS += \
+./TouchGFX/target/generated/OSWrappers.o \
+./TouchGFX/target/generated/STM32DMA.o \
+./TouchGFX/target/generated/TouchGFXConfiguration.o \
+./TouchGFX/target/generated/TouchGFXGeneratedHAL.o 
+
+CPP_DEPS += \
+./TouchGFX/target/generated/OSWrappers.d \
+./TouchGFX/target/generated/STM32DMA.d \
+./TouchGFX/target/generated/TouchGFXConfiguration.d \
+./TouchGFX/target/generated/TouchGFXGeneratedHAL.d 
+
+
+# Each subdirectory must supply rules for building sources it contributes
+TouchGFX/target/generated/%.o TouchGFX/target/generated/%.su TouchGFX/target/generated/%.cyclo: ../TouchGFX/target/generated/%.cpp TouchGFX/target/generated/subdir.mk
+	arm-none-eabi-g++ "$<" -mcpu=cortex-m55 -std=gnu++14 -g3 -c -I../../../Appli/TouchGFX/App -I../../../Appli/TouchGFX/target/generated -I../../../Appli/TouchGFX/target -I../../../Appli/Core/Inc -I../../../Secure_nsclib -I../../../Drivers/STM32N6xx_HAL_Driver/Inc -I../../../Drivers/CMSIS/Device/ST/STM32N6xx/Include -I../../../Drivers/STM32N6xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Include -I../../../Middlewares/Third_Party/FreeRTOS/Source/include/ -I../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM55_NTZ/non_secure/ -I../../Appli/../../Appli/Middlewares/ST/touchgfx/framework/include -I../../Appli/../../Appli/TouchGFX/generated/fonts/include -I../../Appli/../../Appli/TouchGFX/generated/gui_generated/include -I../../Appli/../../Appli/TouchGFX/generated/images/include -I../../Appli/../../Appli/TouchGFX/generated/texts/include -I../../Appli/../../Appli/TouchGFX/generated/videos/include -I../../Appli/../../Appli/TouchGFX/gui/include -I../../Appli/../../Appli/Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/include -I../../Appli/../../Appli/Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/include -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "$@"
+
+clean: clean-TouchGFX-2f-target-2f-generated
+
+clean-TouchGFX-2f-target-2f-generated:
+	-$(RM) ./TouchGFX/target/generated/OSWrappers.cyclo ./TouchGFX/target/generated/OSWrappers.d ./TouchGFX/target/generated/OSWrappers.o ./TouchGFX/target/generated/OSWrappers.su ./TouchGFX/target/generated/STM32DMA.cyclo ./TouchGFX/target/generated/STM32DMA.d ./TouchGFX/target/generated/STM32DMA.o ./TouchGFX/target/generated/STM32DMA.su ./TouchGFX/target/generated/TouchGFXConfiguration.cyclo ./TouchGFX/target/generated/TouchGFXConfiguration.d ./TouchGFX/target/generated/TouchGFXConfiguration.o ./TouchGFX/target/generated/TouchGFXConfiguration.su ./TouchGFX/target/generated/TouchGFXGeneratedHAL.cyclo ./TouchGFX/target/generated/TouchGFXGeneratedHAL.d ./TouchGFX/target/generated/TouchGFXGeneratedHAL.o ./TouchGFX/target/generated/TouchGFXGeneratedHAL.su
+
+.PHONY: clean-TouchGFX-2f-target-2f-generated
+
