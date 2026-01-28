@@ -83,7 +83,8 @@ touchUI_BringUP_FSBL.bin \
 
 
 # All Target
-all: main-build
+all:
+	+@$(MAKE) --no-print-directory main-build && $(MAKE) --no-print-directory post-build
 
 # Main-build Target
 main-build: touchUI_BringUP_FSBL.elf secondary-outputs
@@ -114,6 +115,11 @@ clean:
 	-$(RM) default.size.stdout touchUI_BringUP_FSBL.bin touchUI_BringUP_FSBL.elf touchUI_BringUP_FSBL.list touchUI_BringUP_FSBL.map
 	-@echo ' '
 
+post-build:
+	cd "C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/STM32CubeIDE/FSBL/Debug"
+	echo y | "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_SigningTool_CLI.exe" -bin "touchUI_BringUP_FSBL.bin" -nk -of 0x80000000 -t fsbl -o "touchUI_BringUP_FSBL-Trusted.bin" -hv 2.3 -dump "touchUI_BringUP_FSBL-Trusted.bin"
+	-@echo ' '
+
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
@@ -123,6 +129,6 @@ fail-specified-linker-script-missing:
 warn-no-linker-script-specified:
 	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
 
-.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified post-build
 
 -include ../makefile.targets

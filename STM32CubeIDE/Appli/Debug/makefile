@@ -89,7 +89,8 @@ touchUI_BringUP_Appli.bin \
 
 
 # All Target
-all: main-build
+all:
+	+@$(MAKE) --no-print-directory main-build && $(MAKE) --no-print-directory post-build
 
 # Main-build Target
 main-build: touchUI_BringUP_Appli.elf secondary-outputs
@@ -120,6 +121,12 @@ clean:
 	-$(RM) default.size.stdout touchUI_BringUP_Appli.bin touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.list touchUI_BringUP_Appli.map
 	-@echo ' '
 
+post-build:
+	arm-none-eabi-objcopy.exe -O binary --remove-section=ExtFlashSection --remove-section=FontFlashSection --remove-section=TextFlashSection touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.bin&arm-none-eabi-objcopy.exe -O ihex --only-section=FontFlashSection --only-section=TextFlashSection --only-section=ExtFlashSection touchUI_BringUP_Appli.elf touchUI_BringUP_Appli_assets.hex
+	cd "C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/STM32CubeIDE/Appli/Debug"
+	echo y | "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_SigningTool_CLI.exe" -bin "touchUI_BringUP_Appli.bin" -nk -of 0x80000000 -t fsbl -o "Project-trusted.bin" -hv 2.3 -dump "Project-trusted.bin"
+	-@echo ' '
+
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
@@ -129,6 +136,6 @@ fail-specified-linker-script-missing:
 warn-no-linker-script-specified:
 	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
 
-.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified post-build
 
 -include ../makefile.targets
