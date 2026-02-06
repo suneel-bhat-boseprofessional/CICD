@@ -18,7 +18,7 @@
 #ifndef TouchGFXGeneratedHAL_HPP
 #define TouchGFXGeneratedHAL_HPP
 
-#include <touchgfx/hal/HAL.hpp>
+#include <touchgfx_nema/HALGPU2D.hpp>
 
 /**
  * @class TouchGFXGeneratedHAL
@@ -27,11 +27,11 @@
  *
  * @sa HAL
  */
-class TouchGFXGeneratedHAL : public touchgfx::HAL
+class TouchGFXGeneratedHAL : public touchgfx::HALGPU2D
 {
 public:
     /**
-     * @fn TouchGFXGeneratedHAL::TouchGFXGeneratedHAL(touchgfx::DMA_Interface& dma, touchgfx::LCD& display, touchgfx::TouchController& tc, uint16_t width, uint16_t height) : touchgfx::HAL(dma, display, tc, width, height)
+     * @fn TouchGFXGeneratedHAL::TouchGFXGeneratedHAL(touchgfx::DMA_Interface& dma, touchgfx::LCD& display, touchgfx::TouchController& tc, uint16_t width, uint16_t height) : touchgfx::HALGPU2D(dma, display, tc, width, height)
      *
      * @brief Constructor.
      *
@@ -44,7 +44,7 @@ public:
      * @param height           Height of the display.
      */
     TouchGFXGeneratedHAL(touchgfx::DMA_Interface& dma, touchgfx::LCD& display, touchgfx::TouchController& tc, uint16_t width, uint16_t height) :
-        touchgfx::HAL(dma, display, tc, width, height)
+        touchgfx::HALGPU2D(dma, display, tc, width, height)
     {
     }
 
@@ -109,6 +109,19 @@ public:
     }
 
     /**
+     * @fn virtual void TouchGFXGeneratedHAL::unlockFrameBuffer();
+     *
+     * @brief Unlocks the framebuffer.
+     *
+     * This specialization is marks DMA2D as un-reserved by the framwork.
+     * @see HAL::unlockFrameBuffer
+     */
+    virtual void unlockFrameBuffer()
+    {
+        HAL::unlockFrameBuffer();
+    }
+
+    /**
      * @fn virtual void TouchGFXGeneratedHAL::flushFrameBuffer(const touchgfx::Rect& rect);
      *
      * @brief This function is called whenever the framework has performed a partial draw.
@@ -154,6 +167,15 @@ public:
      *        Called when a rendering pass is completed.
      */
     virtual void endFrame();
+
+    /**
+     * @fn virtual void TouchGFXGeneratedHAL::submitGPU2D();
+     *
+     *  @brief This function can be used to explicitly submit any GPU2D operations that
+     *         might be queued in the command list. Can be called if e.g. the task is
+     *         about to sleep, to ensure GPU2D operations are running in the background.
+     */
+    virtual void submitGPU2D();
 
 protected:
     /**
@@ -205,6 +227,7 @@ protected:
 
     virtual void FlushCache();
 
+    virtual void InvalidateTextureCache();
 };
 #endif // TouchGFXGeneratedHAL_HPP
 

@@ -56,6 +56,12 @@ void process_touch_data(void);
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern DMA2D_HandleTypeDef hdma2d;
+extern GPU2D_HandleTypeDef hgpu2d;
+extern DMA_HandleTypeDef handle_HPDMA1_Channel1;
+extern DMA_HandleTypeDef handle_HPDMA1_Channel0;
+extern JPEG_HandleTypeDef hjpeg;
+extern LTDC_HandleTypeDef hltdc;
 extern TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN EV */
@@ -190,6 +196,104 @@ void EXTI8_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles DMA2D global interrupt.
+  */
+void DMA2D_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2D_IRQn 0 */
+
+  /* USER CODE END DMA2D_IRQn 0 */
+  HAL_DMA2D_IRQHandler(&hdma2d);
+  /* USER CODE BEGIN DMA2D_IRQn 1 */
+
+  /* USER CODE END DMA2D_IRQn 1 */
+}
+
+/**
+  * @brief This function handles JPEG global interrupt.
+  */
+void JPEG_IRQHandler(void)
+{
+  /* USER CODE BEGIN JPEG_IRQn 0 */
+
+  /* USER CODE END JPEG_IRQn 0 */
+  HAL_JPEG_IRQHandler(&hjpeg);
+  /* USER CODE BEGIN JPEG_IRQn 1 */
+
+  /* USER CODE END JPEG_IRQn 1 */
+}
+
+/**
+  * @brief This function handles GPU2D global interrupt.
+  */
+void GPU2D_IRQHandler(void)
+{
+  /* USER CODE BEGIN GPU2D_IRQn 0 */
+
+  /* USER CODE END GPU2D_IRQn 0 */
+  HAL_GPU2D_IRQHandler(&hgpu2d);
+  /* USER CODE BEGIN GPU2D_IRQn 1 */
+
+  /* USER CODE END GPU2D_IRQn 1 */
+}
+
+/**
+  * @brief This function handles GPU2D Error interrupt.
+  */
+void GPU2D_ER_IRQHandler(void)
+{
+  /* USER CODE BEGIN GPU2D_ER_IRQn 0 */
+
+  /* USER CODE END GPU2D_ER_IRQn 0 */
+  HAL_GPU2D_ER_IRQHandler(&hgpu2d);
+  /* USER CODE BEGIN GPU2D_ER_IRQn 1 */
+
+  /* USER CODE END GPU2D_ER_IRQn 1 */
+}
+
+/**
+  * @brief This function handles GPU2D cache interrupt.
+  */
+void ICACHE_IRQHandler(void)
+{
+  /* USER CODE BEGIN ICACHE_IRQn 0 */
+
+  /* USER CODE END ICACHE_IRQn 0 */
+  HAL_ICACHE_IRQHandler();
+  /* USER CODE BEGIN ICACHE_IRQn 1 */
+
+  /* USER CODE END ICACHE_IRQn 1 */
+}
+
+/**
+  * @brief This function handles HPDMA1 Channel 0 global interrupt.
+  */
+void HPDMA1_Channel0_IRQHandler(void)
+{
+  /* USER CODE BEGIN HPDMA1_Channel0_IRQn 0 */
+
+  /* USER CODE END HPDMA1_Channel0_IRQn 0 */
+  HAL_DMA_IRQHandler(&handle_HPDMA1_Channel0);
+  /* USER CODE BEGIN HPDMA1_Channel0_IRQn 1 */
+
+  /* USER CODE END HPDMA1_Channel0_IRQn 1 */
+}
+
+/**
+  * @brief This function handles HPDMA1 Channel 1 global interrupt.
+  */
+void HPDMA1_Channel1_IRQHandler(void)
+{
+  /* USER CODE BEGIN HPDMA1_Channel1_IRQn 0 */
+
+  /* USER CODE END HPDMA1_Channel1_IRQn 0 */
+  HAL_DMA_IRQHandler(&handle_HPDMA1_Channel1);
+  /* USER CODE BEGIN HPDMA1_Channel1_IRQn 1 */
+
+  /* USER CODE END HPDMA1_Channel1_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM2 global interrupt.
   */
 void TIM2_IRQHandler(void)
@@ -201,6 +305,34 @@ void TIM2_IRQHandler(void)
   /* USER CODE BEGIN TIM2_IRQn 1 */
 
   /* USER CODE END TIM2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles LTDC global interrupt.
+  */
+void LTDC_UP_IRQHandler(void)
+{
+  /* USER CODE BEGIN LTDC_UP_IRQn 0 */
+
+  /* USER CODE END LTDC_UP_IRQn 0 */
+  HAL_LTDC_IRQHandler(&hltdc);
+  /* USER CODE BEGIN LTDC_UP_IRQn 1 */
+
+  /* USER CODE END LTDC_UP_IRQn 1 */
+}
+
+/**
+  * @brief This function handles LTDC error interrupt.
+  */
+void LTDC_UP_ERR_IRQHandler(void)
+{
+  /* USER CODE BEGIN LTDC_UP_ERR_IRQn 0 */
+
+  /* USER CODE END LTDC_UP_ERR_IRQn 0 */
+  HAL_LTDC_IRQHandler(&hltdc);
+  /* USER CODE BEGIN LTDC_UP_ERR_IRQn 1 */
+
+  /* USER CODE END LTDC_UP_ERR_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

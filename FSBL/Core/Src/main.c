@@ -42,9 +42,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-DMA_HandleTypeDef handle_HPDMA1_Channel1;
-DMA_HandleTypeDef handle_HPDMA1_Channel0;
-
 UART_HandleTypeDef huart1;
 
 XSPI_HandleTypeDef hxspi2;
@@ -59,6 +56,7 @@ static void MX_GPIO_Init(void);
 static void MX_HPDMA1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_XSPI2_Init(void);
+static void MX_BSEC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -98,11 +96,20 @@ int main(void)
   MX_HPDMA1_Init();
   MX_USART1_UART_Init();
   MX_XSPI2_Init();
+  MX_BSEC_Init();
   MX_EXTMEM_MANAGER_Init();
   /* USER CODE BEGIN 2 */
 
+  printf("Debug UART printf ready FSBL!\r\n");
+  HAL_UART_Transmit(&huart1, (uint8_t *)"FSBL Entered\r\n", 13, HAL_MAX_DELAY);
+
   /* USER CODE END 2 */
 
+  /* Launch the application */
+  if (BOOT_OK != BOOT_Application())
+  {
+    Error_Handler();
+  }
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -184,7 +191,13 @@ void SystemClock_Config(void)
   * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_NONE;
-  RCC_OscInitStruct.PLL1.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL1.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL1.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL1.PLLM = 1;
+  RCC_OscInitStruct.PLL1.PLLN = 25;
+  RCC_OscInitStruct.PLL1.PLLFractional = 0;
+  RCC_OscInitStruct.PLL1.PLLP1 = 1;
+  RCC_OscInitStruct.PLL1.PLLP2 = 1;
   RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_NONE;
   RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
   RCC_OscInitStruct.PLL4.PLLState = RCC_PLL_NONE;
@@ -200,16 +213,44 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK2|RCC_CLOCKTYPE_PCLK5
                               |RCC_CLOCKTYPE_PCLK4;
   RCC_ClkInitStruct.CPUCLKSource = RCC_CPUCLKSOURCE_HSI;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_IC2_IC6_IC11;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV32;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV1;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV1;
   RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV1;
+  RCC_ClkInitStruct.IC2Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
+  RCC_ClkInitStruct.IC2Selection.ClockDivider = 5;
+  RCC_ClkInitStruct.IC6Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
+  RCC_ClkInitStruct.IC6Selection.ClockDivider = 4;
+  RCC_ClkInitStruct.IC11Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
+  RCC_ClkInitStruct.IC11Selection.ClockDivider = 4;
+
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief BSEC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_BSEC_Init(void)
+{
+
+  /* USER CODE BEGIN BSEC_Init 0 */
+
+  /* USER CODE END BSEC_Init 0 */
+
+  /* USER CODE BEGIN BSEC_Init 1 */
+
+  /* USER CODE END BSEC_Init 1 */
+  /* USER CODE BEGIN BSEC_Init 2 */
+
+  /* USER CODE END BSEC_Init 2 */
+
 }
 
 /**
@@ -224,60 +265,12 @@ static void MX_HPDMA1_Init(void)
 
   /* USER CODE END HPDMA1_Init 0 */
 
-  DMA_IsolationConfigTypeDef IsolationConfiginput = {0};
-
   /* Peripheral clock enable */
   __HAL_RCC_HPDMA1_CLK_ENABLE();
 
   /* USER CODE BEGIN HPDMA1_Init 1 */
 
   /* USER CODE END HPDMA1_Init 1 */
-  handle_HPDMA1_Channel1.Instance = HPDMA1_Channel1;
-  handle_HPDMA1_Channel1.Init.Request = DMA_REQUEST_SW;
-  handle_HPDMA1_Channel1.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
-  handle_HPDMA1_Channel1.Init.Direction = DMA_MEMORY_TO_MEMORY;
-  handle_HPDMA1_Channel1.Init.SrcInc = DMA_SINC_FIXED;
-  handle_HPDMA1_Channel1.Init.DestInc = DMA_DINC_FIXED;
-  handle_HPDMA1_Channel1.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_BYTE;
-  handle_HPDMA1_Channel1.Init.DestDataWidth = DMA_DEST_DATAWIDTH_BYTE;
-  handle_HPDMA1_Channel1.Init.Priority = DMA_LOW_PRIORITY_LOW_WEIGHT;
-  handle_HPDMA1_Channel1.Init.SrcBurstLength = 1;
-  handle_HPDMA1_Channel1.Init.DestBurstLength = 1;
-  handle_HPDMA1_Channel1.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT0;
-  handle_HPDMA1_Channel1.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
-  handle_HPDMA1_Channel1.Init.Mode = DMA_NORMAL;
-  if (HAL_DMA_Init(&handle_HPDMA1_Channel1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  IsolationConfiginput.CidFiltering = DMA_ISOLATION_OFF;
-  IsolationConfiginput.StaticCid = DMA_CHANNEL_STATIC_CID_0;
-  if (HAL_DMA_SetIsolationAttributes(&handle_HPDMA1_Channel1, &IsolationConfiginput) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  handle_HPDMA1_Channel0.Instance = HPDMA1_Channel0;
-  handle_HPDMA1_Channel0.Init.Request = DMA_REQUEST_SW;
-  handle_HPDMA1_Channel0.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
-  handle_HPDMA1_Channel0.Init.Direction = DMA_MEMORY_TO_MEMORY;
-  handle_HPDMA1_Channel0.Init.SrcInc = DMA_SINC_FIXED;
-  handle_HPDMA1_Channel0.Init.DestInc = DMA_DINC_FIXED;
-  handle_HPDMA1_Channel0.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_BYTE;
-  handle_HPDMA1_Channel0.Init.DestDataWidth = DMA_DEST_DATAWIDTH_BYTE;
-  handle_HPDMA1_Channel0.Init.Priority = DMA_LOW_PRIORITY_LOW_WEIGHT;
-  handle_HPDMA1_Channel0.Init.SrcBurstLength = 1;
-  handle_HPDMA1_Channel0.Init.DestBurstLength = 1;
-  handle_HPDMA1_Channel0.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT0;
-  handle_HPDMA1_Channel0.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
-  handle_HPDMA1_Channel0.Init.Mode = DMA_NORMAL;
-  if (HAL_DMA_Init(&handle_HPDMA1_Channel0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_DMA_SetIsolationAttributes(&handle_HPDMA1_Channel0, &IsolationConfiginput) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN HPDMA1_Init 2 */
 
   /* USER CODE END HPDMA1_Init 2 */
@@ -351,17 +344,17 @@ static void MX_XSPI2_Init(void)
   /* USER CODE END XSPI2_Init 1 */
   /* XSPI2 parameter configuration*/
   hxspi2.Instance = XSPI2;
-  hxspi2.Init.FifoThresholdByte = 1;
+  hxspi2.Init.FifoThresholdByte = 4;
   hxspi2.Init.MemoryMode = HAL_XSPI_SINGLE_MEM;
-  hxspi2.Init.MemoryType = HAL_XSPI_MEMTYPE_MICRON;
-  hxspi2.Init.MemorySize = HAL_XSPI_SIZE_16B;
+  hxspi2.Init.MemoryType = HAL_XSPI_MEMTYPE_MACRONIX;
+  hxspi2.Init.MemorySize = HAL_XSPI_SIZE_64MB;
   hxspi2.Init.ChipSelectHighTimeCycle = 1;
   hxspi2.Init.FreeRunningClock = HAL_XSPI_FREERUNCLK_DISABLE;
   hxspi2.Init.ClockMode = HAL_XSPI_CLOCK_MODE_0;
   hxspi2.Init.WrapSize = HAL_XSPI_WRAP_NOT_SUPPORTED;
   hxspi2.Init.ClockPrescaler = 0;
   hxspi2.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
-  hxspi2.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_DISABLE;
+  hxspi2.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_ENABLE;
   hxspi2.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_NONE;
   hxspi2.Init.MaxTran = 0;
   hxspi2.Init.Refresh = 0;
@@ -370,7 +363,7 @@ static void MX_XSPI2_Init(void)
   {
     Error_Handler();
   }
-  sXspiManagerCfg.nCSOverride = HAL_XSPI_CSSEL_OVR_DISABLED;
+  sXspiManagerCfg.nCSOverride = HAL_XSPI_CSSEL_OVR_NCS1;
   sXspiManagerCfg.IOPort = HAL_XSPIM_IOPORT_2;
   sXspiManagerCfg.Req2AckTime = 1;
   if (HAL_XSPIM_Config(&hxspi2, &sXspiManagerCfg, HAL_XSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)

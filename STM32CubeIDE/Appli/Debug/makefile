@@ -14,12 +14,12 @@ RM := rm -rf
 -include Drivers/STM32N6xx_HAL_Driver/subdir.mk
 -include Drivers/CMSIS/subdir.mk
 -include Application/User/gui/subdir.mk
+-include Application/User/generated/Core/subdir.mk
 -include Application/User/generated/subdir.mk
 -include Application/User/TouchGFX/target/generated/subdir.mk
 -include Application/User/TouchGFX/target/subdir.mk
 -include Application/User/TouchGFX/App/subdir.mk
 -include Application/User/Startup/subdir.mk
--include Application/User/Core/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -122,7 +122,6 @@ clean:
 	-@echo ' '
 
 post-build:
-	arm-none-eabi-objcopy.exe -O binary --remove-section=ExtFlashSection --remove-section=FontFlashSection --remove-section=TextFlashSection touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.bin&arm-none-eabi-objcopy.exe -O ihex --only-section=FontFlashSection --only-section=TextFlashSection --only-section=ExtFlashSection touchUI_BringUP_Appli.elf touchUI_BringUP_Appli_assets.hex
 	cd "C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/STM32CubeIDE/Appli/Debug"
 	echo y | "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_SigningTool_CLI.exe" -bin "touchUI_BringUP_Appli.bin" -nk -of 0x80000000 -t fsbl -o "Project-trusted.bin" -hv 2.3 -dump "Project-trusted.bin"
 	-@echo ' '

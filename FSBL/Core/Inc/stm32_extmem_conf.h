@@ -47,6 +47,7 @@
 #include "stm32n6xx_hal.h"
 #include "stm32_extmem.h"
 #include "stm32_extmem_type.h"
+#include "boot/stm32_boot_lrun.h"
 
 /* USER CODE BEGIN INCLUDE */
 
@@ -65,6 +66,17 @@ extern XSPI_HandleTypeDef hxspi2;
 enum {
   EXTMEMORY_1  = 0 /*!< ID=0 for the first memory  */
 };
+
+/*
+  @brief management of the boot layer
+*/
+#define EXTMEM_HEADER_OFFSET 0x400
+
+#define EXTMEM_LRUN_SOURCE EXTMEMORY_1
+#define EXTMEM_LRUN_SOURCE_ADDRESS  0x100000u
+#define EXTMEM_LRUN_SOURCE_SIZE     0x10000u
+#define EXTMEM_LRUN_DESTINATION_INTERNAL  1
+#define EXTMEM_LRUN_DESTINATION_ADDRESS 0x34000000u
 
 /* USER CODE BEGIN EC */
 

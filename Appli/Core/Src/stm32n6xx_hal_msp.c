@@ -23,6 +23,9 @@
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
+extern DMA_HandleTypeDef handle_HPDMA1_Channel1;
+
+extern DMA_HandleTypeDef handle_HPDMA1_Channel0;
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
@@ -69,7 +72,10 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  HAL_PWREx_EnableVddIO2();
+  /* Peripheral interrupt init */
+  /* ICACHE_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(ICACHE_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(ICACHE_IRQn);
 
   HAL_PWREx_EnableVddIO3();
 
@@ -140,6 +146,9 @@ void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef* hdma2d)
     /* USER CODE END DMA2D_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_DMA2D_CLK_ENABLE();
+    /* DMA2D interrupt Init */
+    HAL_NVIC_SetPriority(DMA2D_IRQn, 9, 0);
+    HAL_NVIC_EnableIRQ(DMA2D_IRQn);
     /* USER CODE BEGIN DMA2D_MspInit 1 */
 
     /* USER CODE END DMA2D_MspInit 1 */
@@ -163,6 +172,9 @@ void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef* hdma2d)
     /* USER CODE END DMA2D_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_DMA2D_CLK_DISABLE();
+
+    /* DMA2D interrupt DeInit */
+    HAL_NVIC_DisableIRQ(DMA2D_IRQn);
     /* USER CODE BEGIN DMA2D_MspDeInit 1 */
 
     /* USER CODE END DMA2D_MspDeInit 1 */
@@ -185,6 +197,11 @@ void HAL_GPU2D_MspInit(GPU2D_HandleTypeDef* hgpu2d)
     /* USER CODE END GPU2D_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_GPU2D_CLK_ENABLE();
+    /* GPU2D interrupt Init */
+    HAL_NVIC_SetPriority(GPU2D_IRQn, 9, 0);
+    HAL_NVIC_EnableIRQ(GPU2D_IRQn);
+    HAL_NVIC_SetPriority(GPU2D_ER_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(GPU2D_ER_IRQn);
     /* USER CODE BEGIN GPU2D_MspInit 1 */
 
     /* USER CODE END GPU2D_MspInit 1 */
@@ -208,6 +225,10 @@ void HAL_GPU2D_MspDeInit(GPU2D_HandleTypeDef* hgpu2d)
     /* USER CODE END GPU2D_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_GPU2D_CLK_DISABLE();
+
+    /* GPU2D interrupt DeInit */
+    HAL_NVIC_DisableIRQ(GPU2D_IRQn);
+    HAL_NVIC_DisableIRQ(GPU2D_ER_IRQn);
     /* USER CODE BEGIN GPU2D_MspDeInit 1 */
 
     /* USER CODE END GPU2D_MspDeInit 1 */
@@ -309,6 +330,8 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
   */
 void HAL_JPEG_MspInit(JPEG_HandleTypeDef* hjpeg)
 {
+  DMA_IsolationConfigTypeDef IsolationConfiginput;
+  DMA_DataHandlingConfTypeDef DataHandlingConfig;
   if(hjpeg->Instance==JPEG)
   {
     /* USER CODE BEGIN JPEG_MspInit 0 */
@@ -316,6 +339,76 @@ void HAL_JPEG_MspInit(JPEG_HandleTypeDef* hjpeg)
     /* USER CODE END JPEG_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_JPEG_CLK_ENABLE();
+
+    /* JPEG DMA Init */
+    /* HPDMA1_REQUEST_JPEG_TX Init */
+    handle_HPDMA1_Channel1.Instance = HPDMA1_Channel1;
+    handle_HPDMA1_Channel1.Init.Request = HPDMA1_REQUEST_JPEG_TX;
+    handle_HPDMA1_Channel1.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+    handle_HPDMA1_Channel1.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    handle_HPDMA1_Channel1.Init.SrcInc = DMA_SINC_FIXED;
+    handle_HPDMA1_Channel1.Init.DestInc = DMA_DINC_INCREMENTED;
+    handle_HPDMA1_Channel1.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_WORD;
+    handle_HPDMA1_Channel1.Init.DestDataWidth = DMA_DEST_DATAWIDTH_WORD;
+    handle_HPDMA1_Channel1.Init.Priority = DMA_HIGH_PRIORITY;
+    handle_HPDMA1_Channel1.Init.SrcBurstLength = 8;
+    handle_HPDMA1_Channel1.Init.DestBurstLength = 8;
+    handle_HPDMA1_Channel1.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT1|DMA_DEST_ALLOCATED_PORT0;
+    handle_HPDMA1_Channel1.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    handle_HPDMA1_Channel1.Init.Mode = DMA_NORMAL;
+    if (HAL_DMA_Init(&handle_HPDMA1_Channel1) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(hjpeg, hdmaout, handle_HPDMA1_Channel1);
+
+    IsolationConfiginput.CidFiltering = DMA_ISOLATION_ON;
+    IsolationConfiginput.StaticCid = DMA_CHANNEL_STATIC_CID_1;
+    if (HAL_DMA_SetIsolationAttributes(&handle_HPDMA1_Channel1, &IsolationConfiginput) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* HPDMA1_REQUEST_JPEG_RX Init */
+    handle_HPDMA1_Channel0.Instance = HPDMA1_Channel0;
+    handle_HPDMA1_Channel0.Init.Request = HPDMA1_REQUEST_JPEG_RX;
+    handle_HPDMA1_Channel0.Init.BlkHWRequest = DMA_BREQ_SINGLE_BURST;
+    handle_HPDMA1_Channel0.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    handle_HPDMA1_Channel0.Init.SrcInc = DMA_SINC_INCREMENTED;
+    handle_HPDMA1_Channel0.Init.DestInc = DMA_DINC_FIXED;
+    handle_HPDMA1_Channel0.Init.SrcDataWidth = DMA_SRC_DATAWIDTH_BYTE;
+    handle_HPDMA1_Channel0.Init.DestDataWidth = DMA_DEST_DATAWIDTH_WORD;
+    handle_HPDMA1_Channel0.Init.Priority = DMA_HIGH_PRIORITY;
+    handle_HPDMA1_Channel0.Init.SrcBurstLength = 8;
+    handle_HPDMA1_Channel0.Init.DestBurstLength = 8;
+    handle_HPDMA1_Channel0.Init.TransferAllocatedPort = DMA_SRC_ALLOCATED_PORT0|DMA_DEST_ALLOCATED_PORT1;
+    handle_HPDMA1_Channel0.Init.TransferEventMode = DMA_TCEM_BLOCK_TRANSFER;
+    handle_HPDMA1_Channel0.Init.Mode = DMA_NORMAL;
+    if (HAL_DMA_Init(&handle_HPDMA1_Channel0) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    DataHandlingConfig.DataExchange = DMA_EXCHANGE_NONE;
+    DataHandlingConfig.DataAlignment = DMA_DATA_PACK;
+    if (HAL_DMAEx_ConfigDataHandling(&handle_HPDMA1_Channel0, &DataHandlingConfig) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(hjpeg, hdmain, handle_HPDMA1_Channel0);
+
+    IsolationConfiginput.CidFiltering = DMA_ISOLATION_ON;
+    IsolationConfiginput.StaticCid = DMA_CHANNEL_STATIC_CID_1;
+    if (HAL_DMA_SetIsolationAttributes(&handle_HPDMA1_Channel0, &IsolationConfiginput) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* JPEG interrupt Init */
+    HAL_NVIC_SetPriority(JPEG_IRQn, 8, 0);
+    HAL_NVIC_EnableIRQ(JPEG_IRQn);
     /* USER CODE BEGIN JPEG_MspInit 1 */
 
     /* USER CODE END JPEG_MspInit 1 */
@@ -339,6 +432,13 @@ void HAL_JPEG_MspDeInit(JPEG_HandleTypeDef* hjpeg)
     /* USER CODE END JPEG_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_JPEG_CLK_DISABLE();
+
+    /* JPEG DMA DeInit */
+    HAL_DMA_DeInit(hjpeg->hdmaout);
+    HAL_DMA_DeInit(hjpeg->hdmain);
+
+    /* JPEG interrupt DeInit */
+    HAL_NVIC_DisableIRQ(JPEG_IRQn);
     /* USER CODE BEGIN JPEG_MspDeInit 1 */
 
     /* USER CODE END JPEG_MspDeInit 1 */
@@ -374,68 +474,40 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
     /* Peripheral clock enable */
     __HAL_RCC_LTDC_CLK_ENABLE();
 
-    __HAL_RCC_GPIOD_CLK_ENABLE();
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_GPIOE_CLK_ENABLE();
-    __HAL_RCC_GPIOO_CLK_ENABLE();
-    __HAL_RCC_GPIOP_CLK_ENABLE();
-    __HAL_RCC_GPIOF_CLK_ENABLE();
     __HAL_RCC_GPIOG_CLK_ENABLE();
-    __HAL_RCC_GPION_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
     /**LTDC GPIO Configuration
-    PD15     ------> LTDC_R2
-    PB15     ------> LTDC_G4
-    PB13     ------> LTDC_CLK
-    PD8     ------> LTDC_R7
-    PB2     ------> LTDC_B2
-    PB14     ------> LTDC_HSYNC
-    PC9     ------> LTDC_B3
     PE11     ------> LTDC_VSYNC
-    PD13     ------> LTDC_R6
-    PO3     ------> LTDC_G3
-    PC8     ------> LTDC_B0
-    PD9     ------> LTDC_R1
-    PO2     ------> LTDC_B7
-    PO4     ------> LTDC_B4
-    PP15     ------> LTDC_B5
-    PF4     ------> LTDC_R3
-    PF6     ------> LTDC_DE
-    PG5     ------> LTDC_B1
-    PF5     ------> LTDC_G0
-    PF3     ------> LTDC_R4
-    PN11     ------> LTDC_B6
-    PF15     ------> LTDC_G1
+    PG14     ------> LTDC_B1
+    PA11     ------> LTDC_B3
+    PA8     ------> LTDC_B6
+    PA6     ------> LTDC_HSYNC
+    PG1     ------> LTDC_G1
+    PG10     ------> LTDC_G4
     PB10     ------> LTDC_G7
+    PB5(JTDO/TRACESWO)     ------> LTDC_R2
     PA15(JTDI)     ------> LTDC_R5
-    PG0     ------> LTDC_R0
+    PA12     ------> LTDC_B2
+    PA9     ------> LTDC_B5
+    PA5     ------> LTDC_CLK
+    PG12     ------> LTDC_G0
+    PA0     ------> LTDC_G3
     PB11     ------> LTDC_G6
+    PB1     ------> LTDC_R1
+    PA7     ------> LTDC_R4
+    PG9     ------> LTDC_R7
+    PG15     ------> LTDC_B0
+    PA10     ------> LTDC_B4
+    PA2     ------> LTDC_B7
+    PG13     ------> LTDC_DE
     PA1     ------> LTDC_G2
     PB12     ------> LTDC_G5
+    PG2     ------> LTDC_R0
+    PB4(NJTRST)     ------> LTDC_R3
+    PG11     ------> LTDC_R6
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_15|GPIO_PIN_8|GPIO_PIN_13|GPIO_PIN_9;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
-    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_15|GPIO_PIN_13|GPIO_PIN_2|GPIO_PIN_14
-                          |GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_8;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
     GPIO_InitStruct.Pin = GPIO_PIN_11;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -443,56 +515,44 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
     GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_2;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
-    HAL_GPIO_Init(GPIOO, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_4;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF10_LCD;
-    HAL_GPIO_Init(GPIOO, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_15;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
-    HAL_GPIO_Init(GPIOP, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_6|GPIO_PIN_5|GPIO_PIN_3
-                          |GPIO_PIN_15;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
-    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_0;
+    GPIO_InitStruct.Pin = GPIO_PIN_14|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_12
+                          |GPIO_PIN_9|GPIO_PIN_15|GPIO_PIN_13|GPIO_PIN_2
+                          |GPIO_PIN_11;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
     HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_11;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
-    HAL_GPIO_Init(GPION, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_15|GPIO_PIN_1;
+    GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_8|GPIO_PIN_6|GPIO_PIN_15
+                          |GPIO_PIN_12|GPIO_PIN_9|GPIO_PIN_5|GPIO_PIN_0
+                          |GPIO_PIN_10|GPIO_PIN_2|GPIO_PIN_1;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+    GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_5|GPIO_PIN_11|GPIO_PIN_1
+                          |GPIO_PIN_12|GPIO_PIN_4;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF14_LCD;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = GPIO_PIN_7;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF10_LCD;
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    /* LTDC interrupt Init */
+    HAL_NVIC_SetPriority(LTDC_UP_IRQn, 9, 0);
+    HAL_NVIC_EnableIRQ(LTDC_UP_IRQn);
+    HAL_NVIC_SetPriority(LTDC_UP_ERR_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(LTDC_UP_ERR_IRQn);
     /* USER CODE BEGIN LTDC_MspInit 1 */
 
     /* USER CODE END LTDC_MspInit 1 */
@@ -518,57 +578,51 @@ void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef* hltdc)
     __HAL_RCC_LTDC_CLK_DISABLE();
 
     /**LTDC GPIO Configuration
-    PD15     ------> LTDC_R2
-    PB15     ------> LTDC_G4
-    PB13     ------> LTDC_CLK
-    PD8     ------> LTDC_R7
-    PB2     ------> LTDC_B2
-    PB14     ------> LTDC_HSYNC
-    PC9     ------> LTDC_B3
     PE11     ------> LTDC_VSYNC
-    PD13     ------> LTDC_R6
-    PO3     ------> LTDC_G3
-    PC8     ------> LTDC_B0
-    PD9     ------> LTDC_R1
-    PO2     ------> LTDC_B7
-    PO4     ------> LTDC_B4
-    PP15     ------> LTDC_B5
-    PF4     ------> LTDC_R3
-    PF6     ------> LTDC_DE
-    PG5     ------> LTDC_B1
-    PF5     ------> LTDC_G0
-    PF3     ------> LTDC_R4
-    PN11     ------> LTDC_B6
-    PF15     ------> LTDC_G1
+    PG14     ------> LTDC_B1
+    PA11     ------> LTDC_B3
+    PA8     ------> LTDC_B6
+    PA6     ------> LTDC_HSYNC
+    PG1     ------> LTDC_G1
+    PG10     ------> LTDC_G4
     PB10     ------> LTDC_G7
+    PB5(JTDO/TRACESWO)     ------> LTDC_R2
     PA15(JTDI)     ------> LTDC_R5
-    PG0     ------> LTDC_R0
+    PA12     ------> LTDC_B2
+    PA9     ------> LTDC_B5
+    PA5     ------> LTDC_CLK
+    PG12     ------> LTDC_G0
+    PA0     ------> LTDC_G3
     PB11     ------> LTDC_G6
+    PB1     ------> LTDC_R1
+    PA7     ------> LTDC_R4
+    PG9     ------> LTDC_R7
+    PG15     ------> LTDC_B0
+    PA10     ------> LTDC_B4
+    PA2     ------> LTDC_B7
+    PG13     ------> LTDC_DE
     PA1     ------> LTDC_G2
     PB12     ------> LTDC_G5
+    PG2     ------> LTDC_R0
+    PB4(NJTRST)     ------> LTDC_R3
+    PG11     ------> LTDC_R6
     */
-    HAL_GPIO_DeInit(GPIOD, GPIO_PIN_15|GPIO_PIN_8|GPIO_PIN_13|GPIO_PIN_9);
-
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_15|GPIO_PIN_13|GPIO_PIN_2|GPIO_PIN_14
-                          |GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12);
-
-    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_9|GPIO_PIN_8);
-
     HAL_GPIO_DeInit(GPIOE, GPIO_PIN_11);
 
-    HAL_GPIO_DeInit(GPIOO, GPIO_PIN_3|GPIO_PIN_2|GPIO_PIN_4);
+    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_14|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_12
+                          |GPIO_PIN_9|GPIO_PIN_15|GPIO_PIN_13|GPIO_PIN_2
+                          |GPIO_PIN_11);
 
-    HAL_GPIO_DeInit(GPIOP, GPIO_PIN_15);
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11|GPIO_PIN_8|GPIO_PIN_6|GPIO_PIN_15
+                          |GPIO_PIN_12|GPIO_PIN_9|GPIO_PIN_5|GPIO_PIN_0
+                          |GPIO_PIN_7|GPIO_PIN_10|GPIO_PIN_2|GPIO_PIN_1);
 
-    HAL_GPIO_DeInit(GPIOF, GPIO_PIN_4|GPIO_PIN_6|GPIO_PIN_5|GPIO_PIN_3
-                          |GPIO_PIN_15);
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_10|GPIO_PIN_5|GPIO_PIN_11|GPIO_PIN_1
+                          |GPIO_PIN_12|GPIO_PIN_4);
 
-    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_5|GPIO_PIN_0);
-
-    HAL_GPIO_DeInit(GPION, GPIO_PIN_11);
-
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_15|GPIO_PIN_1);
-
+    /* LTDC interrupt DeInit */
+    HAL_NVIC_DisableIRQ(LTDC_UP_IRQn);
+    HAL_NVIC_DisableIRQ(LTDC_UP_ERR_IRQn);
     /* USER CODE BEGIN LTDC_MspDeInit 1 */
 
     /* USER CODE END LTDC_MspDeInit 1 */

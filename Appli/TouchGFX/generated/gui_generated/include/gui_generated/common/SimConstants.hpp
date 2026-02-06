@@ -4,8 +4,8 @@
 #ifndef SIMCONSTANTS_HPP
 #define SIMCONSTANTS_HPP
 
-static unsigned short SIM_WIDTH = 800;
-static unsigned short SIM_HEIGHT = 480;
+static unsigned short SIM_WIDTH = 480;
+static unsigned short SIM_HEIGHT = 128;
 #define SIM_TITLE "touchUI_BringUP"
 
 #endif // SIMCONSTANTS_HPP

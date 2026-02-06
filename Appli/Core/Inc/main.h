@@ -117,10 +117,16 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LCD_BL_Pin GPIO_PIN_12
+#define LCD_BL_GPIO_Port GPIOC
 #define VCOM_RX_Pin GPIO_PIN_6
 #define VCOM_RX_GPIO_Port GPIOE
 #define VCOM_TX_Pin GPIO_PIN_5
 #define VCOM_TX_GPIO_Port GPIOE
+#define LCD_NRST_Pin GPIO_PIN_9
+#define LCD_NRST_GPIO_Port GPIOD
+#define LCD_ON_OFF_Pin GPIO_PIN_8
+#define LCD_ON_OFF_GPIO_Port GPIOG
 
 /* USER CODE BEGIN Private defines */
 

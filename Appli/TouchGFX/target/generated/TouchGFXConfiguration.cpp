@@ -20,7 +20,13 @@
 #include <fonts/ApplicationFontProvider.hpp>
 #include <gui/common/FrontendHeap.hpp>
 #include <BitmapDatabase.hpp>
-#include <platform/driver/lcd/LCD32bpp.hpp>
+#include <touchgfx/VectorFontRendererImpl.hpp>
+#include <touchgfx_nema/LCDGPU2D_AXI.hpp>
+extern "C"
+{
+#include <nema_hal.h>
+#include <nema_vg.h>
+}
 #include <touchgfx/hal/OSWrappers.hpp>
 #include <STM32DMA.hpp>
 #include <TouchGFXHAL.hpp>
@@ -33,17 +39,22 @@ extern "C" void touchgfx_components_init();
 
 static STM32TouchController tc;
 static STM32DMA dma;
-static LCD32bpp display;
+static LCDGPU2D_AXI display;
+static VectorFontRendererImpl vectorFontRenderer;
 
 static ApplicationFontProvider fontProvider;
 static Texts texts;
-static TouchGFXHAL hal(dma, display, tc, 800, 480);
+static TouchGFXHAL hal(dma, display, tc, 480, 128);
 
 void touchgfx_init()
 {
     Bitmap::registerBitmapDatabase(BitmapDatabase::getInstance(), BitmapDatabase::getInstanceSize());
     TypedText::registerTexts(&texts);
     Texts::setLanguage(0);
+
+    display.setFrameBufferFormat(Bitmap::RGB888);
+
+    display.setVectorFontRenderer(&vectorFontRenderer);
 
     FontManager::setFontProvider(&fontProvider);
 
@@ -61,19 +72,25 @@ void touchgfx_init()
 
 void touchgfx_components_init()
 {
+    nema_init();
+    nema_reg_write(0xFFC, 0x7E); /* Enable bus error interrupts */
+    nema_vg_init_stencil_pool(480, 128, 1);
+    nema_vg_handle_large_coords(1, 1);
+    nema_ext_hold_enable(2);
+    nema_ext_hold_irq_enable(2);
+    nema_ext_hold_enable(3);
+    nema_ext_hold_irq_enable(3);
 }
 
 void touchgfx_taskEntry()
 {
     /*
-     * Main event loop will check for VSYNC signal, and then process next frame.
+     * Main event loop. Will wait for VSYNC signal, and then process next frame. Call
+     * this function from your GUI task.
      *
-     * Note This function returns immediately if there is no VSYNC signal.
+     * Note This function never returns
      */
-    if (OSWrappers::isVSyncAvailable())
-    {
-        hal.backPorchExited();
-    }
+    hal.taskEntry();
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

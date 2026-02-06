@@ -54,7 +54,16 @@ void UsageFault_Handler(void);
 void SecureFault_Handler(void);
 void DebugMon_Handler(void);
 void EXTI8_IRQHandler(void);
+void DMA2D_IRQHandler(void);
+void JPEG_IRQHandler(void);
+void GPU2D_IRQHandler(void);
+void GPU2D_ER_IRQHandler(void);
+void ICACHE_IRQHandler(void);
+void HPDMA1_Channel0_IRQHandler(void);
+void HPDMA1_Channel1_IRQHandler(void);
 void TIM2_IRQHandler(void);
+void LTDC_UP_IRQHandler(void);
+void LTDC_UP_ERR_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

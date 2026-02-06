@@ -5,6 +5,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_lrun.c \
 C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c \
 C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Manager/psram/stm32_psram_driver.c \
 C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Manager/sal/stm32_sal_sd.c \
@@ -15,6 +16,7 @@ C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Man
 C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Manager/user/stm32_user_driver.c 
 
 C_DEPS += \
+./Middlewares/STM32_ExtMem_Manager/stm32_boot_lrun.d \
 ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.d \
 ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.d \
 ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.d \
@@ -25,6 +27,7 @@ C_DEPS += \
 ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.d 
 
 OBJS += \
+./Middlewares/STM32_ExtMem_Manager/stm32_boot_lrun.o \
 ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.o \
 ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.o \
 ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.o \
@@ -36,6 +39,8 @@ OBJS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
+Middlewares/STM32_ExtMem_Manager/stm32_boot_lrun.o: C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Manager/boot/stm32_boot_lrun.c Middlewares/STM32_ExtMem_Manager/subdir.mk
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m55 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32N645xx -c -I../../../FSBL/Core/Inc -I../../../Middlewares/ST/STM32_ExtMem_Manager/boot -I../../../Drivers/STM32N6xx_HAL_Driver/Inc -I../../../Drivers/CMSIS/Device/ST/STM32N6xx/Include -I../../../Drivers/STM32N6xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Include -I../../../Middlewares/ST/STM32_ExtMem_Manager -I../../../Middlewares/ST/STM32_ExtMem_Manager/sal -I../../../Middlewares/ST/STM32_ExtMem_Manager/nor_sfdp -I../../../Middlewares/ST/STM32_ExtMem_Manager/psram -I../../../Middlewares/ST/STM32_ExtMem_Manager/sdcard -I../../../Middlewares/ST/STM32_ExtMem_Manager/user -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -mcmse -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "$@"
 Middlewares/STM32_ExtMem_Manager/stm32_extmem.o: C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Manager/stm32_extmem.c Middlewares/STM32_ExtMem_Manager/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m55 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32N645xx -c -I../../../FSBL/Core/Inc -I../../../Middlewares/ST/STM32_ExtMem_Manager/boot -I../../../Drivers/STM32N6xx_HAL_Driver/Inc -I../../../Drivers/CMSIS/Device/ST/STM32N6xx/Include -I../../../Drivers/STM32N6xx_HAL_Driver/Inc/Legacy -I../../../Drivers/CMSIS/Include -I../../../Middlewares/ST/STM32_ExtMem_Manager -I../../../Middlewares/ST/STM32_ExtMem_Manager/sal -I../../../Middlewares/ST/STM32_ExtMem_Manager/nor_sfdp -I../../../Middlewares/ST/STM32_ExtMem_Manager/psram -I../../../Middlewares/ST/STM32_ExtMem_Manager/sdcard -I../../../Middlewares/ST/STM32_ExtMem_Manager/user -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -mcmse -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "$@"
 Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.o: C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/Middlewares/ST/STM32_ExtMem_Manager/psram/stm32_psram_driver.c Middlewares/STM32_ExtMem_Manager/subdir.mk
@@ -56,7 +61,7 @@ Middlewares/STM32_ExtMem_Manager/stm32_user_driver.o: C:/CurrentDevelopment/touc
 clean: clean-Middlewares-2f-STM32_ExtMem_Manager
 
 clean-Middlewares-2f-STM32_ExtMem_Manager:
-	-$(RM) ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.d ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.o ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.su ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.d ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.o ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.su ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.d ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.o ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.su ./Middlewares/STM32_ExtMem_Manager/stm32_sal_xspi.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sal_xspi.d ./Middlewares/STM32_ExtMem_Manager/stm32_sal_xspi.o ./Middlewares/STM32_ExtMem_Manager/stm32_sal_xspi.su ./Middlewares/STM32_ExtMem_Manager/stm32_sdcard_driver.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sdcard_driver.d ./Middlewares/STM32_ExtMem_Manager/stm32_sdcard_driver.o ./Middlewares/STM32_ExtMem_Manager/stm32_sdcard_driver.su ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_data.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_data.d ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_data.o ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_data.su ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_driver.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_driver.d ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_driver.o ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_driver.su ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.d ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.o ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.su
+	-$(RM) ./Middlewares/STM32_ExtMem_Manager/stm32_boot_lrun.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_boot_lrun.d ./Middlewares/STM32_ExtMem_Manager/stm32_boot_lrun.o ./Middlewares/STM32_ExtMem_Manager/stm32_boot_lrun.su ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.d ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.o ./Middlewares/STM32_ExtMem_Manager/stm32_extmem.su ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.d ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.o ./Middlewares/STM32_ExtMem_Manager/stm32_psram_driver.su ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.d ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.o ./Middlewares/STM32_ExtMem_Manager/stm32_sal_sd.su ./Middlewares/STM32_ExtMem_Manager/stm32_sal_xspi.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sal_xspi.d ./Middlewares/STM32_ExtMem_Manager/stm32_sal_xspi.o ./Middlewares/STM32_ExtMem_Manager/stm32_sal_xspi.su ./Middlewares/STM32_ExtMem_Manager/stm32_sdcard_driver.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sdcard_driver.d ./Middlewares/STM32_ExtMem_Manager/stm32_sdcard_driver.o ./Middlewares/STM32_ExtMem_Manager/stm32_sdcard_driver.su ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_data.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_data.d ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_data.o ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_data.su ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_driver.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_driver.d ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_driver.o ./Middlewares/STM32_ExtMem_Manager/stm32_sfdp_driver.su ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.cyclo ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.d ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.o ./Middlewares/STM32_ExtMem_Manager/stm32_user_driver.su
 
 .PHONY: clean-Middlewares-2f-STM32_ExtMem_Manager
 

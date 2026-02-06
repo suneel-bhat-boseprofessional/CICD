@@ -3,15 +3,15 @@
   "Application": {
     "Name": "touchUI_BringUP",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
-    "AvailableColorDepths": [ 32 ],
+    "AvailableColorDepths": [ 24 ],
     "AvailableLCDs":
     {
-      "32": "LCD32bpp"
+      "24": "LCDGPU2D"
     },
     "AvailableResolutions": [
       {
-        "Width": 800,
-        "Height": 480
+        "Width": 480,
+        "Height": 128
       }
     ],
     "PostGenerateTargetCommand": "touchgfx update_project",
@@ -22,8 +22,12 @@
     "ProjectFile": "../../touchUI_BringUP.ioc",
     "OptionalComponentsRoot": "../Middlewares/ST/touchgfx_components",
     "OptionalComponents": [
+      "GPU2D"
     ],
     "AdditionalFeatures": [
+      "GPU2DVector",
+      "VectorFonts",
+      "Video"
     ]
   },
   "Version": "4.26.0"

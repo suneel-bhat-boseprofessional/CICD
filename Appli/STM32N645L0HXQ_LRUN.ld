@@ -1,11 +1,11 @@
 /*
 ******************************************************************************
 **
-** @file        : STM32N6XX_LRUN.ld
+** @file        : STM32N657XX_LRUN.ld
 **
 ** @author      : GPM Application Team
 **
-** @brief       : Linker script for STM32N6XX Device from STM32N6 series
+** @brief       : Linker script for STM32N657XX Device from STM32N6 series
 **                      2048 KBytes RAM
 **
 **                Set heap size, stack size and stack location according
@@ -21,7 +21,7 @@
 ******************************************************************************
 ** @attention
 **
-** Copyright (c) 2025 STMicroelectronics.
+** Copyright (c) 2023 STMicroelectronics.
 ** All rights reserved.
 **
 ** This software is licensed under terms that can be found in the LICENSE file
@@ -34,32 +34,85 @@
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-/* Highest address of the user mode stack */
-_estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
-_sstack = _estack - _Min_Stack_Size;
-
-_Min_Heap_Size = 0x200; /* required amount of heap */
-_Min_Stack_Size = 0x800; /* required amount of stack */
 
 /* Memories definition */
 MEMORY
 {
-  ROM    (xrw)    : ORIGIN = 0x34000400,   LENGTH = 511K
-  RAM    (xrw)    : ORIGIN = 0x34080000,   LENGTH = 1536K
+  DTCM_RAM       (xrw)    : ORIGIN = 0x30000000,   LENGTH = 0x00020000
+  LRUN_APPLI_RAM (xr)     : ORIGIN = 0x34000400,   LENGTH = 0x000FFC00
+  RAM            (xrw)    : ORIGIN = 0x34100000,   LENGTH = 0x00040000
+  CMDLIST_RAM    (xrw)    : ORIGIN = 0x34140000,   LENGTH = 0x00006000
+  FB_RAM         (xrw)    : ORIGIN = 0x34146000,   LENGTH = 0x002DA000
+  PSRAM          (rw)     : ORIGIN = 0x90000000,   LENGTH = 0x02000000
+  ROM            (xr)     : ORIGIN = 0x70100400,   LENGTH = 0x000FFC00
+  ASSETS_ROM     (r)      : ORIGIN = 0x70200000,   LENGTH = 0x07E00000
 }
+/* Highest address of the user mode stack */
+_estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
+_sstack = _estack - _Min_Stack_Size;
 
-/* Sections */
+_Min_Heap_Size = 0x1000;      /* required amount of heap  */
+_Min_Stack_Size = 0x1000; /* required amount of stack */
+
+/* Link ISR vectors */
 SECTIONS
 {
-  /* The startup code into "Rom" Rom type memory */
+  /* The startup code into "LRUN_APPLI_RAM" Ram type memory */
   .isr_vector :
   {
     . = ALIGN(4);
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
-  } >ROM
+  } >LRUN_APPLI_RAM
+}
 
-  /* The program code and other data into "ROM" Rom type memory */
+/* Define specific placement of memory areas */
+SECTIONS
+{
+  BufferSection (NOLOAD) :
+  {
+    *(TouchGFX_Framebuffer TouchGFX_Framebuffer.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x8);
+
+    *(Nemagfx_Stencil_Buffer Nemagfx_Stencil_Buffer.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x8);
+  } >FB_RAM
+  
+  UncachedSection (NOLOAD) :
+  {
+    *(Nemagfx_Memory_Pool_Buffer Nemagfx_Memory_Pool_Buffer.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x8);
+  } >CMDLIST_RAM
+  
+  FontFlashSection :
+  {
+    *(FontFlashSection FontFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >ASSETS_ROM
+
+  TextFlashSection :
+  {
+    *(TextFlashSection TextFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >ASSETS_ROM
+
+  ExtFlashSection :
+  {
+    *(ExtFlashSection ExtFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >ASSETS_ROM
+}
+
+/* Sections */
+SECTIONS
+{
+  /* The program code and other data into "RAM" Ram type memory */
   .text :
   {
     . = ALIGN(4);
@@ -76,22 +129,22 @@ SECTIONS
 
     . = ALIGN(4);
     _etext = .;        /* define a global symbols at end of code */
-  } >ROM
+  } >LRUN_APPLI_RAM
 
-  /* Constant data into "ROM" Rom type memory */
+  /* Constant data into "RAM" Ram type memory */
   .rodata :
   {
     . = ALIGN(4);
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
     . = ALIGN(4);
-  } >ROM
+  } >LRUN_APPLI_RAM
 
   .ARM.extab   : {
     . = ALIGN(4);
     *(.ARM.extab* .gnu.linkonce.armextab.*)
     . = ALIGN(4);
-  } >ROM
+  } >LRUN_APPLI_RAM
 
   .ARM : {
     . = ALIGN(4);
@@ -99,7 +152,7 @@ SECTIONS
     *(.ARM.exidx*)
     __exidx_end = .;
     . = ALIGN(4);
-  } >ROM
+  } >LRUN_APPLI_RAM
 
   .preinit_array     :
   {
@@ -108,7 +161,7 @@ SECTIONS
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
     . = ALIGN(4);
-  } >ROM
+  } >LRUN_APPLI_RAM
 
   .init_array :
   {
@@ -118,7 +171,7 @@ SECTIONS
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
     . = ALIGN(4);
-  } >ROM
+  } >LRUN_APPLI_RAM
 
   .fini_array :
   {
@@ -128,9 +181,19 @@ SECTIONS
     KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
     . = ALIGN(4);
-  } >ROM
+  } >LRUN_APPLI_RAM
 
   /* Used by the startup to initialize data */
+  .gnu.sgstubs ALIGN(32) :
+  {
+    _sNSCVeneer = .;
+    *(.gnu.sgstubs*)   /* Secure Gateway stubs */
+    . = ALIGN(32);
+    FILL(0x00);
+  } >LRUN_APPLI_RAM
+  _eNSCVeneer = .;
+
+  /* Uninitialized data section into "RAM" Ram type memory */
   _sidata = LOADADDR(.data);
 
   /* Initialized data sections into "RAM" Ram type memory */
@@ -142,9 +205,33 @@ SECTIONS
     *(.data*)          /* .data* sections */
 
     . = ALIGN(4);
-    _edata = .;        /* define a global symbol at data end */
 
-  } >RAM AT> ROM
+  } >RAM AT> LRUN_APPLI_RAM
+
+  /* Initialized TLS data section */
+  .tdata : ALIGN(4)
+  {
+    *(.tdata .tdata.* .gnu.linkonce.td.*)
+    . = ALIGN(4);
+    _edata = .;        /* define a global symbol at data end */
+    PROVIDE(__data_end = .);
+    PROVIDE(__tdata_end = .);
+  } >RAM AT> LRUN_APPLI_RAM
+
+  PROVIDE( __tdata_start = ADDR(.tdata) );
+  PROVIDE( __tdata_size = __tdata_end - __tdata_start );
+
+  PROVIDE( __data_start = ADDR(.data) );
+  PROVIDE( __data_size = __data_end - __data_start );
+
+  PROVIDE( __tdata_source = LOADADDR(.tdata) );
+  PROVIDE( __tdata_source_end = LOADADDR(.tdata) + SIZEOF(.tdata) );
+  PROVIDE( __tdata_source_size = __tdata_source_end - __tdata_source );
+
+  PROVIDE( __data_source = LOADADDR(.data) );
+  PROVIDE( __data_source_end = __tdata_source_end );
+  PROVIDE( __data_source_size = __data_source_end - __data_source );
+
 
   .noncacheable :
   {
@@ -155,22 +242,31 @@ SECTIONS
     __enoncacheable = .;  /* create symbol for end of section */
   } > RAM
 
-  .gnu.sgstubs :
+  /* Uninitialized TLS data section */
+  .tbss (NOLOAD) : ALIGN(4)
   {
-    _sNSCVeneer = .;
-    . = ALIGN(4);
-    *(.gnu.sgstubs*)   /* Secure Gateway stubs */
-    . = ALIGN(4);
-  } >ROM
-  _eNSCVeneer = .;
-
-  /* Uninitialized data section into "RAM" Ram type memory */
-  . = ALIGN(4);
-  .bss :
-  {
-    /* This is used by the startup in order to initialize the .bss section */
     _sbss = .;         /* define a global symbol at bss start */
     __bss_start__ = _sbss;
+    *(.tbss .tbss.*)
+    . = ALIGN(4);
+    PROVIDE( __tbss_end = . );
+  } >RAM
+
+  PROVIDE( __tbss_start = ADDR(.tbss) );
+  PROVIDE( __tbss_size = __tbss_end - __tbss_start );
+  PROVIDE( __tbss_offset = ADDR(.tbss) - ADDR(.tdata) );
+
+  PROVIDE( __tls_base = __tdata_start );
+  PROVIDE( __tls_end = __tbss_end );
+  PROVIDE( __tls_size = __tls_end - __tls_base );
+  PROVIDE( __tls_align = MAX(ALIGNOF(.tdata), ALIGNOF(.tbss)) );
+  PROVIDE( __tls_size_align = (__tls_size + __tls_align - 1) & ~(__tls_align - 1) );
+  PROVIDE( __arm32_tls_tcb_offset = MAX(8, __tls_align) );
+  PROVIDE( __arm64_tls_tcb_offset = MAX(16, __tls_align) );
+
+  .bss (NOLOAD) : ALIGN(4)
+  {
+    /* This is used by the startup in order to initialize the .bss section */
     *(.bss)
     *(.bss*)
     *(COMMON)
@@ -178,10 +274,16 @@ SECTIONS
     . = ALIGN(4);
     _ebss = .;         /* define a global symbol at bss end */
     __bss_end__ = _ebss;
+      PROVIDE( __bss_end = .);
   } >RAM
+  PROVIDE( __non_tls_bss_start = ADDR(.bss) );
+
+  PROVIDE( __bss_start = __tbss_start );
+  PROVIDE( __bss_size = __bss_end - __bss_start );
+
 
   /* User_heap_stack section, used to check that there is enough "RAM" Ram  type memory left */
-  ._user_heap_stack :
+  ._user_heap_stack (NOLOAD) :
   {
     . = ALIGN(8);
     PROVIDE ( end = . );
@@ -194,9 +296,9 @@ SECTIONS
   /* Remove information from the compiler libraries */
   /DISCARD/ :
   {
-    libc.a ( * )
-    libm.a ( * )
-    libgcc.a ( * )
+    libc.a:* ( * )
+    libm.a:* ( * )
+    libgcc.a:* ( * )
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
