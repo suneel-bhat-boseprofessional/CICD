@@ -39,10 +39,10 @@ ENTRY(Reset_Handler)
 MEMORY
 {
   DTCM_RAM       (xrw)    : ORIGIN = 0x30000000,   LENGTH = 0x00020000
-  LRUN_APPLI_RAM (xr)     : ORIGIN = 0x34000400,   LENGTH = 0x000FFC00
+  FB_RAM (xr)     : ORIGIN = 0x34200400,   LENGTH = 0x000FFC00
   RAM            (xrw)    : ORIGIN = 0x34100000,   LENGTH = 0x00040000
-  CMDLIST_RAM    (xrw)    : ORIGIN = 0x34140000,   LENGTH = 0x00006000
-  FB_RAM         (xrw)    : ORIGIN = 0x34146000,   LENGTH = 0x002DA000
+  CMDLIST_RAM    (xrw)    : ORIGIN = 0x34140000,   LENGTH = 0x00008000
+  FB_RAM         (xrw)    : ORIGIN = 0x34148000,   LENGTH = 0x002D8000
   PSRAM          (rw)     : ORIGIN = 0x90000000,   LENGTH = 0x02000000
   ROM            (xr)     : ORIGIN = 0x70100400,   LENGTH = 0x000FFC00
   ASSETS_ROM     (r)      : ORIGIN = 0x70200000,   LENGTH = 0x07E00000
@@ -57,13 +57,13 @@ _Min_Stack_Size = 0x1000; /* required amount of stack */
 /* Link ISR vectors */
 SECTIONS
 {
-  /* The startup code into "LRUN_APPLI_RAM" Ram type memory */
+  /* The startup code into "FB_RAM" Ram type memory */
   .isr_vector :
   {
     . = ALIGN(4);
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
-  } >LRUN_APPLI_RAM
+  } >RAM
 }
 
 /* Define specific placement of memory areas */
@@ -92,21 +92,21 @@ SECTIONS
     *(FontFlashSection FontFlashSection.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x4);
-  } >ASSETS_ROM
+  } >FB_RAM
 
   TextFlashSection :
   {
     *(TextFlashSection TextFlashSection.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x4);
-  } >ASSETS_ROM
+  } >FB_RAM
 
   ExtFlashSection :
   {
     *(ExtFlashSection ExtFlashSection.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x4);
-  } >ASSETS_ROM
+  } >FB_RAM
 }
 
 /* Sections */
@@ -129,7 +129,7 @@ SECTIONS
 
     . = ALIGN(4);
     _etext = .;        /* define a global symbols at end of code */
-  } >LRUN_APPLI_RAM
+  } >FB_RAM
 
   /* Constant data into "RAM" Ram type memory */
   .rodata :
@@ -138,13 +138,13 @@ SECTIONS
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
     . = ALIGN(4);
-  } >LRUN_APPLI_RAM
+  } >FB_RAM
 
   .ARM.extab   : {
     . = ALIGN(4);
     *(.ARM.extab* .gnu.linkonce.armextab.*)
     . = ALIGN(4);
-  } >LRUN_APPLI_RAM
+  } >FB_RAM
 
   .ARM : {
     . = ALIGN(4);
@@ -152,7 +152,7 @@ SECTIONS
     *(.ARM.exidx*)
     __exidx_end = .;
     . = ALIGN(4);
-  } >LRUN_APPLI_RAM
+  } >FB_RAM
 
   .preinit_array     :
   {
@@ -161,7 +161,7 @@ SECTIONS
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
     . = ALIGN(4);
-  } >LRUN_APPLI_RAM
+  } >FB_RAM
 
   .init_array :
   {
@@ -171,7 +171,7 @@ SECTIONS
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
     . = ALIGN(4);
-  } >LRUN_APPLI_RAM
+  } >FB_RAM
 
   .fini_array :
   {
@@ -181,7 +181,7 @@ SECTIONS
     KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
     . = ALIGN(4);
-  } >LRUN_APPLI_RAM
+  } >FB_RAM
 
   /* Used by the startup to initialize data */
   .gnu.sgstubs ALIGN(32) :
@@ -190,7 +190,7 @@ SECTIONS
     *(.gnu.sgstubs*)   /* Secure Gateway stubs */
     . = ALIGN(32);
     FILL(0x00);
-  } >LRUN_APPLI_RAM
+  } >FB_RAM
   _eNSCVeneer = .;
 
   /* Uninitialized data section into "RAM" Ram type memory */
@@ -206,7 +206,7 @@ SECTIONS
 
     . = ALIGN(4);
 
-  } >RAM AT> LRUN_APPLI_RAM
+  } >RAM AT> FB_RAM
 
   /* Initialized TLS data section */
   .tdata : ALIGN(4)
@@ -216,7 +216,7 @@ SECTIONS
     _edata = .;        /* define a global symbol at data end */
     PROVIDE(__data_end = .);
     PROVIDE(__tdata_end = .);
-  } >RAM AT> LRUN_APPLI_RAM
+  } >RAM AT> FB_RAM
 
   PROVIDE( __tdata_start = ADDR(.tdata) );
   PROVIDE( __tdata_size = __tdata_end - __tdata_start );

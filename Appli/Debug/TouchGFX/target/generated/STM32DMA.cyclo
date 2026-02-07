@@ -1,0 +1,49 @@
+C:/git-repo/touch_UI_Debug/Drivers/CMSIS/Include/core_cm55.h:3918:22:void __NVIC_EnableIRQ(IRQn_Type)	2
+C:/git-repo/touch_UI_Debug/Drivers/CMSIS/Include/core_cm55.h:3956:22:void __NVIC_DisableIRQ(IRQn_Type)	2
+C:/git-repo/touch_UI_Debug/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1755:22:void LL_AHB5_GRP1_EnableClock(uint32_t)	1
+C:/git-repo/touch_UI_Debug/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1945:22:void LL_AHB5_GRP1_ForceReset(uint32_t)	1
+C:/git-repo/touch_UI_Debug/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1999:22:void LL_AHB5_GRP1_ReleaseReset(uint32_t)	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Types.hpp:78:5:touchgfx::colortype::colortype()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Types.hpp:114:5:touchgfx::colortype::operator uint32_t() const	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/DMA.hpp:61:13:touchgfx::DMA_Queue::~DMA_Queue()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/DMA.hpp:61:13:virtual touchgfx::DMA_Queue::~DMA_Queue()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/DMA.hpp:138:18:virtual void touchgfx::DMA_Interface::flush()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/DMA.hpp:240:13:touchgfx::DMA_Interface::~DMA_Interface()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/DMA.hpp:240:13:virtual touchgfx::DMA_Interface::~DMA_Interface()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/DMA.hpp:250:5:touchgfx::DMA_Interface::DMA_Interface(touchgfx::DMA_Queue&)	1
+C:/git-repo/touch_UI_Debug/Appli/TouchGFX/target/generated/STM32DMA.hpp:97:31:virtual touchgfx::DMAType STM32DMA::getDMAType()	1
+C:/git-repo/touch_UI_Debug/Appli/TouchGFX/target/generated/STM32DMA.hpp:133:18:virtual void STM32DMA::signalDMAInterrupt()	9
+C:/git-repo/touch_UI_Debug/Appli/TouchGFX/target/generated/STM32DMA.hpp:159:18:virtual void STM32DMA::start()	8
+C:/git-repo/touch_UI_Debug/Appli/TouchGFX/target/generated/STM32DMA.hpp:203:10:void STM32DMA::externalJobCompleted()	2
+C:/git-repo/touch_UI_Debug/Appli/TouchGFX/target/generated/STM32DMA.hpp:219:10:void STM32DMA::externalJobExecute()	2
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/HAL.hpp:117:17:static touchgfx::HAL* touchgfx::HAL::getInstance()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/HAL.hpp:171:10:void touchgfx::HAL::signalDMAInterrupt()	1
+../TouchGFX/target/generated/STM32DMA.cpp:39:17:void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef*)	1
+../TouchGFX/target/generated/STM32DMA.cpp:45:17:void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef*)	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/DMA.hpp:87:7:touchgfx::LockFreeDMA_Queue::~LockFreeDMA_Queue()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/DMA.hpp:87:7:virtual touchgfx::LockFreeDMA_Queue::~LockFreeDMA_Queue()	1
+C:/git-repo/touch_UI_Debug/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/BlitOp.hpp:46:8:touchgfx::BlitOp::BlitOp()	1
+../TouchGFX/target/generated/STM32DMA.cpp:55:1:STM32DMA::STM32DMA()	2
+../TouchGFX/target/generated/STM32DMA.cpp:61:1:STM32DMA::~STM32DMA()	1
+../TouchGFX/target/generated/STM32DMA.cpp:61:1:virtual STM32DMA::~STM32DMA()	1
+../TouchGFX/target/generated/STM32DMA.cpp:67:6:virtual void STM32DMA::initialize()	1
+../TouchGFX/target/generated/STM32DMA.cpp:84:17:uint32_t STM32DMA::getChromARTInputFormat(touchgfx::Bitmap::BitmapFormat)	4
+../TouchGFX/target/generated/STM32DMA.cpp:119:17:uint32_t STM32DMA::getChromARTOutputFormat(touchgfx::Bitmap::BitmapFormat)	3
+../TouchGFX/target/generated/STM32DMA.cpp:152:16:virtual touchgfx::BlitOperations STM32DMA::getBlitCaps()	1
+../TouchGFX/target/generated/STM32DMA.cpp:175:6:virtual void STM32DMA::setupDataCopy(const touchgfx::BlitOp&)	16
+../TouchGFX/target/generated/STM32DMA.cpp:342:6:virtual void STM32DMA::setupDataFill(const touchgfx::BlitOp&)	2
+../TouchGFX/target/generated/STM32DMA.cpp:410:6:void touchgfx::paint::setL8Palette(const uint8_t*)	1
+../TouchGFX/target/generated/STM32DMA.cpp:421:6:void touchgfx::paint::tearDown()	2
+../TouchGFX/target/generated/STM32DMA.cpp:434:6:void touchgfx::paint::flushLine(uint32_t*, int)	4
+../TouchGFX/target/generated/STM32DMA.cpp:450:6:void touchgfx::paint::invalidateTextureCache()	1
+../TouchGFX/target/generated/STM32DMA.cpp:466:6:void touchgfx::paint::rgb565::lineFromColor(uint16_t*, unsigned int, uint32_t, uint8_t, uint32_t)	3
+../TouchGFX/target/generated/STM32DMA.cpp:516:6:void touchgfx::paint::rgb565::lineFromRGB565(uint16_t*, const uint16_t*, unsigned int, uint8_t)	3
+../TouchGFX/target/generated/STM32DMA.cpp:560:6:void touchgfx::paint::rgb565::lineFromARGB8888(uint16_t*, const uint32_t*, unsigned int, uint8_t)	2
+../TouchGFX/target/generated/STM32DMA.cpp:593:6:void touchgfx::paint::rgb565::lineFromL8RGB888(uint16_t*, const uint8_t*, unsigned int, uint8_t)	5
+../TouchGFX/target/generated/STM32DMA.cpp:658:6:void touchgfx::paint::rgb565::lineFromL8ARGB8888(uint16_t*, const uint8_t*, unsigned int, uint8_t)	4
+../TouchGFX/target/generated/STM32DMA.cpp:724:6:void touchgfx::paint::argb8888::lineFromColor(uint32_t*, int16_t, uint32_t, uint8_t)	3
+../TouchGFX/target/generated/STM32DMA.cpp:774:6:void touchgfx::paint::argb8888::lineFromRGB888(uint8_t*, const uint8_t*, int16_t, uint8_t)	3
+../TouchGFX/target/generated/STM32DMA.cpp:818:6:void touchgfx::paint::argb8888::lineFromRGB565(uint8_t*, const uint16_t*, int16_t, uint8_t)	3
+../TouchGFX/target/generated/STM32DMA.cpp:862:6:void touchgfx::paint::argb8888::lineFromARGB8888(uint8_t*, const uint32_t*, int16_t, uint8_t)	3
+../TouchGFX/target/generated/STM32DMA.cpp:903:6:void touchgfx::paint::argb8888::lineFromL8RGB888(uint8_t*, const uint8_t*, int16_t, uint8_t)	5
+../TouchGFX/target/generated/STM32DMA.cpp:968:6:void touchgfx::paint::argb8888::lineFromL8ARGB8888(uint8_t*, const uint8_t*, int16_t, uint8_t)	4

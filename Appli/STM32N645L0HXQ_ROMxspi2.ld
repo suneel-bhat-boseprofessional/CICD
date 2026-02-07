@@ -33,8 +33,8 @@
 
 /* Entry Point */
 ENTRY(Reset_Handler)
-_Min_Heap_Size = 0x200; /* required amount of heap */
-_Min_Stack_Size = 0x800; /* required amount of stack */
+_Min_Heap_Size = 0x1000; /* required amount of heap */
+_Min_Stack_Size = 0x1000; /* required amount of stack */
 
 /* Highest address of the user mode stack */
 _estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
@@ -43,11 +43,15 @@ _sstack = _estack - _Min_Stack_Size;
 /* Memories definition */
 MEMORY
 {
-  ROM    (xrw)    : ORIGIN = 0x70100400,   LENGTH = 511K
-  RAM    (xrw)    : ORIGIN = 0x34000000,   LENGTH = 2048K
+  RAM            (xrw)    : ORIGIN = 0x34000000,   LENGTH = 2048K
+  CMDLIST_RAM    (xrw)    : ORIGIN = 0x34140000,   LENGTH = 0x00006000
+  FB_RAM         (xrw)    : ORIGIN = 0x34146000,   LENGTH = 0x002DA000
+  ROM            (xr)     : ORIGIN = 0x70100400,   LENGTH = 0x00600000
+  ASSETS_ROM     (r)      : ORIGIN = 0x70700400,   LENGTH = 0x000FFC00
 }
 
 /* Sections */
+/* Define specific placement of memory areas */
 SECTIONS
 {
   /* The startup code into "ROM" Rom type memory */
@@ -57,8 +61,49 @@ SECTIONS
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
   } >ROM
+}
 
-  /* The program code and other data into "ROM" Rom type memory */
+SECTIONS
+{
+  BufferSection (NOLOAD) :
+  {
+    *(TouchGFX_Framebuffer TouchGFX_Framebuffer.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x8);
+
+    *(Nemagfx_Stencil_Buffer Nemagfx_Stencil_Buffer.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x8);
+  } >FB_RAM
+  
+  UncachedSection (NOLOAD) :
+  {
+    *(Nemagfx_Memory_Pool_Buffer Nemagfx_Memory_Pool_Buffer.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x8);
+  } >CMDLIST_RAM
+  
+  FontFlashSection :
+  {
+    *(FontFlashSection FontFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >ROM
+
+  TextFlashSection :
+  {
+    *(TextFlashSection TextFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >ROM
+
+  ExtFlashSection :
+  {
+    *(ExtFlashSection ExtFlashSection.*)
+    *(.gnu.linkonce.r.*)
+    . = ALIGN(0x4);
+  } >ROM
+
   .text :
   {
     . = ALIGN(4);

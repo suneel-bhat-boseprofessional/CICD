@@ -42,18 +42,19 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32N6xx_HAL_Driver \
+Middlewares/FreeRTOS/Source/CMSIS_RTOS_V2 \
+Middlewares/FreeRTOS/Source \
+Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM55_NTZ/non_secure \
+Middlewares/FreeRTOS/Source/portable/MemMang \
 TouchGFX/App \
 TouchGFX/generated/fonts/src \
 TouchGFX/generated/gui_generated/src/common \
 TouchGFX/generated/gui_generated/src/screen_screen \
 TouchGFX/generated/images/src \
-TouchGFX/generated/simulator/src \
-TouchGFX/generated/simulator/src/video \
 TouchGFX/generated/texts/src \
 TouchGFX/gui/src/common \
 TouchGFX/gui/src/model \
 TouchGFX/gui/src/screen_screen \
-TouchGFX/simulator \
 TouchGFX/target \
 TouchGFX/target/generated \
 
