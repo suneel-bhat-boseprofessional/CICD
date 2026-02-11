@@ -38,25 +38,36 @@ ENTRY(Reset_Handler)
 /* Memories definition */
 MEMORY
 {
-  SRAM (xrw) : ORIGIN = 0x34000000, LENGTH = 0x00200000 /* 2MB Internal SRAM */
+  DTCM_RAM       (xrw)    : ORIGIN = 0x30000000,   LENGTH = 0x00020000
+  LRUN_APPLI_RAM (xr)     : ORIGIN = 0x34000400,   LENGTH = 0x000FFC00
+  RAM            (xrw)    : ORIGIN = 0x34100000,   LENGTH = 0x00040000
+  CMDLIST_RAM    (xrw)    : ORIGIN = 0x34140000,   LENGTH = 0x00008000
+  /*
+  FB_RAM         (xrw)    : ORIGIN = 0x34148000,   LENGTH = 0x000B8000
+  */
+  FB_RAM         (xrw)    : ORIGIN = 0x34148000,   LENGTH = 0x0007a000
+  FB2_RAM        (xrw)    : ORIGIN = 0x341c2000,   LENGTH = 0x0003e000
+  PSRAM          (rw)     : ORIGIN = 0x90000000,   LENGTH = 0x02000000
+  ROM            (xr)     : ORIGIN = 0x70100400,   LENGTH = 0x000FFC00
+  ASSETS_ROM     (r)      : ORIGIN = 0x70200000,   LENGTH = 0x07E00000
 }
 /* Highest address of the user mode stack */
-_estack = ORIGIN(SRAM) + LENGTH(SRAM); /* end of SRAM */
+_estack = ORIGIN(RAM) + LENGTH(RAM); /* end of "RAM" Ram type memory */
 _sstack = _estack - _Min_Stack_Size;
 
-_Min_Heap_Size = 0x200;      /* required amount of heap  */
-_Min_Stack_Size = 0x800; /* required amount of stack */
+_Min_Heap_Size = 0x1000;      /* required amount of heap  */
+_Min_Stack_Size = 0x1000; /* required amount of stack */
 
 /* Link ISR vectors */
 SECTIONS
 {
-  /* The startup code into SRAM */
+  /* The startup code into "FB_RAM" Ram type memory */
   .isr_vector :
   {
     . = ALIGN(4);
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
-  } >SRAM
+  } >LRUN_APPLI_RAM
 }
 
 /* Define specific placement of memory areas */
@@ -71,41 +82,42 @@ SECTIONS
     *(Nemagfx_Stencil_Buffer Nemagfx_Stencil_Buffer.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x8);
-  } >SRAM
+  /*} >FB_RAM */
+  } >FB2_RAM
   
   UncachedSection (NOLOAD) :
   {
     *(Nemagfx_Memory_Pool_Buffer Nemagfx_Memory_Pool_Buffer.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x8);
-  } >SRAM
+  } >CMDLIST_RAM
   
   FontFlashSection :
   {
     *(FontFlashSection FontFlashSection.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x4);
-  } >SRAM
+  } >FB_RAM
 
   TextFlashSection :
   {
     *(TextFlashSection TextFlashSection.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x4);
-  } >SRAM
+  } >FB_RAM
 
   ExtFlashSection :
   {
     *(ExtFlashSection ExtFlashSection.*)
     *(.gnu.linkonce.r.*)
     . = ALIGN(0x4);
-  } >SRAM
+  } >FB_RAM
 }
 
 /* Sections */
 SECTIONS
 {
-  /* The program code and other data into SRAM */
+  /* The program code and other data into "RAM" Ram type memory */
   .text :
   {
     . = ALIGN(4);
@@ -122,22 +134,22 @@ SECTIONS
 
     . = ALIGN(4);
     _etext = .;        /* define a global symbols at end of code */
-  } >SRAM
+  } >LRUN_APPLI_RAM
 
-  /* Constant data into SRAM */
+  /* Constant data into "RAM" Ram type memory */
   .rodata :
   {
     . = ALIGN(4);
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
     . = ALIGN(4);
-  } >SRAM
+  } >LRUN_APPLI_RAM
 
   .ARM.extab   : {
     . = ALIGN(4);
     *(.ARM.extab* .gnu.linkonce.armextab.*)
     . = ALIGN(4);
-  } >SRAM
+  } >LRUN_APPLI_RAM
 
   .ARM : {
     . = ALIGN(4);
@@ -145,7 +157,7 @@ SECTIONS
     *(.ARM.exidx*)
     __exidx_end = .;
     . = ALIGN(4);
-  } >SRAM
+  } >LRUN_APPLI_RAM
 
   .preinit_array     :
   {
@@ -154,7 +166,7 @@ SECTIONS
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
     . = ALIGN(4);
-  } >SRAM
+  } >LRUN_APPLI_RAM
 
   .init_array :
   {
@@ -164,7 +176,7 @@ SECTIONS
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
     . = ALIGN(4);
-  } >SRAM
+  } >LRUN_APPLI_RAM
 
   .fini_array :
   {
@@ -174,7 +186,7 @@ SECTIONS
     KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
     . = ALIGN(4);
-  } >SRAM
+  } >LRUN_APPLI_RAM
 
   /* Used by the startup to initialize data */
   .gnu.sgstubs ALIGN(32) :
@@ -183,13 +195,13 @@ SECTIONS
     *(.gnu.sgstubs*)   /* Secure Gateway stubs */
     . = ALIGN(32);
     FILL(0x00);
-  } >SRAM
+  } >LRUN_APPLI_RAM
   _eNSCVeneer = .;
 
-  /* Uninitialized data section into SRAM */
+  /* Uninitialized data section into "RAM" Ram type memory */
   _sidata = LOADADDR(.data);
 
-  /* Initialized data sections into SRAM */
+  /* Initialized data sections into "RAM" Ram type memory */
   .data :
   {
     . = ALIGN(4);
@@ -199,7 +211,8 @@ SECTIONS
 
     . = ALIGN(4);
 
-  } >SRAM
+  } >LRUN_APPLI_RAM
+  /*} >RAM AT> FB_RAM*/
 
   /* Initialized TLS data section */
   .tdata : ALIGN(4)
@@ -209,7 +222,8 @@ SECTIONS
     _edata = .;        /* define a global symbol at data end */
     PROVIDE(__data_end = .);
     PROVIDE(__tdata_end = .);
-  } >SRAM
+  } >LRUN_APPLI_RAM
+  /*} >RAM AT> FB_RAM*/
 
   PROVIDE( __tdata_start = ADDR(.tdata) );
   PROVIDE( __tdata_size = __tdata_end - __tdata_start );
@@ -233,7 +247,7 @@ SECTIONS
     KEEP(*(.noncacheable))
     . = ALIGN(8);
     __enoncacheable = .;  /* create symbol for end of section */
-  } >SRAM
+  } > RAM
 
   /* Uninitialized TLS data section */
   .tbss (NOLOAD) : ALIGN(4)
@@ -243,7 +257,7 @@ SECTIONS
     *(.tbss .tbss.*)
     . = ALIGN(4);
     PROVIDE( __tbss_end = . );
-  } >SRAM
+  } >RAM
 
   PROVIDE( __tbss_start = ADDR(.tbss) );
   PROVIDE( __tbss_size = __tbss_end - __tbss_start );
@@ -268,14 +282,14 @@ SECTIONS
     _ebss = .;         /* define a global symbol at bss end */
     __bss_end__ = _ebss;
       PROVIDE( __bss_end = .);
-  } >SRAM
+  } >RAM
   PROVIDE( __non_tls_bss_start = ADDR(.bss) );
 
   PROVIDE( __bss_start = __tbss_start );
   PROVIDE( __bss_size = __bss_end - __bss_start );
 
 
-  /* User_heap_stack section, used to check that there is enough SRAM left */
+  /* User_heap_stack section, used to check that there is enough "RAM" Ram  type memory left */
   ._user_heap_stack (NOLOAD) :
   {
     . = ALIGN(8);
@@ -284,7 +298,7 @@ SECTIONS
     . = . + _Min_Heap_Size;
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
-  } >SRAM
+  } >RAM
 
   /* Remove information from the compiler libraries */
   /DISCARD/ :

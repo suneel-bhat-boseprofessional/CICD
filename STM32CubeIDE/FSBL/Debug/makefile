@@ -90,8 +90,8 @@ all:
 main-build: touchUI_BringUP_FSBL.elf secondary-outputs
 
 # Tool invocations
-touchUI_BringUP_FSBL.elf touchUI_BringUP_FSBL.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\touchUIPCB\touchUI_Bringup\STM32CubeIDE\FSBL\STM32N645L0HXQ_AXISRAM2_fsbl.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "touchUI_BringUP_FSBL.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\touchUIPCB\touchUI_Bringup\STM32CubeIDE\FSBL\STM32N645L0HXQ_AXISRAM2_fsbl.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_FSBL.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+touchUI_BringUP_FSBL.elf touchUI_BringUP_FSBL.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\STM32CubeIDE\FSBL\STM32N645L0HXQ_AXISRAM2_fsbl.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "touchUI_BringUP_FSBL.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\STM32CubeIDE\FSBL\STM32N645L0HXQ_AXISRAM2_fsbl.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_FSBL.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -116,7 +116,7 @@ clean:
 	-@echo ' '
 
 post-build:
-	cd "C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/STM32CubeIDE/FSBL/Debug"
+	cd "C:/CurrentDevelopment/sudhaTouchUICode/touchUI_Bringup/STM32CubeIDE/FSBL/Debug"
 	echo y | "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_SigningTool_CLI.exe" -bin "touchUI_BringUP_FSBL.bin" -nk -of 0x80000000 -t fsbl -o "touchUI_BringUP_FSBL-Trusted.bin" -hv 2.3 -dump "touchUI_BringUP_FSBL-Trusted.bin"
 	-@echo ' '
 

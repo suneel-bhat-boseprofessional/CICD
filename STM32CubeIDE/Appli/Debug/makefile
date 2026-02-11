@@ -96,8 +96,8 @@ all:
 main-build: touchUI_BringUP_Appli.elf secondary-outputs
 
 # Tool invocations
-touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\touchUIPCB\touchUI_Bringup\STM32CubeIDE\Appli\STM32N645L0HXQ_LRUN.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "touchUI_BringUP_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\touchUIPCB\touchUI_Bringup\STM32CubeIDE\Appli\STM32N645L0HXQ_LRUN.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_Appli.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o -L../../../Appli/Middlewares/ST/touchgfx/lib/core/cortex_m55/gcc -L../../Appli/../../Appli/Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/lib/core/cortex_m55/gcc -L../../Appli/../../Appli/Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/lib/cortex_m55/gcc --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\STM32CubeIDE\Appli\STM32N645L0HXQ_LRUN.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "touchUI_BringUP_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\STM32CubeIDE\Appli\STM32N645L0HXQ_LRUN.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_Appli.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o -L../../../Appli/Middlewares/ST/touchgfx/lib/core/cortex_m55/gcc -L../../Appli/../../Appli/Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/lib/core/cortex_m55/gcc -L../../Appli/../../Appli/Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/lib/cortex_m55/gcc --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -122,7 +122,7 @@ clean:
 	-@echo ' '
 
 post-build:
-	cd "C:/CurrentDevelopment/touchUIPCB/touchUI_Bringup/STM32CubeIDE/Appli/Debug"
+	cd "C:/CurrentDevelopment/sudhaTouchUICode/touchUI_Bringup/STM32CubeIDE/Appli/Debug"
 	echo y | "C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_SigningTool_CLI.exe" -bin "touchUI_BringUP_Appli.bin" -nk -of 0x80000000 -t fsbl -o "Project-trusted.bin" -hv 2.3 -dump "Project-trusted.bin"
 	-@echo ' '
 
