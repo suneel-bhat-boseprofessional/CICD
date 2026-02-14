@@ -59,6 +59,9 @@ const osThreadAttr_t TouchGFXTask_attributes = {
   .stack_size = 4096 * 4
 };
 
+void Manual_FB_DrawTestPattern(void);
+void Manual_FB_Init(void);
+
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
@@ -108,7 +111,7 @@ void MX_FREERTOS_Init(void) {
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* creation of TouchGFXTask */
-  TouchGFXTaskHandle = osThreadNew(TouchGFX_Task, NULL, &TouchGFXTask_attributes);
+  //TouchGFXTaskHandle = osThreadNew(TouchGFX_Task, NULL, &TouchGFXTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -128,11 +131,15 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
+   extern  LTDC_HandleTypeDef hltdc;
   /* USER CODE BEGIN defaultTask */
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    osDelay(200);
+    Manual_FB_Init();
+    osDelay(100);
+    Manual_FB_DrawTestPattern();
   }
   /* USER CODE END defaultTask */
 }
