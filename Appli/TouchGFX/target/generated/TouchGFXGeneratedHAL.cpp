@@ -20,6 +20,7 @@
 #include <touchgfx/hal/OSWrappers.hpp>
 #include <gui/common/FrontendHeap.hpp>
 #include <touchgfx/hal/GPIO.hpp>
+#include "main.h"
 
 #include <touchgfx_nema/GPU2DVectorRenderer.hpp>
 
@@ -27,11 +28,12 @@
 #include <DirectFrameBufferVideoController.hpp>
 #include <stm32n6xx_hal.h>
 
+
 HardwareMJPEGDecoder mjpegdecoder1;
 
 namespace
 {
-DirectFrameBufferVideoController<1, Bitmap::RGB888> videoController;
+DirectFrameBufferVideoController<1, Bitmap::RGB565> videoController;
 }
 
 //Singleton Factory
@@ -58,8 +60,12 @@ using namespace touchgfx;
 namespace
 {
 // Use the section "TouchGFX_Framebuffer" in the linker script to specify the placement of the buffer
+#if !MANUAL_FB_ENABLE
+// Only allocate TouchGFX framebuffer when manual framebuffer is disabled
+// Reduced size: single buffer only (240x64x2 bytes = 30KB)
 LOCATION_PRAGMA_NOLOAD("TouchGFX_Framebuffer")
-uint32_t frameBuf[(480 * 128 * 3 + 3) / 4] LOCATION_ATTRIBUTE_NOLOAD("TouchGFX_Framebuffer");
+uint32_t frameBuf[(240 * 64 * 2 + 3) / 4] LOCATION_ATTRIBUTE_NOLOAD("TouchGFX_Framebuffer");
+#endif
 static uint16_t lcd_int_active_line;
 static uint16_t lcd_int_porch_line;
 }
@@ -73,8 +79,8 @@ void TouchGFXGeneratedHAL::initialize()
     {
         while (1);
     }
-    setFrameBufferStartAddresses((void*)frameBuf, (void*)0, (void*)0);
-
+   // setFrameBufferStartAddresses((void*)frameBuf, (void*)0, (void*)0);
+    setFrameBufferStartAddresses((void*)frameBuf, (void*)(frameBuf + sizeof(frameBuf) / (sizeof(uint32_t) * 2)), (void*)0);
     /*
      * Add DMA2D to hardware decoder
      */
@@ -110,7 +116,7 @@ void TouchGFXGeneratedHAL::disableInterrupts()
 void TouchGFXGeneratedHAL::enableLCDControllerInterrupt()
 {
     lcd_int_active_line = (LTDC->BPCR & LTDC_BPCR_AVBP_Msk) - 1;
-    lcd_int_porch_line = (LTDC->AWCR & LTDC_AWCR_AAH_Msk) - 1;
+    lcd_int_porch_line = (LTDC->AWCR & LTDC_AWCR_AAH_Msk);
 
     /* Sets the Line Interrupt position */
     LTDC->LIPCR = lcd_int_active_line;
@@ -205,10 +211,46 @@ void TouchGFXGeneratedHAL::InvalidateTextureCache()
     HAL_ICACHE_Invalidate();
 }
 
+//extern "C"
+//{
+//    void HAL_LTDC_LineEventCallback(LTDC_HandleTypeDef* hltdc)
+//    {
+//        if (!HAL::getInstance())
+//        {
+//            return;
+//        }
+//
+//        if (LTDC->LIPCR == lcd_int_active_line)
+//        {
+//            //entering active area
+//            HAL_LTDC_ProgramLineEvent(hltdc, lcd_int_porch_line);
+//            HAL::getInstance()->vSync();
+//            OSWrappers::signalVSync();
+//
+//            // Swap frame buffers immediately instead of waiting for the task to be scheduled in.
+//            // Note: task will also swap when it wakes up, but that operation is guarded and will not have
+//            // any effect if already swapped.
+//            HAL::getInstance()->swapFrameBuffers();
+//            GPIO::set(GPIO::VSYNC_FREQ);
+//        }
+//        else
+//        {
+//            //exiting active area
+//            HAL_LTDC_ProgramLineEvent(hltdc, lcd_int_active_line);
+//
+//            // Signal to the framework that display update has finished.
+//            HAL::getInstance()->frontPorchEntered();
+//            GPIO::clear(GPIO::VSYNC_FREQ);
+//        }
+//    }
+//}
+
+
 extern "C"
 {
     void HAL_LTDC_LineEventCallback(LTDC_HandleTypeDef* hltdc)
     {
+
         if (!HAL::getInstance())
         {
             return;
@@ -216,16 +258,11 @@ extern "C"
 
         if (LTDC->LIPCR == lcd_int_active_line)
         {
+
+            GPIO::clear(GPIO::VSYNC_FREQ);
+
             //entering active area
             HAL_LTDC_ProgramLineEvent(hltdc, lcd_int_porch_line);
-            HAL::getInstance()->vSync();
-            OSWrappers::signalVSync();
-
-            // Swap frame buffers immediately instead of waiting for the task to be scheduled in.
-            // Note: task will also swap when it wakes up, but that operation is guarded and will not have
-            // any effect if already swapped.
-            HAL::getInstance()->swapFrameBuffers();
-            GPIO::set(GPIO::VSYNC_FREQ);
         }
         else
         {
@@ -234,7 +271,15 @@ extern "C"
 
             // Signal to the framework that display update has finished.
             HAL::getInstance()->frontPorchEntered();
-            GPIO::clear(GPIO::VSYNC_FREQ);
+
+            HAL::getInstance()->vSync();
+            OSWrappers::signalVSync();
+
+            // Swap frame buffers immediately instead of waiting for the task to be scheduled in.
+            // Note: task will also swap when it wakes up, but that operation is guarded and will not have
+            // any effect if already swapped.
+            HAL::getInstance()->swapFrameBuffers();
+            GPIO::set(GPIO::VSYNC_FREQ);
         }
     }
 }

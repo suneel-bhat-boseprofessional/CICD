@@ -9,7 +9,6 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include Drivers/STM32N6xx_HAL_Driver/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk
@@ -63,8 +62,8 @@ all: main-build
 main-build: touchUI_BringUP_FSBL.elf secondary-outputs
 
 # Tool invocations
-touchUI_BringUP_FSBL.elf touchUI_BringUP_FSBL.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\touchUIPCB\touchUI_Bringup\FSBL\STM32N645L0HXQ_AXISRAM2_fsbl.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "touchUI_BringUP_FSBL.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\touchUIPCB\touchUI_Bringup\FSBL\STM32N645L0HXQ_AXISRAM2_fsbl.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_FSBL.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+touchUI_BringUP_FSBL.elf touchUI_BringUP_FSBL.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\FSBL\STM32N645L0HXQ_AXISRAM2_fsbl.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "touchUI_BringUP_FSBL.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\FSBL\STM32N645L0HXQ_AXISRAM2_fsbl.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_FSBL.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

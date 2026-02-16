@@ -15,6 +15,7 @@ RM := rm -rf
 -include TouchGFX/gui/src/model/subdir.mk
 -include TouchGFX/gui/src/common/subdir.mk
 -include TouchGFX/generated/texts/src/subdir.mk
+-include TouchGFX/generated/images/src/__generated/subdir.mk
 -include TouchGFX/generated/images/src/subdir.mk
 -include TouchGFX/generated/gui_generated/src/screen_screen/subdir.mk
 -include TouchGFX/generated/gui_generated/src/common/subdir.mk
@@ -103,8 +104,8 @@ all:
 main-build: touchUI_BringUP_Appli.elf secondary-outputs
 
 # Tool invocations
-touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.map: $(OBJS) $(USER_OBJS) C:\git-repo\touch_UI_Debug\Appli\STM32N645L0HXQ_LRUN.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "touchUI_BringUP_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\git-repo\touch_UI_Debug\Appli\STM32N645L0HXQ_LRUN.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_Appli.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o -L"C:\git-repo\touch_UI_Debug\Appli\Middlewares\ST\touchgfx\lib\core\cortex_m55\gcc" -L"C:\git-repo\touch_UI_Debug\Appli\Middlewares\ST\touchgfx_components\gpu2d\NemaGFX\lib\core\cortex_m55\gcc" -L"C:\git-repo\touch_UI_Debug\Appli\Middlewares\ST\touchgfx_components\gpu2d\TouchGFXNema\lib\cortex_m55\gcc" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\Appli\STM32N645L0HXQ_LRUN.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "touchUI_BringUP_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\Appli\STM32N645L0HXQ_LRUN.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_Appli.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o -L"C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\Appli\Middlewares\ST\touchgfx\lib\core\cortex_m55\gcc" -L"C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\Appli\Middlewares\ST\touchgfx_components\gpu2d\NemaGFX\lib\core\cortex_m55\gcc" -L"C:\CurrentDevelopment\sudhaTouchUICode\touchUI_Bringup\Appli\Middlewares\ST\touchgfx_components\gpu2d\TouchGFXNema\lib\cortex_m55\gcc" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

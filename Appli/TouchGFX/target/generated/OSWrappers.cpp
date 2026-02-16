@@ -27,7 +27,7 @@ static osMessageQueueId_t vsync_queue = NULL;
 
 // Just a dummy value to insert in the VSYNC queue.
 static uint32_t dummy = 0x5a;
-
+volatile int test1 = 0, test2 = 0;
 using namespace touchgfx;
 
 /*
@@ -93,6 +93,7 @@ void OSWrappers::giveFrameBufferSemaphoreFromISR()
 void OSWrappers::signalVSync()
 {
     osMessageQueuePut(vsync_queue, &dummy, 0, 0);
+    test1 = test1 + 1;
 }
 
 /*
@@ -112,6 +113,7 @@ void OSWrappers::signalRenderingDone()
  */
 void OSWrappers::waitForVSync()
 {
+	test2 = test2 + 1;
     uint32_t dummyGet;
     // First make sure the queue is empty, by trying to remove an element with 0 timeout.
     osMessageQueueGet(vsync_queue, &dummyGet, 0, 0);

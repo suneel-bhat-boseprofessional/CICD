@@ -52,7 +52,7 @@ void touchgfx_init()
     TypedText::registerTexts(&texts);
     Texts::setLanguage(0);
 
-    display.setFrameBufferFormat(Bitmap::RGB888);
+    display.setFrameBufferFormat(Bitmap::RGB565);
 
     display.setVectorFontRenderer(&vectorFontRenderer);
 

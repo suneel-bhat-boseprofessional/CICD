@@ -223,6 +223,20 @@ void STM32DMA::setupDataCopy(const BlitOp& blitOp)
 
         /* set DMA2D foreground color */
         WRITE_REG(DMA2D->FGCOLR, blitOp.color);
+
+        /* Write DMA2D BGPFCCR register */
+        WRITE_REG(DMA2D->BGPFCCR, dma2dBackgroundColorMode | (DMA2D_NO_MODIF_ALPHA << DMA2D_BGPFCCR_AM_Pos));
+
+        /* Configure DMA2D Stream source2 address */
+        WRITE_REG(DMA2D->BGMAR, reinterpret_cast<uint32_t>(blitOp.pDst));
+
+        /* Set DMA2D mode */
+        WRITE_REG(DMA2D->CR, DMA2D_M2M_BLEND | DMA2D_IT_TC | DMA2D_CR_START | DMA2D_IT_CE | DMA2D_IT_TE);
+        break;
+    case BLIT_OP_COPY_WITH_ALPHA:
+        /* Set DMA2D color mode and alpha mode */
+        WRITE_REG(DMA2D->FGPFCCR, dma2dForegroundColorMode | (DMA2D_COMBINE_ALPHA << DMA2D_FGPFCCR_AM_Pos) | (blitOp.alpha << 24));
+
         /* Write DMA2D BGPFCCR register */
         WRITE_REG(DMA2D->BGPFCCR, dma2dBackgroundColorMode | (DMA2D_NO_MODIF_ALPHA << DMA2D_BGPFCCR_AM_Pos));
 
@@ -234,8 +248,11 @@ void STM32DMA::setupDataCopy(const BlitOp& blitOp)
         break;
     case BLIT_OP_COPY_L8:
         {
-            const clutData_t* const palette = reinterpret_cast<const clutData_t*>(blitOp.pClut);
             bool blend = true;
+            const clutData_t* const palette = reinterpret_cast<const clutData_t*>(blitOp.pClut);
+
+            /* Write foreground CLUT memory address */
+            WRITE_REG(DMA2D->FGCMAR, reinterpret_cast<uint32_t>(&palette->data));
 
             /* Set DMA2D color mode and alpha mode */
             WRITE_REG(DMA2D->FGPFCCR, dma2dForegroundColorMode | (DMA2D_COMBINE_ALPHA << DMA2D_FGPFCCR_AM_Pos) | (blitOp.alpha << 24));
@@ -246,9 +263,7 @@ void STM32DMA::setupDataCopy(const BlitOp& blitOp)
             /* Configure DMA2D Stream source2 address */
             WRITE_REG(DMA2D->BGMAR, reinterpret_cast<uint32_t>(blitOp.pDst));
 
-            /* Write foreground CLUT memory address */
-            WRITE_REG(DMA2D->FGCMAR, reinterpret_cast<uint32_t>(&palette->data));
-
+            /* Configure CLUT */
             switch ((Bitmap::ClutFormat)palette->format)
             {
             case Bitmap::CLUT_FORMAT_L8_ARGB8888:
@@ -262,6 +277,7 @@ void STM32DMA::setupDataCopy(const BlitOp& blitOp)
                 }
                 MODIFY_REG(DMA2D->FGPFCCR, (DMA2D_FGPFCCR_CS | DMA2D_FGPFCCR_CCM), (((palette->size - 1) << DMA2D_FGPFCCR_CS_Pos) | (DMA2D_CCM_RGB888 << DMA2D_FGPFCCR_CCM_Pos)));
                 break;
+
             case Bitmap::CLUT_FORMAT_L8_RGB565:
             default:
                 assert(0 && "Unsupported format");
@@ -286,19 +302,6 @@ void STM32DMA::setupDataCopy(const BlitOp& blitOp)
                 WRITE_REG(DMA2D->CR, DMA2D_M2M_PFC | DMA2D_IT_TC | DMA2D_CR_START | DMA2D_IT_CE | DMA2D_IT_TE);
             }
         }
-        break;
-    case BLIT_OP_COPY_WITH_ALPHA:
-        /* Set DMA2D color mode and alpha mode */
-        WRITE_REG(DMA2D->FGPFCCR, dma2dForegroundColorMode | (DMA2D_COMBINE_ALPHA << DMA2D_FGPFCCR_AM_Pos) | (blitOp.alpha << 24));
-
-        /* Write DMA2D BGPFCCR register */
-        WRITE_REG(DMA2D->BGPFCCR, dma2dBackgroundColorMode | (DMA2D_NO_MODIF_ALPHA << DMA2D_BGPFCCR_AM_Pos));
-
-        /* Configure DMA2D Stream source2 address */
-        WRITE_REG(DMA2D->BGMAR, reinterpret_cast<uint32_t>(blitOp.pDst));
-
-        /* Set DMA2D mode */
-        WRITE_REG(DMA2D->CR, DMA2D_M2M_BLEND | DMA2D_IT_TC | DMA2D_CR_START | DMA2D_IT_CE | DMA2D_IT_TE);
         break;
     case BLIT_OP_COPY_ARGB8888:
     case BLIT_OP_COPY_ARGB8888_WITH_ALPHA:
@@ -329,7 +332,6 @@ void STM32DMA::setupDataCopy(const BlitOp& blitOp)
             /* Start DMA2D : M2M Mode */
             WRITE_REG(DMA2D->CR, DMA2D_M2M | DMA2D_IT_TC | DMA2D_CR_START | DMA2D_IT_CE | DMA2D_IT_TE);
         }
-
         break;
     }
 }

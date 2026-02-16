@@ -872,12 +872,12 @@ void DMA2D_CropBuffer(JPEG_Data_BufferTypeDef& job)
     blitOp.srcLoopStride = MCU_WIDTH_PIXELS;
     blitOp.dstLoopStride = FrameBufferWidth;
     blitOp.pDst = reinterpret_cast<uint16_t*>(job.OutputBuffer + dstOffset);
-    blitOp.srcFormat = touchgfx::Bitmap::RGB888;
-    blitOp.dstFormat = touchgfx::Bitmap::RGB888;
+    blitOp.srcFormat = touchgfx::Bitmap::RGB565;
+    blitOp.dstFormat = touchgfx::Bitmap::RGB565;
     DMA2D_reference->addToQueue(blitOp);
 
     /* DMA2D OPFCCR register configuration */
-    WRITE_REG(DMA2D->OPFCCR, DMA2D_OUTPUT_RGB888);
+    WRITE_REG(DMA2D->OPFCCR, DMA2D_OUTPUT_RGB565);
 
     /* Configure DMA2D data size */
     WRITE_REG(DMA2D->NLR, MCU_HEIGHT_PIXELS | (MCU_WIDTH_PIXELS << DMA2D_NLR_PL_Pos));
