@@ -55,7 +55,7 @@ const osThreadAttr_t defaultTask_attributes = {
 osThreadId_t TouchGFXTaskHandle;
 const osThreadAttr_t TouchGFXTask_attributes = {
   .name = "TouchGFXTask",
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityNormal1,
   .stack_size = 4096 * 4
 };
 
@@ -136,7 +136,8 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-   osDelay(1);
+	  HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
+    osDelay(100);
 //    Manual_FB_Init();
 //    osDelay(100);
 //    Manual_FB_DrawTestPattern();

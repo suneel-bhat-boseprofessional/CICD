@@ -28,8 +28,6 @@
 #include <stdlib.h>
 
 extern int notifyTouch;
-extern volatile int test;
-int i = 10;
 #include "stm32n6xx_it.h"
 /* USER CODE END Includes */
 
@@ -86,13 +84,15 @@ RAMCFG_HandleTypeDef hramcfg_SRAM6;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-int max_touches = MAX_NUM_TOUCHES;  
+int max_touches = MAX_NUM_TOUCHES;
 struct coop_data finger[MAX_NUM_TOUCHES];
 
 #if MANUAL_FB_ENABLE
 // Allocate smaller framebuffer to fit within FB2_RAM constraints (200x50 = 20KB)
-__attribute__((section("TouchGFX_Framebuffer")))static __attribute__((aligned(4))) uint16_t manual_framebuffer[FB_WIDTH * FB_HEIGHT];
-nter
+__attribute__((section("TouchGFX_Framebuffer")))
+static __attribute__((aligned(4))) uint16_t manual_framebuffer[LCD_WIDTH * LCD_HEIGHT];
+
+// Current framebuffer pointer
 static uint16_t* current_framebuffer = manual_framebuffer;
 #endif
 
@@ -119,13 +119,13 @@ void process_touch_data(void);
 
 /* Manual Framebuffer Functions */
 #if MANUAL_FB_ENABLE
-static void Manual_FB_Init(vvoid Manual_FB_Init(void);
+void Manual_FB_Init(void);
 static void Manual_FB_SetPixel(uint16_t x, uint16_t y, uint16_t color);
 static uint16_t Manual_FB_RGB888ToRGB565(uint8_t r, uint8_t g, uint8_t b);
 static void Manual_FB_FillScreen(uint16_t color);
 static void Manual_FB_DrawRectangle(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color);
 void Manual_FB_DrawTestPattern(void);
-nual_FB_UpdateLTDC(void);
+static void Manual_FB_UpdateLTDC(void);
 #endif
 
 /* USER CODE END PFP */
@@ -144,7 +144,7 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
 {
     HAL_StatusTypeDef status;
     uint16_t deviceAddr = 0x55 << 1; // Left shift for HAL (0xAA for write, 0xAB for read)
-    
+
     // Step 1: Write register address (0xAA = write address)
     status = HAL_I2C_Master_Transmit(&hi2c1, deviceAddr, &regAddr, 1, HAL_MAX_DELAY);
     if (status != HAL_OK)
@@ -152,10 +152,10 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
         printf("I2C Write failed: 0x%02X\r\n", status);
         return status;
     }
-    
+
     // Step 2: Add delay as specified
     HAL_Delay(1);
-    
+
     // Step 3: Read data (0xAB = read address, automatically handled by HAL)
     status = HAL_I2C_Master_Receive(&hi2c1, deviceAddr, data, dataSize, HAL_MAX_DELAY);
     if (status != HAL_OK)
@@ -163,7 +163,7 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
         printf("I2C Read failed: 0x%02X\r\n", status);
         return status;
     }
-    
+
     return HAL_OK;
 }
 
@@ -177,9 +177,9 @@ void process_touch_data(void)
     uint8_t readData[40];   // Buffer for read data
     uint16_t bytesToRead = 40; // Number of bytes to read
     uint8_t i;
-    
+
     HAL_StatusTypeDef result = I2C_ReadRegister_0x55(regAddr, readData, bytesToRead);
-    
+
     if (result == HAL_OK)
     {
         for (i = 0; i < max_touches; i++)
@@ -229,7 +229,7 @@ void process_touch_data(void)
     {
         printf("I2C Read failed with status: 0x%02X\r\n", result);
     }
-    notifyTouch = 0; 
+    notifyTouch = 0;
 }
 
 void SystemClock_Config(void)
@@ -402,7 +402,13 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MPU Configuration--------------------------------------------------------*/
- // MPU_Config();
+  /* Enable the CPU Cache */
+
+  /* Enable I-Cache---------------------------------------------------------*/
+//  SCB_EnableICache();
+//
+//  /* Enable D-Cache---------------------------------------------------------*/
+//  SCB_EnableDCache();
 
   /* Enable the CPU Cache */
 
@@ -412,7 +418,6 @@ int main(void)
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
-  MX_GPIO_Init();
   /* Configure the system clock */
   SystemClock_Config();
 
@@ -420,34 +425,41 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
   /* Enable I-Cache---------------------------------------------------------*/
-  SCB_EnableICache();
+//  SCB_EnableICache();
+//
+//  /* Enable D-Cache---------------------------------------------------------*/
+//  SCB_EnableDCache();
 
-  /* Enable D-Cache---------------------------------------------------------*/
-  SCB_EnableDCache();
-
+#if MANUAL_FB_ENABLE
+    // Clear framebuffer to black
+    Manual_FB_FillScreen(0x0);
+#endif
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+
+
   MX_GPIO_Init();
   MX_HPDMA1_Init();
-  MX_USART1_UART_Init();
-  HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
+  MX_JPEG_Init();
+  MX_CRC_Init();
   MX_DMA2D_Init();
   MX_GPU2D_Init();
-  MX_JPEG_Init();
+  MX_ICACHE_Init();
   MX_LTDC_Init();
+
+  MX_USART1_UART_Init();
+  HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
   MX_I2C1_Init();
   // Verify critical clocks are stable
 
-  MX_ICACHE_Init();
-  MX_CRC_Init();
   MX_RAMCFG_Init();
 #if !MANUAL_FB_ENABLE
   MX_TouchGFX_Init();
 #endif
   SystemIsolation_Config();
   /* Call PreOsInit function */
-#if !MANUAL_FB_ENABLE  
+#if !MANUAL_FB_ENABLE
   MX_TouchGFX_PreOSInit();
 #endif
   /* USER CODE BEGIN 2 */
@@ -456,9 +468,9 @@ int main(void)
   // Initialize and demo manual framebuffer
   Manual_FB_Init();
   Manual_FB_DrawTestPattern();
-  
+
   printf("Manual framebuffer demo active - TouchGFX bypassed\n");
-  printf("Reduced framebuffer: %dx%d (%d KB) to fit FB2_RAM\n", FB_WIDTH, FB_HEIGHT, (FB_WIDTH*FB_HEIGHT*2)/1024);
+  printf("Reduced framebuffer: %dx%d (%d KB) to fit FB2_RAM\n", LCD_WIDTH, LCD_HEIGHT, (LCD_WIDTH*LCD_HEIGHT*2)/1024);
   printf("Framebuffer address: 0x%08X\n", (uint32_t)manual_framebuffer);
   printf("LTDC Layer1 CFBAR: 0x%08X\n", (uint32_t)LTDC_Layer1->CFBAR);
 
@@ -538,10 +550,10 @@ static void MX_DMA2D_Init(void)
   /* USER CODE END DMA2D_Init 1 */
   hdma2d.Instance = DMA2D;
   hdma2d.Init.Mode = DMA2D_M2M;
-  hdma2d.Init.ColorMode = DMA2D_OUTPUT_ARGB8888;
+  hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB565;
   hdma2d.Init.OutputOffset = 0;
   hdma2d.LayerCfg[1].InputOffset = 0;
-  hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_ARGB8888;
+  hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_RGB565;
   hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
   hdma2d.LayerCfg[1].InputAlpha = 0;
   if (HAL_DMA2D_Init(&hdma2d) != HAL_OK)
@@ -738,25 +750,45 @@ static void MX_LTDC_Init(void)
   hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
   hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
   hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+
+  ////////////////////////////////////////////////////
+  // QUESTION: The VSYNC Display period in the display datat sheet shows 272, should this be 128????
+  ////////////////////////////////////////////////////
+
+#if 0
+  hltdc.Init.HorizontalSync = 4;//3;
+  hltdc.Init.VerticalSync = 4;//3;
+  hltdc.Init.AccumulatedHBP =  4+43;//46;
+  hltdc.Init.AccumulatedVBP = 4+12;//15;
+  hltdc.Init.AccumulatedActiveW = 4+43+480;//526;
+  hltdc.Init.AccumulatedActiveH = 4+12+272;//287;
+  hltdc.Init.TotalWidth = 4+43+480+8;//534;
+  hltdc.Init.TotalHeigh = 4+12+272+8;//295;
+#endif
+
   hltdc.Init.HorizontalSync = 3;
   hltdc.Init.VerticalSync = 3;
-  hltdc.Init.AccumulatedHBP = 46;
+  hltdc.Init.AccumulatedHBP =  46;
   hltdc.Init.AccumulatedVBP = 15;
   hltdc.Init.AccumulatedActiveW = 526;
-  hltdc.Init.AccumulatedActiveH = 287;
+  hltdc.Init.AccumulatedActiveH = 143;
   hltdc.Init.TotalWidth = 534;
-  hltdc.Init.TotalHeigh = 295;
+  hltdc.Init.TotalHeigh = 151;
+
+
   hltdc.Init.Backcolor.Blue = 0;
   hltdc.Init.Backcolor.Green = 0;
-  hltdc.Init.Backcolor.Red = 255;
+  hltdc.Init.Backcolor.Red = 127;
   if (HAL_LTDC_Init(&hltdc) != HAL_OK)
   {
     Error_Handler();
   }
+
   pLayerCfg.WindowX0 = 0;
-  pLayerCfg.WindowX1 = FB_WIDTH;    // Match reduced framebuffer width (200)
+  pLayerCfg.WindowX1 = LCD_WIDTH;
   pLayerCfg.WindowY0 = 0;
-  pLayerCfg.WindowY1 = FB_HEIGHT;   // Match reduced framebuffer height (50)
+  pLayerCfg.WindowY1 = LCD_HEIGHT;
+
   pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
   pLayerCfg.Alpha = 255;
   pLayerCfg.Alpha0 = 0;
@@ -765,10 +797,10 @@ static void MX_LTDC_Init(void)
 #if MANUAL_FB_ENABLE
   pLayerCfg.FBStartAdress = (uint32_t)manual_framebuffer;
 #else
-  pLayerCfg.FBStartAdress =  0x341c2000;  // TouchGFX will set this later
+  pLayerCfg.FBStartAdress = 0;  // TouchGFX will set this later
 #endif
-  pLayerCfg.ImageWidth = FB_WIDTH;   // Match framebuffer width (200)
-  pLayerCfg.ImageHeight = FB_HEIGHT; // Match framebuffer height (50)
+  pLayerCfg.ImageWidth = LCD_WIDTH;
+  pLayerCfg.ImageHeight = LCD_HEIGHT;
   pLayerCfg.Backcolor.Blue = 0;
   pLayerCfg.Backcolor.Green = 0;
   pLayerCfg.Backcolor.Red = 0;
@@ -853,13 +885,17 @@ static void MX_RAMCFG_Init(void)
   /*RIMC configuration*/
   RIMC_MasterConfig_t RIMC_master = {0};
   RIMC_master.MasterCID = RIF_CID_1;
-  RIMC_master.SecPriv = RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_NPRIV;
+  RIMC_master.SecPriv = RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV;
   HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_DMA2D, &RIMC_master);
 
   HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_GPU2D, &RIMC_master);
 
   HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_LTDC1, &RIMC_master);
 
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_GPU2D , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_DMA2D , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_LTDC , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_LTDCL1 , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
   /* RIF-Aware IPs Config */
 
   /* set up HPDMA configuration */
@@ -987,20 +1023,11 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LCD_BL_GPIO_Port, LCD_BL_Pin, GPIO_PIN_SET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LCD_NRST_GPIO_Port, LCD_NRST_Pin, GPIO_PIN_SET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LCD_ON_OFF_GPIO_Port, LCD_ON_OFF_Pin, GPIO_PIN_SET);
-
   /*Configure GPIO pin : LCD_BL_Pin */
   GPIO_InitStruct.Pin = LCD_BL_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(LCD_BL_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PE8 */
@@ -1013,15 +1040,24 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = LCD_NRST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(LCD_NRST_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : LCD_ON_OFF_Pin */
   GPIO_InitStruct.Pin = LCD_ON_OFF_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(LCD_ON_OFF_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LCD_BL_GPIO_Port, LCD_BL_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LCD_NRST_GPIO_Port, LCD_NRST_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LCD_ON_OFF_GPIO_Port, LCD_ON_OFF_Pin, GPIO_PIN_SET);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI8_IRQn, 0, 0);
@@ -1045,7 +1081,7 @@ int _write(int file, char *ptr, int len)
 #endif
 
 #ifdef __ICCARM__
-// For IAR toolchain  
+// For IAR toolchain
 int fputc(int ch, FILE *f)
 {
     HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, HAL_MAX_DELAY);
@@ -1070,7 +1106,7 @@ void uart_printf(const char* format, ...)
     va_start(args, format);
     int len = vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
-    
+
     if(len > 0)
     {
         HAL_UART_Transmit(&huart1, (uint8_t*)buffer, len, HAL_MAX_DELAY);
@@ -1089,14 +1125,14 @@ int __putchar(int ch)
  * @brief Initialize the manual framebuffer system
  * @retval None
  */
-static void Manual_FB_Init(void)
+void Manual_FB_Init(void)
 {
     // Clear framebuffer to black
-    Manual_FB_FillScreen(0x0000);
-    
+    Manual_FB_FillScreen(0x1f);
+
     // Update LTDC to use our framebuffer
     Manual_FB_UpdateLTDC();
-    
+
     printf("Manual framebuffer initialized at 0x%08X\n", (uint32_t)manual_framebuffer);
 }
 
@@ -1106,16 +1142,11 @@ static void Manual_FB_Init(void)
  */
 static void Manual_FB_UpdateLTDC(void)
 {
-    // Update LTDC Layer 1 framebuffer address
-    LTDC_Layer1->CFBAR = (uint32_t)current_framebuffer;
-    
+    uint32_t buf_start =  (uint32_t)manual_framebuffer & ~0x1f;
+    uint32_t buf_size =  ((LCD_WIDTH * LCD_HEIGHT * 2) + 31) & ~31;
+
     // Force immediate reload
-    LTDC->SRCR = LTDC_SRCR_IMR;
-    
-    // Invalidate cache if necessary
-    if (SCB->CCR & SCB_CCR_DC_Msk) {
-        SCB_CleanInvalidateDCache();
-    }
+    SCB_CleanDCache_by_Addr((uint32_t*)buf_start, buf_size);
 }
 
 /**
@@ -1139,8 +1170,8 @@ static uint16_t Manual_FB_RGB888ToRGB565(uint8_t r, uint8_t g, uint8_t b)
  */
 static void Manual_FB_SetPixel(uint16_t x, uint16_t y, uint16_t color)
 {
-    if (x < FB_WIDTH && y < FB_HEIGHT) {
-        current_framebuffer[y * FB_WIDTH + x] = color;
+    if (x < LCD_WIDTH && y < LCD_HEIGHT) {
+        current_framebuffer[y * LCD_WIDTH + x] = color;
     }
 }
 
@@ -1151,7 +1182,7 @@ static void Manual_FB_SetPixel(uint16_t x, uint16_t y, uint16_t color)
  */
 static void Manual_FB_FillScreen(uint16_t color)
 {
-    uint32_t total_pixels = FB_WIDTH * FB_HEIGHT;  // 200 * 50 = 10,000 pixels
+    uint32_t total_pixels = LCD_WIDTH * LCD_HEIGHT;  // 200 * 50 = 10,000 pixels
     for (uint32_t i = 0; i < total_pixels; i++) {
         current_framebuffer[i] = color;
     }
@@ -1179,33 +1210,33 @@ static void Manual_FB_DrawRectangle(uint16_t x, uint16_t y, uint16_t width, uint
  * @brief Draw test pattern for reduced framebuffer (200x50) - memory constrained
  * @retval None
  */
-static void Manual_FB_DrawTestPattern(void)
+void Manual_FB_DrawTestPattern(void)
 {
     // Clear framebuffer to black
     Manual_FB_FillScreen(0x0000);
-    
+
     // Define RGB565 colors
     uint16_t red    = Manual_FB_RGB888ToRGB565(255, 0, 0);
     uint16_t green  = Manual_FB_RGB888ToRGB565(0, 255, 0);
     uint16_t blue   = Manual_FB_RGB888ToRGB565(0, 0, 255);
     uint16_t yellow = Manual_FB_RGB888ToRGB565(255, 255, 0);
     uint16_t white  = Manual_FB_RGB888ToRGB565(255, 255, 255);
-    
+
     // Draw 2x2 colored rectangles in reduced framebuffer (100x25 each)
-    Manual_FB_DrawRectangle(0,   0,  100, 25, red);
-    Manual_FB_DrawRectangle(100, 0,  100, 25, green);
-    Manual_FB_DrawRectangle(0,   25, 100, 25, blue);
-    Manual_FB_DrawRectangle(100, 25, 100, 25, yellow);
-    
+    Manual_FB_DrawRectangle(0,   0,  240, 64, red);
+    Manual_FB_DrawRectangle(240, 0,  240, 64, green);
+    Manual_FB_DrawRectangle(0,   64, 240, 64, blue);
+    Manual_FB_DrawRectangle(240, 64, 240, 64, yellow);
+
     // Draw white border
-    Manual_FB_DrawRectangle(0, 0, FB_WIDTH, 2, white);       // Top
-    Manual_FB_DrawRectangle(0, FB_HEIGHT-2, FB_WIDTH, 2, white); // Bottom
-    Manual_FB_DrawRectangle(0, 0, 2, FB_HEIGHT, white);      // Left
-    Manual_FB_DrawRectangle(FB_WIDTH-2, 0, 2, FB_HEIGHT, white); // Right
-    
+    Manual_FB_DrawRectangle(0, 0, LCD_WIDTH, 2, white);       // Top
+    Manual_FB_DrawRectangle(0, LCD_HEIGHT-2, LCD_WIDTH, 2, white); // Bottom
+    Manual_FB_DrawRectangle(0, 0, 2, LCD_HEIGHT, white);      // Left
+    Manual_FB_DrawRectangle(LCD_WIDTH-2, 0, 2, LCD_HEIGHT, white); // Right
+
     // Update display
     Manual_FB_UpdateLTDC();
-    
+
     printf("Test pattern drawn to reduced framebuffer (200x50, 20KB)\n");
 }
 #endif
@@ -1224,6 +1255,7 @@ void MPU_Config(void)
   /* Disables the MPU */
   HAL_MPU_Disable();
 
+#if 0
   /** Initializes and configures the Region 0 and the memory to be protected
   */
   MPU_InitStruct.Enable = MPU_REGION_ENABLE;
@@ -1237,16 +1269,18 @@ void MPU_Config(void)
   MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
 
   HAL_MPU_ConfigRegion(&MPU_InitStruct);
+#endif
 
   /** Initializes and configures the Region 1 and the memory to be protected
   */
-  MPU_InitStruct.Number = MPU_REGION_NUMBER1;
-  MPU_InitStruct.BaseAddress = 0x34146000;
-  MPU_InitStruct.LimitAddress = 0x3441FFFF;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER0;
+  MPU_InitStruct.BaseAddress = 0x34148000;
+  MPU_InitStruct.LimitAddress = 0x341c1fff;
   MPU_InitStruct.AttributesIndex = MPU_ATTRIBUTES_NUMBER2;
 
   HAL_MPU_ConfigRegion(&MPU_InitStruct);
 
+#if 0
   /** Initializes and configures the Region 2 and the memory to be protected
   */
   MPU_InitStruct.Number = MPU_REGION_NUMBER2;
@@ -1278,6 +1312,7 @@ void MPU_Config(void)
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
 
   HAL_MPU_ConfigRegion(&MPU_InitStruct);
+#endif
 
   /** Initializes and configures the Attribute 0 and the memory to be protected
   */
