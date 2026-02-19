@@ -209,7 +209,7 @@ void process_touch_data(void)
                     finger[i].status = KEY_PRESS;
                 }
                 finger[i].per_valuebit = 1;
-                printf(" touch down X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
+                //printf(" touch down X=%d,Y=%d\r\n", finger[i].x, finger[i].y);
             }
             else
             {
@@ -866,7 +866,7 @@ static void MX_I2C1_Init(void)
   hi2c1.Instance = I2C1;
   // Timing value for 100kHz I2C with typical PCLK1 (try this conservative value)
   // If this doesn't work, use STM32CubeMX I2C Timing Configuration tool
-  hi2c1.Init.Timing = 0x10707DBC;  // Conservative 100kHz timing
+  hi2c1.Init.Timing = 0x00702681;  // Conservative 100kHz timing
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;

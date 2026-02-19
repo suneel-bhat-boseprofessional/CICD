@@ -13,7 +13,8 @@
             "Height": 50,
             "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
             "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
-            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json",
+            "Draggable": true
           }
         ],
         "Interactions": []
