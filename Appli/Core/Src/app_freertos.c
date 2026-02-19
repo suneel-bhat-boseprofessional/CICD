@@ -19,6 +19,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "app_freertos.h"
+#include "main.h"
+
+extern int notifyTouch;
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -136,8 +139,13 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	  HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
+	 NVIC_DisableIRQ(EXTI8_IRQn);
+	if(notifyTouch == 1)
+	      process_touch_data();
+	 NVIC_EnableIRQ(EXTI8_IRQn);
     osDelay(100);
+
 //    Manual_FB_Init();
 //    osDelay(100);
 //    Manual_FB_DrawTestPattern();

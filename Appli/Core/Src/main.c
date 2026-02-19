@@ -104,11 +104,12 @@ void MX_FREERTOS_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_HPDMA1_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_I2C1_Init(void);
 static void MX_DMA2D_Init(void);
 static void MX_GPU2D_Init(void);
 static void MX_JPEG_Init(void);
 static void MX_LTDC_Init(void);
-static void MX_I2C1_Init(void);
+
 static void MX_ICACHE_Init(void);
 static void MX_CRC_Init(void);
 static void MX_RAMCFG_Init(void);
@@ -116,6 +117,9 @@ static void SystemIsolation_Config(void);
 /* USER CODE BEGIN PFP */
 HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t dataSize);
 void process_touch_data(void);
+void I2C_Force_BusRecovery(void);
+void I2C_DiagnosticCheck(void);
+void I2C_ClearBusyFlag(void);
 
 /* Manual Framebuffer Functions */
 #if MANUAL_FB_ENABLE
@@ -386,6 +390,159 @@ static void OpenDebug(void)
 /* USER CODE END 4 */
 
 
+/**
+ * @brief Force I2C bus recovery by generating clock pulses
+ */
+void I2C_Force_BusRecovery(void)
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    
+    printf("\n=== Performing I2C Bus Recovery ===\n");
+    
+    /* Disable I2C peripheral */
+    __HAL_RCC_I2C1_CLK_DISABLE();
+    HAL_Delay(10);
+    
+    /* Enable GPIO clocks */
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOH_CLK_ENABLE();
+    
+    /* Configure SDA (PC1) as GPIO Output Open-Drain */
+    GPIO_InitStruct.Pin = GPIO_PIN_1;  // PC1 = SDA
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+    
+    /* Configure SCL (PH9) as GPIO Output Open-Drain */
+    GPIO_InitStruct.Pin = GPIO_PIN_9;  // PH9 = SCL
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+    
+    /* Set both lines HIGH */
+    HAL_GPIO_WritePin(GPIOH, GPIO_PIN_9, GPIO_PIN_SET);  // SCL HIGH
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);  // SDA HIGH
+    HAL_Delay(5);
+    
+    /* Generate 9 clock pulses to release any stuck slave */
+    for(int i = 0; i < 9; i++)
+    {
+        HAL_GPIO_WritePin(GPIOH, GPIO_PIN_9, GPIO_PIN_RESET);  // SCL LOW
+        HAL_Delay(2);
+        HAL_GPIO_WritePin(GPIOH, GPIO_PIN_9, GPIO_PIN_SET);    // SCL HIGH
+        HAL_Delay(2);
+    }
+    
+    /* Generate STOP condition: SDA LOW->HIGH while SCL is HIGH */
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET);  // SDA LOW
+    HAL_Delay(2);
+    HAL_GPIO_WritePin(GPIOH, GPIO_PIN_9, GPIO_PIN_SET);    // SCL HIGH
+    HAL_Delay(2);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);    // SDA HIGH
+    HAL_Delay(5);
+    
+    printf("Bus recovery complete\n");
+}
+
+/**
+ * @brief Clear I2C BUSY flag by resetting peripheral
+ */
+void I2C_ClearBusyFlag(void)
+{
+    printf("\n=== Clearing I2C BUSY Flag ===\n");
+    
+    /* Disable I2C peripheral */
+    I2C1->CR1 &= ~I2C_CR1_PE;
+    HAL_Delay(10);
+    
+    /* Force reset */
+    __HAL_RCC_I2C1_FORCE_RESET();
+    HAL_Delay(10);
+    __HAL_RCC_I2C1_RELEASE_RESET();
+    HAL_Delay(10);
+    
+    printf("I2C peripheral reset complete\n");
+}
+
+/**
+ * @brief Comprehensive I2C diagnostic check
+ */
+void I2C_DiagnosticCheck(void)
+{
+    printf("\n=== I2C1 Diagnostic Check ===\n");
+    
+    /* Check clock enables */
+    printf("I2C1 Clock: %s\n", __HAL_RCC_I2C1_IS_CLK_ENABLED() ? "ENABLED" : "DISABLED");
+    printf("GPIOC Clock: %s\n", __HAL_RCC_GPIOC_IS_CLK_ENABLED() ? "ENABLED" : "DISABLED");
+    printf("GPIOH Clock: %s\n", __HAL_RCC_GPIOH_IS_CLK_ENABLED() ? "ENABLED" : "DISABLED");
+    
+    /* Check clock frequencies */
+    uint32_t pclk1 = HAL_RCC_GetPCLK1Freq();
+    uint32_t i2c1_clk = HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_I2C1);
+    printf("PCLK1: %lu Hz\n", pclk1);
+    printf("I2C1 Source Clock: %lu Hz\n", i2c1_clk);
+    
+    /* Check GPIO configuration for PC1 (SDA) */
+    uint32_t moder_c = GPIOC->MODER;
+    uint32_t afrl_c = GPIOC->AFR[0];
+    uint32_t otyper_c = GPIOC->OTYPER;
+    uint32_t pupdr_c = GPIOC->PUPDR;
+    
+    /* Check GPIO configuration for PH9 (SCL) */
+    uint32_t moder_h = GPIOH->MODER;
+    uint32_t afrh_h = GPIOH->AFR[1];  // PH9 is in AFR[1]
+    uint32_t otyper_h = GPIOH->OTYPER;
+    uint32_t pupdr_h = GPIOH->PUPDR;
+    
+    printf("\nGPIO Configuration:\n");
+    printf("  PC1 (SDA) MODE: 0x%lX %s\n", (moder_c >> 2) & 0x3, 
+           ((moder_c >> 2) & 0x3) == 0x2 ? "[AF-OK]" : "[ERROR]");
+    printf("  PH9 (SCL) MODE: 0x%lX %s\n", (moder_h >> 18) & 0x3,
+           ((moder_h >> 18) & 0x3) == 0x2 ? "[AF-OK]" : "[ERROR]");
+    printf("  PC1 AFR: 0x%lX %s\n", (afrl_c >> 4) & 0xF,
+           ((afrl_c >> 4) & 0xF) == 0x4 ? "[I2C1-OK]" : "[ERROR]");
+    printf("  PH9 AFR: 0x%lX %s\n", (afrh_h >> 4) & 0xF,
+           ((afrh_h >> 4) & 0xF) == 0x4 ? "[I2C1-OK]" : "[ERROR]");
+    printf("  PC1 OTYPE: 0x%lX %s\n", (otyper_c >> 1) & 0x1,
+           ((otyper_c >> 1) & 0x1) == 0x1 ? "[OD-OK]" : "[ERROR-Should be OD]");
+    printf("  PH9 OTYPE: 0x%lX %s\n", (otyper_h >> 9) & 0x1,
+           ((otyper_h >> 9) & 0x1) == 0x1 ? "[OD-OK]" : "[ERROR-Should be OD]");
+    
+    /* Read pin states */
+    uint32_t idr_c = GPIOC->IDR;
+    uint32_t idr_h = GPIOH->IDR;
+    printf("\nPin States:\n");
+    printf("  SCL (PH9): %s\n", (idr_h & GPIO_PIN_9) ? "HIGH" : "LOW");
+    printf("  SDA (PC1): %s\n", (idr_c & GPIO_PIN_1) ? "HIGH" : "LOW");
+    
+    /* Check I2C peripheral registers */
+    printf("\nI2C1 Registers:\n");
+    printf("  CR1: 0x%08lX %s\n", I2C1->CR1, (I2C1->CR1 & I2C_CR1_PE) ? "[PE=1]" : "[PE=0]");
+    printf("  CR2: 0x%08lX\n", I2C1->CR2);
+    printf("  ISR: 0x%08lX\n", I2C1->ISR);
+    printf("  TIMINGR: 0x%08lX\n", I2C1->TIMINGR);
+    
+    /* Check ISR flags */
+    printf("\nISR Flags:\n");
+    if(I2C1->ISR & I2C_ISR_BUSY) printf("  [ERROR] BUSY flag SET - Bus is busy!\n");
+    if(I2C1->ISR & I2C_ISR_ARLO) printf("  [ERROR] ARLO flag SET - Arbitration lost!\n");
+    if(I2C1->ISR & I2C_ISR_BERR) printf("  [ERROR] BERR flag SET - Bus error!\n");
+    if(I2C1->ISR & I2C_ISR_OVR) printf("  [ERROR] OVR flag SET - Overrun!\n");
+    if(I2C1->ISR & I2C_ISR_NACKF) printf("  [INFO] NACKF flag SET - NACK received\n");
+    if((I2C1->ISR & 0x1F) == 0) printf("  All error flags clear [OK]\n");
+    
+    /* Check HAL handle state */
+    printf("\nHAL I2C Handle:\n");
+    printf("  State: 0x%02X (%s)\n", hi2c1.State,
+           hi2c1.State == HAL_I2C_STATE_READY ? "READY" :
+           hi2c1.State == HAL_I2C_STATE_BUSY ? "BUSY" : "OTHER");
+    printf("  ErrorCode: 0x%08lX\n", hi2c1.ErrorCode);
+    
+    printf("===================\n\n");
+}
+
 /* USER CODE END 0 */
 
 
@@ -446,12 +603,72 @@ int main(void)
   MX_DMA2D_Init();
   MX_GPU2D_Init();
   MX_ICACHE_Init();
+  
+  /* USER CODE BEGIN I2C1_BusRecovery */
+  // Perform bus recovery before I2C initialization
+  I2C_Force_BusRecovery();
+  I2C_ClearBusyFlag();
+  /* USER CODE END I2C1_BusRecovery */
+  
+  MX_I2C1_Init();
   MX_LTDC_Init();
 
   MX_USART1_UART_Init();
   HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
-  MX_I2C1_Init();
+
+  /* USER CODE BEGIN I2C1_Diagnostics */
+  // Run comprehensive I2C diagnostics
+  I2C_DiagnosticCheck();
+  /* USER CODE END I2C1_Diagnostics */
   // Verify critical clocks are stable
+
+  //read write loop back test to verify I2C communication with touch controller
+
+  //debug logics - I2C Address Scan
+  printf("\n=== Starting I2C Address Scan ===\n");
+  NVIC_DisableIRQ(EXTI8_IRQn);
+  HAL_StatusTypeDef result;
+  int devices_found = 0;
+  
+  for (int i=1; i<128; i++)
+  {
+      /*
+       * the HAL wants a left aligned i2c address
+       * &hi2c1 is the handle
+       * (uint16_t)(i<<1) is the i2c address left aligned
+       * retries 2
+       * timeout 2
+       */
+      result = HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t)(i<<1), 2, 10);  // FIXED: was using 55 instead of i
+      
+      if (result == HAL_OK)
+      {
+          printf("\nDevice found at 7-bit addr: 0x%02X (8-bit write: 0x%02X, read: 0x%02X)\n", 
+                 i, i<<1, (i<<1)|1);
+          devices_found++;
+      }
+      else if (result == HAL_BUSY)
+      {
+          printf("\n[ERROR] I2C Bus BUSY at address 0x%02X - stopping scan\n", i);
+          break;
+      }
+      else
+      {
+          printf(".");  // No device at this address
+      }
+      
+      if(i % 16 == 0) printf("\n");  // New line every 16 addresses
+  }
+  
+  NVIC_EnableIRQ(EXTI8_IRQn);
+  printf("\n\nI2C scan complete - Found %d device(s)\n", devices_found);
+  
+  // Test specific address 0x55
+  printf("\nTesting device at 0x55...\n");
+  result = HAL_I2C_IsDeviceReady(&hi2c1, 0x55<<1, 3, 100);
+  printf("Result for 0x55: %s\n", 
+         result == HAL_OK ? "ACK" : 
+         result == HAL_BUSY ? "BUSY" : "NACK/ERROR");
 
   MX_RAMCFG_Init();
 #if !MANUAL_FB_ENABLE
@@ -478,6 +695,7 @@ int main(void)
    uint32_t hClk = HAL_RCC_GetHCLKFreq();
    printf("System Clock: %lu Hz, HCLK: %lu Hz\r\n", sysClk, hClk);
 #endif
+
 
   /* USER CODE END 2 */
 
@@ -635,14 +853,20 @@ static void MX_I2C1_Init(void)
 {
 
   /* USER CODE BEGIN I2C1_Init 0 */
-
+  // Force I2C peripheral reset before initialization
+  __HAL_RCC_I2C1_FORCE_RESET();
+  HAL_Delay(2);
+  __HAL_RCC_I2C1_RELEASE_RESET();
+  HAL_Delay(2);
   /* USER CODE END I2C1_Init 0 */
 
   /* USER CODE BEGIN I2C1_Init 1 */
 
   /* USER CODE END I2C1_Init 1 */
   hi2c1.Instance = I2C1;
-  hi2c1.Init.Timing = 0x0000030F;
+  // Timing value for 100kHz I2C with typical PCLK1 (try this conservative value)
+  // If this doesn't work, use STM32CubeMX I2C Timing Configuration tool
+  hi2c1.Init.Timing = 0x10707DBC;  // Conservative 100kHz timing
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;

@@ -69,6 +69,8 @@
 "./TouchGFX/generated/images/src/BitmapDatabase.o"
 "./TouchGFX/generated/images/src/SVGDatabase.o"
 "./TouchGFX/generated/images/src/image_boseLogo.o"
+"./TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.o"
+"./TouchGFX/generated/images/src/__generated/image_alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.o"
 "./TouchGFX/generated/texts/src/LanguageGb.o"
 "./TouchGFX/generated/texts/src/Texts.o"
 "./TouchGFX/generated/texts/src/TypedTextDatabase.o"
