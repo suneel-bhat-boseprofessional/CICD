@@ -26,40 +26,30 @@
 
 #include "main.h"
 
-
-
 volatile bool doSampleTouch = false;
 
-extern "C" I2C_HandleTypeDef hi2c2;
-
-using namespace touchgfx;
-
-extern "C"
-
+extern "C" 
 {
-    void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
-
+    extern I2C_HandleTypeDef hi2c1;
+    extern struct coop_data finger[MAX_NUM_TOUCHES];
+    void process_touch_data(void);
+    
+    /**
+      * @brief  GPIO EXTI Rising Edge callback for touch interrupt
+      * @param  GPIO_Pin: Specifies the pins connected to the EXTI line
+      * @retval None
+      */
+    void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
     {
         if (GPIO_Pin == GPIO_PIN_8)
-
         {
-            /* Communication with TS is done via I2C.
-            Often the sw requires ISRs (interrupt service routines) to be quick while communication
-            with I2C can be considered relatively long (depending on SW requirements).
-            Considering that the TS feature don't need immediate reaction,
-            it is suggested to use polling mode instead of EXTI mode,
-            in order to avoid blocking I2C communication on interrupt service routines */
-            /* Here an example of implementation is proposed which is a mix between pooling and exit mode:
-            On ISR a flag is set (exti4_received), the main loop polls on the flag rather then polling the TS;
-            Mcu communicates with TS only when the flag has been set by ISR. This is just an example:
-            the users should choose they strategy depending on their application needs.*/
+            /* Touch interrupt detected - set flag for TouchGFX to sample */
             doSampleTouch = true;
-            return;
         }
-
     }
-
 }
+
+using namespace touchgfx;
 
 void STM32TouchController::init()
 {
@@ -71,17 +61,38 @@ void STM32TouchController::init()
 
 bool STM32TouchController::sampleTouch(int32_t& x, int32_t& y)
 {
-    /**
-     * By default sampleTouch returns false,
-     * return true if a touch has been detected, otherwise false.
-     *
-     * Coordinates are passed to the caller by reference by x and y.
-     *
-     * This function is called by the TouchGFX framework.
-     * By default sampleTouch is called every tick, this can be adjusted by HAL::setTouchSampleRate(int8_t);
-     *
-     */
-    return false;
+    bool touchDetected = false;
+    
+    NVIC_DisableIRQ(EXTI8_IRQn);  // Changed from EXTI4_IRQn to match GPIO_PIN_8
+    
+    if (doSampleTouch)
+    {
+        // Call your custom I2C driver to read touch data from device at 0x55
+        // This reads 40 bytes from register 0x12 and populates finger[] array
+        process_touch_data();
+        
+        // Check if first touch point is valid
+        if (finger[0].per_valuebit == 1 && finger[0].status != NO_TOUCH)
+        {
+            // Get coordinates from first touch point
+            x = finger[0].x;
+            y = finger[0].y;
+            touchDetected = true;
+        }
+        else
+        {
+            // No valid touch detected
+            x = 0;
+            y = 0;
+            touchDetected = false;
+        }
+        
+        doSampleTouch = false;  // Reset flag after processing
+    }
+    
+    NVIC_EnableIRQ(EXTI8_IRQn);  // Changed from EXTI4_IRQn to match GPIO_PIN_8
+    
+    return touchDetected;
 }
 
 /* USER CODE END STM32TouchController */
