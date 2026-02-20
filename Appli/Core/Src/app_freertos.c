@@ -147,7 +147,7 @@ void StartDefaultTask(void *argument)
   //   osDelay(100);
 
 //    Manual_FB_Init();
-    osDelay(10);
+    osDelay(100);
 //    Manual_FB_DrawTestPattern();
   }
   /* USER CODE END defaultTask */

@@ -27,6 +27,8 @@
 #include "main.h"
 
 volatile bool doSampleTouch = false;
+static uint32_t lastTouchTime = 0;
+static const uint32_t DEBOUNCE_TIME_MS = 50;  // 50ms debounce period
 
 extern "C" 
 {
@@ -35,16 +37,23 @@ extern "C"
     void process_touch_data(void);
     
     /**
-      * @brief  GPIO EXTI Rising Edge callback for touch interrupt
+      * @brief  GPIO EXTI Falling Edge callback for touch interrupt
       * @param  GPIO_Pin: Specifies the pins connected to the EXTI line
       * @retval None
       */
-    void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
+    void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
     {
         if (GPIO_Pin == GPIO_PIN_8)
         {
-            /* Touch interrupt detected - set flag for TouchGFX to sample */
-            doSampleTouch = true;
+            uint32_t currentTime = HAL_GetTick();
+            
+            // Debounce: Only accept interrupt if enough time has passed since last one
+            if ((currentTime - lastTouchTime) >= DEBOUNCE_TIME_MS)
+            {
+                /* Touch interrupt detected - set flag for TouchGFX to sample */
+                doSampleTouch = true;
+                lastTouchTime = currentTime;
+            }
         }
     }
 }

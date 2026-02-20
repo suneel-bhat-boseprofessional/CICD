@@ -18,6 +18,80 @@
           }
         ],
         "Interactions": []
+      },
+      {
+        "Name": "Screen1",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "boseLogo",
+            "X": 26,
+            "Y": 13,
+            "Width": 429,
+            "Height": 102,
+            "RelativeFilename": "boseLogo.png"
+          },
+          {
+            "Type": "Box",
+            "Name": "colorImage",
+            "Width": 480,
+            "Height": 128,
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 0
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "imageChangeBtn",
+            "Width": 480,
+            "Height": 128,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 480,
+                "Height": 128,
+                "LockToFlexButtonSize": true,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "changeScreenColor",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "imageChangeBtn"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "changeScreenColor"
+            }
+          }
+        ]
       }
     ],
     "CustomContainerDefinitions": [],
@@ -27,7 +101,7 @@
       "Height": 128
     },
     "SelectedColorDepth": 24,
-    "StartupScreenName": "screen",
+    "StartupScreenName": "Screen1",
     "SelectedStartupLanguage": "GB",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "UIPath": ".",
