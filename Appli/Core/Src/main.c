@@ -53,6 +53,8 @@ typedef uint16_t u16;
 /* Manual Framebuffer Configuration */
 #define MANUAL_FB_ENABLE 0 // Set to 1 to use manual framebuffer instead of TouchGFX
 
+#define XIP_BUILD 1
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -600,40 +602,61 @@ static void MX_TIM4_Init(void)
   */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
+#if !defined(XIP_BUILD) || (XIP_BUILD == 0)
   OpenDebug();
+#endif
+
   /* USER CODE END 1 */
 
   /* MPU Configuration--------------------------------------------------------*/
   /* Enable the CPU Cache */
 
   /* Enable I-Cache---------------------------------------------------------*/
-//  SCB_EnableICache();
-//
-//  /* Enable D-Cache---------------------------------------------------------*/
-//  SCB_EnableDCache();
+  //SCB_EnableICache();
+
+  /* Enable D-Cache---------------------------------------------------------*/
+ // SCB_EnableDCache();
 
   /* Enable the CPU Cache */
 
   /* MCU Configuration--------------------------------------------------------*/
+
   HAL_Init();
+
+#if !defined(XIP_BUILD) || (XIP_BUILD == 0)
+  SystemClock_Config();
+#else
+  //
+  // Tick clock is enabled by HAL_Init(). But its IRQ priority is
+  // set to default (15) which is lower that the value allowed
+  // by the system (5).
+  //
+  // Set the priority lowere than 5 to enable interrupts)
+  //
+  HAL_NVIC_SetPriority(TIM2_IRQn, 4, 0);
 
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
   /* Configure the system clock */
-  SystemClock_Config();
 
   __HAL_RCC_SYSCFG_CLK_ENABLE();
 
+  // FSBL diable IRQ, enable it.
+  __enable_irq();       // Re-enable globally
+
+  // FSBL suspends tick, enable it.
+  HAL_ResumeTick();
+#endif
+
   /* USER CODE BEGIN SysInit */
   /* Enable I-Cache---------------------------------------------------------*/
-//  SCB_EnableICache();
-//
-//  /* Enable D-Cache---------------------------------------------------------*/
-//  SCB_EnableDCache();
+  //SCB_EnableICache();
+
+  /* Enable D-Cache---------------------------------------------------------*/
+  //SCB_EnableDCache();
 
 #if MANUAL_FB_ENABLE
     // Clear framebuffer to black
@@ -652,6 +675,8 @@ int main(void)
   MX_GPU2D_Init();
   MX_ICACHE_Init();
   
+
+
   /* USER CODE BEGIN I2C1_BusRecovery */
   // Perform bus recovery before I2C initialization
   I2C_Force_BusRecovery();
