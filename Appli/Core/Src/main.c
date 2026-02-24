@@ -29,6 +29,7 @@
 
 extern int notifyTouch;
 #include "stm32n6xx_it.h"
+#include "fan_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -373,6 +374,7 @@ void SystemClock_Config(void)
   }
 }
 
+#if !defined(XIP_BUILD) || (XIP_BUILD == 0)
 static void OpenDebug(void)
 {
   BSEC_HandleTypeDef hbsec;
@@ -390,6 +392,7 @@ static void OpenDebug(void)
     Error_Handler();
   }
 }
+#endif
 
 /* USER CODE END 4 */
 
@@ -689,7 +692,9 @@ int main(void)
   MX_USART1_UART_Init();
   HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
   MX_TIM4_Init();
-  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
+
+  // Initialize fan control system (PWM + UART interrupt)
+  FanControl_Init(&htim4, &huart1, TIM_CHANNEL_2);
 
   /* USER CODE BEGIN I2C1_Diagnostics */
   // Run comprehensive I2C diagnostics
@@ -1670,6 +1675,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 1 */
 
   /* USER CODE END Callback 1 */
+}
+
+/**
+  * @brief  HAL UART RX Complete Callback
+  * @param  huart: UART handle
+  * @retval None
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  FanControl_UART_RxCallback(huart);
 }
 
 /**
