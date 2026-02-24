@@ -626,6 +626,10 @@ int main(void)
   HAL_Init();
 
 #if !defined(XIP_BUILD) || (XIP_BUILD == 0)
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+  /* Configure the system clock */
   SystemClock_Config();
 #else
   //
@@ -637,13 +641,6 @@ int main(void)
   //
   HAL_NVIC_SetPriority(TIM2_IRQn, 4, 0);
 
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-  /* Configure the system clock */
-
-  __HAL_RCC_SYSCFG_CLK_ENABLE();
-
   // FSBL diable IRQ, enable it.
   __enable_irq();       // Re-enable globally
 
@@ -652,6 +649,9 @@ int main(void)
 #endif
 
   /* USER CODE BEGIN SysInit */
+
+  __HAL_RCC_SYSCFG_CLK_ENABLE();
+
   /* Enable I-Cache---------------------------------------------------------*/
   //SCB_EnableICache();
 
