@@ -5,16 +5,18 @@
         "Name": "screen",
         "Components": [
           {
-            "Type": "Button",
-            "Name": "button1",
-            "X": 120,
-            "Y": 39,
-            "Width": 240,
-            "Height": 50,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
-            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json",
-            "Draggable": true
+            "Type": "ScrollList",
+            "Name": "scrollList1",
+            "Width": 480,
+            "Height": 128,
+            "IsHorizontal": true,
+            "ItemTemplateName": "CustomContainer1",
+            "NumberofItems": 10,
+            "Easing": "Back",
+            "EasingOption": "Out",
+            "SwipeAcceleration": 1.0,
+            "DragAcceleration": 1.0,
+            "OverShootPercentage": 75
           }
         ],
         "Interactions": []
@@ -94,14 +96,34 @@
         ]
       }
     ],
-    "CustomContainerDefinitions": [],
+    "CustomContainerDefinitions": [
+      {
+        "Name": "CustomContainer1",
+        "Width": 480,
+        "Height": 128,
+        "Components": [
+          {
+            "Type": "Button",
+            "Name": "button1",
+            "X": 120,
+            "Y": 39,
+            "Width": 240,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
+            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+          }
+        ],
+        "Interactions": []
+      }
+    ],
     "Name": "touchUI_BringUP",
     "Resolution": {
       "Width": 480,
       "Height": 128
     },
     "SelectedColorDepth": 24,
-    "StartupScreenName": "Screen1",
+    "StartupScreenName": "screen",
     "SelectedStartupLanguage": "GB",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "UIPath": ".",

@@ -3,17 +3,27 @@
 /*********************************************************************************/
 #include <gui_generated/screen_screen/screenViewBase.hpp>
 #include <touchgfx/Color.hpp>
-#include <images/BitmapDatabase.hpp>
 
-screenViewBase::screenViewBase()
+screenViewBase::screenViewBase() :
+    updateItemCallback(this, &screenViewBase::updateItemCallbackHandler)
 {
     __background.setPosition(0, 0, 480, 128);
     __background.setColor(touchgfx::Color::getColorFromRGB(0, 0, 0));
     add(__background);
 
-    button1.setXY(120, 39);
-    button1.setBitmaps(touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_NORMAL_ID), touchgfx::Bitmap(BITMAP_ALTERNATE_THEME_IMAGES_WIDGETS_BUTTON_REGULAR_HEIGHT_50_MEDIUM_ROUNDED_PRESSED_ID));
-    add(button1);
+    scrollList1.setPosition(0, 0, 480, 128);
+    scrollList1.setHorizontal(true);
+    scrollList1.setCircular(false);
+    scrollList1.setEasingEquation(touchgfx::EasingEquations::backEaseOut);
+    scrollList1.setSwipeAcceleration(10);
+    scrollList1.setDragAcceleration(10);
+    scrollList1.setNumberOfItems(10);
+    scrollList1.setPadding(0, 0);
+    scrollList1.setSnapping(false);
+    scrollList1.setOvershootPercentage(75);
+    scrollList1.setDrawableSize(480, 0);
+    scrollList1.setDrawables(scrollList1ListItems, updateItemCallback);
+    add(scrollList1);
 }
 
 screenViewBase::~screenViewBase()
@@ -23,5 +33,17 @@ screenViewBase::~screenViewBase()
 
 void screenViewBase::setupScreen()
 {
+    scrollList1.initialize();
+    for (int i = 0; i < scrollList1ListItems.getNumberOfDrawables(); i++)
+    {
+        scrollList1ListItems[i].initialize();
+    }
+}
 
+void screenViewBase::updateItemCallbackHandler(touchgfx::DrawableListItemsInterface* items, int16_t containerIndex, int16_t itemIndex)
+{
+    if (items == &scrollList1ListItems)
+    {
+        scrollList1UpdateItem(scrollList1ListItems[containerIndex], itemIndex);
+    }
 }

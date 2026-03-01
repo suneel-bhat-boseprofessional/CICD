@@ -64,7 +64,8 @@ namespace
 // Only allocate TouchGFX framebuffer when manual framebuffer is disabled
 // Full width, partial height to avoid horizontal section misalignment: 480x64x2 bytes = 60KB per buffer
 LOCATION_PRAGMA_NOLOAD("TouchGFX_Framebuffer")
-uint32_t frameBuf[(480 * 64 * 2 + 3) / 4 * 2] LOCATION_ATTRIBUTE_NOLOAD("TouchGFX_Framebuffer");
+//uint32_t frameBuf[(480 * 64 * 2 + 3) / 4 * 2] LOCATION_ATTRIBUTE_NOLOAD("TouchGFX_Framebuffer");
+uint32_t frameBuf[(480 * 128 * 2 + 3) / 4 * 2] LOCATION_ATTRIBUTE_NOLOAD("TouchGFX_Framebuffer");
 #endif
 static uint16_t lcd_int_active_line;
 static uint16_t lcd_int_porch_line;
@@ -74,13 +75,13 @@ void TouchGFXGeneratedHAL::initialize()
 {
     HALGPU2D::initialize(16384);
     registerEventListener(*(Application::getInstance()));
-    registerTaskDelayFunction(&OSWrappers::taskDelay);
-    if (!setFrameRefreshStrategy(HAL::REFRESH_STRATEGY_OPTIM_SINGLE_BUFFER_TFT_CTRL))
-    {
-        while (1);
-    }
-    setFrameBufferStartAddresses((void*)frameBuf, (void*)0, (void*)0);
-    //setFrameBufferStartAddresses((void*)frameBuf, (void*)(frameBuf + sizeof(frameBuf) / (sizeof(uint32_t) * 2)), (void*)0);
+    // registerTaskDelayFunction(&OSWrappers::taskDelay);
+    // if (!setFrameRefreshStrategy(HAL::REFRESH_STRATEGY_OPTIM_SINGLE_BUFFER_TFT_CTRL))
+    // {
+    //     while (1);
+    // }
+    //setFrameBufferStartAddresses((void*)frameBuf, (void*)0, (void*)0);
+    setFrameBufferStartAddresses((void*)frameBuf, (void*)(frameBuf + sizeof(frameBuf) / (sizeof(uint32_t) * 2)), (void*)0);
     /*
      * Add DMA2D to hardware decoder
      */

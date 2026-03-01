@@ -45,15 +45,15 @@ extern "C"
     {
         if (GPIO_Pin == GPIO_PIN_8)
         {
-            uint32_t currentTime = HAL_GetTick();
+            //uint32_t currentTime = HAL_GetTick();
             
             // Debounce: Only accept interrupt if enough time has passed since last one
-            if ((currentTime - lastTouchTime) >= DEBOUNCE_TIME_MS)
-            {
+//            if ((currentTime - lastTouchTime) >= DEBOUNCE_TIME_MS)
+//            {
                 /* Touch interrupt detected - set flag for TouchGFX to sample */
                 doSampleTouch = true;
-                lastTouchTime = currentTime;
-            }
+//                lastTouchTime = currentTime;
+//            }
         }
     }
 }

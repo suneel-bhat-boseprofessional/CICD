@@ -8,8 +8,8 @@
 #include <mvp/View.hpp>
 #include <gui/screen_screen/screenPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/Button.hpp>
-#include <touchgfx/mixins/Draggable.hpp>
+#include <touchgfx/containers/scrollers/ScrollList.hpp>
+#include <gui/containers/CustomContainer1.hpp>
 
 class screenViewBase : public touchgfx::View<screenPresenter>
 {
@@ -17,6 +17,11 @@ public:
     screenViewBase();
     virtual ~screenViewBase();
     virtual void setupScreen();
+
+    virtual void scrollList1UpdateItem(CustomContainer1& item, int16_t itemIndex)
+    {
+        // Override and implement this function in screen
+    }
 
 protected:
     FrontendApplication& application() {
@@ -27,9 +32,20 @@ protected:
      * Member Declarations
      */
     touchgfx::Box __background;
-    touchgfx::Draggable< touchgfx::Button > button1;
+    touchgfx::ScrollList scrollList1;
+    touchgfx::DrawableListItems<CustomContainer1, 2> scrollList1ListItems;
 
 private:
+
+    /*
+     * Callback Declarations
+     */
+    touchgfx::Callback<screenViewBase, touchgfx::DrawableListItemsInterface*, int16_t, int16_t> updateItemCallback;
+
+    /*
+     * Callback Handler Declarations
+     */
+    void updateItemCallbackHandler(touchgfx::DrawableListItemsInterface* items, int16_t containerIndex, int16_t itemIndex);
 
 };
 
