@@ -41,13 +41,15 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 
+
 /* Exported variables --------------------------------------------------------*/
+extern uint8_t uart_rx_buffer[512];
 
 /* Exported functions prototypes ---------------------------------------------*/
 void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_t tim_channel);
 void FanControl_SetSpeed(uint8_t percent);
 void FanControl_ProcessJSON(uint8_t *data, uint16_t length);
-void FanControl_UART_RxCallback(UART_HandleTypeDef *huart);
+void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);
 
 /* Generic JSON Helper Functions ---------------------------------------------*/
 /**
