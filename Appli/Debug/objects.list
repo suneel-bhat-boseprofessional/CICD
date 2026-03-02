@@ -1,6 +1,7 @@
 "./Core/Src/app_freertos.o"
 "./Core/Src/fan_control.o"
 "./Core/Src/main.o"
+"./Core/Src/protocol.o"
 "./Core/Src/secure_nsc.o"
 "./Core/Src/stm32n6xx_hal_msp.o"
 "./Core/Src/stm32n6xx_hal_timebase_tim.o"

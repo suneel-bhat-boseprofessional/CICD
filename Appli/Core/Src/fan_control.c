@@ -23,6 +23,74 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <stdlib.h> // for atoi
+
+MessageType ParseMessageType(const char *typeStr)
+{
+  if (strcmp(typeStr, "request") == 0) return MSG_TYPE_REQUEST;
+  if (strcmp(typeStr, "response") == 0) return MSG_TYPE_RESPONSE;
+  if (strcmp(typeStr, "event") == 0) return MSG_TYPE_EVENT;
+  return MSG_TYPE_UNKNOWN;
+}
+
+MessageStatus ParseStatus(const char *statusStr)
+{
+  if (strcmp(statusStr, "success") == 0) return STATUS_SUCCESS;
+  if (strcmp(statusStr, "error") == 0) return STATUS_ERROR;
+  return STATUS_UNKNOWN;
+}
+
+int ParseGenericMessage(const char *json, GenericMessage *msg)
+{
+  char buffer[128];
+
+  if (!JSON_GetStringValue(json, "type", buffer, sizeof(buffer))) return -1;
+  msg->type = ParseMessageType(buffer);
+
+  if (!JSON_GetStringValue(json, "action", msg->action, sizeof(msg->action))) return -1;
+  if (!JSON_GetStringValue(json, "requestId", msg->requestId, sizeof(msg->requestId))) return -1;
+
+  if (JSON_GetStringValue(json, "status", buffer, sizeof(buffer)))
+    msg->status = ParseStatus(buffer);
+  else
+    msg->status = STATUS_UNKNOWN;
+
+  // Parse error object if present
+  char errorCode[8], errorMsg[64];
+  if (JSON_GetStringValue(json, "error.code", errorCode, sizeof(errorCode)) &&
+    JSON_GetStringValue(json, "error.message", errorMsg, sizeof(errorMsg)))
+  {
+    msg->error.code = atoi(errorCode);
+    strncpy(msg->error.message, errorMsg, sizeof(msg->error.message));
+  }
+  else
+  {
+    msg->error.code = 0;
+    msg->error.message[0] = '\0';
+  }
+
+  // Extract payload as raw JSON string
+  if (JSON_GetStringValue(json, "payload", msg->payload, sizeof(msg->payload)) == NULL)
+    msg->payload[0] = '\0';
+
+  return 0;
+}
+
+void SendGenericResponse(UART_HandleTypeDef *huart, const GenericMessage *msg)
+{
+  char buffer[256];
+  int len = snprintf(buffer, sizeof(buffer),
+    "{\"type\":\"response\",\"action\":\"%s\",\"requestId\":\"%s\",\"status\":\"%s\",\"payload\":%s,\"error\":{\"code\":%d,\"message\":\"%s\"}}\r\n",
+    msg->action,
+    msg->requestId,
+    msg->status == STATUS_SUCCESS ? "success" : "error",
+    msg->payload[0] ? msg->payload : "{}",
+    msg->error.code,
+    msg->error.message
+  );
+  HAL_UART_Transmit(huart, (uint8_t*)buffer, len, 100);
+}
+
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
@@ -157,8 +225,8 @@ void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, u
     else
       pData[sizeof(uart_rx_buffer) - 1] = '\0';
 
-    // Process the received JSON packet
-    FanControl_ProcessJSON(pData, Size);
+    // Process the received JSON packet (generic handler)
+    JSON_ProcessMessage(pData, Size);
   }
   // Restart UART receive to idle interrupt
   HAL_UARTEx_ReceiveToIdle_IT(p_huart, uart_rx_buffer, sizeof(uart_rx_buffer));
@@ -199,43 +267,51 @@ void FanControl_SetSpeed(uint8_t percent)
   * @note   JSON format: {"speed":"LOW"} or {"speed":"MID"} or {"speed":"HIGH"}
   *         Can be extended to support more commands by checking different keys
   */
-void FanControl_ProcessJSON(uint8_t *data, uint16_t length)
+
+void JSON_ProcessMessage(uint8_t *data, uint16_t length)
 {
-  char value[16];
-  
-  // Check if module is initialized
-  if (p_huart == NULL) return;
-  
-  // Try to extract "speed" command
-  if (JSON_GetStringValue((char*)data, "speed", value, sizeof(value)) != NULL)
-  {
-    // Process speed command
-    if (strcmp(value, "LOW") == 0)
+    GenericMessage msg;
+    if (ParseGenericMessage((char*)data, &msg) != 0)
     {
-      FanControl_SetSpeed(SPEED_LOW_PERCENT);
+        HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Invalid JSON\r\n", 21, 100);
+        return;
     }
-    else if (strcmp(value, "MID") == 0)
+
+    switch (msg.type)
     {
-      FanControl_SetSpeed(SPEED_MID_PERCENT);
+        case MSG_TYPE_REQUEST:
+            // Example: handle fan control request
+            if (strcmp(msg.action, "setFanSpeed") == 0)
+            {
+                char speed[16];
+                if (JSON_GetStringValue(msg.payload, "speed", speed, sizeof(speed)))
+                {
+                    if (strcmp(speed, "LOW") == 0)
+                        FanControl_SetSpeed(SPEED_LOW_PERCENT);
+                    else if (strcmp(speed, "MID") == 0)
+                        FanControl_SetSpeed(SPEED_MID_PERCENT);
+                    else if (strcmp(speed, "HIGH") == 0)
+                        FanControl_SetSpeed(SPEED_HIGH_PERCENT);
+                    else
+                        HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Invalid speed value\r\n", 29, 100);
+                }
+                else
+                {
+                    HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Missing speed\r\n", 22, 100);
+                }
+            }
+            // Add more actions here
+            break;
+        case MSG_TYPE_RESPONSE:
+            // Handle response
+            break;
+        case MSG_TYPE_EVENT:
+            // Handle event
+            break;
+        default:
+            HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Unknown type\r\n", 21, 100);
+            break;
     }
-    else if (strcmp(value, "HIGH") == 0)
-    {
-      FanControl_SetSpeed(SPEED_HIGH_PERCENT);
-    }
-    else
-    {
-      HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Invalid speed value\r\n", 29, 100);
-    }
-  }
-  // Future: Add more command handlers here
-  // Example: else if (JSON_GetStringValue((char*)data, "mode", value, sizeof(value)) != NULL)
-  // {
-  //   // Handle mode command
-  // }
-  else
-  {
-    HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Unknown command or invalid JSON\r\n", 41, 100);
-  }
 }
 
 

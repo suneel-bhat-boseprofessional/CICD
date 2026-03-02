@@ -4,8 +4,12 @@ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:135:12:js
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:193:12:jsmn_parse_string	23
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:268:14:jsmn_parse	52
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:459:15:jsmn_init	1
-../Core/Src/fan_control.c:56:7:JSON_GetStringValue	12
-../Core/Src/fan_control.c:120:6:FanControl_Init	1
-../Core/Src/fan_control.c:150:6:FanControl_UART_RxIdleCallback	5
-../Core/Src/fan_control.c:172:6:FanControl_SetSpeed	9
-../Core/Src/fan_control.c:202:6:FanControl_ProcessJSON	6
+../Core/Src/fan_control.c:28:13:ParseMessageType	4
+../Core/Src/fan_control.c:36:15:ParseStatus	3
+../Core/Src/fan_control.c:43:5:ParseGenericMessage	8
+../Core/Src/fan_control.c:79:6:SendGenericResponse	3
+../Core/Src/fan_control.c:124:7:JSON_GetStringValue	12
+../Core/Src/fan_control.c:188:6:FanControl_Init	1
+../Core/Src/fan_control.c:218:6:FanControl_UART_RxIdleCallback	5
+../Core/Src/fan_control.c:240:6:FanControl_SetSpeed	9
+../Core/Src/fan_control.c:271:6:JSON_ProcessMessage	11
