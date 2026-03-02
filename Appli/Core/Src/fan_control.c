@@ -30,9 +30,8 @@
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-static uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
-static uint8_t uart_rx_index = 0;
-static uint8_t uart_rx_byte;
+uint8_t uart_rx_buffer[512];
+
 
 // Module handles - set during initialization
 static TIM_HandleTypeDef *p_htim = NULL;
@@ -133,11 +132,36 @@ void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_
   // Start PWM
   HAL_TIM_PWM_Start(p_htim, tim_pwm_channel);
   
-  // Start UART receive interrupt
-  HAL_UART_Receive_IT(p_huart, &uart_rx_byte, 1);
-  
+  // Start UART receive to idle interrupt for up to 512 bytes
+  HAL_UARTEx_ReceiveToIdle_IT(p_huart, uart_rx_buffer, sizeof(uart_rx_buffer));
+
+
   // Set initial fan speed to LOW
   FanControl_SetSpeed(SPEED_LOW_PERCENT);
+}
+
+/**
+  * @brief  Fan Control UART RX Idle handler - Call this from HAL_UARTEx_RxEventCallback
+  * @param  huart: UART handle
+  * @param  pData: Pointer to received data buffer
+  * @param  Size: Number of bytes received
+  * @retval None
+  */
+void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
+{
+  if (huart == p_huart && Size > 0 && Size <= sizeof(uart_rx_buffer))
+  {
+    // Null-terminate the received data for string processing
+    if (Size < sizeof(uart_rx_buffer))
+      pData[Size] = '\0';
+    else
+      pData[sizeof(uart_rx_buffer) - 1] = '\0';
+
+    // Process the received JSON packet
+    FanControl_ProcessJSON(pData, Size);
+  }
+  // Restart UART receive to idle interrupt
+  HAL_UARTEx_ReceiveToIdle_IT(p_huart, uart_rx_buffer, sizeof(uart_rx_buffer));
 }
 
 /**
@@ -214,47 +238,4 @@ void FanControl_ProcessJSON(uint8_t *data, uint16_t length)
   }
 }
 
-/**
-  * @brief  Fan Control UART RX handler - Call this from HAL_UART_RxCpltCallback
-  * @param  huart: UART handle
-  * @retval None
-  */
-void FanControl_UART_RxCallback(UART_HandleTypeDef *huart)
-{
-  // Check if this is our UART instance
-  if (huart == p_huart)
-  {
-    // Check for newline character (packet delimiter)
-    if (uart_rx_byte == '\n' || uart_rx_byte == '\r')
-    {
-      if (uart_rx_index > 0)
-      {
-        // Null-terminate the string
-        uart_rx_buffer[uart_rx_index] = '\0';
-        
-        // Process the received JSON packet
-        FanControl_ProcessJSON(uart_rx_buffer, uart_rx_index);
-        
-        // Reset buffer index
-        uart_rx_index = 0;
-      }
-    }
-    else
-    {
-      // Add byte to buffer if there's space
-      if (uart_rx_index < UART_RX_BUFFER_SIZE - 1)
-      {
-        uart_rx_buffer[uart_rx_index++] = uart_rx_byte;
-      }
-      else
-      {
-        // Buffer overflow - reset
-        uart_rx_index = 0;
-        HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Buffer overflow\r\n", 25, 100);
-      }
-    }
-    
-    // Re-enable UART receive interrupt for next byte
-    HAL_UART_Receive_IT(p_huart, &uart_rx_byte, 1);
-  }
-}
+

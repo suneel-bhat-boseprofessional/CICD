@@ -1,0 +1,11 @@
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:106:19:jsmn_alloc_token	32	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:124:13:jsmn_fill_token	24	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:135:12:jsmn_parse_primitive	32	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:193:12:jsmn_parse_string	40	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:268:14:jsmn_parse	56	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:459:15:jsmn_init	16	static
+../Core/Src/fan_control.c:56:7:JSON_GetStringValue	336	static
+../Core/Src/fan_control.c:120:6:FanControl_Init	24	static
+../Core/Src/fan_control.c:150:6:FanControl_UART_RxIdleCallback	24	static
+../Core/Src/fan_control.c:172:6:FanControl_SetSpeed	80	static
+../Core/Src/fan_control.c:202:6:FanControl_ProcessJSON	32	static

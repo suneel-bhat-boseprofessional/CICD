@@ -1677,14 +1677,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE END Callback 1 */
 }
 
+
 /**
-  * @brief  HAL UART RX Complete Callback
+  * @brief  HAL UARTEx RX Event Callback (IDLE or RX event)
   * @param  huart: UART handle
+  * @param  Size: Number of bytes received
   * @retval None
   */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
-  FanControl_UART_RxCallback(huart);
+    // Use the same buffer as fan_control.c
+    extern uint8_t uart_rx_buffer[512];
+    FanControl_UART_RxIdleCallback(huart, uart_rx_buffer, Size);
 }
 
 /**

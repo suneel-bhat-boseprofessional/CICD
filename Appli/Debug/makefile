@@ -108,8 +108,8 @@ all:
 main-build: touchUI_BringUP_Appli.elf secondary-outputs
 
 # Tool invocations
-touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.map: $(OBJS) $(USER_OBJS) C:\CurrentDevelopment\cleantouchUICode\touchUI_Bringup\Appli\STM32N645L0HXQ_XIP.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "touchUI_BringUP_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\CurrentDevelopment\cleantouchUICode\touchUI_Bringup\Appli\STM32N645L0HXQ_XIP.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_Appli.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o -L"C:\CurrentDevelopment\cleantouchUICode\touchUI_Bringup\Appli\Middlewares\ST\touchgfx\lib\core\cortex_m55\gcc" -L"C:\CurrentDevelopment\cleantouchUICode\touchUI_Bringup\Appli\Middlewares\ST\touchgfx_components\gpu2d\NemaGFX\lib\core\cortex_m55\gcc" -L"C:\CurrentDevelopment\cleantouchUICode\touchUI_Bringup\Appli\Middlewares\ST\touchgfx_components\gpu2d\TouchGFXNema\lib\cortex_m55\gcc" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+touchUI_BringUP_Appli.elf touchUI_BringUP_Appli.map: $(OBJS) $(USER_OBJS) C:\ST\touchUI_Development\touchUI_Bringup\Appli\STM32N645L0HXQ_XIP.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "touchUI_BringUP_Appli.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"C:\ST\touchUI_Development\touchUI_Bringup\Appli\STM32N645L0HXQ_XIP.ld" --specs=nosys.specs -Wl,-Map="touchUI_BringUP_Appli.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o -L"C:\ST\touchUI_Development\touchUI_Bringup\Appli\Middlewares\ST\touchgfx\lib\core\cortex_m55\gcc" -L"C:\ST\touchUI_Development\touchUI_Bringup\Appli\Middlewares\ST\touchgfx_components\gpu2d\NemaGFX\lib\core\cortex_m55\gcc" -L"C:\ST\touchUI_Development\touchUI_Bringup\Appli\Middlewares\ST\touchgfx_components\gpu2d\TouchGFXNema\lib\cortex_m55\gcc" --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
