@@ -25,6 +25,10 @@
 
 #include <stdlib.h> // for atoi
 
+// Fix: Add FreeRTOS includes for QueueHandle_t and queue APIs
+#include "FreeRTOS.h"
+#include "queue.h"
+
 MessageType ParseMessageType(const char *typeStr)
 {
   if (strcmp(typeStr, "request") == 0) return MSG_TYPE_REQUEST;
@@ -225,8 +229,17 @@ void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, u
     else
       pData[sizeof(uart_rx_buffer) - 1] = '\0';
 
-    // Process the received JSON packet (generic handler)
-    JSON_ProcessMessage(pData, Size);
+    // Only enqueue the received message to the queue for processing in the default task
+    extern QueueHandle_t uartRxQueue;
+    if (uartRxQueue != NULL)
+    {
+      // Ensure null-termination for string processing in the task
+      size_t msg_len = strlen((char*)pData);
+      if (msg_len > 0 && msg_len < sizeof(uart_rx_buffer))
+      {
+        xQueueSend(uartRxQueue, pData, 0);
+      }
+    }
   }
   // Restart UART receive to idle interrupt
   HAL_UARTEx_ReceiveToIdle_IT(p_huart, uart_rx_buffer, sizeof(uart_rx_buffer));

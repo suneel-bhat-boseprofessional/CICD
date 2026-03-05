@@ -208,6 +208,30 @@
     <Filter Include="Header Files\generated\gui_generated\containers">
       <UniqueIdentifier>43FD6770-D3C5-FB3B-C909-EF081D6BE2B6</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gui\screen2_screen">
+      <UniqueIdentifier>EE3B6446-5200-762C-B1FF-1E0E0E51E43B</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui\screen2_screen">
+      <UniqueIdentifier>2F224BE9-1061-1B8C-D0D0-D96BD5C0E7A5</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\screen2_screen">
+      <UniqueIdentifier>E64B8320-DAD2-9F41-5FF8-2F74B79CCCED</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\screen2_screen">
+      <UniqueIdentifier>19E46A85-7A31-6F39-0B0F-6619A4F7007C</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\screen3_screen">
+      <UniqueIdentifier>65F9BC57-9DA1-2201-4464-4821EE8B2BE0</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui\screen3_screen">
+      <UniqueIdentifier>F2960A8B-27A3-8EEF-F8D7-6129E7E98238</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\screen3_screen">
+      <UniqueIdentifier>C6166EAA-E185-7066-1708-DE9E5FBCDEC6</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\screen3_screen">
+      <UniqueIdentifier>B4FFEC7E-5ACF-BD5D-F5A3-05E220218E11</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -263,6 +287,24 @@
     </ClCompile>
     <ClCompile Include="..\..\generated\gui_generated\src\containers\CustomContainer1Base.cpp">
       <Filter>Source Files\generated\gui_generated\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\screen2_screen\Screen2Presenter.cpp">
+      <Filter>Source Files\gui\screen2_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\screen2_screen\Screen2View.cpp">
+      <Filter>Source Files\gui\screen2_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\screen2_screen\Screen2ViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\screen2_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\screen3_screen\Screen3Presenter.cpp">
+      <Filter>Source Files\gui\screen3_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\screen3_screen\Screen3View.cpp">
+      <Filter>Source Files\gui\screen3_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\screen3_screen\Screen3ViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\screen3_screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -729,6 +771,24 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\containers\CustomContainer1Base.hpp">
       <Filter>Header Files\generated\gui_generated\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\screen2_screen\Screen2Presenter.hpp">
+      <Filter>Header Files\gui\screen2_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\screen2_screen\Screen2View.hpp">
+      <Filter>Header Files\gui\screen2_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\screen2_screen\Screen2ViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\screen2_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\screen3_screen\Screen3Presenter.hpp">
+      <Filter>Header Files\gui\screen3_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\screen3_screen\Screen3View.hpp">
+      <Filter>Header Files\gui\screen3_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\screen3_screen\Screen3ViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\screen3_screen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

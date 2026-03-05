@@ -51,6 +51,8 @@ TouchGFX/generated/fonts/src \
 TouchGFX/generated/gui_generated/src/common \
 TouchGFX/generated/gui_generated/src/containers \
 TouchGFX/generated/gui_generated/src/screen1_screen \
+TouchGFX/generated/gui_generated/src/screen2_screen \
+TouchGFX/generated/gui_generated/src/screen3_screen \
 TouchGFX/generated/gui_generated/src/screen_screen \
 TouchGFX/generated/images/src \
 TouchGFX/generated/images/src/__generated \
@@ -59,6 +61,8 @@ TouchGFX/gui/src/common \
 TouchGFX/gui/src/containers \
 TouchGFX/gui/src/model \
 TouchGFX/gui/src/screen1_screen \
+TouchGFX/gui/src/screen2_screen \
+TouchGFX/gui/src/screen3_screen \
 TouchGFX/gui/src/screen_screen \
 TouchGFX/target \
 TouchGFX/target/generated \

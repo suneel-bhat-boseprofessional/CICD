@@ -94,6 +94,99 @@
             }
           }
         ]
+      },
+      {
+        "Name": "Screen2",
+        "CanvasBufferSize": 7200,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 38,
+            "Y": 20,
+            "Width": 186,
+            "Height": 24,
+            "TextId": "__SingleUse_L9UH",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 272,
+            "Y": 74,
+            "Width": 162,
+            "Height": 24,
+            "TextId": "__SingleUse_G7ZO",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 38,
+            "Y": 74,
+            "Width": 194,
+            "Height": 24,
+            "TextId": "__SingleUse_5UDL",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea4",
+            "X": 272,
+            "Y": 20,
+            "Width": 149,
+            "Height": 20,
+            "TextId": "__SingleUse_UZQM",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "Screen3",
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 27,
+            "Y": 28,
+            "Width": 374,
+            "Height": 72,
+            "TextId": "__SingleUse_R4RV",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          }
+        ],
+        "Interactions": []
       }
     ],
     "CustomContainerDefinitions": [
@@ -123,7 +216,7 @@
       "Height": 128
     },
     "SelectedColorDepth": 24,
-    "StartupScreenName": "screen",
+    "StartupScreenName": "Screen2",
     "SelectedStartupLanguage": "GB",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "UIPath": ".",

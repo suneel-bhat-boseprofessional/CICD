@@ -92,6 +92,12 @@ TouchGFX/target/generated/TouchGFXGeneratedHAL.o: \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen2_screen/Screen2View.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen2_screen/Screen2ViewBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen2_screen/Screen2Presenter.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen3_screen/Screen3View.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen3_screen/Screen3ViewBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen3_screen/Screen3Presenter.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/GPIO.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/main.h \
  C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal.h \
@@ -239,6 +245,12 @@ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framewor
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen2_screen/Screen2View.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen2_screen/Screen2ViewBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen2_screen/Screen2Presenter.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen3_screen/Screen3View.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen3_screen/Screen3ViewBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen3_screen/Screen3Presenter.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/GPIO.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/main.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal.h:

@@ -302,6 +302,26 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen1_screen/Screen1View.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/Screen2Presenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen2_screen/Screen2Presenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Screen2View.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen2_screen/Screen2View.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Screen3Presenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen3_screen/Screen3Presenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Screen3View.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen3_screen/Screen3View.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/screenPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen_screen/screenPresenter.cpp</locationURI>
@@ -352,6 +372,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Font_verdanab_20_4bpp_0.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/GeneratedFont.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/GeneratedFont.cpp</locationURI>
@@ -372,6 +397,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Kerning_verdanab_20_4bpp.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Table_verdana_10_4bpp.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.cpp</locationURI>
@@ -387,6 +417,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Table_verdanab_20_4bpp.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/UnmappedDataFont.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/UnmappedDataFont.cpp</locationURI>
@@ -395,6 +430,46 @@
 			<name>Application/User/generated/VectorFontRendererBuffers.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/VectorFontRendererBuffers.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Vector_Font_verdana_0.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Font_verdana_0.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Vector_Font_verdanab_0.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Vector_Kerning_verdana.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Kerning_verdana.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Vector_Kerning_verdanab.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Vector_Table_verdana.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Table_verdana.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Vector_Table_verdana_20.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Table_verdana_20.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Vector_Table_verdanab.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Table_verdanab.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Vector_Table_verdanab_20.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/FrontendApplicationBase.cpp</name>
@@ -410,6 +485,16 @@
 			<name>Application/User/generated/Screen1ViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Screen2ViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen2_screen/Screen2ViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Screen3ViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/screenViewBase.cpp</name>

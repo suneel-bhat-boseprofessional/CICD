@@ -86,6 +86,12 @@ TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.o: \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen2_screen/Screen2View.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen2_screen/Screen2ViewBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen2_screen/Screen2Presenter.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen3_screen/Screen3View.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen3_screen/Screen3ViewBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen3_screen/Screen3Presenter.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/texts/include/texts/TextKeysAndLanguages.hpp
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/mvp/MVPApplication.hpp:
@@ -173,4 +179,10 @@ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framewor
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen2_screen/Screen2View.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen2_screen/Screen2ViewBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen2_screen/Screen2Presenter.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen3_screen/Screen3View.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen3_screen/Screen3ViewBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen3_screen/Screen3Presenter.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/texts/include/texts/TextKeysAndLanguages.hpp:

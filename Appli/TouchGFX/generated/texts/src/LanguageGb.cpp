@@ -10,5 +10,9 @@ KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE;
 // Remap all strings
 TEXT_LOCATION_FLASH_PRAGMA
 KEEP extern const uint32_t indicesGb[] TEXT_LOCATION_FLASH_ATTRIBUTE = {
-    0
+    0,   // T___SINGLEUSE_R4RV: "Testing text on the screen for \ndisplay quality check bla bla bla,,,,,,,\nDemo application just for text display"
+    161, // T___SINGLEUSE_UZQM: "Bold Verdana"
+    112, // T___SINGLEUSE_5UDL: "Normal Verdana(V)"
+    146, // T___SINGLEUSE_G7ZO: "Normal Verdana"
+    130  // T___SINGLEUSE_L9UH: "Bold Verdana(V)"
 };

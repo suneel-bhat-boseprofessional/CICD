@@ -1,8 +1,0 @@
-"./Core/Src/extmem_manager.o"
-"./Core/Src/main.o"
-"./Core/Src/stm32n6xx_hal_msp.o"
-"./Core/Src/stm32n6xx_it.o"
-"./Core/Src/syscalls.o"
-"./Core/Src/sysmem.o"
-"./Core/Src/system_stm32n6xx_fsbl.o"
-"./Core/Startup/startup_stm32n645l0hxq_fsbl.o"
