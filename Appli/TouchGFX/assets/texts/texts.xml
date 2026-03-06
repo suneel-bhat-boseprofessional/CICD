@@ -5,23 +5,7 @@
   </Languages>
   <Texts>
     <TextGroup Id="Group1" />
-    <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_R4RV" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Testing text on the screen for &#10;display quality check bla bla bla,,,,,,,&#10;Demo application just for text display</Translation>
-      </Text>
-      <Text Id="__SingleUse_UZQM" Alignment="Left" TypographyId="Typography3">
-        <Translation Language="GB">Bold Verdana</Translation>
-      </Text>
-      <Text Id="__SingleUse_5UDL" Alignment="Left" TypographyId="Typography2">
-        <Translation Language="GB">Normal Verdana(V)</Translation>
-      </Text>
-      <Text Id="__SingleUse_G7ZO" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Normal Verdana</Translation>
-      </Text>
-      <Text Id="__SingleUse_L9UH" Alignment="Left" TypographyId="Typography1">
-        <Translation Language="GB">Bold Verdana(V)</Translation>
-      </Text>
-    </TextGroup>
+    <TextGroup Id="Unsorted" />
   </Texts>
   <Typographies>
     <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />

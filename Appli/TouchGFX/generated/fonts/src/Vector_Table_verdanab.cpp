@@ -4,29 +4,17 @@
 
 FONT_TABLE_LOCATION_FLASH_PRAGMA
 KEEP extern const touchgfx::VectorFontNode vector_glyphs_verdanab[] FONT_TABLE_LOCATION_FLASH_ATTRIBUTE = {
-    {     0, 0x0020,    0,    0,    0,    0,  700,   0,   0 },
-    {     1, 0x0028,  754, 1968, 1556,  193, 1113,   0,   0 },
-    {    49, 0x0029,  754, 1968, 1556,  166, 1113,   0,   0 },
-    {    97, 0x003F, 1004, 1519, 1519,  147, 1263,   0,   0 },
-    {   169, 0x0042, 1274, 1489, 1489,  190, 1560,   0,   0 },
-    {   281, 0x0056, 1516, 1489, 1489,   24, 1564,   0,   0 },
-    {   298, 0x0061, 1121, 1185, 1155,   86, 1368,   0,   0 },
-    {   403, 0x0064, 1172, 1587, 1556,   90, 1432,   0,   0 },
-    {   475, 0x0065, 1188, 1188, 1158,   88, 1360,   0,   0 },
-    {   539, 0x006C,  360, 1556, 1556,  170,  700,   0,   0 },
-    {   550, 0x006E, 1128, 1154, 1154,  170, 1459,   0,   0 },
-    {   600, 0x006F, 1230, 1193, 1158,   88, 1406,   0,   0 },
-    {   678, 0x0072,  814, 1127, 1127,  170, 1018,   0,   0 }
+    {     0, 0x003F, 1004, 1519, 1519,  147, 1263,   0,   0 }
 };
 
     // The VectorFontData accessed by static initializers. Must be located in internal flash.
 KEEP extern const touchgfx::VectorFontData vector_fontData_verdanab = {
-       13, // Number of glyphs
+        1, // Number of glyphs
      2048, // Baseline Height
         0, // Max left
         0, // Max right
         0, // Max above top
-      412, // Max below baseline
+        0, // Max below baseline
        63, // Fallback character
         0  // Ellipsis character
     };
