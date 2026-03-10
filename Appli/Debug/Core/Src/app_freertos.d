@@ -55,7 +55,9 @@ Core/Src/app_freertos.o: ../Core/Src/app_freertos.c \
  C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart.h \
  C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart_ex.h \
  C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/CMSIS/RTOS2/Include/cmsis_os2.h \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/main.h
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/main.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/app_freertos.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/FreeRTOSConfig.h:
@@ -113,3 +115,5 @@ C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32
 C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart_ex.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/CMSIS/RTOS2/Include/cmsis_os2.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/main.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/task.h:

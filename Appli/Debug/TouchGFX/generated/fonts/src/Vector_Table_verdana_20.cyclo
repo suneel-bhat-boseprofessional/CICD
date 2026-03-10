@@ -1,0 +1,6 @@
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Font.hpp:169:13:touchgfx::Font::~Font()	1
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Font.hpp:169:13:virtual touchgfx::Font::~Font()	1
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/fonts/include/fonts/GeneratedFont.hpp:91:7:touchgfx::GeneratedVectorFont::~GeneratedVectorFont()	1
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/fonts/include/fonts/GeneratedFont.hpp:91:7:virtual touchgfx::GeneratedVectorFont::~GeneratedVectorFont()	1
+../TouchGFX/generated/fonts/src/Vector_Table_verdana_20.cpp:24:201:void __tcf_0()	1
+../TouchGFX/generated/fonts/src/Vector_Table_verdana_20.cpp:22:32:touchgfx::GeneratedVectorFont& getFont_vector_verdana_20()	3

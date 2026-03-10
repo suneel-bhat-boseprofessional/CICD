@@ -44,7 +44,18 @@ Core/Src/fan_control.o: ../Core/Src/fan_control.c \
  C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_tim_ex.h \
  C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart.h \
  C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart_ex.h \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/FreeRTOSConfig.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/portable.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM55_NTZ/non_secure/portmacro.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM55_NTZ/non_secure/portmacrocommon.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
+ C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/fan_control.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/main.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal.h:
@@ -91,3 +102,14 @@ C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32
 C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart_ex.h:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/json_parser.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Core/Inc/FreeRTOSConfig.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/portable.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM55_NTZ/non_secure/portmacro.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM55_NTZ/non_secure/portmacrocommon.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
+C:/ST/touchUI_Development/touchUI_Bringup/Middlewares/Third_Party/FreeRTOS/Source/include/list.h:

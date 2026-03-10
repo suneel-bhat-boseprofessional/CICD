@@ -47,15 +47,9 @@ TouchGFX/generated/gui_generated/src/screen_screen/screenViewBase.o: \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen_screen/screenPresenter.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/ModelListener.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollList.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/containers/CustomContainer1.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/containers/CustomContainer1Base.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/images/include/images/BitmapDatabase.hpp
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen_screen/screenViewBase.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/common/FrontendApplication.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp:
@@ -103,12 +97,6 @@ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framewor
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen_screen/screenPresenter.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/ModelListener.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollList.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/containers/CustomContainer1.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/containers/CustomContainer1Base.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Color.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/images/include/images/BitmapDatabase.hpp:

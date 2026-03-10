@@ -5,118 +5,19 @@
         "Name": "screen",
         "Components": [
           {
-            "Type": "ScrollList",
-            "Name": "scrollList1",
-            "Width": 480,
-            "Height": 128,
-            "IsHorizontal": true,
-            "ItemTemplateName": "CustomContainer1",
-            "NumberofItems": 10,
-            "Easing": "Back",
-            "EasingOption": "Out",
-            "SwipeAcceleration": 1.0,
-            "DragAcceleration": 1.0,
-            "OverShootPercentage": 75
-          }
-        ],
-        "Interactions": []
-      },
-      {
-        "Name": "Screen1",
-        "Components": [
-          {
             "Type": "Image",
-            "Name": "boseLogo",
-            "X": 26,
-            "Y": 13,
-            "Width": 429,
-            "Height": 102,
-            "RelativeFilename": "boseLogo.png"
-          },
-          {
-            "Type": "Box",
-            "Name": "colorImage",
-            "Width": 480,
-            "Height": 128,
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Alpha": 0
-          },
-          {
-            "Type": "FlexButton",
-            "Name": "imageChangeBtn",
-            "Width": 480,
-            "Height": 128,
-            "Alpha": 0,
-            "ButtonTrigger": {
-              "Type": "ClickButtonTrigger"
-            },
-            "ButtonStyles": [
-              {
-                "Type": "BoxWithBorderButtonStyle",
-                "Width": 480,
-                "Height": 128,
-                "LockToFlexButtonSize": true,
-                "ColorReleased": {
-                  "Green": 102,
-                  "Blue": 153
-                },
-                "ColorPressed": {
-                  "Green": 153,
-                  "Blue": 204
-                },
-                "ColorBorderReleased": {
-                  "Green": 51,
-                  "Blue": 102
-                },
-                "ColorBorderPressed": {
-                  "Red": 51,
-                  "Green": 102,
-                  "Blue": 153
-                }
-              }
-            ]
-          }
-        ],
-        "Interactions": [
-          {
-            "InteractionName": "changeScreenColor",
-            "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "imageChangeBtn"
-            },
-            "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "changeScreenColor"
-            }
-          }
-        ]
-      }
-    ],
-    "CustomContainerDefinitions": [
-      {
-        "Name": "CustomContainer1",
-        "Width": 480,
-        "Height": 128,
-        "Components": [
-          {
-            "Type": "Button",
-            "Name": "button1",
-            "X": 120,
-            "Y": 39,
-            "Width": 240,
-            "Height": 50,
-            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_pressed.png",
-            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_medium_rounded_normal.png",
-            "Preset": "alternate_theme\\presets\\button\\regular\\height_50\\medium_rounded_normal.json"
+            "Name": "Image1",
+            "X": 211,
+            "Y": 45,
+            "Width": 59,
+            "Height": 39,
+            "RelativeFilename": "Logo.png"
           }
         ],
         "Interactions": []
       }
     ],
+    "CustomContainerDefinitions": [],
     "Name": "touchUI_BringUP",
     "Resolution": {
       "Width": 480,

@@ -23,6 +23,17 @@
 
 extern int notifyTouch;
 
+// Fix: Add required includes for FreeRTOS queue APIs and string functions
+#include <string.h>
+#include "FreeRTOS.h"
+#include "queue.h"
+
+// Fix: Declare uartRxQueue as extern (defined in main.c)
+extern QueueHandle_t uartRxQueue;
+
+// Fix: Define rxBuffer for queue receive
+uint8_t rxBuffer[512];
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -52,7 +63,7 @@ osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
+  .stack_size = 512 * 4
 };
 /* Definitions for TouchGFXTask */
 osThreadId_t TouchGFXTaskHandle;
@@ -134,21 +145,22 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
-   extern  LTDC_HandleTypeDef hltdc;
   /* USER CODE BEGIN defaultTask */
   /* Infinite loop */
   for(;;)
   {
-	//HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
-	//  NVIC_DisableIRQ(EXTI8_IRQn);
-	// if(notifyTouch == 1)
-	//       process_touch_data();
-	//  NVIC_EnableIRQ(EXTI8_IRQn);
-  //   osDelay(100);
-
-//    Manual_FB_Init();
-    osDelay(100);
-//    Manual_FB_DrawTestPattern();
+	  if (uxQueueMessagesWaiting(uartRxQueue) > 0)
+	      {
+	        xQueueReceive(
+	            uartRxQueue,
+	            rxBuffer,
+	            0
+	        );
+          // Process the received message (JSON command)
+          extern void JSON_ProcessMessage(uint8_t *data, uint16_t length);
+          JSON_ProcessMessage(rxBuffer, strlen((char*)rxBuffer));
+	      }
+    osDelay(1);
   }
   /* USER CODE END defaultTask */
 }

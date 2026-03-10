@@ -129,7 +129,8 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
 #define LCD_ON_OFF_GPIO_Port GPIOG
 
 /* USER CODE BEGIN Private defines */
-
+#define RX_BUFFER_SIZE   128
+#define UART_QUEUE_LEN   sizeof(uint8_t)
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

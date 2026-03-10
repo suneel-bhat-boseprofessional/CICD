@@ -7,17 +7,17 @@
 CPP_SRCS += \
 ../TouchGFX/generated/images/src/BitmapDatabase.cpp \
 ../TouchGFX/generated/images/src/SVGDatabase.cpp \
-../TouchGFX/generated/images/src/image_boseLogo.cpp 
+../TouchGFX/generated/images/src/image_Logo.cpp 
 
 OBJS += \
 ./TouchGFX/generated/images/src/BitmapDatabase.o \
 ./TouchGFX/generated/images/src/SVGDatabase.o \
-./TouchGFX/generated/images/src/image_boseLogo.o 
+./TouchGFX/generated/images/src/image_Logo.o 
 
 CPP_DEPS += \
 ./TouchGFX/generated/images/src/BitmapDatabase.d \
 ./TouchGFX/generated/images/src/SVGDatabase.d \
-./TouchGFX/generated/images/src/image_boseLogo.d 
+./TouchGFX/generated/images/src/image_Logo.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -27,7 +27,7 @@ TouchGFX/generated/images/src/%.o TouchGFX/generated/images/src/%.su TouchGFX/ge
 clean: clean-TouchGFX-2f-generated-2f-images-2f-src
 
 clean-TouchGFX-2f-generated-2f-images-2f-src:
-	-$(RM) ./TouchGFX/generated/images/src/BitmapDatabase.cyclo ./TouchGFX/generated/images/src/BitmapDatabase.d ./TouchGFX/generated/images/src/BitmapDatabase.o ./TouchGFX/generated/images/src/BitmapDatabase.su ./TouchGFX/generated/images/src/SVGDatabase.cyclo ./TouchGFX/generated/images/src/SVGDatabase.d ./TouchGFX/generated/images/src/SVGDatabase.o ./TouchGFX/generated/images/src/SVGDatabase.su ./TouchGFX/generated/images/src/image_boseLogo.cyclo ./TouchGFX/generated/images/src/image_boseLogo.d ./TouchGFX/generated/images/src/image_boseLogo.o ./TouchGFX/generated/images/src/image_boseLogo.su
+	-$(RM) ./TouchGFX/generated/images/src/BitmapDatabase.cyclo ./TouchGFX/generated/images/src/BitmapDatabase.d ./TouchGFX/generated/images/src/BitmapDatabase.o ./TouchGFX/generated/images/src/BitmapDatabase.su ./TouchGFX/generated/images/src/SVGDatabase.cyclo ./TouchGFX/generated/images/src/SVGDatabase.d ./TouchGFX/generated/images/src/SVGDatabase.o ./TouchGFX/generated/images/src/SVGDatabase.su ./TouchGFX/generated/images/src/image_Logo.cyclo ./TouchGFX/generated/images/src/image_Logo.d ./TouchGFX/generated/images/src/image_Logo.o ./TouchGFX/generated/images/src/image_Logo.su
 
 .PHONY: clean-TouchGFX-2f-generated-2f-images-2f-src
 

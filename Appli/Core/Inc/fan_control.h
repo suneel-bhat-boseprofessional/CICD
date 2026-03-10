@@ -48,7 +48,39 @@ extern uint8_t uart_rx_buffer[512];
 /* Exported functions prototypes ---------------------------------------------*/
 void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_t tim_channel);
 void FanControl_SetSpeed(uint8_t percent);
-void FanControl_ProcessJSON(uint8_t *data, uint16_t length);
+// Generic JSON message types and helpers
+typedef enum {
+  MSG_TYPE_REQUEST,
+  MSG_TYPE_RESPONSE,
+  MSG_TYPE_EVENT,
+  MSG_TYPE_UNKNOWN
+} MessageType;
+
+typedef enum {
+  STATUS_SUCCESS,
+  STATUS_ERROR,
+  STATUS_UNKNOWN
+} MessageStatus;
+
+typedef struct {
+  int code;
+  char message[64];
+} ErrorInfo;
+
+typedef struct {
+  char action[32];
+  char requestId[32];
+  MessageType type;
+  MessageStatus status;
+  ErrorInfo error;
+  char payload[128]; // raw JSON string of payload
+} GenericMessage;
+
+MessageType ParseMessageType(const char *typeStr);
+MessageStatus ParseStatus(const char *statusStr);
+int ParseGenericMessage(const char *json, GenericMessage *msg);
+void JSON_ProcessMessage(uint8_t *data, uint16_t length);
+void SendGenericResponse(UART_HandleTypeDef *huart, const GenericMessage *msg);
 void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);
 
 /* Generic JSON Helper Functions ---------------------------------------------*/

@@ -28,6 +28,12 @@
 #include <stdlib.h>
 
 extern int notifyTouch;
+// FreeRTOS includes for queue usage
+#include "FreeRTOS.h"
+#include "queue.h"
+
+// UART RX queue handle definition (not extern)
+QueueHandle_t uartRxQueue = NULL;
 #include "stm32n6xx_it.h"
 #include "fan_control.h"
 /* USER CODE END Includes */
@@ -495,13 +501,13 @@ void I2C_DiagnosticCheck(void)
     uint32_t moder_c = GPIOC->MODER;
     uint32_t afrl_c = GPIOC->AFR[0];
     uint32_t otyper_c = GPIOC->OTYPER;
-    uint32_t pupdr_c = GPIOC->PUPDR;
+    // uint32_t pupdr_c = GPIOC->PUPDR; // Unused, suppress warning
     
     /* Check GPIO configuration for PH9 (SCL) */
     uint32_t moder_h = GPIOH->MODER;
     uint32_t afrh_h = GPIOH->AFR[1];  // PH9 is in AFR[1]
     uint32_t otyper_h = GPIOH->OTYPER;
-    uint32_t pupdr_h = GPIOH->PUPDR;
+    // uint32_t pupdr_h = GPIOH->PUPDR; // Unused, suppress warning
     
     printf("\nGPIO Configuration:\n");
     printf("  PC1 (SDA) MODE: 0x%lX %s\n", (moder_c >> 2) & 0x3, 
@@ -776,6 +782,8 @@ int main(void)
    printf("System Clock: %lu Hz, HCLK: %lu Hz\r\n", sysClk, hClk);
 #endif
 
+   //UART message reception queue
+   uartRxQueue = xQueueCreate(10, RX_BUFFER_SIZE);
 
   /* USER CODE END 2 */
 
@@ -1053,7 +1061,8 @@ static void MX_LTDC_Init(void)
   hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AL;
   hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
   hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
-  hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+  //hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+  hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IIPC;
 
   ////////////////////////////////////////////////////
   // QUESTION: The VSYNC Display period in the display datat sheet shows 272, should this be 128????
@@ -1549,7 +1558,7 @@ void Manual_FB_DrawTestPattern(void)
 
  /* MPU Configuration */
 
-void MPU_Config(void)
+__attribute__((unused)) static void MPU_Config(void)
 {
   MPU_Region_InitTypeDef MPU_InitStruct = {0};
   MPU_Attributes_InitTypeDef MPU_AttributesInit = {0};
