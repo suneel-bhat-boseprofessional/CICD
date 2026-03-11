@@ -18,6 +18,11 @@ void zonePresenter::deactivate()
 
 }
 
+void zonePresenter::zoneNamesUpdated()
+{
+    view.zoneNamesUpdated();
+}
+
 void zonePresenter::setSelectedZone(int index)
 {
     model->setSelectedZone(index);

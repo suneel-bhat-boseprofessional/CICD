@@ -1,7 +1,11 @@
-../TouchGFX/gui/src/model/Model.cpp:4:1:Model::Model()	16	static
-../TouchGFX/gui/src/model/Model.cpp:15:6:void Model::bind(ModelListener*)	16	static
-../TouchGFX/gui/src/model/Model.cpp:20:6:void Model::tick()	16	static
-../TouchGFX/gui/src/model/Model.cpp:24:6:void Model::setSelectedZone(int)	16	static
-../TouchGFX/gui/src/model/Model.cpp:29:5:int Model::getSelectedZone()	16	static
-../TouchGFX/gui/src/model/Model.cpp:34:6:void Model::setZoneVolume(int, int)	24	static
-../TouchGFX/gui/src/model/Model.cpp:39:5:int Model::getZoneVolume(int)	16	static
+../TouchGFX/gui/src/model/Model.cpp:16:17:void set_zone_name_c(int, const char*)	16	static
+../TouchGFX/gui/src/model/Model.cpp:26:1:Model::Model()	16	static
+../TouchGFX/gui/src/model/Model.cpp:35:6:void Model::setZoneName(int, const char*)	24	static
+../TouchGFX/gui/src/model/Model.cpp:43:13:const char* Model::getZoneName(int) const	16	static
+../TouchGFX/gui/src/model/Model.cpp:51:6:void Model::setAllZoneNames(const char**, int)	32	static
+../TouchGFX/gui/src/model/Model.cpp:58:6:void Model::bind(ModelListener*)	16	static
+../TouchGFX/gui/src/model/Model.cpp:63:6:void Model::tick()	16	static
+../TouchGFX/gui/src/model/Model.cpp:75:6:void Model::setSelectedZone(int)	16	static
+../TouchGFX/gui/src/model/Model.cpp:80:5:int Model::getSelectedZone()	16	static
+../TouchGFX/gui/src/model/Model.cpp:85:6:void Model::setZoneVolume(int, int)	24	static
+../TouchGFX/gui/src/model/Model.cpp:90:5:int Model::getZoneVolume(int)	16	static

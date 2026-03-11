@@ -16,6 +16,7 @@ public:
     virtual void tearDownScreen();
 
     virtual void scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex);
+    void zoneNamesUpdated();
 
     void zoneSelected(int16_t index);
 

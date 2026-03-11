@@ -23,6 +23,8 @@
 #include <string.h>
 #include <stdio.h>
 
+extern void set_zone_name_c(int idx, const char* name);
+
 #include <stdlib.h> // for atoi
 
 // Fix: Add FreeRTOS includes for QueueHandle_t and queue APIs
@@ -52,7 +54,8 @@ int ParseGenericMessage(const char *json, GenericMessage *msg)
   msg->type = ParseMessageType(buffer);
 
   if (!JSON_GetStringValue(json, "action", msg->action, sizeof(msg->action))) return -1;
-  if (!JSON_GetStringValue(json, "requestId", msg->requestId, sizeof(msg->requestId))) return -1;
+  if (!JSON_GetStringValue(json, "requestId", msg->requestId, sizeof(msg->requestId)))
+    msg->requestId[0] = '\0';
 
   if (JSON_GetStringValue(json, "status", buffer, sizeof(buffer)))
     msg->status = ParseStatus(buffer);
@@ -265,11 +268,6 @@ void FanControl_SetSpeed(uint8_t percent)
   
   // Update PWM duty cycle
   __HAL_TIM_SET_COMPARE(p_htim, tim_pwm_channel, pulse_value);
-  
-  // Send confirmation
-  char msg[50];
-  sprintf(msg, "Fan speed set to %d%% (Pulse: %lu)\r\n", percent, pulse_value);
-  HAL_UART_Transmit(p_huart, (uint8_t*)msg, strlen(msg), 100);
 }
 
 /**
@@ -284,11 +282,21 @@ void FanControl_SetSpeed(uint8_t percent)
 void JSON_ProcessMessage(uint8_t *data, uint16_t length)
 {
     GenericMessage msg;
+  GenericMessage resp;
     if (ParseGenericMessage((char*)data, &msg) != 0)
     {
         HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Invalid JSON\r\n", 21, 100);
         return;
     }
+
+  memset(&resp, 0, sizeof(resp));
+  strncpy(resp.action, msg.action, sizeof(resp.action) - 1);
+  strncpy(resp.requestId, msg.requestId, sizeof(resp.requestId) - 1);
+  resp.type = MSG_TYPE_RESPONSE;
+  resp.status = STATUS_SUCCESS;
+  resp.error.code = 0;
+  resp.error.message[0] = '\0';
+  strncpy(resp.payload, "{}", sizeof(resp.payload) - 1);
 
     switch (msg.type)
     {
@@ -300,18 +308,47 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
                 if (JSON_GetStringValue(msg.payload, "speed", speed, sizeof(speed)))
                 {
                     if (strcmp(speed, "LOW") == 0)
+              {
                         FanControl_SetSpeed(SPEED_LOW_PERCENT);
+                snprintf(resp.payload, sizeof(resp.payload), "{\"speed\":\"LOW\",\"percent\":%d}", SPEED_LOW_PERCENT);
+              }
                     else if (strcmp(speed, "MID") == 0)
+              {
                         FanControl_SetSpeed(SPEED_MID_PERCENT);
+                snprintf(resp.payload, sizeof(resp.payload), "{\"speed\":\"MID\",\"percent\":%d}", SPEED_MID_PERCENT);
+              }
                     else if (strcmp(speed, "HIGH") == 0)
+              {
                         FanControl_SetSpeed(SPEED_HIGH_PERCENT);
+                snprintf(resp.payload, sizeof(resp.payload), "{\"speed\":\"HIGH\",\"percent\":%d}", SPEED_HIGH_PERCENT);
+              }
                     else
+              {
                         HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Invalid speed value\r\n", 29, 100);
+                resp.status = STATUS_ERROR;
+                resp.error.code = 4002;
+                strncpy(resp.error.message, "Invalid speed value", sizeof(resp.error.message) - 1);
+                strncpy(resp.payload, "{\"detail\":\"invalid speed\"}", sizeof(resp.payload) - 1);
+              }
                 }
                 else
                 {
                     HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Missing speed\r\n", 22, 100);
+              resp.status = STATUS_ERROR;
+              resp.error.code = 4001;
+              strncpy(resp.error.message, "Missing speed", sizeof(resp.error.message) - 1);
+              strncpy(resp.payload, "{\"detail\":\"missing speed\"}", sizeof(resp.payload) - 1);
                 }
+
+            SendGenericResponse(p_huart, &resp);
+          }
+          else
+          {
+            resp.status = STATUS_ERROR;
+            resp.error.code = 4004;
+            strncpy(resp.error.message, "Unknown request action", sizeof(resp.error.message) - 1);
+            strncpy(resp.payload, "{\"detail\":\"unsupported request\"}", sizeof(resp.payload) - 1);
+            SendGenericResponse(p_huart, &resp);
             }
             // Add more actions here
             break;
@@ -319,8 +356,62 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
             // Handle response
             break;
         case MSG_TYPE_EVENT:
-            // Handle event
-            break;
+          // Handle event
+          if (strcmp(msg.action, "updateZoneNames") == 0) {
+            // Parse zoneNames array from payload (assume: {"zoneNames":["A","B","C","D"]})
+            jsmn_parser parser;
+            jsmntok_t tokens[JSON_MAX_TOKENS];
+            int token_count;
+            int i, j;
+            char nameBuf[20];
+            int updatedCount = 0;
+
+            jsmn_init(&parser);
+            token_count = jsmn_parse(&parser, msg.payload, strlen(msg.payload), tokens, JSON_MAX_TOKENS);
+            if (token_count < 0) {
+              resp.status = STATUS_ERROR;
+              resp.error.code = 4101;
+              strncpy(resp.error.message, "Invalid payload JSON", sizeof(resp.error.message) - 1);
+              strncpy(resp.payload, "{\"event\":\"updateZoneNames\",\"updatedZones\":0}", sizeof(resp.payload) - 1);
+              SendGenericResponse(p_huart, &resp);
+              break;
+            }
+            // Find the "zoneNames" key
+            for (i = 1; i < token_count; i++) {
+              if (tokens[i].type == JSMN_STRING) {
+                int key_len = tokens[i].end - tokens[i].start;
+                if (strncmp(msg.payload + tokens[i].start, "zoneNames", key_len) == 0 && key_len == 9) {
+                  // Next token should be the array
+                  jsmntok_t *arr = &tokens[i+1];
+                  if (arr->type == JSMN_ARRAY) {
+                    int arr_size = arr->size;
+                    for (j = 0; j < arr_size && j < 4; j++) {
+                      jsmntok_t *val = &tokens[i+2+j];
+                      int len = val->end - val->start;
+                      if (len > 19) len = 19;
+                      strncpy(nameBuf, msg.payload + val->start, len);
+                      nameBuf[len] = '\0';
+                      set_zone_name_c(j, nameBuf);
+                      updatedCount++;
+                    }
+                  }
+                  break;
+                }
+              }
+            }
+
+            snprintf(resp.payload, sizeof(resp.payload),
+                     "{\"event\":\"updateZoneNames\",\"updatedZones\":%d}", updatedCount);
+            SendGenericResponse(p_huart, &resp);
+          }
+          else {
+            resp.status = STATUS_ERROR;
+            resp.error.code = 4104;
+            strncpy(resp.error.message, "Unknown event action", sizeof(resp.error.message) - 1);
+            strncpy(resp.payload, "{\"detail\":\"unsupported event\"}", sizeof(resp.payload) - 1);
+            SendGenericResponse(p_huart, &resp);
+          }
+          break;
         default:
             HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Unknown type\r\n", 21, 100);
             break;

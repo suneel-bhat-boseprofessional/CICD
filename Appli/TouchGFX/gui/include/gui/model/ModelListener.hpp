@@ -14,6 +14,9 @@ public:
     {
         model = m;
     }
+
+    // Called from Model::tick when zone names changed from backend events.
+    virtual void zoneNamesUpdated() {}
 protected:
     Model* model;
 };

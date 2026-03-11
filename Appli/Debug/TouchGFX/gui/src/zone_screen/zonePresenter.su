@@ -1,6 +1,7 @@
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/ModelListener.hpp:9:5:ModelListener::ModelListener()	16	static
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:ModelListener::~ModelListener()	16	static
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/ModelListener.hpp:11:13:virtual ModelListener::~ModelListener()	16	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/ModelListener.hpp:19:18:virtual void ModelListener::zoneNamesUpdated()	16	static
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:37:18:virtual void touchgfx::Presenter::activate()	16	static
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:47:18:virtual void touchgfx::Presenter::deactivate()	16	static
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/mvp/Presenter.hpp:52:13:touchgfx::Presenter::~Presenter()	16	static
@@ -9,6 +10,7 @@ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framewor
 ../TouchGFX/gui/src/zone_screen/zonePresenter.cpp:5:1:zonePresenter::zonePresenter(zoneView&)	16	static
 ../TouchGFX/gui/src/zone_screen/zonePresenter.cpp:11:6:virtual void zonePresenter::activate()	16	static
 ../TouchGFX/gui/src/zone_screen/zonePresenter.cpp:16:6:virtual void zonePresenter::deactivate()	16	static
-../TouchGFX/gui/src/zone_screen/zonePresenter.cpp:21:6:void zonePresenter::setSelectedZone(int)	16	static
+../TouchGFX/gui/src/zone_screen/zonePresenter.cpp:21:6:virtual void zonePresenter::zoneNamesUpdated()	16	static
+../TouchGFX/gui/src/zone_screen/zonePresenter.cpp:26:6:void zonePresenter::setSelectedZone(int)	16	static
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone_screen/zonePresenter.hpp:11:7:zonePresenter::~zonePresenter()	16	static
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone_screen/zonePresenter.hpp:11:7:virtual zonePresenter::~zonePresenter()	16	static
