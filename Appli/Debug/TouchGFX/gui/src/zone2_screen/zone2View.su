@@ -1,0 +1,10 @@
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:104:18:virtual void touchgfx::Screen::afterTransition()	16	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:115:18:virtual void touchgfx::Screen::tearDownScreen()	16	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:144:18:virtual void touchgfx::Screen::handleTickEvent()	16	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:154:18:virtual void touchgfx::Screen::handleKeyEvent(uint8_t)	16	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone2_screen/zone2View.hpp:11:13:zone2View::~zone2View()	16	static
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone2_screen/zone2View.hpp:11:13:virtual zone2View::~zone2View()	16	static
+../TouchGFX/gui/src/zone2_screen/zone2View.cpp:3:1:zone2View::zone2View()	16	static
+../TouchGFX/gui/src/zone2_screen/zone2View.cpp:8:6:virtual void zone2View::setupScreen()	24	static
+../TouchGFX/gui/src/zone2_screen/zone2View.cpp:18:6:virtual void zone2View::tearDownScreen()	16	static
+../TouchGFX/gui/src/zone2_screen/zone2View.cpp:23:6:void zone2View::volumeChanged(int)	24	static

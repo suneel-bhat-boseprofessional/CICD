@@ -17,19 +17,17 @@ struct Typography
     static const touchgfx::FontId LARGE = 1;
     static const touchgfx::FontId SMALL = 2;
     static const touchgfx::FontId TYPOGRAPHY1 = 3;
-    static const touchgfx::FontId TYPOGRAPHY2 = 4;
-    static const touchgfx::FontId TYPOGRAPHY3 = 5;
+    static const touchgfx::FontId VER = 4;
 };
 
 struct TypographyFontIndex
 {
-    static const touchgfx::FontId DEFAULT = 0;     // verdana_20_4bpp
+    static const touchgfx::FontId DEFAULT = 0;     // verdana_18_4bpp
     static const touchgfx::FontId LARGE = 1;       // verdana_40_4bpp
     static const touchgfx::FontId SMALL = 2;       // verdana_10_4bpp
-    static const touchgfx::FontId TYPOGRAPHY1 = 3; // Vector_verdanab_20
-    static const touchgfx::FontId TYPOGRAPHY2 = 4; // Vector_verdana_20
-    static const touchgfx::FontId TYPOGRAPHY3 = 5; // verdanab_20_4bpp
-    static const uint16_t NUMBER_OF_FONTS = 6;
+    static const touchgfx::FontId TYPOGRAPHY1 = 3; // verdanab_14_4bpp
+    static const touchgfx::FontId VER = 4;         // EaseStandard_Bold_17_4bpp
+    static const uint16_t NUMBER_OF_FONTS = 5;
 };
 
 class ApplicationFontProvider : public touchgfx::FontProvider

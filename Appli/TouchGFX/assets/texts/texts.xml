@@ -4,15 +4,67 @@
     <Language Id="GB" />
   </Languages>
   <Texts>
-    <TextGroup Id="Group1" />
-    <TextGroup Id="Unsorted" />
+    <TextGroup Id="Group1">
+      <Text Id="T_GYM" Alignment="Left" TypographyId="Typography1">
+        <Translation Language="GB">Gym</Translation>
+      </Text>
+      <Text Id="T_DRIVING" Alignment="Left" TypographyId="Typography1">
+        <Translation Language="GB">Driving</Translation>
+      </Text>
+      <Text Id="T_BEDROOM" Alignment="Left" TypographyId="Typography1">
+        <Translation Language="GB">Bedroom</Translation>
+      </Text>
+      <Text Id="T_WORK" Alignment="Left" TypographyId="Typography1">
+        <Translation Language="GB">Work</Translation>
+      </Text>
+      <Text Id="T_SETUP" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Setup</Translation>
+      </Text>
+      <Text Id="T_NOTIFICATIONS" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Notifications</Translation>
+      </Text>
+      <Text Id="T_BLUETOOTH" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Bluetooth</Translation>
+      </Text>
+      <Text Id="T_SETTINGS" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Settings</Translation>
+      </Text>
+      <Text Id="T_INOUT" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">In/out</Translation>
+      </Text>
+      <Text Id="T_METERS" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Meters</Translation>
+      </Text>
+      <Text Id="T_ZONE" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Zones</Translation>
+      </Text>
+    </TextGroup>
+    <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_SJEH" Alignment="Center" TypographyId="Typography1">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_WIY1" Alignment="Center" TypographyId="Typography1">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_EY0F" Alignment="Center" TypographyId="Typography1">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_ZOX7" Alignment="Center" TypographyId="Typography1">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_IQHY" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Reception</Translation>
+      </Text>
+      <Text Id="__SingleUse_6SET" Alignment="Center" TypographyId="Typography1">
+        <Translation Language="GB">&lt;Value&gt;</Translation>
+      </Text>
+    </TextGroup>
   </Texts>
   <Typographies>
-    <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Default" Font="verdana.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Typography1" Font="verdanab.ttf" Size="20" Bpp="4" IsVector="yes" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Typography2" Font="verdana.ttf" Size="20" Bpp="4" IsVector="yes" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Typography3" Font="verdanab.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Typography1" Font="verdanab.ttf" Size="14" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="a-z,A-Z" />
+    <Typography Id="ver" Font="EaseStandard-Bold.ttf" Size="17" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="a-z,A-Z" />
   </Typographies>
 </TextDatabase>

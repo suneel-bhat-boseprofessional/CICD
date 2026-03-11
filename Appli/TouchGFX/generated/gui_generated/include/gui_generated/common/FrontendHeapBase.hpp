@@ -12,8 +12,14 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
-#include <gui/screen_screen/screenView.hpp>
-#include <gui/screen_screen/screenPresenter.hpp>
+#include <gui/launch_screen/launchView.hpp>
+#include <gui/launch_screen/launchPresenter.hpp>
+#include <gui/home_screen/homeView.hpp>
+#include <gui/home_screen/homePresenter.hpp>
+#include <gui/zone_screen/zoneView.hpp>
+#include <gui/zone_screen/zonePresenter.hpp>
+#include <gui/zone2_screen/zone2View.hpp>
+#include <gui/zone2_screen/zone2Presenter.hpp>
 
 
 /**
@@ -36,8 +42,11 @@ public:
      * A list of all view types. Must end with meta::Nil.
      * @note All view types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< screenView,
-            touchgfx::meta::Nil
+    typedef touchgfx::meta::TypeList< launchView,
+            touchgfx::meta::TypeList< homeView,
+            touchgfx::meta::TypeList< zoneView,
+            touchgfx::meta::TypeList< zone2View,
+            touchgfx::meta::Nil > > >
             > GeneratedViewTypes;
 
     /**
@@ -49,8 +58,11 @@ public:
      * A list of all presenter types. Must end with meta::Nil.
      * @note All presenter types used in the application MUST be added to this list!
      */
-    typedef touchgfx::meta::TypeList< screenPresenter,
-            touchgfx::meta::Nil
+    typedef touchgfx::meta::TypeList< launchPresenter,
+            touchgfx::meta::TypeList< homePresenter,
+            touchgfx::meta::TypeList< zonePresenter,
+            touchgfx::meta::TypeList< zone2Presenter,
+            touchgfx::meta::Nil > > >
             > GeneratedPresenterTypes;
 
     /**
@@ -73,7 +85,7 @@ public:
 
     virtual void gotoStartScreen(FrontendApplication& app)
     {
-        app.gotoscreenScreenNoTransition();
+        app.gotolaunchScreenNoTransition();
     }
 protected:
     FrontendHeapBase(touchgfx::AbstractPartition& presenters, touchgfx::AbstractPartition& views, touchgfx::AbstractPartition& transitions, FrontendApplication& app)

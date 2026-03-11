@@ -52,13 +52,53 @@ TouchGFX/target/generated/TouchGFXConfiguration.o: \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/FrameBufferListener.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Gestures.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/Model.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen_screen/screenView.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen_screen/screenViewBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/launch_screen/launchView.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/launch_screen/launchViewBase.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/mvp/View.hpp \
- C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen_screen/screenPresenter.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/launch_screen/launchPresenter.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/ModelListener.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/home_screen/homeView.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/home_screen/homeViewBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/home_screen/homePresenter.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollList.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/containers/CustomContainer1.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/containers/CustomContainer1Base.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/ClickListener.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone_screen/zoneView.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/zone_screen/zoneViewBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone_screen/zonePresenter.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/containers/CustomContainer2.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/containers/CustomContainer2Base.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/Buttons.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/AnimatedImageButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/AbstractButtonContainer.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AnimatedImage.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/BoxWithBorderButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/BoxWithBorder.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/ClickButtonTrigger.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/IconButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/ImageButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/RepeatButtonTrigger.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TextButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TiledImageButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/ToggleButtonTrigger.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TouchButtonTrigger.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone2_screen/zone2View.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/zone2_screen/zone2ViewBase.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone2_screen/zone2Presenter.hpp \
+ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/Slider.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/images/include/BitmapDatabase.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/images/include/images/BitmapDatabase.hpp \
  C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/VectorFontRendererImpl.hpp \
@@ -184,13 +224,53 @@ C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framewor
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/FrameBufferListener.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Gestures.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/Model.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen_screen/screenView.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/screen_screen/screenViewBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/launch_screen/launchView.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/launch_screen/launchViewBase.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/screen_screen/screenPresenter.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/launch_screen/launchPresenter.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/model/ModelListener.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/home_screen/homeView.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/home_screen/homeViewBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/home_screen/homePresenter.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollList.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/DrawableList.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/scrollers/ScrollBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/EasingEquations.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/containers/CustomContainer1.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/containers/CustomContainer1Base.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Button.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/mixins/ClickListener.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone_screen/zoneView.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/zone_screen/zoneViewBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone_screen/zonePresenter.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/containers/CustomContainer2.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/containers/CustomContainer2Base.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/Buttons.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/AnimatedImageButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/AbstractButtonContainer.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AnimatedImage.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/BoxWithBorderButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/BoxWithBorder.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/ClickButtonTrigger.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/IconButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/ImageButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/RepeatButtonTrigger.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TextButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TiledImageButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TiledImage.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/ToggleButtonTrigger.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TouchButtonTrigger.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone2_screen/zone2View.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/gui_generated/include/gui_generated/zone2_screen/zone2ViewBase.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/gui/include/gui/zone2_screen/zone2Presenter.hpp:
+C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/containers/Slider.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/images/include/BitmapDatabase.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/generated/images/include/images/BitmapDatabase.hpp:
 C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/touchgfx/VectorFontRendererImpl.hpp:

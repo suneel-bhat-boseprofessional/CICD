@@ -282,19 +282,59 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/common/FrontendApplication.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/CustomContainer1.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer1.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/CustomContainer2.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer2.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/homePresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/home_screen/homePresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/homeView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/home_screen/homeView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/launchPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/launch_screen/launchPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/launchView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/launch_screen/launchView.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/Model.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/model/Model.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/gui/screenPresenter.cpp</name>
+			<name>Application/User/gui/zone2Presenter.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen_screen/screenPresenter.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/zone2_screen/zone2Presenter.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/gui/screenView.cpp</name>
+			<name>Application/User/gui/zone2View.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen_screen/screenView.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/zone2_screen/zone2View.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/zonePresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/zone_screen/zonePresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/zoneView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/zone_screen/zoneView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/ApplicationFontProvider.cpp</name>
@@ -322,14 +362,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/FontCache.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Font_EaseStandard_Bold_17_4bpp_0.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Font_verdana_10_4bpp_0.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Font_verdana_20_4bpp_0.cpp</name>
+			<name>Application/User/generated/Font_verdana_18_4bpp_0.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdana_20_4bpp_0.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdana_18_4bpp_0.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Font_verdana_40_4bpp_0.cpp</name>
@@ -337,9 +382,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Font_verdanab_20_4bpp_0.cpp</name>
+			<name>Application/User/generated/Font_verdanab_14_4bpp_0.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/GeneratedFont.cpp</name>
@@ -347,14 +392,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/GeneratedFont.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Kerning_EaseStandard_Bold_17_4bpp.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_17_4bpp.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Kerning_verdana_10_4bpp.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Kerning_verdana_20_4bpp.cpp</name>
+			<name>Application/User/generated/Kerning_verdana_18_4bpp.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdana_20_4bpp.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdana_18_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Kerning_verdana_40_4bpp.cpp</name>
@@ -362,9 +412,14 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Kerning_verdanab_20_4bpp.cpp</name>
+			<name>Application/User/generated/Kerning_verdanab_14_4bpp.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Table_EaseStandard_Bold_17_4bpp.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_17_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Table_verdana_10_4bpp.cpp</name>
@@ -372,9 +427,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Table_verdana_20_4bpp.cpp</name>
+			<name>Application/User/generated/Table_verdana_18_4bpp.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdana_20_4bpp.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdana_18_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Table_verdana_40_4bpp.cpp</name>
@@ -382,9 +437,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Table_verdanab_20_4bpp.cpp</name>
+			<name>Application/User/generated/Table_verdanab_14_4bpp.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/UnmappedDataFont.cpp</name>
@@ -397,54 +452,39 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/VectorFontRendererBuffers.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Vector_Font_verdana_0.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Font_verdana_0.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/Vector_Font_verdanab_0.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/Vector_Kerning_verdana.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Kerning_verdana.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/Vector_Kerning_verdanab.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/Vector_Table_verdana.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Table_verdana.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/Vector_Table_verdana_20.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Table_verdana_20.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/Vector_Table_verdanab.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Table_verdanab.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/Vector_Table_verdanab_20.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/FrontendApplicationBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/screenViewBase.cpp</name>
+			<name>Application/User/generated/CustomContainer1Base.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen_screen/screenViewBase.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/CustomContainer2Base.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer2Base.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/homeViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/launchViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/launch_screen/launchViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/zone2ViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/zone2_screen/zone2ViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/zoneViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/zone_screen/zoneViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/BitmapDatabase.cpp</name>
@@ -457,9 +497,139 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/SVGDatabase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Bluetooth_image.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Bluetooth_image.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Down.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Down.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Ellipse_1954.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Ellipse_1954.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Ellipse_1955.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Ellipse_1955.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Footer_100.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Footer_100.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Footer_Text.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Footer_Text.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Frame.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Grabber.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Grabber.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Group_1.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Group_1.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Inout_image.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Inout_image.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Logo.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Logo.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Meters_image.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Meters_image.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Notifications_image.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Notifications_image.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Rectangle_1.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Rectangle_1.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Rectangle_2.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Rectangle_2.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Settings_image.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Settings_image.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Setup_image.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Setup_image.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Slider.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Slider.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Up.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Up.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Vector.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Vector.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Volume_green.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Volume_green.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Volumeslider_bg.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Volumeslider_bg.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Zone.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Zone.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_left.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_left.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_right.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_right.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_volume-off.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_volume-off.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_zones.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_zones.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/LanguageGb.cpp</name>

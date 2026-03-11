@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../TouchGFX/gui/src/containers/CustomContainer1.cpp 
+../TouchGFX/gui/src/containers/CustomContainer1.cpp \
+../TouchGFX/gui/src/containers/CustomContainer2.cpp 
 
 OBJS += \
-./TouchGFX/gui/src/containers/CustomContainer1.o 
+./TouchGFX/gui/src/containers/CustomContainer1.o \
+./TouchGFX/gui/src/containers/CustomContainer2.o 
 
 CPP_DEPS += \
-./TouchGFX/gui/src/containers/CustomContainer1.d 
+./TouchGFX/gui/src/containers/CustomContainer1.d \
+./TouchGFX/gui/src/containers/CustomContainer2.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ TouchGFX/gui/src/containers/%.o TouchGFX/gui/src/containers/%.su TouchGFX/gui/sr
 clean: clean-TouchGFX-2f-gui-2f-src-2f-containers
 
 clean-TouchGFX-2f-gui-2f-src-2f-containers:
-	-$(RM) ./TouchGFX/gui/src/containers/CustomContainer1.cyclo ./TouchGFX/gui/src/containers/CustomContainer1.d ./TouchGFX/gui/src/containers/CustomContainer1.o ./TouchGFX/gui/src/containers/CustomContainer1.su
+	-$(RM) ./TouchGFX/gui/src/containers/CustomContainer1.cyclo ./TouchGFX/gui/src/containers/CustomContainer1.d ./TouchGFX/gui/src/containers/CustomContainer1.o ./TouchGFX/gui/src/containers/CustomContainer1.su ./TouchGFX/gui/src/containers/CustomContainer2.cyclo ./TouchGFX/gui/src/containers/CustomContainer2.d ./TouchGFX/gui/src/containers/CustomContainer2.o ./TouchGFX/gui/src/containers/CustomContainer2.su
 
 .PHONY: clean-TouchGFX-2f-gui-2f-src-2f-containers
 
