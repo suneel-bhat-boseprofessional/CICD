@@ -28,7 +28,7 @@ Model::Model() : modelListener(0)
     selectedZone = 0;
     // initial volumes for zones
     zoneVolume[0] = 50;
-    zoneVolume[1] = 80;
+    zoneVolume[1] = 59;
     zoneVolume[2] = 30;
     zoneVolume[3] = 0;
 }
