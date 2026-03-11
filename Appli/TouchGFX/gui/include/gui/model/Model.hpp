@@ -8,14 +8,22 @@ class Model
 public:
     Model();
 
-    void bind(ModelListener* listener)
-    {
-        modelListener = listener;
-    }
-
+    void bind(ModelListener* listener);
     void tick();
-protected:
+
+    // selected zone
+    void setSelectedZone(int index);
+    int getSelectedZone();
+
+    // volume per zone
+    void setZoneVolume(int index, int value);
+    int getZoneVolume(int index);
+
+private:
     ModelListener* modelListener;
+
+    int selectedZone;
+    int zoneVolume[4];
 };
 
-#endif // MODEL_HPP
+#endif

@@ -10,29 +10,24 @@ CPP_SRCS += \
 ../TouchGFX/generated/fonts/src/CompressedFontCache.cpp \
 ../TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.cpp \
 ../TouchGFX/generated/fonts/src/FontCache.cpp \
+../TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.cpp \
 ../TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.cpp \
-../TouchGFX/generated/fonts/src/Font_verdana_20_4bpp_0.cpp \
+../TouchGFX/generated/fonts/src/Font_verdana_18_4bpp_0.cpp \
 ../TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.cpp \
-../TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.cpp \
+../TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.cpp \
 ../TouchGFX/generated/fonts/src/GeneratedFont.cpp \
+../TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_17_4bpp.cpp \
 ../TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.cpp \
-../TouchGFX/generated/fonts/src/Kerning_verdana_20_4bpp.cpp \
+../TouchGFX/generated/fonts/src/Kerning_verdana_18_4bpp.cpp \
 ../TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.cpp \
-../TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.cpp \
+../TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.cpp \
+../TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_17_4bpp.cpp \
 ../TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.cpp \
-../TouchGFX/generated/fonts/src/Table_verdana_20_4bpp.cpp \
+../TouchGFX/generated/fonts/src/Table_verdana_18_4bpp.cpp \
 ../TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.cpp \
-../TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.cpp \
+../TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.cpp \
 ../TouchGFX/generated/fonts/src/UnmappedDataFont.cpp \
-../TouchGFX/generated/fonts/src/VectorFontRendererBuffers.cpp \
-../TouchGFX/generated/fonts/src/Vector_Font_verdana_0.cpp \
-../TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.cpp \
-../TouchGFX/generated/fonts/src/Vector_Kerning_verdana.cpp \
-../TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.cpp \
-../TouchGFX/generated/fonts/src/Vector_Table_verdana.cpp \
-../TouchGFX/generated/fonts/src/Vector_Table_verdana_20.cpp \
-../TouchGFX/generated/fonts/src/Vector_Table_verdanab.cpp \
-../TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.cpp 
+../TouchGFX/generated/fonts/src/VectorFontRendererBuffers.cpp 
 
 OBJS += \
 ./TouchGFX/generated/fonts/src/ApplicationFontProvider.o \
@@ -40,29 +35,24 @@ OBJS += \
 ./TouchGFX/generated/fonts/src/CompressedFontCache.o \
 ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.o \
 ./TouchGFX/generated/fonts/src/FontCache.o \
+./TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.o \
 ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.o \
-./TouchGFX/generated/fonts/src/Font_verdana_20_4bpp_0.o \
+./TouchGFX/generated/fonts/src/Font_verdana_18_4bpp_0.o \
 ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.o \
-./TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.o \
+./TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.o \
 ./TouchGFX/generated/fonts/src/GeneratedFont.o \
+./TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_17_4bpp.o \
 ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.o \
-./TouchGFX/generated/fonts/src/Kerning_verdana_20_4bpp.o \
+./TouchGFX/generated/fonts/src/Kerning_verdana_18_4bpp.o \
 ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.o \
-./TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.o \
+./TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.o \
+./TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_17_4bpp.o \
 ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.o \
-./TouchGFX/generated/fonts/src/Table_verdana_20_4bpp.o \
+./TouchGFX/generated/fonts/src/Table_verdana_18_4bpp.o \
 ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.o \
-./TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.o \
+./TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.o \
 ./TouchGFX/generated/fonts/src/UnmappedDataFont.o \
-./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.o \
-./TouchGFX/generated/fonts/src/Vector_Font_verdana_0.o \
-./TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.o \
-./TouchGFX/generated/fonts/src/Vector_Kerning_verdana.o \
-./TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.o \
-./TouchGFX/generated/fonts/src/Vector_Table_verdana.o \
-./TouchGFX/generated/fonts/src/Vector_Table_verdana_20.o \
-./TouchGFX/generated/fonts/src/Vector_Table_verdanab.o \
-./TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.o 
+./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.o 
 
 CPP_DEPS += \
 ./TouchGFX/generated/fonts/src/ApplicationFontProvider.d \
@@ -70,29 +60,24 @@ CPP_DEPS += \
 ./TouchGFX/generated/fonts/src/CompressedFontCache.d \
 ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.d \
 ./TouchGFX/generated/fonts/src/FontCache.d \
+./TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.d \
 ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.d \
-./TouchGFX/generated/fonts/src/Font_verdana_20_4bpp_0.d \
+./TouchGFX/generated/fonts/src/Font_verdana_18_4bpp_0.d \
 ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.d \
-./TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.d \
+./TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.d \
 ./TouchGFX/generated/fonts/src/GeneratedFont.d \
+./TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_17_4bpp.d \
 ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.d \
-./TouchGFX/generated/fonts/src/Kerning_verdana_20_4bpp.d \
+./TouchGFX/generated/fonts/src/Kerning_verdana_18_4bpp.d \
 ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.d \
-./TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.d \
+./TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.d \
+./TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_17_4bpp.d \
 ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.d \
-./TouchGFX/generated/fonts/src/Table_verdana_20_4bpp.d \
+./TouchGFX/generated/fonts/src/Table_verdana_18_4bpp.d \
 ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.d \
-./TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.d \
+./TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.d \
 ./TouchGFX/generated/fonts/src/UnmappedDataFont.d \
-./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.d \
-./TouchGFX/generated/fonts/src/Vector_Font_verdana_0.d \
-./TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.d \
-./TouchGFX/generated/fonts/src/Vector_Kerning_verdana.d \
-./TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.d \
-./TouchGFX/generated/fonts/src/Vector_Table_verdana.d \
-./TouchGFX/generated/fonts/src/Vector_Table_verdana_20.d \
-./TouchGFX/generated/fonts/src/Vector_Table_verdanab.d \
-./TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.d 
+./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -102,8 +87,7 @@ TouchGFX/generated/fonts/src/%.o TouchGFX/generated/fonts/src/%.su TouchGFX/gene
 clean: clean-TouchGFX-2f-generated-2f-fonts-2f-src
 
 clean-TouchGFX-2f-generated-2f-fonts-2f-src:
-	-$(RM) ./TouchGFX/generated/fonts/src/ApplicationFontProvider.cyclo ./TouchGFX/generated/fonts/src/ApplicationFontProvider.d ./TouchGFX/generated/fonts/src/ApplicationFontProvider.o ./TouchGFX/generated/fonts/src/ApplicationFontProvider.su ./TouchGFX/generated/fonts/src/CachedFont.cyclo ./TouchGFX/generated/fonts/src/CachedFont.d ./TouchGFX/generated/fonts/src/CachedFont.o ./TouchGFX/generated/fonts/src/CachedFont.su ./TouchGFX/generated/fonts/src/CompressedFontCache.cyclo ./TouchGFX/generated/fonts/src/CompressedFontCache.d ./TouchGFX/generated/fonts/src/CompressedFontCache.o ./TouchGFX/generated/fonts/src/CompressedFontCache.su ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.cyclo ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.d ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.o ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.su ./TouchGFX/generated/fonts/src/FontCache.cyclo ./TouchGFX/generated/fonts/src/FontCache.d ./TouchGFX/generated/fonts/src/FontCache.o ./TouchGFX/generated/fonts/src/FontCache.su ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.su ./TouchGFX/generated/fonts/src/Font_verdana_20_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_verdana_20_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_verdana_20_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_verdana_20_4bpp_0.su ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.su ./TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_verdanab_20_4bpp_0.su ./TouchGFX/generated/fonts/src/GeneratedFont.cyclo ./TouchGFX/generated/fonts/src/GeneratedFont.d ./TouchGFX/generated/fonts/src/GeneratedFont.o ./TouchGFX/generated/fonts/src/GeneratedFont.su ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.su ./TouchGFX/generated/fonts/src/Kerning_verdana_20_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_verdana_20_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_verdana_20_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_verdana_20_4bpp.su ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.su ./TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_verdanab_20_4bpp.su ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.d ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.o ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.su ./TouchGFX/generated/fonts/src/Table_verdana_20_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_verdana_20_4bpp.d ./TouchGFX/generated/fonts/src/Table_verdana_20_4bpp.o ./TouchGFX/generated/fonts/src/Table_verdana_20_4bpp.su ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.d ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.o ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.su ./TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.d ./TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.o ./TouchGFX/generated/fonts/src/Table_verdanab_20_4bpp.su ./TouchGFX/generated/fonts/src/UnmappedDataFont.cyclo ./TouchGFX/generated/fonts/src/UnmappedDataFont.d ./TouchGFX/generated/fonts/src/UnmappedDataFont.o ./TouchGFX/generated/fonts/src/UnmappedDataFont.su ./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.cyclo ./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.d ./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.o ./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.su ./TouchGFX/generated/fonts/src/Vector_Font_verdana_0.cyclo ./TouchGFX/generated/fonts/src/Vector_Font_verdana_0.d ./TouchGFX/generated/fonts/src/Vector_Font_verdana_0.o ./TouchGFX/generated/fonts/src/Vector_Font_verdana_0.su ./TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.cyclo ./TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.d ./TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.o ./TouchGFX/generated/fonts/src/Vector_Font_verdanab_0.su ./TouchGFX/generated/fonts/src/Vector_Kerning_verdana.cyclo ./TouchGFX/generated/fonts/src/Vector_Kerning_verdana.d ./TouchGFX/generated/fonts/src/Vector_Kerning_verdana.o ./TouchGFX/generated/fonts/src/Vector_Kerning_verdana.su ./TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.cyclo ./TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.d ./TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.o ./TouchGFX/generated/fonts/src/Vector_Kerning_verdanab.su ./TouchGFX/generated/fonts/src/Vector_Table_verdana.cyclo ./TouchGFX/generated/fonts/src/Vector_Table_verdana.d ./TouchGFX/generated/fonts/src/Vector_Table_verdana.o ./TouchGFX/generated/fonts/src/Vector_Table_verdana.su ./TouchGFX/generated/fonts/src/Vector_Table_verdana_20.cyclo ./TouchGFX/generated/fonts/src/Vector_Table_verdana_20.d ./TouchGFX/generated/fonts/src/Vector_Table_verdana_20.o ./TouchGFX/generated/fonts/src/Vector_Table_verdana_20.su ./TouchGFX/generated/fonts/src/Vector_Table_verdanab.cyclo ./TouchGFX/generated/fonts/src/Vector_Table_verdanab.d
-	-$(RM) ./TouchGFX/generated/fonts/src/Vector_Table_verdanab.o ./TouchGFX/generated/fonts/src/Vector_Table_verdanab.su ./TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.cyclo ./TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.d ./TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.o ./TouchGFX/generated/fonts/src/Vector_Table_verdanab_20.su
+	-$(RM) ./TouchGFX/generated/fonts/src/ApplicationFontProvider.cyclo ./TouchGFX/generated/fonts/src/ApplicationFontProvider.d ./TouchGFX/generated/fonts/src/ApplicationFontProvider.o ./TouchGFX/generated/fonts/src/ApplicationFontProvider.su ./TouchGFX/generated/fonts/src/CachedFont.cyclo ./TouchGFX/generated/fonts/src/CachedFont.d ./TouchGFX/generated/fonts/src/CachedFont.o ./TouchGFX/generated/fonts/src/CachedFont.su ./TouchGFX/generated/fonts/src/CompressedFontCache.cyclo ./TouchGFX/generated/fonts/src/CompressedFontCache.d ./TouchGFX/generated/fonts/src/CompressedFontCache.o ./TouchGFX/generated/fonts/src/CompressedFontCache.su ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.cyclo ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.d ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.o ./TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.su ./TouchGFX/generated/fonts/src/FontCache.cyclo ./TouchGFX/generated/fonts/src/FontCache.d ./TouchGFX/generated/fonts/src/FontCache.o ./TouchGFX/generated/fonts/src/FontCache.su ./TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.su ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_verdana_10_4bpp_0.su ./TouchGFX/generated/fonts/src/Font_verdana_18_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_verdana_18_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_verdana_18_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_verdana_18_4bpp_0.su ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.su ./TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.cyclo ./TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.d ./TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.o ./TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.su ./TouchGFX/generated/fonts/src/GeneratedFont.cyclo ./TouchGFX/generated/fonts/src/GeneratedFont.d ./TouchGFX/generated/fonts/src/GeneratedFont.o ./TouchGFX/generated/fonts/src/GeneratedFont.su ./TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_17_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_17_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_17_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_17_4bpp.su ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_verdana_10_4bpp.su ./TouchGFX/generated/fonts/src/Kerning_verdana_18_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_verdana_18_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_verdana_18_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_verdana_18_4bpp.su ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.su ./TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.cyclo ./TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.d ./TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.o ./TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.su ./TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_17_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_17_4bpp.d ./TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_17_4bpp.o ./TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_17_4bpp.su ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.d ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.o ./TouchGFX/generated/fonts/src/Table_verdana_10_4bpp.su ./TouchGFX/generated/fonts/src/Table_verdana_18_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_verdana_18_4bpp.d ./TouchGFX/generated/fonts/src/Table_verdana_18_4bpp.o ./TouchGFX/generated/fonts/src/Table_verdana_18_4bpp.su ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.d ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.o ./TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.su ./TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.cyclo ./TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.d ./TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.o ./TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.su ./TouchGFX/generated/fonts/src/UnmappedDataFont.cyclo ./TouchGFX/generated/fonts/src/UnmappedDataFont.d ./TouchGFX/generated/fonts/src/UnmappedDataFont.o ./TouchGFX/generated/fonts/src/UnmappedDataFont.su ./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.cyclo ./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.d ./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.o ./TouchGFX/generated/fonts/src/VectorFontRendererBuffers.su
 
 .PHONY: clean-TouchGFX-2f-generated-2f-fonts-2f-src
 

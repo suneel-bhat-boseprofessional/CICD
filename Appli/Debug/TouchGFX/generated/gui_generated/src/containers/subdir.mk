@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.cpp 
+../TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.cpp \
+../TouchGFX/generated/gui_generated/src/containers/CustomContainer2Base.cpp 
 
 OBJS += \
-./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.o 
+./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.o \
+./TouchGFX/generated/gui_generated/src/containers/CustomContainer2Base.o 
 
 CPP_DEPS += \
-./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.d 
+./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.d \
+./TouchGFX/generated/gui_generated/src/containers/CustomContainer2Base.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ TouchGFX/generated/gui_generated/src/containers/%.o TouchGFX/generated/gui_gener
 clean: clean-TouchGFX-2f-generated-2f-gui_generated-2f-src-2f-containers
 
 clean-TouchGFX-2f-generated-2f-gui_generated-2f-src-2f-containers:
-	-$(RM) ./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.cyclo ./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.d ./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.o ./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.su
+	-$(RM) ./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.cyclo ./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.d ./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.o ./TouchGFX/generated/gui_generated/src/containers/CustomContainer1Base.su ./TouchGFX/generated/gui_generated/src/containers/CustomContainer2Base.cyclo ./TouchGFX/generated/gui_generated/src/containers/CustomContainer2Base.d ./TouchGFX/generated/gui_generated/src/containers/CustomContainer2Base.o ./TouchGFX/generated/gui_generated/src/containers/CustomContainer2Base.su
 
 .PHONY: clean-TouchGFX-2f-generated-2f-gui_generated-2f-src-2f-containers
 
