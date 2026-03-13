@@ -1,9 +1,0 @@
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/platform/driver/touch/TouchController.hpp:30:13:touchgfx::TouchController::~TouchController()	1
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/Middlewares/ST/touchgfx/framework/include/platform/driver/touch/TouchController.hpp:30:13:virtual touchgfx::TouchController::~TouchController()	1
-C:/ST/touchUI_Development/touchUI_Bringup/Drivers/CMSIS/Include/core_cm55.h:3918:22:void __NVIC_EnableIRQ(IRQn_Type)	2
-C:/ST/touchUI_Development/touchUI_Bringup/Drivers/CMSIS/Include/core_cm55.h:3956:22:void __NVIC_DisableIRQ(IRQn_Type)	2
-../TouchGFX/target/STM32TouchController.cpp:44:10:void HAL_GPIO_EXTI_Falling_Callback(uint16_t)	2
-../TouchGFX/target/STM32TouchController.cpp:63:6:virtual void STM32TouchController::init()	1
-../TouchGFX/target/STM32TouchController.cpp:71:6:virtual bool STM32TouchController::sampleTouch(int32_t&, int32_t&)	4
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/target/STM32TouchController.hpp:38:7:STM32TouchController::~STM32TouchController()	1
-C:/ST/touchUI_Development/touchUI_Bringup/Appli/TouchGFX/target/STM32TouchController.hpp:38:7:virtual STM32TouchController::~STM32TouchController()	1
