@@ -16,14 +16,14 @@ public:
 
     void setAction(GenericCallback<int>& callback);
 
-    void function1();
+    void function1(int zone);
 
 protected:
 
     int itemIndex;
+
     GenericCallback<int>* action;
 
-    // Wildcard buffers for 4 elements
     Unicode::UnicodeChar zoneName[4][20];
 };
 

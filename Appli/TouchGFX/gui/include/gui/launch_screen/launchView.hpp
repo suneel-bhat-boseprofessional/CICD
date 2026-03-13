@@ -14,4 +14,4 @@ public:
 protected:
 };
 
-#endif // LAUNCHVIEW_HPP
+#endif
