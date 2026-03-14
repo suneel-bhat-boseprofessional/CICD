@@ -1,7 +1,7 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 
-int zoneCount = 6;     // CHANGE ZONE COUNT HERE
+int zoneCount = 9;     // CHANGE ZONE COUNT HERE
 
 Model::Model() :
     modelListener(0),

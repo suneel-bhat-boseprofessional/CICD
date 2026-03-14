@@ -15,14 +15,9 @@ void zoneView::setupScreen()
 
     scrollList1.setNumberOfItems(containers);
 
-    scrollList1.invalidate();
-
-    scrollList1.setPosition(scrollList1.getX(),
-                            scrollList1.getY(),
-                            scrollList1.getWidth(),
-                            scrollList1.getHeight());
-
     scrollList1.setItemSelectedCallback(zoneSelectedCallback);
+
+    scrollList1.invalidate();
 }
 
 void zoneView::tearDownScreen()
@@ -38,10 +33,17 @@ void zoneView::scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex)
 void zoneView::zoneSelected(int16_t index)
 {
     presenter->setSelectedZone(index);
+
     application().gotozone2ScreenNoTransition();
 }
 
 void zoneView::zoneNamesUpdated()
 {
+    int containers = (zoneCount + 3) / 4;
+
+    scrollList1.setNumberOfItems(0);
+    scrollList1.invalidate();
+
+    scrollList1.setNumberOfItems(containers);
     scrollList1.invalidate();
 }
