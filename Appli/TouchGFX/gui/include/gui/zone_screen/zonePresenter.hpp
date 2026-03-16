@@ -17,7 +17,6 @@ public:
     virtual void deactivate();
     virtual void zoneNamesUpdated();
 
-    // zone selection
     void setSelectedZone(int index);
 
 private:

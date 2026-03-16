@@ -1,6 +1,5 @@
 #include <gui/zone_screen/zoneView.hpp>
-
-extern int zoneCount;
+#include <gui/model/Model.hpp>
 
 zoneView::zoneView() :
     zoneSelectedCallback(this, &zoneView::zoneSelected)
@@ -15,8 +14,6 @@ void zoneView::setupScreen()
 
     scrollList1.setNumberOfItems(containers);
 
-    scrollList1.setItemSelectedCallback(zoneSelectedCallback);
-
     scrollList1.invalidate();
 }
 
@@ -28,22 +25,16 @@ void zoneView::tearDownScreen()
 void zoneView::scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex)
 {
     item.setListElements(itemIndex);
+    item.setAction(zoneSelectedCallback);
 }
 
-void zoneView::zoneSelected(int16_t index)
+void zoneView::zoneSelected(int index)
 {
     presenter->setSelectedZone(index);
-
     application().gotozone2ScreenNoTransition();
 }
 
 void zoneView::zoneNamesUpdated()
 {
-    int containers = (zoneCount + 3) / 4;
-
-    scrollList1.setNumberOfItems(0);
-    scrollList1.invalidate();
-
-    scrollList1.setNumberOfItems(containers);
     scrollList1.invalidate();
 }

@@ -1,10 +1,6 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include <touchgfx/Unicode.hpp>
-
-#define MAX_ZONES 20
-
 extern int zoneCount;
 
 class ModelListener;
@@ -14,24 +10,41 @@ class Model
 public:
     Model();
 
-    void bind(ModelListener* listener);
+    void bind(ModelListener* listener)
+    {
+        modelListener = listener;
+    }
 
     void tick();
 
-    int getSelectedZone();
     void setSelectedZone(int index);
+    int getSelectedZone();
 
-    int getZoneVolume(int index);
     void setZoneVolume(int index, int value);
+    int getZoneVolume(int index);
 
-private:
+    void setZoneName(int index, const char* name);
+    const char* getZoneName(int index);
+
+    volatile bool zoneNamesChanged;   // ← ADD flag
+
+protected:
     ModelListener* modelListener;
-
     int selectedZone;
-
-    int zoneVolume[MAX_ZONES];
+    int zoneVolumes[16];
+    char zoneNames[16][32];
 };
 
-extern "C" void set_zone_name_c(int index, const char* name);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void set_zone_name_c(int idx, const char* name);
+
+#ifdef __cplusplus
+}
+#endif
+
+extern Model* modelInstance;
 
 #endif

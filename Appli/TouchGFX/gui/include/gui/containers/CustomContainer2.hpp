@@ -13,18 +13,17 @@ public:
     CustomContainer2();
 
     void setListElements(int item);
-
     void setAction(GenericCallback<int>& callback);
-
-    void function1(int zone);
+    void handleButtonPress(const touchgfx::AbstractButton& src);
 
 protected:
-
     int itemIndex;
-
     GenericCallback<int>* action;
-
     Unicode::UnicodeChar zoneName[4][20];
+
+    // our own callback — separate from base class one
+    touchgfx::Callback<CustomContainer2,
+        const touchgfx::AbstractButton&> myButtonCallback;
 };
 
 #endif

@@ -16,14 +16,13 @@ public:
     virtual void tearDownScreen();
 
     void scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex);
-    void zoneSelected(int16_t index);
+
+    void zoneSelected(int index);
 
     void zoneNamesUpdated();
 
 protected:
-
-    touchgfx::Callback<zoneView, int16_t> zoneSelectedCallback;
-
+    touchgfx::Callback<zoneView, int> zoneSelectedCallback;
 };
 
 #endif

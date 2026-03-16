@@ -5,17 +5,14 @@
 zone2Presenter::zone2Presenter(zone2View& v)
     : view(v)
 {
-
 }
 
 void zone2Presenter::activate()
 {
-
 }
 
 void zone2Presenter::deactivate()
 {
-
 }
 
 int zone2Presenter::getSelectedZone()
@@ -25,10 +22,10 @@ int zone2Presenter::getSelectedZone()
 
 int zone2Presenter::getZoneVolume(int index)
 {
-    return model->getZoneVolume(index);
+    return model->getZoneVolume(index);   // ← removed __
 }
 
 void zone2Presenter::setZoneVolume(int index, int value)
 {
-    model->setZoneVolume(index, value);
+    model->setZoneVolume(index, value);   // ← removed __
 }
