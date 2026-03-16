@@ -566,8 +566,8 @@
           {
             "Type": "Button",
             "Name": "button3",
-            "X": 344,
-            "Y": 27,
+            "X": 240,
+            "Y": 29,
             "Width": 71,
             "Height": 47,
             "Pressed": "Group 1.png",
@@ -576,8 +576,8 @@
           {
             "Type": "Button",
             "Name": "button4",
-            "X": 240,
-            "Y": 28,
+            "X": 344,
+            "Y": 29,
             "Width": 70,
             "Height": 46,
             "Pressed": "zones.png",
