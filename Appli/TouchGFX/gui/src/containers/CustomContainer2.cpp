@@ -65,10 +65,23 @@ void CustomContainer2::setListElements(int item)
     for(int i = 0; i < 4; i++)
     {
         int zoneIndex = base + i;
+        const char* configuredName = 0;
 
         if(zoneIndex < zoneCount)
         {
-            Unicode::snprintf(zoneName[i], 20, "Zone %d", zoneIndex + 1);
+            if(modelInstance != 0)
+            {
+                configuredName = modelInstance->getZoneName(zoneIndex);
+            }
+
+            if(configuredName != 0 && configuredName[0] != '\0')
+            {
+                Unicode::fromUTF8((const uint8_t*)configuredName, zoneName[i], 20);
+            }
+            else
+            {
+                Unicode::snprintf(zoneName[i], 20, "Zone %d", zoneIndex + 1);
+            }
 
             if(i == 0)
             {

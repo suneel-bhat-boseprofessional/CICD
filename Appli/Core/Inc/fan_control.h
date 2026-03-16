@@ -30,9 +30,9 @@ extern "C" {
 #include "main.h"
 
 /* Exported defines ----------------------------------------------------------*/
-#define UART_RX_BUFFER_SIZE 128
+#define UART_RX_BUFFER_SIZE RX_BUFFER_SIZE
 #define PWM_PERIOD 1279
-#define JSON_MAX_TOKENS 16  // Maximum number of JSON tokens to parse
+#define JSON_MAX_TOKENS 32  // Maximum number of JSON tokens to parse
 
 /* Fan speed percentages */
 #define SPEED_LOW_PERCENT   30
@@ -43,7 +43,7 @@ extern "C" {
 
 
 /* Exported variables --------------------------------------------------------*/
-extern uint8_t uart_rx_buffer[512];
+extern uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
 
 /* Exported functions prototypes ---------------------------------------------*/
 void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_t tim_channel);
@@ -73,7 +73,7 @@ typedef struct {
   MessageType type;
   MessageStatus status;
   ErrorInfo error;
-  char payload[128]; // raw JSON string of payload
+  char payload[256]; // raw JSON string of payload
 } GenericMessage;
 
 MessageType ParseMessageType(const char *typeStr);

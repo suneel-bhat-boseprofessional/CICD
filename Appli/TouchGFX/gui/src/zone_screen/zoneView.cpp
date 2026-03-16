@@ -13,6 +13,12 @@ void zoneView::setupScreen()
     int containers = (zoneCount + 3) / 4;
 
     scrollList1.setNumberOfItems(containers);
+    scrollList1.initialize();
+
+    for (int i = 0; i < scrollList1ListItems.getNumberOfDrawables(); i++)
+    {
+        scrollList1.itemChanged(i);
+    }
 
     scrollList1.invalidate();
 }
@@ -36,5 +42,14 @@ void zoneView::zoneSelected(int index)
 
 void zoneView::zoneNamesUpdated()
 {
+    int containers = (zoneCount + 3) / 4;
+    scrollList1.setNumberOfItems(containers);
+    scrollList1.initialize();
+
+    for (int i = 0; i < scrollList1ListItems.getNumberOfDrawables(); i++)
+    {
+        scrollList1.itemChanged(i);
+    }
+
     scrollList1.invalidate();
 }

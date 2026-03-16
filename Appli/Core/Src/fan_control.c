@@ -24,6 +24,7 @@
 #include <stdio.h>
 
 extern void set_zone_name_c(int idx, const char* name);
+extern void set_zone_count_c(int count);
 
 #include <stdlib.h> // for atoi
 
@@ -105,7 +106,7 @@ void SendGenericResponse(UART_HandleTypeDef *huart, const GenericMessage *msg)
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-uint8_t uart_rx_buffer[512];
+uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
 
 
 // Module handles - set during initialization
@@ -358,13 +359,17 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
         case MSG_TYPE_EVENT:
           // Handle event
           if (strcmp(msg.action, "updateZoneNames") == 0) {
-            // Parse zoneNames array from payload (assume: {"zoneNames":["A","B","C","D"]})
+            // Parse payload (supports {"zoneCount":N,"zoneNames":[...]})
             jsmn_parser parser;
             jsmntok_t tokens[JSON_MAX_TOKENS];
             int token_count;
-            int i, j;
-            char nameBuf[20];
+            int i;
+            char nameBuf[64];
+            char zoneCountBuf[12];
             int updatedCount = 0;
+            int requestedZoneCount = -1;
+            int appliedZoneCount = -1;
+            int zoneNamesFound = 0;
 
             jsmn_init(&parser);
             token_count = jsmn_parse(&parser, msg.payload, strlen(msg.payload), tokens, JSON_MAX_TOKENS);
@@ -376,19 +381,51 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
               SendGenericResponse(p_huart, &resp);
               break;
             }
+
+            if (JSON_GetStringValue(msg.payload, "zoneCount", zoneCountBuf, sizeof(zoneCountBuf))) {
+              requestedZoneCount = atoi(zoneCountBuf);
+              if (requestedZoneCount < 0) {
+                requestedZoneCount = 0;
+              }
+              set_zone_count_c(requestedZoneCount);
+              appliedZoneCount = requestedZoneCount;
+            }
+
             // Find the "zoneNames" key
-            for (i = 1; i < token_count; i++) {
+            for (i = 1; i < token_count - 1; i++) {
               if (tokens[i].type == JSMN_STRING) {
                 int key_len = tokens[i].end - tokens[i].start;
                 if (strncmp(msg.payload + tokens[i].start, "zoneNames", key_len) == 0 && key_len == 9) {
                   // Next token should be the array
-                  jsmntok_t *arr = &tokens[i+1];
+                  jsmntok_t *arr = &tokens[i + 1];
                   if (arr->type == JSMN_ARRAY) {
                     int arr_size = arr->size;
-                    for (j = 0; j < arr_size && j < 4; j++) {
-                      jsmntok_t *val = &tokens[i+2+j];
+                    int maxApply = arr_size;
+                    int valueTokIdx = i + 2;
+                    int j;
+
+                    zoneNamesFound = 1;
+                    if (requestedZoneCount >= 0 && requestedZoneCount < maxApply) {
+                      maxApply = requestedZoneCount;
+                    }
+
+                    if (requestedZoneCount < 0) {
+                      set_zone_count_c(arr_size);
+                      appliedZoneCount = arr_size;
+                    }
+
+                    for (j = 0; j < arr_size && valueTokIdx < token_count; j++, valueTokIdx++) {
+                      jsmntok_t *val = &tokens[valueTokIdx];
                       int len = val->end - val->start;
-                      if (len > 19) len = 19;
+
+                      if (j >= maxApply || val->type != JSMN_STRING) {
+                        continue;
+                      }
+
+                      if (len > (int)sizeof(nameBuf) - 1) {
+                        len = (int)sizeof(nameBuf) - 1;
+                      }
+
                       strncpy(nameBuf, msg.payload + val->start, len);
                       nameBuf[len] = '\0';
                       set_zone_name_c(j, nameBuf);
@@ -400,8 +437,19 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
               }
             }
 
+            if (requestedZoneCount < 0 && !zoneNamesFound) {
+              resp.status = STATUS_ERROR;
+              resp.error.code = 4102;
+              strncpy(resp.error.message, "Missing zone config", sizeof(resp.error.message) - 1);
+              strncpy(resp.payload, "{\"detail\":\"zoneCount or zoneNames required\"}", sizeof(resp.payload) - 1);
+              SendGenericResponse(p_huart, &resp);
+              break;
+            }
+
             snprintf(resp.payload, sizeof(resp.payload),
-                     "{\"event\":\"updateZoneNames\",\"updatedZones\":%d}", updatedCount);
+                     "{\"event\":\"updateZoneNames\",\"zoneCount\":%d,\"updatedZones\":%d}",
+                     (appliedZoneCount >= 0) ? appliedZoneCount : updatedCount,
+                     updatedCount);
             SendGenericResponse(p_huart, &resp);
           }
           else {

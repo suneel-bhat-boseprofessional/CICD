@@ -32,7 +32,7 @@ extern int notifyTouch;
 extern QueueHandle_t uartRxQueue;
 
 // Fix: Define rxBuffer for queue receive
-uint8_t rxBuffer[512];
+uint8_t rxBuffer[RX_BUFFER_SIZE];
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -63,7 +63,7 @@ osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 512 * 4
+  .stack_size = 1024 * 4
 };
 /* Definitions for TouchGFXTask */
 osThreadId_t TouchGFXTaskHandle;

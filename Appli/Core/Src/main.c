@@ -1696,7 +1696,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
     // Use the same buffer as fan_control.c
-    extern uint8_t uart_rx_buffer[512];
+  extern uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
     FanControl_UART_RxIdleCallback(huart, uart_rx_buffer, Size);
 }
 
