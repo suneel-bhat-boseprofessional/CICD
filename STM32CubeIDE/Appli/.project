@@ -362,6 +362,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/FontCache.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Font_EaseStandard_Bold_16_4bpp_0.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_16_4bpp_0.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Font_EaseStandard_Bold_17_4bpp_0.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_17_4bpp_0.cpp</locationURI>
@@ -382,14 +387,14 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdana_40_4bpp_0.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Font_verdanab_14_4bpp_0.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_verdanab_14_4bpp_0.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/GeneratedFont.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/GeneratedFont.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Kerning_EaseStandard_Bold_16_4bpp.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_16_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Kerning_EaseStandard_Bold_17_4bpp.cpp</name>
@@ -412,9 +417,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdana_40_4bpp.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Kerning_verdanab_14_4bpp.cpp</name>
+			<name>Application/User/generated/Table_EaseStandard_Bold_16_4bpp.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_verdanab_14_4bpp.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_16_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Table_EaseStandard_Bold_17_4bpp.cpp</name>
@@ -435,11 +440,6 @@
 			<name>Application/User/generated/Table_verdana_40_4bpp.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/Table_verdanab_14_4bpp.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_verdanab_14_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/UnmappedDataFont.cpp</name>
@@ -532,6 +532,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Frame_48.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_48.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Frame_49.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_49.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Grabber.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Grabber.cpp</locationURI>
@@ -607,11 +617,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Volumeslider_bg.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_Zone.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Zone.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_left.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_left.cpp</locationURI>
@@ -625,6 +630,11 @@
 			<name>Application/User/generated/image_volume-off.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_volume-off.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_zone.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_zone.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_zones.cpp</name>
