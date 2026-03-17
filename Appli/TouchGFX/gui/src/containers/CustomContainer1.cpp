@@ -3,8 +3,7 @@
 
 CustomContainer1::CustomContainer1() :
     itemIndex(-1),
-    action(0),
-    isDragging(false)
+    action(0)
 {
 }
 
@@ -65,30 +64,10 @@ void CustomContainer1::setAction(GenericCallback<int>& callback)
 {
     action = &callback;
 }
-
 void CustomContainer1::function1()
 {
-    if (isDragging)
-    {
-        isDragging = false;
-        return;
-    }
-
     if(action && action->isValid())
     {
         action->execute(itemIndex);
-    }
-}
-
-void CustomContainer1::handleDragEvent(const touchgfx::DragEvent& evt)
-{
-    if (evt.getType() == touchgfx::DragEvent::DRAGGED)
-    {
-        isDragging = true;
-    }
-
-    if (getParent())
-    {
-        getParent()->handleDragEvent(evt);
     }
 }
