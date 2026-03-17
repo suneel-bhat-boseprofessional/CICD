@@ -64,7 +64,7 @@
     <Typography Id="Default" Font="verdana.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Typography1" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="a-z,A-Z" />
+    <Typography Id="Typography1" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="/" WildcardCharacterRanges="a-z,A-Z" />
     <Typography Id="ver" Font="EaseStandard-Bold.ttf" Size="17" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="a-z,A-Z" />
   </Typographies>
 </TextDatabase>

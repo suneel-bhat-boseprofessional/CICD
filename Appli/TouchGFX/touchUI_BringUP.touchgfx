@@ -35,7 +35,7 @@
           {
             "Type": "ScrollList",
             "Name": "scrollList1",
-            "X": 20,
+            "X": 24,
             "Y": 4,
             "Width": 432,
             "Height": 128,
@@ -78,7 +78,7 @@
           {
             "Type": "ScrollList",
             "Name": "scrollList1",
-            "X": 20,
+            "X": 24,
             "Y": 4,
             "Width": 429,
             "Height": 121,
