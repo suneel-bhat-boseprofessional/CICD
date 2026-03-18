@@ -16,6 +16,9 @@ public:
     void setAction(GenericCallback<int>& callback);
     void handleButtonPress(const touchgfx::AbstractButton& src);
 
+    virtual void handleDragEvent(const touchgfx::DragEvent& event);
+    virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
+
 protected:
     int itemIndex;
     GenericCallback<int>* action;

@@ -5,6 +5,8 @@
 #include <gui/zone_screen/zonePresenter.hpp>
 #include <touchgfx/Callback.hpp>
 #include <gui/containers/CustomContainer2.hpp>
+#include <touchgfx/events/DragEvent.hpp>
+#include <touchgfx/events/GestureEvent.hpp>
 
 class zoneView : public zoneViewBase
 {
@@ -21,8 +23,12 @@ public:
 
     void zoneNamesUpdated();
 
+    virtual void handleDragEvent(const touchgfx::DragEvent& event);
+    virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
+
 protected:
     touchgfx::Callback<zoneView, int> zoneSelectedCallback;
+    bool scrollOccurred;
 };
 
 #endif

@@ -2,13 +2,15 @@
 #include <gui/model/Model.hpp>
 
 zoneView::zoneView() :
-    zoneSelectedCallback(this, &zoneView::zoneSelected)
+    zoneSelectedCallback(this, &zoneView::zoneSelected),
+    scrollOccurred(false)
 {
 }
 
 void zoneView::setupScreen()
 {
     zoneViewBase::setupScreen();
+    scrollOccurred = false;
 
     int containers = (zoneCount + 3) / 4;
 
@@ -36,6 +38,12 @@ void zoneView::scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex)
 
 void zoneView::zoneSelected(int index)
 {
+    if(scrollOccurred)
+    {
+        scrollOccurred = false;
+        return;
+    }
+
     presenter->setSelectedZone(index);
     application().gotozone2ScreenNoTransition();
 }
@@ -52,4 +60,16 @@ void zoneView::zoneNamesUpdated()
     }
 
     scrollList1.invalidate();
+}
+
+void zoneView::handleDragEvent(const touchgfx::DragEvent& event)
+{
+    scrollOccurred = true;
+    scrollList1.handleDragEvent(event);
+}
+
+void zoneView::handleGestureEvent(const touchgfx::GestureEvent& event)
+{
+    scrollOccurred = true;
+    scrollList1.handleGestureEvent(event);
 }

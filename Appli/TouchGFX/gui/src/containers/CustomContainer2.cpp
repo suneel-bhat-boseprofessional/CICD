@@ -155,3 +155,19 @@ void CustomContainer2::handleButtonPress(const touchgfx::AbstractButton& src)
         action->execute(realZone);
     }
 }
+
+void CustomContainer2::handleDragEvent(const touchgfx::DragEvent& event)
+{
+    if(parent)
+    {
+        parent->handleDragEvent(event);
+    }
+}
+
+void CustomContainer2::handleGestureEvent(const touchgfx::GestureEvent& event)
+{
+    if(parent)
+    {
+        parent->handleGestureEvent(event);
+    }
+}
