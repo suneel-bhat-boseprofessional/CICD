@@ -26,6 +26,14 @@ private:
     bool isDragging;
 
     touchgfx::Unicode::UnicodeChar textArea1Buffer[20];
+
+    // Our own button callback to replace the base class one
+    touchgfx::Callback<CustomContainer1, const touchgfx::AbstractButton&> myButtonCallback;
+    void myButtonCallbackHandler(const touchgfx::AbstractButton& src);
+
+    // Dummy callback that does nothing — assigned during drag
+    touchgfx::Callback<CustomContainer1, const touchgfx::AbstractButton&> dummyCallback;
+    void dummyCallbackHandler(const touchgfx::AbstractButton& src) {}
 };
 
 #endif

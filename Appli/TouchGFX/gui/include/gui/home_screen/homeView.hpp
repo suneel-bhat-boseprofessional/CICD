@@ -26,6 +26,7 @@ public:
 
 private:
     touchgfx::Callback<homeView, int> itemSelectedCallback;
+    bool scrollOccurred;
 };
 
 #endif

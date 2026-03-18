@@ -4,8 +4,12 @@
 CustomContainer1::CustomContainer1() :
     itemIndex(-1),
     action(0),
-    isDragging(false)
+    isDragging(false),
+    myButtonCallback(this, &CustomContainer1::myButtonCallbackHandler),
+    dummyCallback(this, &CustomContainer1::dummyCallbackHandler)
 {
+    // Replace base class button callback with our own from the start
+    button1.setAction(myButtonCallback);
 }
 
 void CustomContainer1::setListElements(int item)
@@ -66,6 +70,15 @@ void CustomContainer1::setAction(GenericCallback<int>& callback)
     action = &callback;
 }
 
+void CustomContainer1::myButtonCallbackHandler(const touchgfx::AbstractButton& src)
+{
+    // This replaces buttonCallbackHandler from base — calls function1 only if not dragging
+    if(!isDragging)
+    {
+        function1();
+    }
+}
+
 void CustomContainer1::function1()
 {
     if(action && action->isValid())
@@ -76,35 +89,25 @@ void CustomContainer1::function1()
 
 void CustomContainer1::handleClickEvent(const touchgfx::ClickEvent& event)
 {
-    isDragging = false;
+    if(event.getType() == touchgfx::ClickEvent::PRESSED)
+    {
+        isDragging = false;
+        button1.setAction(myButtonCallback);
+    }
 
-    if (event.getType() == touchgfx::ClickEvent::RELEASED && !isDragging)
-    {
-        // Normal click — let base handle it
-        CustomContainer1Base::handleClickEvent(event);
-    }
-    else if (event.getType() == touchgfx::ClickEvent::CANCEL)
-    {
-        // Touch was cancelled (e.g. drag started) — don't fire button
-        button1.invalidate();
-    }
-    else
-    {
-        CustomContainer1Base::handleClickEvent(event);
-    }
+    CustomContainer1Base::handleClickEvent(event);
 }
 
 void CustomContainer1::handleDragEvent(const touchgfx::DragEvent& event)
 {
-    isDragging = true;
+    if(!isDragging)
+    {
+        isDragging = true;
+        // Swap to dummy callback so button can never fire function1
+        button1.setAction(dummyCallback);
+    }
 
-    // Cancel the button pressed state visually
-    touchgfx::ClickEvent cancelEvent(touchgfx::ClickEvent::CANCEL, event.getNewX(), event.getNewY());
-    button1.handleClickEvent(cancelEvent);
-    button1.invalidate();
-
-    // Forward drag to parent scroll list
-    if (parent)
+    if(parent)
     {
         parent->handleDragEvent(event);
     }
@@ -112,9 +115,7 @@ void CustomContainer1::handleDragEvent(const touchgfx::DragEvent& event)
 
 void CustomContainer1::handleGestureEvent(const touchgfx::GestureEvent& event)
 {
-    isDragging = true;
-
-    if (parent)
+    if(parent)
     {
         parent->handleGestureEvent(event);
     }

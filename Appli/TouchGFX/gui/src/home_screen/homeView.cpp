@@ -1,13 +1,15 @@
 #include <gui/home_screen/homeView.hpp>
 
 homeView::homeView() :
-    itemSelectedCallback(this, &homeView::itemSelected)
+    itemSelectedCallback(this, &homeView::itemSelected),
+    scrollOccurred(false)
 {
 }
 
 void homeView::setupScreen()
 {
     homeViewBase::setupScreen();
+    scrollOccurred = false;
 }
 
 void homeView::tearDownScreen()
@@ -23,6 +25,13 @@ void homeView::scrollList1UpdateItem(CustomContainer1& item, int16_t itemIndex)
 
 void homeView::itemSelected(int index)
 {
+    // Block navigation if a scroll/drag happened
+    if(scrollOccurred)
+    {
+        scrollOccurred = false;
+        return;
+    }
+
     if(index == 0)
     {
         application().gotozoneScreenNoTransition();
@@ -31,10 +40,12 @@ void homeView::itemSelected(int index)
 
 void homeView::handleDragEvent(const touchgfx::DragEvent& event)
 {
+    scrollOccurred = true;
     scrollList1.handleDragEvent(event);
 }
 
 void homeView::handleGestureEvent(const touchgfx::GestureEvent& event)
 {
+    scrollOccurred = true;
     scrollList1.handleGestureEvent(event);
 }
