@@ -16,9 +16,14 @@ public:
 
     virtual void function1();
 
+    virtual void handleDragEvent(const touchgfx::DragEvent& event);
+    virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
+    virtual void handleClickEvent(const touchgfx::ClickEvent& event);
+
 private:
     int itemIndex;
     touchgfx::GenericCallback<int>* action;
+    bool isDragging;
 
     touchgfx::Unicode::UnicodeChar textArea1Buffer[20];
 };

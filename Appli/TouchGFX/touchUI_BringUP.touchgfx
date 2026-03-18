@@ -46,8 +46,7 @@
             "EasingOption": "Out",
             "SwipeAcceleration": 1.0,
             "DragAcceleration": 1.0,
-            "OverShootPercentage": 75,
-            "Clickable": true
+            "OverShootPercentage": 75
           },
           {
             "Type": "ScalableImage",

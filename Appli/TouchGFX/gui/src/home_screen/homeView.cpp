@@ -28,3 +28,13 @@ void homeView::itemSelected(int index)
         application().gotozoneScreenNoTransition();
     }
 }
+
+void homeView::handleDragEvent(const touchgfx::DragEvent& event)
+{
+    scrollList1.handleDragEvent(event);
+}
+
+void homeView::handleGestureEvent(const touchgfx::GestureEvent& event)
+{
+    scrollList1.handleGestureEvent(event);
+}
