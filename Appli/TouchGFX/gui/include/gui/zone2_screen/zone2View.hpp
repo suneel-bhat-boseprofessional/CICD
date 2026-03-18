@@ -3,6 +3,8 @@
 
 #include <gui_generated/zone2_screen/zone2ViewBase.hpp>
 #include <gui/zone2_screen/zone2Presenter.hpp>
+#include <touchgfx/containers/Slider.hpp>
+#include <touchgfx/Unicode.hpp>
 
 class zone2View : public zone2ViewBase
 {
@@ -16,6 +18,11 @@ public:
     void volumeChanged(int value);
 
 protected:
+    touchgfx::Callback<zone2View, const touchgfx::Slider&, int> sliderCallback;
+    void sliderValueChanged(const touchgfx::Slider& slider, int value);
+
+    touchgfx::Unicode::UnicodeChar volumeBuffer[8];
+    touchgfx::Unicode::UnicodeChar zoneNameBuffer[32];
 };
 
 #endif

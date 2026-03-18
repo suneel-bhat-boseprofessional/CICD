@@ -15,6 +15,7 @@ public:
     void setListElements(int item);
     void setAction(GenericCallback<int>& callback);
     void handleButtonPress(const touchgfx::AbstractButton& src);
+    void refreshVolumes();
 
     virtual void handleDragEvent(const touchgfx::DragEvent& event);
     virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
@@ -23,8 +24,8 @@ protected:
     int itemIndex;
     GenericCallback<int>* action;
     Unicode::UnicodeChar zoneName[4][20];
+    Unicode::UnicodeChar volumeText[4][8];
 
-    // our own callback — separate from base class one
     touchgfx::Callback<CustomContainer2,
         const touchgfx::AbstractButton&> myButtonCallback;
 };

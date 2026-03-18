@@ -22,10 +22,10 @@ int zone2Presenter::getSelectedZone()
 
 int zone2Presenter::getZoneVolume(int index)
 {
-    return model->getZoneVolume(index);   // ← removed __
+    return model->getZoneVolume(index);
 }
 
 void zone2Presenter::setZoneVolume(int index, int value)
 {
-    model->setZoneVolume(index, value);   // ← removed __
+    model->setZoneVolume(index, value);
 }

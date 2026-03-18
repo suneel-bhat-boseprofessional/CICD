@@ -12,8 +12,11 @@ CustomContainer2::CustomContainer2() :
     textArea3.setWildcard(zoneName[2]);
     textArea4.setWildcard(zoneName[3]);
 
-    // rebind all buttons to OUR callback
-    // this overrides what the base constructor set
+    textArea5.setWildcard(volumeText[0]);
+    textArea6.setWildcard(volumeText[1]);
+    textArea7.setWildcard(volumeText[2]);
+    textArea8.setWildcard(volumeText[3]);
+
     button1.setAction(myButtonCallback);
     button2.setAction(myButtonCallback);
     button3.setAction(myButtonCallback);
@@ -25,7 +28,6 @@ void CustomContainer2::setListElements(int item)
     itemIndex = item;
     int base = itemIndex * 4;
 
-    // reset all 4 zones first
     image1.setVisible(false);
     image2.setVisible(false);
     image3.setVisible(false);
@@ -46,6 +48,11 @@ void CustomContainer2::setListElements(int item)
     textArea3.setVisible(false);
     textArea4.setVisible(false);
 
+    textArea5.setVisible(false);
+    textArea6.setVisible(false);
+    textArea7.setVisible(false);
+    textArea8.setVisible(false);
+
     image1.invalidate();
     image2.invalidate();
     image3.invalidate();
@@ -61,7 +68,11 @@ void CustomContainer2::setListElements(int item)
     textArea3.invalidate();
     textArea4.invalidate();
 
-    // now set only valid zones visible
+    textArea5.invalidate();
+    textArea6.invalidate();
+    textArea7.invalidate();
+    textArea8.invalidate();
+
     for(int i = 0; i < 4; i++)
     {
         int zoneIndex = base + i;
@@ -83,15 +94,20 @@ void CustomContainer2::setListElements(int item)
                 Unicode::snprintf(zoneName[i], 20, "Zone %d", zoneIndex + 1);
             }
 
+            int vol = (modelInstance != 0) ? modelInstance->getZoneVolume(zoneIndex) : 0;
+            Unicode::snprintf(volumeText[i], 8, "%d", vol);
+
             if(i == 0)
             {
                 textArea1.setVisible(true);
                 image1.setVisible(true);
                 button1.setVisible(true);
                 button1.setTouchable(true);
+                textArea5.setVisible(true);
                 textArea1.invalidate();
                 image1.invalidate();
                 button1.invalidate();
+                textArea5.invalidate();
             }
             else if(i == 1)
             {
@@ -99,9 +115,11 @@ void CustomContainer2::setListElements(int item)
                 image2.setVisible(true);
                 button2.setVisible(true);
                 button2.setTouchable(true);
+                textArea6.setVisible(true);
                 textArea2.invalidate();
                 image2.invalidate();
                 button2.invalidate();
+                textArea6.invalidate();
             }
             else if(i == 2)
             {
@@ -109,9 +127,11 @@ void CustomContainer2::setListElements(int item)
                 image3.setVisible(true);
                 button3.setVisible(true);
                 button3.setTouchable(true);
+                textArea7.setVisible(true);
                 textArea3.invalidate();
                 image3.invalidate();
                 button3.invalidate();
+                textArea7.invalidate();
             }
             else if(i == 3)
             {
@@ -119,9 +139,11 @@ void CustomContainer2::setListElements(int item)
                 image4.setVisible(true);
                 button4.setVisible(true);
                 button4.setTouchable(true);
+                textArea8.setVisible(true);
                 textArea4.invalidate();
                 image4.invalidate();
                 button4.invalidate();
+                textArea8.invalidate();
             }
         }
     }
@@ -147,13 +169,34 @@ void CustomContainer2::handleButtonPress(const touchgfx::AbstractButton& src)
 
     int realZone = itemIndex * 4 + zone;
 
-    // guard — reject invalid zones
     if(realZone < 0 || realZone >= zoneCount) return;
 
     if(action && action->isValid())
     {
         action->execute(realZone);
     }
+}
+
+void CustomContainer2::refreshVolumes()
+{
+    if(itemIndex < 0 || modelInstance == 0) return;
+
+    int base = itemIndex * 4;
+
+    for(int i = 0; i < 4; i++)
+    {
+        int zoneIndex = base + i;
+        if(zoneIndex < zoneCount)
+        {
+            int vol = modelInstance->getZoneVolume(zoneIndex);
+            Unicode::snprintf(volumeText[i], 8, "%d", vol);
+        }
+    }
+
+    textArea5.invalidate();
+    textArea6.invalidate();
+    textArea7.invalidate();
+    textArea8.invalidate();
 }
 
 void CustomContainer2::handleDragEvent(const touchgfx::DragEvent& event)

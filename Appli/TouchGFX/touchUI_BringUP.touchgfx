@@ -158,47 +158,21 @@
         "Name": "zone2",
         "Components": [
           {
-            "Type": "Box",
-            "Name": "box1",
-            "Width": 480,
-            "Height": 128,
-            "Color": {
-              "Red": 8,
-              "Green": 8,
-              "Blue": 8
-            }
-          },
-          {
             "Type": "Slider",
             "Name": "slider1",
-            "X": 106,
+            "X": 104,
             "Y": 92,
-            "Width": 253,
+            "Width": 240,
             "Height": 30,
             "IsHorizontalSlider": true,
             "BackgroundUnselected": "Rectangle 1.png",
-            "BackgroundSelected": "Volume_green.png",
+            "BackgroundSelected": "Filler.png",
             "Indicator": "Grabber.png",
-            "BackgroundX": 18,
+            "BackgroundX": 1,
             "IndicatorPos": 6,
             "IndicatorMax": 220,
             "ValueMax": 100,
             "InitValue": 50
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textArea1",
-            "X": 24,
-            "Width": 89,
-            "Height": 22,
-            "TextId": "__SingleUse_IQHY",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "AutoSize": true
           },
           {
             "Type": "FlexButton",
@@ -248,6 +222,43 @@
             "Width": 6,
             "Height": 9,
             "RelativeFilename": "left.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 377,
+            "Y": 93,
+            "Width": 44,
+            "Height": 29,
+            "TextId": "__SingleUse_2HRC",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 51,
+              "Green": 127,
+              "Blue": 92
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "scalableImage1",
+            "X": 64,
+            "Y": 22,
+            "Width": 346,
+            "Height": 33,
+            "Filename": "Group 3.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 16,
+            "Y": 1,
+            "Width": 141,
+            "Height": 15,
+            "TextId": "__SingleUse_JK4L",
+            "TextRotation": "0",
+            "Wildcard1": {}
           }
         ],
         "Interactions": [
@@ -471,6 +482,70 @@
             "Height": 46,
             "Pressed": "zones.png",
             "Released": "zones.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea5",
+            "X": 34,
+            "Y": 52,
+            "Width": 41,
+            "Height": 23,
+            "TextId": "__SingleUse_GUH2",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 51,
+              "Green": 127,
+              "Blue": 92
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea6",
+            "X": 141,
+            "Y": 52,
+            "Width": 41,
+            "Height": 24,
+            "TextId": "__SingleUse_J0S6",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 51,
+              "Green": 127,
+              "Blue": 92
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea7",
+            "X": 248,
+            "Y": 53,
+            "Width": 41,
+            "Height": 21,
+            "TextId": "__SingleUse_E4LS",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 51,
+              "Green": 127,
+              "Blue": 92
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea8",
+            "X": 355,
+            "Y": 51,
+            "Width": 41,
+            "Height": 23,
+            "TextId": "__SingleUse_353O",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 51,
+              "Green": 127,
+              "Blue": 92
+            },
+            "Wildcard1": {}
           }
         ],
         "Interactions": [

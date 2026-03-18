@@ -20,6 +20,7 @@ void zoneView::setupScreen()
     for (int i = 0; i < scrollList1ListItems.getNumberOfDrawables(); i++)
     {
         scrollList1.itemChanged(i);
+        scrollList1ListItems[i].refreshVolumes();
     }
 
     scrollList1.invalidate();
