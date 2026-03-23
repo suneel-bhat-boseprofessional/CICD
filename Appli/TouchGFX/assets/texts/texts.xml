@@ -43,7 +43,7 @@
       <Text Id="__SingleUse_JK4L" Alignment="Left" TypographyId="ver">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_2HRC" Alignment="Center" TypographyId="Default">
+      <Text Id="__SingleUse_2HRC" Alignment="Center" TypographyId="Typography2">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_353O" Alignment="Center" TypographyId="Default">
@@ -81,5 +81,6 @@
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Typography1" Font="EaseStandard-Bold.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="/" WildcardCharacterRanges="A-Z,a-z" />
     <Typography Id="ver" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="a-z,A-Z" />
+    <Typography Id="Typography2" Font="EaseStandard-Bold.ttf" Size="32" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="0-9" />
   </Typographies>
 </TextDatabase>

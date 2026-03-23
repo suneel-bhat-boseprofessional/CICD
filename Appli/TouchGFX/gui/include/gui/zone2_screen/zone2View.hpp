@@ -6,6 +6,26 @@
 #include <touchgfx/containers/Slider.hpp>
 #include <touchgfx/Unicode.hpp>
 
+class CustomSlider : public touchgfx::Slider
+{
+public:
+    void setFillerWidth(int width)
+    {
+        backgroundSelectedViewPort.setWidth(width);
+        backgroundSelectedViewPort.invalidate();
+    }
+
+    int getIndicatorX() const
+    {
+        return indicator.getX();
+    }
+
+    int getIndicatorWidth() const
+    {
+        return indicator.getWidth();
+    }
+};
+
 class zone2View : public zone2ViewBase
 {
 public:
@@ -20,6 +40,7 @@ public:
 protected:
     touchgfx::Callback<zone2View, const touchgfx::Slider&, int> sliderCallback;
     void sliderValueChanged(const touchgfx::Slider& slider, int value);
+    void updateSliderFill(int value);
 
     touchgfx::Unicode::UnicodeChar volumeBuffer[8];
     touchgfx::Unicode::UnicodeChar zoneNameBuffer[32];

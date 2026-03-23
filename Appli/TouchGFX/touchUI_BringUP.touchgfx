@@ -55,7 +55,7 @@
             "Y": 57,
             "Width": 8,
             "Height": 14,
-            "Filename": "left.png",
+            "Filename": "Vector_left.png",
             "ScalingAlgorithm": "Nearest-neighbor"
           },
           {
@@ -65,7 +65,7 @@
             "Y": 57,
             "Width": 8,
             "Height": 14,
-            "Filename": "right.png",
+            "Filename": "Vector.png",
             "ScalingAlgorithm": "Nearest-neighbor"
           }
         ],
@@ -135,7 +135,7 @@
             "Y": 57,
             "Width": 8,
             "Height": 14,
-            "Filename": "left.png",
+            "Filename": "Vector_left.png",
             "ScalingAlgorithm": "Nearest-neighbor"
           }
         ],
@@ -160,19 +160,16 @@
           {
             "Type": "Slider",
             "Name": "slider1",
-            "X": 104,
-            "Y": 92,
-            "Width": 240,
+            "X": 115,
+            "Y": 74,
+            "Width": 235,
             "Height": 30,
             "IsHorizontalSlider": true,
             "BackgroundUnselected": "Rectangle 1.png",
-            "BackgroundSelected": "Filler.png",
+            "BackgroundSelected": "Volume_green.png",
             "Indicator": "Grabber.png",
-            "BackgroundX": 1,
-            "IndicatorPos": 6,
-            "IndicatorMax": 220,
-            "ValueMax": 100,
-            "InitValue": 50
+            "IndicatorMax": 205,
+            "ValueMax": 100
           },
           {
             "Type": "FlexButton",
@@ -215,21 +212,12 @@
             ]
           },
           {
-            "Type": "Image",
-            "Name": "image2",
-            "X": 27,
-            "Y": 64,
-            "Width": 6,
-            "Height": 9,
-            "RelativeFilename": "left.png"
-          },
-          {
             "Type": "TextArea",
             "Name": "textArea2",
-            "X": 377,
-            "Y": 93,
-            "Width": 44,
-            "Height": 29,
+            "X": 363,
+            "Y": 71,
+            "Width": 46,
+            "Height": 36,
             "TextId": "__SingleUse_2HRC",
             "TextRotation": "0",
             "Color": {
@@ -238,16 +226,6 @@
               "Blue": 92
             },
             "Wildcard1": {}
-          },
-          {
-            "Type": "ScalableImage",
-            "Name": "scalableImage1",
-            "X": 64,
-            "Y": 22,
-            "Width": 346,
-            "Height": 33,
-            "Filename": "Group 3.png",
-            "ScalingAlgorithm": "Nearest-neighbor"
           },
           {
             "Type": "TextArea",
@@ -259,6 +237,34 @@
             "TextId": "__SingleUse_JK4L",
             "TextRotation": "0",
             "Wildcard1": {}
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 64,
+            "Y": 25,
+            "Width": 345,
+            "Height": 33,
+            "RelativeFilename": "Group 3.png"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "scalableImage1",
+            "X": 12,
+            "Y": 57,
+            "Width": 8,
+            "Height": 14,
+            "Filename": "Vector_left.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "Image",
+            "Name": "image4",
+            "X": 65,
+            "Y": 73,
+            "Width": 32,
+            "Height": 32,
+            "RelativeFilename": "Unmute.png"
           }
         ],
         "Interactions": [
@@ -272,6 +278,15 @@
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "zone"
+            }
+          },
+          {
+            "InteractionName": "Interaction2",
+            "Trigger": {
+              "Type": "TriggerNone"
+            },
+            "Action": {
+              "Type": "ActionNone"
             }
           }
         ]
@@ -383,11 +398,11 @@
             "Type": "Button",
             "Name": "button1",
             "X": 19,
-            "Y": 29,
+            "Y": 30,
             "Width": 70,
             "Height": 46,
-            "Pressed": "zones.png",
-            "Released": "zones.png"
+            "Pressed": "Volumeslider_bg.png",
+            "Released": "Volumeslider_bg.png"
           },
           {
             "Type": "Button",
@@ -396,8 +411,8 @@
             "Y": 29,
             "Width": 70,
             "Height": 46,
-            "Pressed": "Ellipse 1954.png",
-            "Released": "Ellipse 1954.png"
+            "Pressed": "Volumeslider_bg.png",
+            "Released": "Volumeslider_bg.png"
           },
           {
             "Type": "TextArea",
@@ -468,10 +483,10 @@
             "Name": "button3",
             "X": 233,
             "Y": 29,
-            "Width": 71,
-            "Height": 47,
-            "Pressed": "Group 1.png",
-            "Released": "Group 1.png"
+            "Width": 70,
+            "Height": 46,
+            "Pressed": "Volumeslider_bg.png",
+            "Released": "Volumeslider_bg.png"
           },
           {
             "Type": "Button",
@@ -480,8 +495,8 @@
             "Y": 29,
             "Width": 70,
             "Height": 46,
-            "Pressed": "zones.png",
-            "Released": "zones.png"
+            "Pressed": "Volumeslider_bg.png",
+            "Released": "Volumeslider_bg.png"
           },
           {
             "Type": "TextArea",
@@ -550,18 +565,6 @@
         ],
         "Interactions": [
           {
-            "InteractionName": "Interaction1",
-            "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "button1"
-            },
-            "Action": {
-              "Type": "ActionGotoScreen",
-              "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "zone2"
-            }
-          },
-          {
             "InteractionName": "Interaction2",
             "Trigger": {
               "Type": "TriggerClicked",
@@ -590,6 +593,17 @@
             "Trigger": {
               "Type": "TriggerClicked",
               "TriggerComponent": "button4"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "zone2"
+            }
+          },
+          {
+            "InteractionName": "Interaction5",
+            "Trigger": {
+              "Type": "TriggerNone"
             },
             "Action": {
               "Type": "ActionGotoScreen",

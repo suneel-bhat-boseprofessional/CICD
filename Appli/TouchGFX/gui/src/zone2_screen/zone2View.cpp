@@ -10,23 +10,21 @@ void zone2View::setupScreen()
 {
     zone2ViewBase::setupScreen();
 
-    int zone = presenter->getSelectedZone();
+    int zone   = presenter->getSelectedZone();
     int volume = presenter->getZoneVolume(zone);
 
-    // Wire slider callback
+    slider1.setValueRange(0, 100);
     slider1.setNewValueCallback(sliderCallback);
-
-    // Set slider to saved volume
     slider1.setValue(volume);
 
-    // Show current volume in textArea2
+    updateSliderFill(volume);
+
     Unicode::snprintf(volumeBuffer, 8, "%d", volume);
     textArea2.setWildcard(volumeBuffer);
     textArea2.invalidate();
 
-    // Show selected zone name in textArea3
     const char* name = modelInstance->getZoneName(zone);
-    if(name != 0 && name[0] != '\0')
+    if (name != 0 && name[0] != '\0')
     {
         Unicode::fromUTF8((const uint8_t*)name, zoneNameBuffer, 32);
     }
@@ -53,7 +51,16 @@ void zone2View::volumeChanged(int value)
     int zone = presenter->getSelectedZone();
     presenter->setZoneVolume(zone, value);
 
-    // Update live display in textArea2
+    updateSliderFill(value);
+
     Unicode::snprintf(volumeBuffer, 8, "%d", value);
     textArea2.invalidate();
+}
+
+void zone2View::updateSliderFill(int value)
+{
+    CustomSlider& cs = static_cast<CustomSlider&>(slider1);
+    int fillerWidth = cs.getIndicatorX() + (cs.getIndicatorWidth() / 2);
+
+    cs.setFillerWidth(fillerWidth);
 }
