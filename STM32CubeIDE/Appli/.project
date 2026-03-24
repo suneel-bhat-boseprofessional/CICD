@@ -512,6 +512,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/SVGDatabase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Background_image.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Background_image.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Bluetooth_image.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Bluetooth_image.cpp</locationURI>
@@ -520,6 +525,11 @@
 			<name>Application/User/generated/image_Ellipse_1954.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Ellipse_1954.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Filler_image.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Filler_image.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Frame.cpp</name>
@@ -587,6 +597,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Union.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Union_1.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Union_1.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Union_2.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Union_2.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Unmute.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Unmute.cpp</locationURI>
@@ -615,6 +635,11 @@
 			<name>Application/User/generated/image_left.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_left.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_vector_2.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_vector_2.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_volume-off.cpp</name>

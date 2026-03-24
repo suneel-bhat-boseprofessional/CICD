@@ -3,10 +3,10 @@
   "Application": {
     "Name": "touchUI_BringUP",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
-    "AvailableColorDepths": [ 24 ],
+    "AvailableColorDepths": [ 16 ],
     "AvailableLCDs":
     {
-      "24": "LCDGPU2D"
+      "16": "LCDGPU2D"
     },
     "AvailableResolutions": [
       {

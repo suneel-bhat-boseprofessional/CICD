@@ -28,6 +28,8 @@ void CustomContainer2::setListElements(int item)
     itemIndex = item;
     int base = itemIndex * 4;
 
+    // --- hide everything first -------------------------------------------
+
     image1.setVisible(false);
     image2.setVisible(false);
     image3.setVisible(false);
@@ -53,6 +55,12 @@ void CustomContainer2::setListElements(int item)
     textArea7.setVisible(false);
     textArea8.setVisible(false);
 
+    // hide all circles before selectively showing active ones
+    circleProgress1.setVisible(false);
+    circleProgress2.setVisible(false);
+    circleProgress3.setVisible(false);
+    circleProgress4.setVisible(false);
+
     image1.invalidate();
     image2.invalidate();
     image3.invalidate();
@@ -72,6 +80,13 @@ void CustomContainer2::setListElements(int item)
     textArea6.invalidate();
     textArea7.invalidate();
     textArea8.invalidate();
+
+    circleProgress1.invalidate();
+    circleProgress2.invalidate();
+    circleProgress3.invalidate();
+    circleProgress4.invalidate();
+
+    // --- populate active slots -------------------------------------------
 
     for(int i = 0; i < 4; i++)
     {
@@ -104,10 +119,13 @@ void CustomContainer2::setListElements(int item)
                 button1.setVisible(true);
                 button1.setTouchable(true);
                 textArea5.setVisible(true);
+                circleProgress1.setVisible(true);
+                circleProgress1.setValue(vol);
                 textArea1.invalidate();
                 image1.invalidate();
                 button1.invalidate();
                 textArea5.invalidate();
+                circleProgress1.invalidate();
             }
             else if(i == 1)
             {
@@ -116,10 +134,13 @@ void CustomContainer2::setListElements(int item)
                 button2.setVisible(true);
                 button2.setTouchable(true);
                 textArea6.setVisible(true);
+                circleProgress2.setVisible(true);
+                circleProgress2.setValue(vol);
                 textArea2.invalidate();
                 image2.invalidate();
                 button2.invalidate();
                 textArea6.invalidate();
+                circleProgress2.invalidate();
             }
             else if(i == 2)
             {
@@ -128,10 +149,13 @@ void CustomContainer2::setListElements(int item)
                 button3.setVisible(true);
                 button3.setTouchable(true);
                 textArea7.setVisible(true);
+                circleProgress3.setVisible(true);
+                circleProgress3.setValue(vol);
                 textArea3.invalidate();
                 image3.invalidate();
                 button3.invalidate();
                 textArea7.invalidate();
+                circleProgress3.invalidate();
             }
             else if(i == 3)
             {
@@ -140,10 +164,13 @@ void CustomContainer2::setListElements(int item)
                 button4.setVisible(true);
                 button4.setTouchable(true);
                 textArea8.setVisible(true);
+                circleProgress4.setVisible(true);
+                circleProgress4.setValue(vol);
                 textArea4.invalidate();
                 image4.invalidate();
                 button4.invalidate();
                 textArea8.invalidate();
+                circleProgress4.invalidate();
             }
         }
     }
@@ -190,6 +217,14 @@ void CustomContainer2::refreshVolumes()
         {
             int vol = modelInstance->getZoneVolume(zoneIndex);
             Unicode::snprintf(volumeText[i], 8, "%d", vol);
+
+            switch(i)
+            {
+                case 0: circleProgress1.setValue(vol); circleProgress1.invalidate(); break;
+                case 1: circleProgress2.setValue(vol); circleProgress2.invalidate(); break;
+                case 2: circleProgress3.setValue(vol); circleProgress3.invalidate(); break;
+                case 3: circleProgress4.setValue(vol); circleProgress4.invalidate(); break;
+            }
         }
     }
 

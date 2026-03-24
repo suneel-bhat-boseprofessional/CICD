@@ -40,7 +40,7 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_JK4L" Alignment="Left" TypographyId="ver">
+      <Text Id="__SingleUse_JK4L" Alignment="Center" TypographyId="ver">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_2HRC" Alignment="Center" TypographyId="Typography2">

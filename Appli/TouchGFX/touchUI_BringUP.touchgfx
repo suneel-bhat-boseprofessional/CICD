@@ -5,6 +5,12 @@
         "Name": "launch",
         "Components": [
           {
+            "Type": "Box",
+            "Name": "box1",
+            "Width": 480,
+            "Height": 128
+          },
+          {
             "Type": "Image",
             "Name": "image1",
             "X": 198,
@@ -55,7 +61,7 @@
             "Y": 57,
             "Width": 8,
             "Height": 14,
-            "Filename": "Vector_left.png",
+            "Filename": "Union_1.png",
             "ScalingAlgorithm": "Nearest-neighbor"
           },
           {
@@ -65,7 +71,7 @@
             "Y": 57,
             "Width": 8,
             "Height": 14,
-            "Filename": "Vector.png",
+            "Filename": "Union_2.png",
             "ScalingAlgorithm": "Nearest-neighbor"
           }
         ],
@@ -73,6 +79,7 @@
       },
       {
         "Name": "zone",
+        "CanvasBufferSize": 7200,
         "Components": [
           {
             "Type": "ScrollList",
@@ -92,9 +99,11 @@
           {
             "Type": "FlexButton",
             "Name": "flexButton1",
+            "X": 2,
             "Y": 39,
             "Width": 20,
             "Height": 50,
+            "Alpha": 0,
             "ButtonTrigger": {
               "Type": "ClickButtonTrigger"
             },
@@ -135,7 +144,7 @@
             "Y": 57,
             "Width": 8,
             "Height": 14,
-            "Filename": "Vector_left.png",
+            "Filename": "Union_1.png",
             "ScalingAlgorithm": "Nearest-neighbor"
           }
         ],
@@ -158,6 +167,12 @@
         "Name": "zone2",
         "Components": [
           {
+            "Type": "Box",
+            "Name": "box1",
+            "Width": 480,
+            "Height": 128
+          },
+          {
             "Type": "Slider",
             "Name": "slider1",
             "X": 115,
@@ -178,6 +193,7 @@
             "Y": 43,
             "Width": 50,
             "Height": 50,
+            "Alpha": 0,
             "ButtonTrigger": {
               "Type": "ClickButtonTrigger"
             },
@@ -216,8 +232,8 @@
             "Name": "textArea2",
             "X": 363,
             "Y": 71,
-            "Width": 46,
-            "Height": 36,
+            "Width": 57,
+            "Height": 34,
             "TextId": "__SingleUse_2HRC",
             "TextRotation": "0",
             "Color": {
@@ -230,12 +246,16 @@
           {
             "Type": "TextArea",
             "Name": "textArea3",
-            "X": 16,
-            "Y": 1,
-            "Width": 141,
-            "Height": 15,
+            "X": 54,
+            "Width": 366,
+            "Height": 21,
             "TextId": "__SingleUse_JK4L",
             "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            },
             "Wildcard1": {}
           },
           {
@@ -254,7 +274,7 @@
             "Y": 57,
             "Width": 8,
             "Height": 14,
-            "Filename": "Vector_left.png",
+            "Filename": "Union_1.png",
             "ScalingAlgorithm": "Nearest-neighbor"
           },
           {
@@ -561,6 +581,98 @@
               "Blue": 92
             },
             "Wildcard1": {}
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "circleProgress1",
+            "X": 19,
+            "Y": 30,
+            "Width": 70,
+            "Height": 46,
+            "FileNameProgress": "Filler_image.png",
+            "Color": {
+              "Green": 240,
+              "Blue": 255
+            },
+            "CenterX": 35.1,
+            "CenterY": 34.8,
+            "Radius": 29.4,
+            "LineWidth": 10.6,
+            "StartAngle": -121.4,
+            "EndAngle": 103.0,
+            "CapPrecision": "Round",
+            "FileNameBackground": "Background_image.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 100
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "circleProgress4",
+            "X": 340,
+            "Y": 29,
+            "Width": 70,
+            "Height": 46,
+            "FileNameProgress": "Filler_image.png",
+            "Color": {
+              "Green": 240,
+              "Blue": 255
+            },
+            "CenterX": 35.1,
+            "CenterY": 34.8,
+            "Radius": 29.3,
+            "LineWidth": 15.1,
+            "StartAngle": -124.2,
+            "EndAngle": 103.0,
+            "CapPrecision": "Round",
+            "FileNameBackground": "Background_image.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 98
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "circleProgress3",
+            "X": 233,
+            "Y": 30,
+            "Width": 70,
+            "Height": 46,
+            "FileNameProgress": "Filler_image.png",
+            "Color": {
+              "Green": 240,
+              "Blue": 255
+            },
+            "CenterX": 35.1,
+            "CenterY": 34.8,
+            "Radius": 29.3,
+            "LineWidth": 15.1,
+            "StartAngle": -124.2,
+            "EndAngle": 103.0,
+            "CapPrecision": "Round",
+            "FileNameBackground": "Background_image.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 98
+          },
+          {
+            "Type": "CircleProgress",
+            "Name": "circleProgress2",
+            "X": 125,
+            "Y": 28,
+            "Width": 70,
+            "Height": 46,
+            "FileNameProgress": "Filler_image.png",
+            "Color": {
+              "Green": 240,
+              "Blue": 255
+            },
+            "CenterX": 35.1,
+            "CenterY": 34.8,
+            "Radius": 29.3,
+            "LineWidth": 12.6,
+            "StartAngle": -121.0,
+            "EndAngle": 103.0,
+            "CapPrecision": "Round",
+            "FileNameBackground": "Background_image.png",
+            "ProgressRangeMax": 100,
+            "ProgressInitialValue": 100
           }
         ],
         "Interactions": [
@@ -619,17 +731,18 @@
       "Width": 480,
       "Height": 128
     },
-    "SelectedColorDepth": 24,
+    "SelectedColorDepth": 16,
     "StartupScreenName": "launch",
     "SelectedStartupLanguage": "GB",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "UIPath": ".",
     "AvailableColorDepths": [
-      24
+      16
     ],
     "AvailableLCDs": {
       "32": "LCD32bpp",
-      "24": "LCDGPU2D"
+      "24": "LCDGPU2D",
+      "16": "LCDGPU2D"
     },
     "AvailableSections": [
       "ExtFlashSection",
