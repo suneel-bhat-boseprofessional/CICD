@@ -7,6 +7,7 @@
 #include <gui/containers/CustomContainer2.hpp>
 #include <touchgfx/events/DragEvent.hpp>
 #include <touchgfx/events/GestureEvent.hpp>
+#include <touchgfx/events/ClickEvent.hpp>
 
 class zoneView : public zoneViewBase
 {
@@ -16,6 +17,7 @@ public:
 
     virtual void setupScreen();
     virtual void tearDownScreen();
+    virtual void handleTickEvent();
 
     void scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex);
 
@@ -25,10 +27,15 @@ public:
 
     virtual void handleDragEvent(const touchgfx::DragEvent& event);
     virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
+    virtual void handleClickEvent(const touchgfx::ClickEvent& event);
+
+    void setScrollPerformanceMode(bool enabled);
 
 protected:
     touchgfx::Callback<zoneView, int> zoneSelectedCallback;
     bool scrollOccurred;
+    bool scrollPerformanceMode;
+    uint8_t scrollSettleTicks;
 };
 
 #endif

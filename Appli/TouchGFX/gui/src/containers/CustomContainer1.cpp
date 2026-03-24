@@ -5,8 +5,8 @@ CustomContainer1::CustomContainer1() :
     itemIndex(-1),
     action(0),
     isDragging(false),
-    myButtonCallback(this, &CustomContainer1::myButtonCallbackHandler),
-    dummyCallback(this, &CustomContainer1::dummyCallbackHandler)
+    suppressNextClick(false),
+    myButtonCallback(this, &CustomContainer1::myButtonCallbackHandler)
 {
     // Replace base class button callback with our own from the start
     button1.setAction(myButtonCallback);
@@ -60,9 +60,9 @@ void CustomContainer1::setListElements(int item)
 
     Unicode::fromUTF8((const uint8_t*)names[item], textArea1Buffer, 20);
     textArea1.setWildcard(textArea1Buffer);
+    button1.setTouchable(true);
 
-    button1.invalidate();
-    textArea1.invalidate();
+    invalidate();
 }
 
 void CustomContainer1::setAction(GenericCallback<int>& callback)
@@ -72,7 +72,12 @@ void CustomContainer1::setAction(GenericCallback<int>& callback)
 
 void CustomContainer1::myButtonCallbackHandler(const touchgfx::AbstractButton& src)
 {
-    // This replaces buttonCallbackHandler from base — calls function1 only if not dragging
+    if(suppressNextClick)
+    {
+        suppressNextClick = false;
+        return;
+    }
+
     if(!isDragging)
     {
         function1();
@@ -92,7 +97,11 @@ void CustomContainer1::handleClickEvent(const touchgfx::ClickEvent& event)
     if(event.getType() == touchgfx::ClickEvent::PRESSED)
     {
         isDragging = false;
-        button1.setAction(myButtonCallback);
+    }
+    else if(event.getType() == touchgfx::ClickEvent::RELEASED)
+    {
+        // Re-enable item touch after drag so next tap works.
+        button1.setTouchable(true);
     }
 
     CustomContainer1Base::handleClickEvent(event);
@@ -103,8 +112,9 @@ void CustomContainer1::handleDragEvent(const touchgfx::DragEvent& event)
     if(!isDragging)
     {
         isDragging = true;
-        // Swap to dummy callback so button can never fire function1
-        button1.setAction(dummyCallback);
+        suppressNextClick = true;
+        // Route drag to the list instead of this child button.
+        button1.setTouchable(false);
     }
 
     if(parent)

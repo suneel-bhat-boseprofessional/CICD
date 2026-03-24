@@ -632,6 +632,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Volumeslider_bg.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Zone.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Zone.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_left.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_left.cpp</locationURI>
@@ -645,11 +650,6 @@
 			<name>Application/User/generated/image_volume-off.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_volume-off.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_zone.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_zone.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/LanguageGb.cpp</name>

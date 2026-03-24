@@ -5,6 +5,9 @@
 CustomContainer2::CustomContainer2() :
     itemIndex(-1),
     action(0),
+    isDragging(false),
+    suppressNextClick(false),
+    reducedRenderingMode(false),
     myButtonCallback(this, &CustomContainer2::handleButtonPress)
 {
     textArea1.setWildcard(zoneName[0]);
@@ -61,31 +64,6 @@ void CustomContainer2::setListElements(int item)
     circleProgress3.setVisible(false);
     circleProgress4.setVisible(false);
 
-    image1.invalidate();
-    image2.invalidate();
-    image3.invalidate();
-    image4.invalidate();
-
-    button1.invalidate();
-    button2.invalidate();
-    button3.invalidate();
-    button4.invalidate();
-
-    textArea1.invalidate();
-    textArea2.invalidate();
-    textArea3.invalidate();
-    textArea4.invalidate();
-
-    textArea5.invalidate();
-    textArea6.invalidate();
-    textArea7.invalidate();
-    textArea8.invalidate();
-
-    circleProgress1.invalidate();
-    circleProgress2.invalidate();
-    circleProgress3.invalidate();
-    circleProgress4.invalidate();
-
     // --- populate active slots -------------------------------------------
 
     for(int i = 0; i < 4; i++)
@@ -117,60 +95,40 @@ void CustomContainer2::setListElements(int item)
                 textArea1.setVisible(true);
                 image1.setVisible(true);
                 button1.setVisible(true);
-                button1.setTouchable(true);
+                button1.setTouchable(!isDragging);
                 textArea5.setVisible(true);
-                circleProgress1.setVisible(true);
+                circleProgress1.setVisible(!reducedRenderingMode);
                 circleProgress1.setValue(vol);
-                textArea1.invalidate();
-                image1.invalidate();
-                button1.invalidate();
-                textArea5.invalidate();
-                circleProgress1.invalidate();
             }
             else if(i == 1)
             {
                 textArea2.setVisible(true);
                 image2.setVisible(true);
                 button2.setVisible(true);
-                button2.setTouchable(true);
+                button2.setTouchable(!isDragging);
                 textArea6.setVisible(true);
-                circleProgress2.setVisible(true);
+                circleProgress2.setVisible(!reducedRenderingMode);
                 circleProgress2.setValue(vol);
-                textArea2.invalidate();
-                image2.invalidate();
-                button2.invalidate();
-                textArea6.invalidate();
-                circleProgress2.invalidate();
             }
             else if(i == 2)
             {
                 textArea3.setVisible(true);
                 image3.setVisible(true);
                 button3.setVisible(true);
-                button3.setTouchable(true);
+                button3.setTouchable(!isDragging);
                 textArea7.setVisible(true);
-                circleProgress3.setVisible(true);
+                circleProgress3.setVisible(!reducedRenderingMode);
                 circleProgress3.setValue(vol);
-                textArea3.invalidate();
-                image3.invalidate();
-                button3.invalidate();
-                textArea7.invalidate();
-                circleProgress3.invalidate();
             }
             else if(i == 3)
             {
                 textArea4.setVisible(true);
                 image4.setVisible(true);
                 button4.setVisible(true);
-                button4.setTouchable(true);
+                button4.setTouchable(!isDragging);
                 textArea8.setVisible(true);
-                circleProgress4.setVisible(true);
+                circleProgress4.setVisible(!reducedRenderingMode);
                 circleProgress4.setValue(vol);
-                textArea4.invalidate();
-                image4.invalidate();
-                button4.invalidate();
-                textArea8.invalidate();
-                circleProgress4.invalidate();
             }
         }
     }
@@ -185,6 +143,12 @@ void CustomContainer2::setAction(GenericCallback<int>& callback)
 
 void CustomContainer2::handleButtonPress(const touchgfx::AbstractButton& src)
 {
+    if(suppressNextClick)
+    {
+        suppressNextClick = false;
+        return;
+    }
+
     int zone = -1;
 
     if(&src == &button1) zone = 0;
@@ -220,22 +184,66 @@ void CustomContainer2::refreshVolumes()
 
             switch(i)
             {
-                case 0: circleProgress1.setValue(vol); circleProgress1.invalidate(); break;
-                case 1: circleProgress2.setValue(vol); circleProgress2.invalidate(); break;
-                case 2: circleProgress3.setValue(vol); circleProgress3.invalidate(); break;
-                case 3: circleProgress4.setValue(vol); circleProgress4.invalidate(); break;
+                case 0: circleProgress1.setValue(vol); break;
+                case 1: circleProgress2.setValue(vol); break;
+                case 2: circleProgress3.setValue(vol); break;
+                case 3: circleProgress4.setValue(vol); break;
             }
         }
     }
 
-    textArea5.invalidate();
-    textArea6.invalidate();
-    textArea7.invalidate();
-    textArea8.invalidate();
+    invalidate();
+}
+
+void CustomContainer2::setReducedRenderingMode(bool enabled)
+{
+    if(reducedRenderingMode == enabled)
+    {
+        return;
+    }
+
+    reducedRenderingMode = enabled;
+
+    circleProgress1.setVisible(!reducedRenderingMode && button1.isVisible());
+    circleProgress2.setVisible(!reducedRenderingMode && button2.isVisible());
+    circleProgress3.setVisible(!reducedRenderingMode && button3.isVisible());
+    circleProgress4.setVisible(!reducedRenderingMode && button4.isVisible());
+
+    invalidate();
+}
+
+void CustomContainer2::handleClickEvent(const touchgfx::ClickEvent& event)
+{
+    if(event.getType() == touchgfx::ClickEvent::PRESSED)
+    {
+        isDragging = false;
+    }
+    else if(event.getType() == touchgfx::ClickEvent::RELEASED)
+    {
+        // Re-enable children after potential drag so next tap works normally.
+        button1.setTouchable(button1.isVisible());
+        button2.setTouchable(button2.isVisible());
+        button3.setTouchable(button3.isVisible());
+        button4.setTouchable(button4.isVisible());
+    }
+
+    CustomContainer2Base::handleClickEvent(event);
 }
 
 void CustomContainer2::handleDragEvent(const touchgfx::DragEvent& event)
 {
+    if(!isDragging)
+    {
+        isDragging = true;
+        suppressNextClick = true;
+
+        // Let the list consume drag events instead of button children.
+        button1.setTouchable(false);
+        button2.setTouchable(false);
+        button3.setTouchable(false);
+        button4.setTouchable(false);
+    }
+
     if(parent)
     {
         parent->handleDragEvent(event);
