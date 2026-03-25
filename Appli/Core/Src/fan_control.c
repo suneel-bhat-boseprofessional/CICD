@@ -25,6 +25,9 @@
 
 extern void set_zone_name_c(int idx, const char* name);
 extern void set_zone_count_c(int count);
+extern int get_zone_count_c(void);
+extern void set_zone_volume_c(int idx, int value);
+extern void set_zone_muted_c(int idx, int muted);
 
 #include <stdlib.h> // for atoi
 
@@ -32,50 +35,11 @@ extern void set_zone_count_c(int count);
 #include "FreeRTOS.h"
 #include "queue.h"
 
-MessageType ParseMessageType(const char *typeStr)
-{
-  if (strcmp(typeStr, "request") == 0) return MSG_TYPE_REQUEST;
-  if (strcmp(typeStr, "response") == 0) return MSG_TYPE_RESPONSE;
-  if (strcmp(typeStr, "event") == 0) return MSG_TYPE_EVENT;
-  return MSG_TYPE_UNKNOWN;
-}
-
-MessageStatus ParseStatus(const char *statusStr)
-{
-  if (strcmp(statusStr, "success") == 0) return STATUS_SUCCESS;
-  if (strcmp(statusStr, "error") == 0) return STATUS_ERROR;
-  return STATUS_UNKNOWN;
-}
-
 int ParseGenericMessage(const char *json, GenericMessage *msg)
 {
-  char buffer[128];
-
-  if (!JSON_GetStringValue(json, "type", buffer, sizeof(buffer))) return -1;
-  msg->type = ParseMessageType(buffer);
+  if (json == NULL || msg == NULL) return -1;
 
   if (!JSON_GetStringValue(json, "action", msg->action, sizeof(msg->action))) return -1;
-  if (!JSON_GetStringValue(json, "requestId", msg->requestId, sizeof(msg->requestId)))
-    msg->requestId[0] = '\0';
-
-  if (JSON_GetStringValue(json, "status", buffer, sizeof(buffer)))
-    msg->status = ParseStatus(buffer);
-  else
-    msg->status = STATUS_UNKNOWN;
-
-  // Parse error object if present
-  char errorCode[8], errorMsg[64];
-  if (JSON_GetStringValue(json, "error.code", errorCode, sizeof(errorCode)) &&
-    JSON_GetStringValue(json, "error.message", errorMsg, sizeof(errorMsg)))
-  {
-    msg->error.code = atoi(errorCode);
-    strncpy(msg->error.message, errorMsg, sizeof(msg->error.message));
-  }
-  else
-  {
-    msg->error.code = 0;
-    msg->error.message[0] = '\0';
-  }
 
   // Extract payload as raw JSON string
   if (JSON_GetStringValue(json, "payload", msg->payload, sizeof(msg->payload)) == NULL)
@@ -84,19 +48,15 @@ int ParseGenericMessage(const char *json, GenericMessage *msg)
   return 0;
 }
 
-void SendGenericResponse(UART_HandleTypeDef *huart, const GenericMessage *msg)
-{
-  char buffer[256];
-  int len = snprintf(buffer, sizeof(buffer),
-    "{\"type\":\"response\",\"action\":\"%s\",\"requestId\":\"%s\",\"status\":\"%s\",\"payload\":%s,\"error\":{\"code\":%d,\"message\":\"%s\"}}\r\n",
-    msg->action,
-    msg->requestId,
-    msg->status == STATUS_SUCCESS ? "success" : "error",
-    msg->payload[0] ? msg->payload : "{}",
-    msg->error.code,
-    msg->error.message
-  );
-  HAL_UART_Transmit(huart, (uint8_t*)buffer, len, 100);
+
+// Send NACK (failure) message only
+void SendNack(UART_HandleTypeDef *huart, const char *failedAction, const char *errorMsg, int errorCode) {
+  (void)failedAction;
+    char buffer[256];
+    int len = snprintf(buffer, sizeof(buffer),
+        "{\"action\":\"nack\",\"payload\":{\"error\":\"%s\",\"value\":%d}}\r\n",
+        errorMsg, errorCode);
+    HAL_UART_Transmit(huart, (uint8_t*)buffer, len, 100);
 }
 
 /* Private typedef -----------------------------------------------------------*/
@@ -183,6 +143,67 @@ char* JSON_GetStringValue(const char *json, const char *key, char *value_buffer,
     }
   }
   
+  return NULL;
+}
+
+static char* JSON_GetObjectChildValue(const char *json,
+                                      const char *objectKey,
+                                      const char *childKey,
+                                      char *value_buffer,
+                                      uint16_t buffer_size)
+{
+  jsmn_parser parser;
+  jsmntok_t tokens[JSON_MAX_TOKENS];
+  int token_count;
+  int i;
+
+  if (json == NULL || objectKey == NULL || childKey == NULL || value_buffer == NULL || buffer_size == 0)
+    return NULL;
+
+  jsmn_init(&parser);
+  token_count = jsmn_parse(&parser, json, strlen(json), tokens, JSON_MAX_TOKENS);
+  if (token_count < 0)
+    return NULL;
+
+  for (i = 1; i < token_count - 1; i++)
+  {
+    if (tokens[i].type == JSMN_STRING)
+    {
+      int obj_key_len = tokens[i].end - tokens[i].start;
+      if ((int)strlen(objectKey) == obj_key_len &&
+          strncmp(json + tokens[i].start, objectKey, obj_key_len) == 0)
+      {
+        jsmntok_t *obj = &tokens[i + 1];
+        int j;
+
+        if (obj->type != JSMN_OBJECT)
+          return NULL;
+
+        for (j = i + 2; j < token_count - 1 && tokens[j].start < obj->end; j++)
+        {
+          if (tokens[j].type == JSMN_STRING)
+          {
+            int child_key_len = tokens[j].end - tokens[j].start;
+            if ((int)strlen(childKey) == child_key_len &&
+                strncmp(json + tokens[j].start, childKey, child_key_len) == 0)
+            {
+              jsmntok_t *value_token = &tokens[j + 1];
+              int value_len = value_token->end - value_token->start;
+
+              if (value_len >= (int)buffer_size)
+                value_len = buffer_size - 1;
+
+              strncpy(value_buffer, json + value_token->start, value_len);
+              value_buffer[value_len] = '\0';
+              return value_buffer;
+            }
+          }
+        }
+        return NULL;
+      }
+    }
+  }
+
   return NULL;
 }
 
@@ -282,188 +303,118 @@ void FanControl_SetSpeed(uint8_t percent)
 
 void JSON_ProcessMessage(uint8_t *data, uint16_t length)
 {
-    GenericMessage msg;
-  GenericMessage resp;
-    if (ParseGenericMessage((char*)data, &msg) != 0)
+  (void)length;
+  GenericMessage msg;
+
+  if (ParseGenericMessage((char*)data, &msg) != 0)
+  {
+    SendNack(p_huart, "parse", "INVALID PACKET", -1);
+    return;
+  }
+
+  if (strcmp(msg.action, "setFanSpeed") == 0)
+  {
+    char speed[16];
+    if (JSON_GetStringValue(msg.payload, "speed", speed, sizeof(speed)))
     {
-        HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Invalid JSON\r\n", 21, 100);
-        return;
+      if (strcmp(speed, "LOW") == 0)
+        FanControl_SetSpeed(SPEED_LOW_PERCENT);
+      else if (strcmp(speed, "MID") == 0)
+        FanControl_SetSpeed(SPEED_MID_PERCENT);
+      else if (strcmp(speed, "HIGH") == 0)
+        FanControl_SetSpeed(SPEED_HIGH_PERCENT);
+      else
+        SendNack(p_huart, "setFanSpeed", "INVALID SPEED", 4002);
+    }
+    else
+    {
+      SendNack(p_huart, "setFanSpeed", "MISSING SPEED", 4001);
+    }
+    return;
+  }
+
+  if (strcmp(msg.action, "identity") == 0)
+  {
+    char tmp[32];
+
+    if (!JSON_GetStringValue(msg.payload, "Id", tmp, sizeof(tmp))) {
+      SendNack(p_huart, "identity", "MISSING IDENTITY.ID", 4201);
+      return;
+    }
+    if (!JSON_GetStringValue(msg.payload, "Version", tmp, sizeof(tmp))) {
+      SendNack(p_huart, "identity", "MISSING IDENTITY.VERSION", 4202);
+      return;
+    }
+    if (!JSON_GetStringValue(msg.payload, "Mac", tmp, sizeof(tmp))) {
+      SendNack(p_huart, "identity", "MISSING IDENTITY.MAC", 4203);
+      return;
+    }
+    if (!JSON_GetStringValue(msg.payload, "Ip", tmp, sizeof(tmp))) {
+      SendNack(p_huart, "identity", "MISSING IDENTITY.IP", 4204);
+      return;
+    }
+    if (!JSON_GetStringValue(msg.payload, "IpMask", tmp, sizeof(tmp))) {
+      SendNack(p_huart, "identity", "MISSING IDENTITY.IPMASK", 4205);
+      return;
+    }
+    if (!JSON_GetStringValue(msg.payload, "Gateway", tmp, sizeof(tmp))) {
+      SendNack(p_huart, "identity", "MISSING IDENTITY.GATEWAY", 4206);
+      return;
+    }
+    if (!JSON_GetStringValue(msg.payload, "Dhcp", tmp, sizeof(tmp))) {
+      SendNack(p_huart, "identity", "MISSING IDENTITY.DHCP", 4207);
+      return;
     }
 
-  memset(&resp, 0, sizeof(resp));
-  strncpy(resp.action, msg.action, sizeof(resp.action) - 1);
-  strncpy(resp.requestId, msg.requestId, sizeof(resp.requestId) - 1);
-  resp.type = MSG_TYPE_RESPONSE;
-  resp.status = STATUS_SUCCESS;
-  resp.error.code = 0;
-  resp.error.message[0] = '\0';
-  strncpy(resp.payload, "{}", sizeof(resp.payload) - 1);
+    // No response on success
+    return;
+  }
 
-    switch (msg.type)
-    {
-        case MSG_TYPE_REQUEST:
-            // Example: handle fan control request
-            if (strcmp(msg.action, "setFanSpeed") == 0)
-            {
-                char speed[16];
-                if (JSON_GetStringValue(msg.payload, "speed", speed, sizeof(speed)))
-                {
-                    if (strcmp(speed, "LOW") == 0)
-              {
-                        FanControl_SetSpeed(SPEED_LOW_PERCENT);
-                snprintf(resp.payload, sizeof(resp.payload), "{\"speed\":\"LOW\",\"percent\":%d}", SPEED_LOW_PERCENT);
-              }
-                    else if (strcmp(speed, "MID") == 0)
-              {
-                        FanControl_SetSpeed(SPEED_MID_PERCENT);
-                snprintf(resp.payload, sizeof(resp.payload), "{\"speed\":\"MID\",\"percent\":%d}", SPEED_MID_PERCENT);
-              }
-                    else if (strcmp(speed, "HIGH") == 0)
-              {
-                        FanControl_SetSpeed(SPEED_HIGH_PERCENT);
-                snprintf(resp.payload, sizeof(resp.payload), "{\"speed\":\"HIGH\",\"percent\":%d}", SPEED_HIGH_PERCENT);
-              }
-                    else
-              {
-                        HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Invalid speed value\r\n", 29, 100);
-                resp.status = STATUS_ERROR;
-                resp.error.code = 4002;
-                strncpy(resp.error.message, "Invalid speed value", sizeof(resp.error.message) - 1);
-                strncpy(resp.payload, "{\"detail\":\"invalid speed\"}", sizeof(resp.payload) - 1);
-              }
-                }
-                else
-                {
-                    HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Missing speed\r\n", 22, 100);
-              resp.status = STATUS_ERROR;
-              resp.error.code = 4001;
-              strncpy(resp.error.message, "Missing speed", sizeof(resp.error.message) - 1);
-              strncpy(resp.payload, "{\"detail\":\"missing speed\"}", sizeof(resp.payload) - 1);
-                }
+  if (strcmp(msg.action, "zone") == 0)
+  {
+    char indexBuf[12];
+    char nameBuf[64];
+    char gainBuf[12];
+    char muteBuf[8];
+    int zoneIndex;
 
-            SendGenericResponse(p_huart, &resp);
-          }
-          else
-          {
-            resp.status = STATUS_ERROR;
-            resp.error.code = 4004;
-            strncpy(resp.error.message, "Unknown request action", sizeof(resp.error.message) - 1);
-            strncpy(resp.payload, "{\"detail\":\"unsupported request\"}", sizeof(resp.payload) - 1);
-            SendGenericResponse(p_huart, &resp);
-            }
-            // Add more actions here
-            break;
-        case MSG_TYPE_RESPONSE:
-            // Handle response
-            break;
-        case MSG_TYPE_EVENT:
-          // Handle event
-          if (strcmp(msg.action, "updateZoneNames") == 0) {
-            // Parse payload (supports {"zoneCount":N,"zoneNames":[...]})
-            jsmn_parser parser;
-            jsmntok_t tokens[JSON_MAX_TOKENS];
-            int token_count;
-            int i;
-            char nameBuf[64];
-            char zoneCountBuf[12];
-            int updatedCount = 0;
-            int requestedZoneCount = -1;
-            int appliedZoneCount = -1;
-            int zoneNamesFound = 0;
-
-            jsmn_init(&parser);
-            token_count = jsmn_parse(&parser, msg.payload, strlen(msg.payload), tokens, JSON_MAX_TOKENS);
-            if (token_count < 0) {
-              resp.status = STATUS_ERROR;
-              resp.error.code = 4101;
-              strncpy(resp.error.message, "Invalid payload JSON", sizeof(resp.error.message) - 1);
-              strncpy(resp.payload, "{\"event\":\"updateZoneNames\",\"updatedZones\":0}", sizeof(resp.payload) - 1);
-              SendGenericResponse(p_huart, &resp);
-              break;
-            }
-
-            if (JSON_GetStringValue(msg.payload, "zoneCount", zoneCountBuf, sizeof(zoneCountBuf))) {
-              requestedZoneCount = atoi(zoneCountBuf);
-              if (requestedZoneCount < 0) {
-                requestedZoneCount = 0;
-              }
-              set_zone_count_c(requestedZoneCount);
-              appliedZoneCount = requestedZoneCount;
-            }
-
-            // Find the "zoneNames" key
-            for (i = 1; i < token_count - 1; i++) {
-              if (tokens[i].type == JSMN_STRING) {
-                int key_len = tokens[i].end - tokens[i].start;
-                if (strncmp(msg.payload + tokens[i].start, "zoneNames", key_len) == 0 && key_len == 9) {
-                  // Next token should be the array
-                  jsmntok_t *arr = &tokens[i + 1];
-                  if (arr->type == JSMN_ARRAY) {
-                    int arr_size = arr->size;
-                    int maxApply = arr_size;
-                    int valueTokIdx = i + 2;
-                    int j;
-
-                    zoneNamesFound = 1;
-                    if (requestedZoneCount >= 0 && requestedZoneCount < maxApply) {
-                      maxApply = requestedZoneCount;
-                    }
-
-                    if (requestedZoneCount < 0) {
-                      set_zone_count_c(arr_size);
-                      appliedZoneCount = arr_size;
-                    }
-
-                    for (j = 0; j < arr_size && valueTokIdx < token_count; j++, valueTokIdx++) {
-                      jsmntok_t *val = &tokens[valueTokIdx];
-                      int len = val->end - val->start;
-
-                      if (j >= maxApply || val->type != JSMN_STRING) {
-                        continue;
-                      }
-
-                      if (len > (int)sizeof(nameBuf) - 1) {
-                        len = (int)sizeof(nameBuf) - 1;
-                      }
-
-                      strncpy(nameBuf, msg.payload + val->start, len);
-                      nameBuf[len] = '\0';
-                      set_zone_name_c(j, nameBuf);
-                      updatedCount++;
-                    }
-                  }
-                  break;
-                }
-              }
-            }
-
-            if (requestedZoneCount < 0 && !zoneNamesFound) {
-              resp.status = STATUS_ERROR;
-              resp.error.code = 4102;
-              strncpy(resp.error.message, "Missing zone config", sizeof(resp.error.message) - 1);
-              strncpy(resp.payload, "{\"detail\":\"zoneCount or zoneNames required\"}", sizeof(resp.payload) - 1);
-              SendGenericResponse(p_huart, &resp);
-              break;
-            }
-
-            snprintf(resp.payload, sizeof(resp.payload),
-                     "{\"event\":\"updateZoneNames\",\"zoneCount\":%d,\"updatedZones\":%d}",
-                     (appliedZoneCount >= 0) ? appliedZoneCount : updatedCount,
-                     updatedCount);
-            SendGenericResponse(p_huart, &resp);
-          }
-          else {
-            resp.status = STATUS_ERROR;
-            resp.error.code = 4104;
-            strncpy(resp.error.message, "Unknown event action", sizeof(resp.error.message) - 1);
-            strncpy(resp.payload, "{\"detail\":\"unsupported event\"}", sizeof(resp.payload) - 1);
-            SendGenericResponse(p_huart, &resp);
-          }
-          break;
-        default:
-            HAL_UART_Transmit(p_huart, (uint8_t*)"Error: Unknown type\r\n", 21, 100);
-            break;
+    if (!JSON_GetStringValue(msg.payload, "Index", indexBuf, sizeof(indexBuf))) {
+      SendNack(p_huart, "zone", "MISSING ZONE.INDEX", 4301);
+      return;
     }
+
+    zoneIndex = atoi(indexBuf);
+    if (zoneIndex < 0) {
+      SendNack(p_huart, "zone", "INVALID ZONE.INDEX", 4302);
+      return;
+    }
+
+    if (!JSON_GetStringValue(msg.payload, "Name", nameBuf, sizeof(nameBuf))) {
+      SendNack(p_huart, "zone", "MISSING ZONE.NAME", 4303);
+      return;
+    }
+
+    // Apply one-by-one zone update and grow the visible zone count.
+    set_zone_name_c(zoneIndex, nameBuf);
+    if ((zoneIndex + 1) > get_zone_count_c()) {
+      set_zone_count_c(zoneIndex + 1);
+    }
+
+    if (JSON_GetObjectChildValue(msg.payload, "Gain", "DefMute", muteBuf, sizeof(muteBuf))) {
+      int muted = (strcmp(muteBuf, "true") == 0 || strcmp(muteBuf, "1") == 0) ? 1 : 0;
+      set_zone_muted_c(zoneIndex, muted);
+    }
+
+    if (JSON_GetObjectChildValue(msg.payload, "Gain", "DefGain", gainBuf, sizeof(gainBuf))) {
+      set_zone_volume_c(zoneIndex, atoi(gainBuf));
+    }
+
+    // sources[] is accepted in payload for future UI binding.
+    // No response on success
+    return;
+  }
+
+  SendNack(p_huart, msg.action, "FAILED ACTION", 4004);
 }
 
 

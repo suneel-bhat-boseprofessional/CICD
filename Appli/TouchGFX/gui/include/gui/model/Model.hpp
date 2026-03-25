@@ -51,6 +51,9 @@ extern "C" {
 
 void set_zone_name_c(int idx, const char* name);
 void set_zone_count_c(int count);
+int  get_zone_count_c(void);
+void set_zone_volume_c(int idx, int value);
+void set_zone_muted_c(int idx, int muted);
 
 #ifdef __cplusplus
 }

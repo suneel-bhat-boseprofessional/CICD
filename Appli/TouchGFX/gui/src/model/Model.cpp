@@ -2,7 +2,7 @@
 #include <gui/model/ModelListener.hpp>
 #include <string.h>
 
-int zoneCount = 4;
+int zoneCount = 0;
 
 Model* modelInstance = 0;
 
@@ -68,7 +68,19 @@ int Model::getZoneVolume(int index)
 void Model::setZoneMuted(int index, bool muted)
 {
     if(index < 0 || index >= MODEL_MAX_ZONES) return;
-    zoneVolumes[index] = zonePrevVolumes[index];
+
+    // On entering mute, remember last audible volume.
+    if(muted && !zoneMuted[index])
+    {
+        zonePrevVolumes[index] = zoneVolumes[index];
+    }
+
+    // On leaving mute, restore last audible volume if current is zero.
+    if(!muted && zoneMuted[index] && zoneVolumes[index] == 0)
+    {
+        zoneVolumes[index] = zonePrevVolumes[index];
+    }
+
     zoneMuted[index] = muted;
 }
 
@@ -147,5 +159,30 @@ extern "C" void set_zone_count_c(int count)
     if(modelInstance != 0)
     {
         modelInstance->setZoneCount(count);
+    }
+}
+
+extern "C" int get_zone_count_c(void)
+{
+    if(modelInstance != 0)
+    {
+        return modelInstance->getZoneCount();
+    }
+    return 0;
+}
+
+extern "C" void set_zone_volume_c(int idx, int value)
+{
+    if(modelInstance != 0)
+    {
+        modelInstance->setZoneVolume(idx, value);
+    }
+}
+
+extern "C" void set_zone_muted_c(int idx, int muted)
+{
+    if(modelInstance != 0)
+    {
+        modelInstance->setZoneMuted(idx, muted ? true : false);
     }
 }
