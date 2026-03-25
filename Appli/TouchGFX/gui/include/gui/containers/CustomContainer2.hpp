@@ -24,7 +24,7 @@ public:
     virtual void handleClickEvent(const touchgfx::ClickEvent& event);
 
 protected:
-    int itemIndex;
+    int  itemIndex;
     GenericCallback<int>* action;
     bool isDragging;
     bool suppressNextClick;

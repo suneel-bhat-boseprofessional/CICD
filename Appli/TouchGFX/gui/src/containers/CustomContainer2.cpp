@@ -29,10 +29,9 @@ CustomContainer2::CustomContainer2() :
 void CustomContainer2::setListElements(int item)
 {
     itemIndex = item;
-    int base = itemIndex * 4;
+    int base  = itemIndex * 4;
 
-    // --- hide everything first -------------------------------------------
-
+    // hide everything first
     button1.setVisible(false);
     button2.setVisible(false);
     button3.setVisible(false);
@@ -53,21 +52,25 @@ void CustomContainer2::setListElements(int item)
     textArea7.setVisible(false);
     textArea8.setVisible(false);
 
-    // hide all circles before selectively showing active ones
     circleProgress1.setVisible(false);
     circleProgress2.setVisible(false);
     circleProgress3.setVisible(false);
     circleProgress4.setVisible(false);
 
-    // --- populate active slots -------------------------------------------
+    image1.setVisible(false);
+    image2.setVisible(false);
+    image3.setVisible(false);
+    image4.setVisible(false);
 
+    // populate active slots
     for(int i = 0; i < 4; i++)
     {
         int zoneIndex = base + i;
-        const char* configuredName = 0;
 
         if(zoneIndex < zoneCount)
         {
+            const char* configuredName = 0;
+
             if(modelInstance != 0)
             {
                 configuredName = modelInstance->getZoneName(zoneIndex);
@@ -85,12 +88,15 @@ void CustomContainer2::setListElements(int item)
             int vol = (modelInstance != 0) ? modelInstance->getZoneVolume(zoneIndex) : 0;
             Unicode::snprintf(volumeText[i], 8, "%d", vol);
 
+            bool muted = (modelInstance != 0) && modelInstance->getZoneMuted(zoneIndex);
+
             if(i == 0)
             {
                 textArea1.setVisible(true);
                 button1.setVisible(true);
                 button1.setTouchable(!isDragging);
-                textArea5.setVisible(true);
+                textArea5.setVisible(!muted);
+                image1.setVisible(muted);
                 circleProgress1.setVisible(!reducedRenderingMode);
                 circleProgress1.setValue(vol);
             }
@@ -99,7 +105,8 @@ void CustomContainer2::setListElements(int item)
                 textArea2.setVisible(true);
                 button2.setVisible(true);
                 button2.setTouchable(!isDragging);
-                textArea6.setVisible(true);
+                textArea6.setVisible(!muted);
+                image2.setVisible(muted);
                 circleProgress2.setVisible(!reducedRenderingMode);
                 circleProgress2.setValue(vol);
             }
@@ -108,7 +115,8 @@ void CustomContainer2::setListElements(int item)
                 textArea3.setVisible(true);
                 button3.setVisible(true);
                 button3.setTouchable(!isDragging);
-                textArea7.setVisible(true);
+                textArea7.setVisible(!muted);
+                image3.setVisible(muted);
                 circleProgress3.setVisible(!reducedRenderingMode);
                 circleProgress3.setValue(vol);
             }
@@ -117,7 +125,8 @@ void CustomContainer2::setListElements(int item)
                 textArea4.setVisible(true);
                 button4.setVisible(true);
                 button4.setTouchable(!isDragging);
-                textArea8.setVisible(true);
+                textArea8.setVisible(!muted);
+                image4.setVisible(muted);
                 circleProgress4.setVisible(!reducedRenderingMode);
                 circleProgress4.setValue(vol);
             }
@@ -142,7 +151,7 @@ void CustomContainer2::handleButtonPress(const touchgfx::AbstractButton& src)
 
     int zone = -1;
 
-    if(&src == &button1) zone = 0;
+    if(&src == &button1)      zone = 0;
     else if(&src == &button2) zone = 1;
     else if(&src == &button3) zone = 2;
     else if(&src == &button4) zone = 3;
@@ -170,15 +179,33 @@ void CustomContainer2::refreshVolumes()
         int zoneIndex = base + i;
         if(zoneIndex < zoneCount)
         {
-            int vol = modelInstance->getZoneVolume(zoneIndex);
+            int  vol   = modelInstance->getZoneVolume(zoneIndex);
+            bool muted = modelInstance->getZoneMuted(zoneIndex);
+
             Unicode::snprintf(volumeText[i], 8, "%d", vol);
 
             switch(i)
             {
-                case 0: circleProgress1.setValue(vol); break;
-                case 1: circleProgress2.setValue(vol); break;
-                case 2: circleProgress3.setValue(vol); break;
-                case 3: circleProgress4.setValue(vol); break;
+                case 0:
+                    circleProgress1.setValue(vol);
+                    textArea5.setVisible(!muted);
+                    image1.setVisible(muted);
+                    break;
+                case 1:
+                    circleProgress2.setValue(vol);
+                    textArea6.setVisible(!muted);
+                    image2.setVisible(muted);
+                    break;
+                case 2:
+                    circleProgress3.setValue(vol);
+                    textArea7.setVisible(!muted);
+                    image3.setVisible(muted);
+                    break;
+                case 3:
+                    circleProgress4.setValue(vol);
+                    textArea8.setVisible(!muted);
+                    image4.setVisible(muted);
+                    break;
             }
         }
     }
@@ -188,10 +215,7 @@ void CustomContainer2::refreshVolumes()
 
 void CustomContainer2::setReducedRenderingMode(bool enabled)
 {
-    if(reducedRenderingMode == enabled)
-    {
-        return;
-    }
+    if(reducedRenderingMode == enabled) return;
 
     reducedRenderingMode = enabled;
 
@@ -211,7 +235,6 @@ void CustomContainer2::handleClickEvent(const touchgfx::ClickEvent& event)
     }
     else if(event.getType() == touchgfx::ClickEvent::RELEASED)
     {
-        // Re-enable children after potential drag so next tap works normally.
         button1.setTouchable(button1.isVisible());
         button2.setTouchable(button2.isVisible());
         button3.setTouchable(button3.isVisible());
@@ -225,10 +248,9 @@ void CustomContainer2::handleDragEvent(const touchgfx::DragEvent& event)
 {
     if(!isDragging)
     {
-        isDragging = true;
+        isDragging        = true;
         suppressNextClick = true;
 
-        // Let the list consume drag events instead of button children.
         button1.setTouchable(false);
         button2.setTouchable(false);
         button3.setTouchable(false);

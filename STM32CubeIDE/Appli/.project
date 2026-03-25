@@ -577,6 +577,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Meters_image.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Mute.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Mute.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Notifications_image.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Notifications_image.cpp</locationURI>
@@ -627,6 +632,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Vector_left.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Volume_bg.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Volume_bg.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Volume_green.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Volume_green.cpp</locationURI>
@@ -637,6 +647,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Volumeslider_bg.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Zone.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Zone.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_left.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_left.cpp</locationURI>
@@ -645,16 +660,6 @@
 			<name>Application/User/generated/image_vector_2.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_vector_2.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_volume-off.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_volume-off.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_zone.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_zone.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/LanguageGb.cpp</name>

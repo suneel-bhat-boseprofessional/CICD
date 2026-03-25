@@ -173,6 +173,34 @@
             "Height": 128
           },
           {
+            "Type": "Image",
+            "Name": "image4",
+            "X": 68,
+            "Y": 73,
+            "Width": 32,
+            "Height": 32,
+            "RelativeFilename": "Volume_bg.png"
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 41,
+            "Width": 45,
+            "Height": 48,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 45,
+                "Height": 48,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
             "Type": "Slider",
             "Name": "slider1",
             "X": 115,
@@ -185,47 +213,6 @@
             "Indicator": "Grabber.png",
             "IndicatorMax": 205,
             "ValueMax": 100
-          },
-          {
-            "Type": "FlexButton",
-            "Name": "flexButton1",
-            "X": 5,
-            "Y": 43,
-            "Width": 50,
-            "Height": 50,
-            "Alpha": 0,
-            "ButtonTrigger": {
-              "Type": "ClickButtonTrigger"
-            },
-            "ButtonStyles": [
-              {
-                "Type": "BoxWithBorderButtonStyle",
-                "Width": 50,
-                "Height": 50,
-                "LockToFlexButtonSize": true,
-                "BorderSize": 5,
-                "ColorReleased": {
-                  "Red": 8,
-                  "Green": 8,
-                  "Blue": 8
-                },
-                "ColorPressed": {
-                  "Red": 8,
-                  "Green": 8,
-                  "Blue": 8
-                },
-                "ColorBorderReleased": {
-                  "Red": 8,
-                  "Green": 8,
-                  "Blue": 8
-                },
-                "ColorBorderPressed": {
-                  "Red": 8,
-                  "Green": 8,
-                  "Blue": 8
-                }
-              }
-            ]
           },
           {
             "Type": "TextArea",
@@ -278,13 +265,14 @@
             "ScalingAlgorithm": "Nearest-neighbor"
           },
           {
-            "Type": "Image",
-            "Name": "image4",
-            "X": 65,
-            "Y": 73,
-            "Width": 32,
-            "Height": 32,
-            "RelativeFilename": "Unmute.png"
+            "Type": "Button",
+            "Name": "button1",
+            "X": 74,
+            "Y": 79,
+            "Width": 20,
+            "Height": 20,
+            "Pressed": "Unmute.png",
+            "Released": "Unmute.png"
           }
         ],
         "Interactions": [
@@ -298,15 +286,6 @@
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "zone"
-            }
-          },
-          {
-            "InteractionName": "Interaction2",
-            "Trigger": {
-              "Type": "TriggerNone"
-            },
-            "Action": {
-              "Type": "ActionNone"
             }
           }
         ]
@@ -385,7 +364,7 @@
             "Y": 15,
             "Width": 100,
             "Height": 99,
-            "Pressed": "Frame_Green.png",
+            "Pressed": "Frame 48.png",
             "Released": "Frame 48.png"
           },
           {
@@ -637,6 +616,42 @@
             "FileNameBackground": "Background_image.png",
             "ProgressRangeMax": 100,
             "ProgressInitialValue": 100
+          },
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 44,
+            "Y": 53,
+            "Width": 20,
+            "Height": 20,
+            "RelativeFilename": "Mute.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 151,
+            "Y": 54,
+            "Width": 20,
+            "Height": 20,
+            "RelativeFilename": "Mute.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 258,
+            "Y": 53,
+            "Width": 20,
+            "Height": 20,
+            "RelativeFilename": "Mute.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image4",
+            "X": 365,
+            "Y": 54,
+            "Width": 20,
+            "Height": 20,
+            "RelativeFilename": "Mute.png"
           }
         ],
         "Interactions": [

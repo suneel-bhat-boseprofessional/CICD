@@ -9,20 +9,21 @@ Model* modelInstance = 0;
 Model::Model() :
     modelListener(0),
     selectedZone(0),
-    zoneNamesChanged(false)   // ← init flag
+    zoneNamesChanged(false)
 {
     modelInstance = this;
 
     for(int i = 0; i < MODEL_MAX_ZONES; i++)
     {
-        zoneVolumes[i] = 0;
-        zoneNames[i][0] = '\0';
+        zoneVolumes[i]     = 0;
+        zonePrevVolumes[i] = 0;
+        zoneMuted[i]       = false;
+        zoneNames[i][0]    = '\0';
     }
 }
 
 void Model::tick()
 {
-    // called every frame by TouchGFX task — safe to notify UI here
     if(zoneNamesChanged)
     {
         zoneNamesChanged = false;
@@ -48,6 +49,10 @@ void Model::setZoneVolume(int index, int value)
     if(index >= 0 && index < MODEL_MAX_ZONES)
     {
         zoneVolumes[index] = value;
+        if(!zoneMuted[index])
+        {
+            zonePrevVolumes[index] = value;
+        }
     }
 }
 
@@ -60,30 +65,45 @@ int Model::getZoneVolume(int index)
     return 0;
 }
 
+void Model::setZoneMuted(int index, bool muted)
+{
+    if(index < 0 || index >= MODEL_MAX_ZONES) return;
+    zoneVolumes[index] = zonePrevVolumes[index];
+    zoneMuted[index] = muted;
+}
+
+bool Model::getZoneMuted(int index)
+{
+    if(index < 0 || index >= MODEL_MAX_ZONES) return false;
+    return zoneMuted[index];
+}
+
 void Model::setZoneCount(int count)
 {
-    if (count < 0)
+    if(count < 0)
     {
         count = 0;
     }
-    else if (count > MODEL_MAX_ZONES)
+    else if(count > MODEL_MAX_ZONES)
     {
         count = MODEL_MAX_ZONES;
     }
 
-    if (zoneCount != count)
+    if(zoneCount != count)
     {
         zoneCount = count;
 
-        if (selectedZone >= zoneCount)
+        if(selectedZone >= zoneCount)
         {
             selectedZone = (zoneCount > 0) ? (zoneCount - 1) : 0;
         }
 
-        for (int i = zoneCount; i < MODEL_MAX_ZONES; i++)
+        for(int i = zoneCount; i < MODEL_MAX_ZONES; i++)
         {
-            zoneNames[i][0] = '\0';
-            zoneVolumes[i] = 0;
+            zoneNames[i][0]    = '\0';
+            zoneVolumes[i]     = 0;
+            zonePrevVolumes[i] = 0;
+            zoneMuted[i]       = false;
         }
 
         zoneNamesChanged = true;
@@ -101,7 +121,7 @@ void Model::setZoneName(int index, const char* name)
     {
         strncpy(zoneNames[index], name, MODEL_ZONE_NAME_MAX_LEN - 1);
         zoneNames[index][MODEL_ZONE_NAME_MAX_LEN - 1] = '\0';
-        zoneNamesChanged = true;   // ← just set flag, do NOT call listener here
+        zoneNamesChanged = true;
     }
 }
 
@@ -124,7 +144,7 @@ extern "C" void set_zone_name_c(int idx, const char* name)
 
 extern "C" void set_zone_count_c(int count)
 {
-    if (modelInstance != 0)
+    if(modelInstance != 0)
     {
         modelInstance->setZoneCount(count);
     }

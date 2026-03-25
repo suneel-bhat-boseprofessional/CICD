@@ -20,23 +20,28 @@ public:
     void tick();
 
     void setSelectedZone(int index);
-    int getSelectedZone();
+    int  getSelectedZone();
 
     void setZoneVolume(int index, int value);
-    int getZoneVolume(int index);
+    int  getZoneVolume(int index);
+
+    void setZoneMuted(int index, bool muted);
+    bool getZoneMuted(int index);
 
     void setZoneCount(int count);
-    int getZoneCount() const;
+    int  getZoneCount() const;
 
-    void setZoneName(int index, const char* name);
+    void        setZoneName(int index, const char* name);
     const char* getZoneName(int index);
 
-    volatile bool zoneNamesChanged;   // ← ADD flag
+    volatile bool zoneNamesChanged;
 
 protected:
     ModelListener* modelListener;
-    int selectedZone;
-    int zoneVolumes[MODEL_MAX_ZONES];
+    int  selectedZone;
+    int  zoneVolumes[MODEL_MAX_ZONES];
+    int  zonePrevVolumes[MODEL_MAX_ZONES];
+    bool zoneMuted[MODEL_MAX_ZONES];
     char zoneNames[MODEL_MAX_ZONES][MODEL_ZONE_NAME_MAX_LEN];
 };
 
