@@ -8,8 +8,7 @@ CustomContainer1::CustomContainer1() :
     suppressNextClick(false),
     myButtonCallback(this, &CustomContainer1::myButtonCallbackHandler)
 {
-    // Replace base class button callback with our own from the start
-    button1.setAction(myButtonCallback);
+    button2.setAction(myButtonCallback);
 }
 
 void CustomContainer1::setListElements(int item)
@@ -30,37 +29,40 @@ void CustomContainer1::setListElements(int item)
     switch(item)
     {
         case 0:
-            button1.setBitmaps(Bitmap(BITMAP_ZONE_ID), Bitmap(BITMAP_ZONE_ID));
+            image2.setBitmap(Bitmap(BITMAP_ZONE_ID));
             break;
 
         case 1:
-            button1.setBitmaps(Bitmap(BITMAP_INOUT_IMAGE_ID), Bitmap(BITMAP_INOUT_IMAGE_ID));
+            image2.setBitmap(Bitmap(BITMAP_INOUT_IMAGE_ID));
             break;
 
         case 2:
-            button1.setBitmaps(Bitmap(BITMAP_METERS_IMAGE_ID), Bitmap(BITMAP_METERS_IMAGE_ID));
+            image2.setBitmap(Bitmap(BITMAP_METERS_IMAGE_ID));
             break;
 
         case 3:
-            button1.setBitmaps(Bitmap(BITMAP_SETTINGS_IMAGE_ID), Bitmap(BITMAP_SETTINGS_IMAGE_ID));
+            image2.setBitmap(Bitmap(BITMAP_SETTINGS_IMAGE_ID));
             break;
 
         case 4:
-            button1.setBitmaps(Bitmap(BITMAP_BLUETOOTH_IMAGE_ID), Bitmap(BITMAP_BLUETOOTH_IMAGE_ID));
+            image2.setBitmap(Bitmap(BITMAP_BLUETOOTH_IMAGE_ID));
             break;
 
         case 5:
-            button1.setBitmaps(Bitmap(BITMAP_NOTIFICATIONS_IMAGE_ID), Bitmap(BITMAP_NOTIFICATIONS_IMAGE_ID));
+            image2.setBitmap(Bitmap(BITMAP_NOTIFICATIONS_IMAGE_ID));
             break;
 
         case 6:
-            button1.setBitmaps(Bitmap(BITMAP_SETUP_IMAGE_ID), Bitmap(BITMAP_SETUP_IMAGE_ID));
+            image2.setBitmap(Bitmap(BITMAP_SETUP_IMAGE_ID));
             break;
     }
 
     Unicode::fromUTF8((const uint8_t*)names[item], textArea1Buffer, 20);
     textArea1.setWildcard(textArea1Buffer);
-    button1.setTouchable(true);
+    button2.setTouchable(true);
+
+    image2.invalidate();
+    textArea1.invalidate();
 
     invalidate();
 }
@@ -100,8 +102,7 @@ void CustomContainer1::handleClickEvent(const touchgfx::ClickEvent& event)
     }
     else if(event.getType() == touchgfx::ClickEvent::RELEASED)
     {
-        // Re-enable item touch after drag so next tap works.
-        button1.setTouchable(true);
+        button2.setTouchable(true);
     }
 
     CustomContainer1Base::handleClickEvent(event);
@@ -113,8 +114,7 @@ void CustomContainer1::handleDragEvent(const touchgfx::DragEvent& event)
     {
         isDragging = true;
         suppressNextClick = true;
-        // Route drag to the list instead of this child button.
-        button1.setTouchable(false);
+        button2.setTouchable(false);
     }
 
     if(parent)

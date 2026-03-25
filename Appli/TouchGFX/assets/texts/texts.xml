@@ -70,7 +70,7 @@
       <Text Id="__SingleUse_ZOX7" Alignment="Center" TypographyId="Typography1">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_6SET" Alignment="Center" TypographyId="Typography1">
+      <Text Id="T_T_ZONE" Alignment="Center" TypographyId="Typography1">
         <Translation Language="GB">&lt;Value&gt;</Translation>
       </Text>
     </TextGroup>

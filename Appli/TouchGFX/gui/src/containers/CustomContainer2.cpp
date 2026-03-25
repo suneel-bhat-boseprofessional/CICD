@@ -33,11 +33,6 @@ void CustomContainer2::setListElements(int item)
 
     // --- hide everything first -------------------------------------------
 
-    image1.setVisible(false);
-    image2.setVisible(false);
-    image3.setVisible(false);
-    image4.setVisible(false);
-
     button1.setVisible(false);
     button2.setVisible(false);
     button3.setVisible(false);
@@ -93,7 +88,6 @@ void CustomContainer2::setListElements(int item)
             if(i == 0)
             {
                 textArea1.setVisible(true);
-                image1.setVisible(true);
                 button1.setVisible(true);
                 button1.setTouchable(!isDragging);
                 textArea5.setVisible(true);
@@ -103,7 +97,6 @@ void CustomContainer2::setListElements(int item)
             else if(i == 1)
             {
                 textArea2.setVisible(true);
-                image2.setVisible(true);
                 button2.setVisible(true);
                 button2.setTouchable(!isDragging);
                 textArea6.setVisible(true);
@@ -113,7 +106,6 @@ void CustomContainer2::setListElements(int item)
             else if(i == 2)
             {
                 textArea3.setVisible(true);
-                image3.setVisible(true);
                 button3.setVisible(true);
                 button3.setTouchable(!isDragging);
                 textArea7.setVisible(true);
@@ -123,7 +115,6 @@ void CustomContainer2::setListElements(int item)
             else if(i == 3)
             {
                 textArea4.setVisible(true);
-                image4.setVisible(true);
                 button4.setVisible(true);
                 button4.setTouchable(!isDragging);
                 textArea8.setVisible(true);
