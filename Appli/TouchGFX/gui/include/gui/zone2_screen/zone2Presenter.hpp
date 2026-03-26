@@ -20,6 +20,8 @@ public:
     int getZoneVolume(int index);
     void setZoneVolume(int index, int value);
 
+    virtual void zoneNamesUpdated();
+
 private:
     zone2Presenter();
 

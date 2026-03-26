@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : fan_control.h
-  * @brief          : Header for fan_control.c file.
-  *                   Fan PWM control via UART JSON commands
+  * @file           : protocol.h
+  * @brief          : Header for protocol.c file.
+  *                   UART JSON protocol handler
   ******************************************************************************
   * @attention
   *
@@ -85,4 +85,4 @@ char* JSON_GetStringValue(const char *json, const char *key, char *value_buffer,
 }
 #endif
 
-#endif /* __FAN_CONTROL_H */
+#endif /* __PROTOCOL_H */

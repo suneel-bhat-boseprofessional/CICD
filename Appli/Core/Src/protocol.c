@@ -1,8 +1,8 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : fan_control.c
-  * @brief          : Fan PWM control via UART JSON commands
+  * @file           : protocol.c
+  * @brief          : UART JSON protocol handler
   ******************************************************************************
   * @attention
   *
@@ -29,7 +29,7 @@ extern int get_zone_count_c(void);
 extern void set_zone_volume_c(int idx, int value);
 extern void set_zone_muted_c(int idx, int muted);
 
-#include <stdlib.h> // for atoi
+#include <stdlib.h> // for atoi, atof
 
 // Fix: Add FreeRTOS includes for QueueHandle_t and queue APIs
 #include "FreeRTOS.h"
@@ -410,6 +410,71 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
     }
 
     // sources[] is accepted in payload for future UI binding.
+    // No response on success
+    return;
+  }
+
+  if (strcmp(msg.action, "setGain") == 0)
+  {
+    char zoneBuf[12];
+    char normBuf[24];
+    char dbBuf[24];
+    int  zoneIndex;
+
+    if (!JSON_GetStringValue(msg.payload, "zone", zoneBuf, sizeof(zoneBuf))) {
+      SendNack(p_huart, "setGain", "MISSING GAIN.ZONE", 4401);
+      return;
+    }
+
+    zoneIndex = atoi(zoneBuf);
+    if (zoneIndex < 0 || zoneIndex >= get_zone_count_c()) {
+      SendNack(p_huart, "setGain", "INVALID GAIN.ZONE", 4402);
+      return;
+    }
+
+    // norm is a direct volume value (0–100); round to nearest integer and clamp
+    if (JSON_GetStringValue(msg.payload, "norm", normBuf, sizeof(normBuf))) {
+      float norm = (float)atof(normBuf);
+      if (norm < 0.0f)   norm = 0.0f;
+      if (norm > 100.0f) norm = 100.0f;
+      set_zone_volume_c(zoneIndex, (int)(norm + 0.5f));
+    } else if (JSON_GetStringValue(msg.payload, "db", dbBuf, sizeof(dbBuf))) {
+      // Store dB value directly as volume integer (caller responsibility)
+      set_zone_volume_c(zoneIndex, (int)(atof(dbBuf) + 0.5f));
+    } else {
+      SendNack(p_huart, "setGain", "MISSING GAIN.NORM OR GAIN.DB", 4403);
+      return;
+    }
+
+    // No response on success
+    return;
+  }
+
+  if (strcmp(msg.action, "setMute") == 0)
+  {
+    char zoneBuf[12];
+    char stateBuf[8];
+    int  zoneIndex;
+
+    if (!JSON_GetStringValue(msg.payload, "zone", zoneBuf, sizeof(zoneBuf))) {
+      SendNack(p_huart, "setMute", "MISSING MUTE.ZONE", 4501);
+      return;
+    }
+
+    zoneIndex = atoi(zoneBuf);
+    if (zoneIndex < 0 || zoneIndex >= get_zone_count_c()) {
+      SendNack(p_huart, "setMute", "INVALID MUTE.ZONE", 4502);
+      return;
+    }
+
+    if (!JSON_GetStringValue(msg.payload, "state", stateBuf, sizeof(stateBuf))) {
+      SendNack(p_huart, "setMute", "MISSING MUTE.STATE", 4503);
+      return;
+    }
+
+    int muted = (strcmp(stateBuf, "true") == 0 || strcmp(stateBuf, "1") == 0) ? 1 : 0;
+    set_zone_muted_c(zoneIndex, muted);
+
     // No response on success
     return;
   }

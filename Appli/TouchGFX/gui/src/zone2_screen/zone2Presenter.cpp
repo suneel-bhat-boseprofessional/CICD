@@ -29,3 +29,8 @@ void zone2Presenter::setZoneVolume(int index, int value)
 {
     model->setZoneVolume(index, value);
 }
+
+void zone2Presenter::zoneNamesUpdated()
+{
+    view.zoneUpdated();
+}

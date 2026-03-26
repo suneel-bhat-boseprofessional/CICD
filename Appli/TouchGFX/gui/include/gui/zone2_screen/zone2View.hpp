@@ -37,6 +37,7 @@ public:
     virtual void tearDownScreen();
 
     void volumeChanged(int value);
+    void zoneUpdated();
 
 protected:
     touchgfx::Callback<zone2View, const touchgfx::Slider&, int> sliderCallback;

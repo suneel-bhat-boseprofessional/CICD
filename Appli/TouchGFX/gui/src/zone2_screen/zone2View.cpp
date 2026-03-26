@@ -101,6 +101,32 @@ void zone2View::volumeBtnClicked(const touchgfx::AbstractButton& src)
     button1.invalidate();
 }
 
+void zone2View::zoneUpdated()
+{
+    int zone   = presenter->getSelectedZone();
+    int volume = presenter->getZoneVolume(zone);
+
+    slider1.setValue(volume);
+    updateSliderFill(volume);
+
+    Unicode::snprintf(volumeBuffer, 8, "%d", volume);
+    textArea2.invalidate();
+
+    const char* name = modelInstance->getZoneName(zone);
+    if(name && name[0] != '\0')
+        Unicode::fromUTF8((const uint8_t*)name, zoneNameBuffer, 32);
+    else
+        Unicode::snprintf(zoneNameBuffer, 32, "Zone %d", zone + 1);
+    textArea3.invalidate();
+
+    bool isMuted = modelInstance->getZoneMuted(zone);
+    if(isMuted)
+        button1.setBitmaps(Bitmap(BITMAP_MUTE_ID), Bitmap(BITMAP_MUTE_ID));
+    else
+        button1.setBitmaps(Bitmap(BITMAP_UNMUTE_ID), Bitmap(BITMAP_UNMUTE_ID));
+    button1.invalidate();
+}
+
 void zone2View::updateSliderFill(int value)
 {
     CustomSlider& cs = static_cast<CustomSlider&>(slider1);

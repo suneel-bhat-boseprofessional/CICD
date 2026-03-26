@@ -53,6 +53,7 @@ void Model::setZoneVolume(int index, int value)
         {
             zonePrevVolumes[index] = value;
         }
+        zoneNamesChanged = true;
     }
 }
 
@@ -78,10 +79,12 @@ void Model::setZoneMuted(int index, bool muted)
     // On leaving mute, restore last audible volume if current is zero.
     if(!muted && zoneMuted[index] && zoneVolumes[index] == 0)
     {
+
         zoneVolumes[index] = zonePrevVolumes[index];
     }
 
     zoneMuted[index] = muted;
+    zoneNamesChanged = true;
 }
 
 bool Model::getZoneMuted(int index)
