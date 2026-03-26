@@ -35,7 +35,7 @@ extern int notifyTouch;
 // UART RX queue handle definition (not extern)
 QueueHandle_t uartRxQueue = NULL;
 #include "stm32n6xx_it.h"
-#include "fan_control.h"
+#include <protocol.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
