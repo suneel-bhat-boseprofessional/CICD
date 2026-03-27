@@ -59,6 +59,10 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length);
 void SendNack(UART_HandleTypeDef *huart, const char *failedAction, const char *errorMsg, int errorCode);
 void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);
 
+/* UI → Device outgoing message helpers */
+void Protocol_SendSetGain(int zone, int norm);
+void Protocol_SendSetMute(int zone, int state);
+
 /* Generic JSON Helper Functions ---------------------------------------------*/
 /**
   * @brief  Extract string value from JSON for any key using JSMN parser

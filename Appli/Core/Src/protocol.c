@@ -482,4 +482,22 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
   SendNack(p_huart, msg.action, "FAILED ACTION", 4004);
 }
 
+void Protocol_SendSetGain(int zone, int norm)
+{
+  char buffer[128];
+  int len = snprintf(buffer, sizeof(buffer),
+      "{\"action\":\"setGain\",\"payload\":{\"zone\":%d,\"norm\":%d}}\r\n",
+      zone, norm);
+  HAL_UART_Transmit(p_huart, (uint8_t*)buffer, len, 100);
+}
+
+void Protocol_SendSetMute(int zone, int state)
+{
+  char buffer[96];
+  int len = snprintf(buffer, sizeof(buffer),
+      "{\"action\":\"setMute\",\"payload\":{\"zone\":%d,\"state\":%s}}\r\n",
+      zone, state ? "true" : "false");
+  HAL_UART_Transmit(p_huart, (uint8_t*)buffer, len, 100);
+}
+
 

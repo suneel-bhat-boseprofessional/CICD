@@ -49,6 +49,7 @@ protected:
     void volumeBtnClicked(const touchgfx::AbstractButton& src);
 
     int lastVolume;
+    bool suppressGainTx;
 
     touchgfx::Unicode::UnicodeChar volumeBuffer[8];
     touchgfx::Unicode::UnicodeChar zoneNameBuffer[32];

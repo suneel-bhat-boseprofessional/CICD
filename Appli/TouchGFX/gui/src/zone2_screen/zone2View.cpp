@@ -3,10 +3,14 @@
 #include <images/BitmapDatabase.hpp>
 #include <touchgfx/widgets/AbstractButton.hpp>
 
+extern "C" void Protocol_SendSetGain(int zone, int norm);
+extern "C" void Protocol_SendSetMute(int zone, int state);
+
 zone2View::zone2View() :
     sliderCallback(this, &zone2View::sliderValueChanged),
     volumeBtnCallback(this, &zone2View::volumeBtnClicked),
-    lastVolume(50)
+    lastVolume(50),
+    suppressGainTx(false)
 {
 }
 
@@ -21,7 +25,9 @@ void zone2View::setupScreen()
 
     slider1.setValueRange(0, 100);
     slider1.setNewValueCallback(sliderCallback);
+    suppressGainTx = true;
     slider1.setValue(volume);
+    suppressGainTx = false;
 
     updateSliderFill(volume);
 
@@ -66,7 +72,18 @@ void zone2View::tearDownScreen()
 
 void zone2View::sliderValueChanged(const touchgfx::Slider& slider, int value)
 {
+    if(suppressGainTx)
+    {
+        return;
+    }
+
+    if(value == lastVolume)
+    {
+        return;
+    }
+
     volumeChanged(value);
+    Protocol_SendSetGain(presenter->getSelectedZone(), value);
 }
 
 void zone2View::volumeChanged(int value)
@@ -91,11 +108,13 @@ void zone2View::volumeBtnClicked(const touchgfx::AbstractButton& src)
     {
         modelInstance->setZoneMuted(zone, false);
         button1.setBitmaps(Bitmap(BITMAP_UNMUTE_ID), Bitmap(BITMAP_UNMUTE_ID));
+        Protocol_SendSetMute(zone, 0);
     }
     else
     {
         modelInstance->setZoneMuted(zone, true);
         button1.setBitmaps(Bitmap(BITMAP_MUTE_ID), Bitmap(BITMAP_MUTE_ID));
+        Protocol_SendSetMute(zone, 1);
     }
 
     button1.invalidate();
@@ -105,8 +124,11 @@ void zone2View::zoneUpdated()
 {
     int zone   = presenter->getSelectedZone();
     int volume = presenter->getZoneVolume(zone);
+    lastVolume = volume;
 
+    suppressGainTx = true;
     slider1.setValue(volume);
+    suppressGainTx = false;
     updateSliderFill(volume);
 
     Unicode::snprintf(volumeBuffer, 8, "%d", volume);

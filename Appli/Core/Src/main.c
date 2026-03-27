@@ -781,7 +781,7 @@ int main(void)
    uint32_t hClk = HAL_RCC_GetHCLKFreq();
    printf("System Clock: %lu Hz, HCLK: %lu Hz\r\n", sysClk, hClk);
 #endif
-
+   printf("{\"action\":\"startup\",\"payload\":\"ready\"}\r\n");
    //UART message reception queue
    uartRxQueue = xQueueCreate(10, RX_BUFFER_SIZE);
 
