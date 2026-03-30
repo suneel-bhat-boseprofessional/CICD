@@ -288,6 +288,20 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
   } >LRUN_APPLI_RAM
+  
+  
+  .ramcode :
+{
+  . = ALIGN(4);
+  _sramcode = .;
+  *(.ramcode)
+  *(.ramcode*)
+  *(.rodata.ramcode*)  /* Force constants into this section */
+  . = ALIGN(4);
+  _eramcode = .;
+} >RAM AT> ROM
+
+_siramcode = LOADADDR(.ramcode);
 
   /* Remove information from the compiler libraries */
   /DISCARD/ :

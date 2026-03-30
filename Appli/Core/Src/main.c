@@ -64,6 +64,35 @@ typedef uint16_t u16;
 
 /* USER CODE END PD */
 
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+#define XSPI_FUNCTIONAL_MODE_INDIRECT_WRITE ((uint32_t)0x00000000)         /*!< Indirect write mode    */
+#define XSPI_FUNCTIONAL_MODE_INDIRECT_READ  ((uint32_t)XSPI_CR_FMODE_0)    /*!< Indirect read mode     */
+#define XSPI_FUNCTIONAL_MODE_AUTO_POLLING   ((uint32_t)XSPI_CR_FMODE_1)    /*!< Automatic polling mode */
+#define XSPI_FUNCTIONAL_MODE_MEMORY_MAPPED  ((uint32_t)XSPI_CR_FMODE)      /*!< Memory-mapped mode     */
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+// Define your target parameters for flash verification
+#define TEST_FLASH_ADDRESS 0x70200000  // 4KB-aligned memory-mapped address
+#define TEST_PATTERN          0xA5U
+#define TEST_SECTOR_SIZE   4096        // MX25L6433F Sector Erase (SE, 0x20): 4KB
+#define TEST_DATA_SIZE     32          // Actual data size for testing
+#define TEST_MEM_ID        0           // Adjust based on your EXTMEM configuration
+
+// STM32N6 Flash Memory Mapping
+#define FLASH_MEMORY_BASE  0x70000000  // STM32N6 maps external flash here
+#define FLASH_SIZE_8MB    0x800000    // 64 Mb = 8MB = 0x800000 bytes
+
+// 4KB sector alignment helper macros
+#define IS_4KB_ALIGNED(addr)           ((addr) % 4096 == 0)
+#define ALIGN_TO_4KB_DOWN(addr)        (((addr) / 4096) * 4096)
+
+// Flag value written to external flash to signal firmware update completion
+#define UPDATE_FLAG_VALUE              0xB5B5B5C5UL
+
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 
@@ -96,6 +125,22 @@ UART_HandleTypeDef huart1;
 int max_touches = MAX_NUM_TOUCHES;
 struct coop_data finger[MAX_NUM_TOUCHES];
 TIM_HandleTypeDef htim4;
+
+
+XSPI_HandleTypeDef hxspi2;
+// External declaration for ExtMem configuration array
+//extern EXTMEM_DefinitionTypeDef extmem_list_config[];
+
+// Simple test variables for RAM code execution
+static volatile uint32_t test_ram_var = 0xDEADBEEF;
+static volatile uint8_t test_flag = 0x55;
+
+// Linker symbols for .ramcode section
+extern uint32_t _sramcode;   // Start of ramcode in RAM
+extern uint32_t _eramcode;   // End of ramcode in RAM
+extern uint32_t _siramcode;  // Start of ramcode in Flash (load address)
+/* USER CODE END PV */
+
 
 #if MANUAL_FB_ENABLE
 // Allocate smaller framebuffer to fit within FB2_RAM constraints (200x50 = 20KB)
@@ -246,6 +291,447 @@ void process_touch_data(void)
     }
     notifyTouch = 0;
 }
+
+
+//Pushpa's change
+__attribute__((section(".ramcode"), noinline))
+HAL_StatusTypeDef Update_External_Flag_Safe(uint32_t addr, uint32_t value)
+{
+    XSPI_TypeDef *xspi = XSPI2;
+    volatile uint8_t status;
+
+    // -------------------------------------------------------------------------
+    // 1. Validation
+    // -------------------------------------------------------------------------
+    if ((addr < FLASH_MEMORY_BASE) ||
+        (addr >= (FLASH_MEMORY_BASE + 0x4000000)) ||
+        ((addr & 0xFFF) != 0))
+    {
+        return HAL_ERROR;
+    }
+
+    // -------------------------------------------------------------------------
+    // 2. CRITICAL: Enter Atomic State
+    // -------------------------------------------------------------------------
+    __disable_irq();
+    __DSB(); // Ensure all memory transactions are finished
+    __ISB(); // Flush instruction pipeline
+
+    // -------------------------------------------------------------------------
+    // 3. Wait for XSPI to be idle from previous XIP fetches
+    // -------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
+    // 4. ABORT XIP MODE (Switch to Indirect/Command Mode)
+    // -------------------------------------------------------------------------
+    SET_BIT(XSPI2->CR, XSPI_CR_ABORT);
+    CLEAR_BIT(XSPI2->CR, XSPI_CR_TCEN);
+    CLEAR_BIT(XSPI2->CR, XSPI_CR_FMODE);
+
+    __DSB();
+    __ISB();
+
+    // SD: Added
+    // while (xspi->SR & XSPI_SR_BUSY);
+
+    // -------------------------------------------------------------------------
+    // STEP A: WRITE ENABLE
+    // -------------------------------------------------------------------------
+    MODIFY_REG(xspi->CR, XSPI_CR_FMODE, 0U);
+    MODIFY_REG(xspi->CR, XSPI_CR_MSEL, 0U);
+
+    // Clear CCR (removes leftover bits from memory-map mode)
+    xspi->CCR = 0U;
+
+    // Clear dummy cycles (critical after memory-map mode)
+    MODIFY_REG(xspi->TCR, XSPI_TCR_DCYC, 0U);
+
+    // Configure instruction
+    MODIFY_REG(xspi->CCR,
+               (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE),
+               (HAL_XSPI_INSTRUCTION_1_LINE |
+                HAL_XSPI_INSTRUCTION_DTR_DISABLE |
+                HAL_XSPI_INSTRUCTION_8_BITS));
+
+    // Trigger command
+    xspi->IR = 0x06; // Write Enable
+
+    // Wait for completion
+    while (xspi->SR & XSPI_SR_BUSY);
+
+    // Clear transfer complete flag
+    xspi->FCR = XSPI_FCR_CTCF;
+
+    // -------------------------------------------------------------------------
+    // STEP E: VERIFY WRITE ENABLE
+    // -------------------------------------------------------------------------
+
+    // Set command mode
+    xspi->CR &= ~XSPI_CR_FMODE;
+    xspi->CR &= ~XSPI_CR_MSEL;
+
+    // Configure status register read (1 byte)
+    xspi->DLR = 0;
+    xspi->CCR = HAL_XSPI_INSTRUCTION_1_LINE |
+                HAL_XSPI_INSTRUCTION_8_BITS |
+                HAL_XSPI_DATA_1_LINE;
+
+    // Indirect read mode
+    xspi->CR |= XSPI_CR_FMODE_0;
+
+    // Trigger read
+    xspi->IR = 0x05;
+
+    // Wait for data
+    while (!(xspi->SR & XSPI_SR_FTF));
+    status = xspi->DR;
+
+    // Wait for completion
+    while (!(xspi->SR & XSPI_SR_TCF));
+    xspi->FCR = XSPI_FCR_CTCF;
+
+
+
+    uint32_t flash_offset = TEST_FLASH_ADDRESS - 0x70000000U;
+    	uint8_t  write_buf[4] = { (uint8_t)(value), (uint8_t)(value >> 8U), (uint8_t)(value >> 16U), (uint8_t)(value >> 24U) };
+    	uint8_t  read_buf[4]  = { 0 };
+    	uint8_t  wip_status;
+
+    	// Helper macro: re-issue write enable at register level (WEL clears after every operation)
+    #define XSPI_WRITE_ENABLE() \
+    	do { \
+    		while (xspi->SR & XSPI_SR_BUSY); \
+    		MODIFY_REG(xspi->CR,  XSPI_CR_FMODE, 0U); \
+    		MODIFY_REG(xspi->CR,  XSPI_CR_MSEL,  0U); \
+    		xspi->CCR = 0U; \
+    		MODIFY_REG(xspi->TCR, XSPI_TCR_DCYC, 0U); \
+    		MODIFY_REG(xspi->CCR, (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE), \
+    		           (HAL_XSPI_INSTRUCTION_1_LINE | HAL_XSPI_INSTRUCTION_DTR_DISABLE | HAL_XSPI_INSTRUCTION_8_BITS)); \
+    		xspi->IR = 0x06; \
+    		while (xspi->SR & XSPI_SR_BUSY); \
+    		xspi->FCR = XSPI_FCR_CTCF; \
+    	} while(0)
+
+    	// Helper macro: poll status register until WIP (bit 0) clears
+    #define XSPI_WAIT_WIP() \
+    	do { \
+    		do { \
+    			while (xspi->SR & XSPI_SR_BUSY); \
+    			MODIFY_REG(xspi->CR,  XSPI_CR_FMODE, 0U); \
+    			MODIFY_REG(xspi->CR,  XSPI_CR_MSEL,  0U); \
+    			xspi->CCR = 0U; \
+    			MODIFY_REG(xspi->TCR, XSPI_TCR_DCYC, 0U); \
+    			xspi->DLR = 0U; \
+    			MODIFY_REG(xspi->CCR, (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE | \
+    			                       XSPI_CCR_DMODE  | XSPI_CCR_DDTR), \
+    			           (HAL_XSPI_INSTRUCTION_1_LINE | HAL_XSPI_INSTRUCTION_DTR_DISABLE | HAL_XSPI_INSTRUCTION_8_BITS | \
+    			            HAL_XSPI_DATA_1_LINE        | HAL_XSPI_DATA_DTR_DISABLE)); \
+    			xspi->CR |= XSPI_CR_FMODE_0; \
+    			xspi->IR  = 0x05; \
+    			while (!(xspi->SR & XSPI_SR_FTF)); \
+    			wip_status = xspi->DR; \
+    			while (!(xspi->SR & XSPI_SR_TCF)); \
+    			xspi->FCR = XSPI_FCR_CTCF; \
+    		} while (wip_status & 0x01); \
+    	} while(0)
+
+    	// --- F1: SECTOR ERASE (0x20, 3-byte address) ---
+    	XSPI_WRITE_ENABLE();
+
+    	while (xspi->SR & XSPI_SR_BUSY);
+    	MODIFY_REG(xspi->CR,  XSPI_CR_FMODE, 0U);
+    	MODIFY_REG(xspi->CR,  XSPI_CR_MSEL,  0U);
+    	xspi->CCR = 0U;
+    	MODIFY_REG(xspi->TCR, XSPI_TCR_DCYC, 0U);
+    	MODIFY_REG(xspi->CCR, (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE |
+    	                        XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE),
+    	           (HAL_XSPI_INSTRUCTION_1_LINE | HAL_XSPI_INSTRUCTION_DTR_DISABLE | HAL_XSPI_INSTRUCTION_8_BITS |
+    	            HAL_XSPI_ADDRESS_1_LINE     | HAL_XSPI_ADDRESS_DTR_DISABLE     | HAL_XSPI_ADDRESS_24_BITS));
+    	xspi->IR = 0x20;       // Sector Erase command
+    	xspi->AR = flash_offset;
+    	while (xspi->SR & XSPI_SR_BUSY);
+    	xspi->FCR = XSPI_FCR_CTCF;
+
+    	XSPI_WAIT_WIP();  // Wait for erase to complete
+//    	HAL_UART_Transmit(&huart1, (uint8_t*) "Sector erase OK\r\n",
+//    		sizeof("Sector erase OK\r\n") - 1, 100);
+
+    	// --- F2: PAGE PROGRAM (0x02, 3-byte address + data) ---
+    	XSPI_WRITE_ENABLE();  // WEL cleared after erase, must re-enable
+
+    	while (xspi->SR & XSPI_SR_BUSY);
+    	MODIFY_REG(xspi->CR,  XSPI_CR_FMODE, 0U);
+    	MODIFY_REG(xspi->CR,  XSPI_CR_MSEL,  0U);
+    	xspi->CCR = 0U;
+    	MODIFY_REG(xspi->TCR, XSPI_TCR_DCYC, 0U);
+    	xspi->DLR = sizeof(write_buf) - 1U;  // DLR = bytes - 1
+    	MODIFY_REG(xspi->CCR, (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE |
+    	                        XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE |
+    	                        XSPI_CCR_DMODE  | XSPI_CCR_DDTR),
+    	           (HAL_XSPI_INSTRUCTION_1_LINE | HAL_XSPI_INSTRUCTION_DTR_DISABLE | HAL_XSPI_INSTRUCTION_8_BITS |
+    	            HAL_XSPI_ADDRESS_1_LINE     | HAL_XSPI_ADDRESS_DTR_DISABLE     | HAL_XSPI_ADDRESS_24_BITS    |
+    	            HAL_XSPI_DATA_1_LINE        | HAL_XSPI_DATA_DTR_DISABLE));
+    	xspi->IR = 0x02;       // Page Program command
+    	xspi->AR = flash_offset;
+    	// Write data bytes - wait for FIFO space via FTF
+    	for (uint32_t i = 0U; i < sizeof(write_buf); i++) {
+    		while (!(xspi->SR & XSPI_SR_FTF));
+    		*(__IO uint8_t*)&xspi->DR = write_buf[i];
+    	}
+    	while (!(xspi->SR & XSPI_SR_TCF));
+    	xspi->FCR = XSPI_FCR_CTCF;
+
+    	XSPI_WAIT_WIP();  // Wait for program to complete
+//    	HAL_UART_Transmit(&huart1, (uint8_t*) "Flash write OK\r\n",
+//    		sizeof("Flash write OK\r\n") - 1, 100);
+
+    	// --- F3: READ BACK (0x03, 3-byte address + data) ---
+    	while (xspi->SR & XSPI_SR_BUSY);
+    	MODIFY_REG(xspi->CR,  XSPI_CR_FMODE, 0U);
+    	MODIFY_REG(xspi->CR,  XSPI_CR_MSEL,  0U);
+    	xspi->CCR = 0U;
+    	MODIFY_REG(xspi->TCR, XSPI_TCR_DCYC, 0U);
+    	xspi->DLR = sizeof(read_buf) - 1U;
+    	MODIFY_REG(xspi->CCR, (XSPI_CCR_IMODE | XSPI_CCR_IDTR | XSPI_CCR_ISIZE |
+    	                        XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE |
+    	                        XSPI_CCR_DMODE  | XSPI_CCR_DDTR),
+    	           (HAL_XSPI_INSTRUCTION_1_LINE | HAL_XSPI_INSTRUCTION_DTR_DISABLE | HAL_XSPI_INSTRUCTION_8_BITS |
+    	            HAL_XSPI_ADDRESS_1_LINE     | HAL_XSPI_ADDRESS_DTR_DISABLE     | HAL_XSPI_ADDRESS_24_BITS    |
+    	            HAL_XSPI_DATA_1_LINE        | HAL_XSPI_DATA_DTR_DISABLE));
+    	xspi->CR |= XSPI_CR_FMODE_0;   // Indirect Read mode
+    	xspi->IR  = 0x03;               // Read command
+    	xspi->AR  = flash_offset;
+    	for (uint32_t i = 0U; i < sizeof(read_buf); i++) {
+    		while (!(xspi->SR & XSPI_SR_FTF));
+    		read_buf[i] = *(__IO uint8_t*)&xspi->DR;
+    	}
+    	while (!(xspi->SR & XSPI_SR_TCF));
+    	xspi->FCR = XSPI_FCR_CTCF;
+
+//    	    volatile int x = 1;
+//    	    while (x > 0)
+//    	    {
+//    	        x++;
+//    	    }
+		// 5. RESTORE XIP MODE (Fast Quad Read 0xEB)
+		// IMPORTANT: Dummy cycles and bits must match your Flash chip settings!
+		// 5. RESTORE XIP MODE
+		xspi->CR &= ~XSPI_CR_FMODE; // Force Indirect mode while configuring
+		__DSB(); __ISB();
+
+
+		xspi->CCR = (HAL_XSPI_INSTRUCTION_1_LINE | HAL_XSPI_INSTRUCTION_8_BITS |
+						 HAL_XSPI_ADDRESS_4_LINES     | HAL_XSPI_ADDRESS_24_BITS    |
+						 HAL_XSPI_DATA_4_LINES);
+
+			/* Set Instruction Code for Read */
+			xspi->IR = 0xEB;
+
+			/* Set Dummy Cycles (6 as per your code) */
+			xspi->TCR = (6U << XSPI_TCR_DCYC_Pos);
+
+			/* 3. Configure WRITE CCR (WCCR) - Quad Page Program 0x38
+			   Your code used 1-4-4 for write too */
+			xspi->WCCR = (HAL_XSPI_INSTRUCTION_1_LINE | HAL_XSPI_INSTRUCTION_8_BITS |
+						  HAL_XSPI_ADDRESS_4_LINES     | HAL_XSPI_ADDRESS_24_BITS    |
+						  HAL_XSPI_DATA_4_LINES);
+
+			/* Set Instruction Code for Write */
+			xspi->WIR = 0x38;
+
+			/* 4. ATOMIC SWITCH TO MEMORY MAPPED
+			   We also enable Prefetch as your code requested */
+			__DSB();
+			__ISB();
+
+			// Clear FMODE and then set to Memory Mapped (3U)
+			// Also ensuring NoPrefetch bits are 0 (which means Prefetch is ENABLED)
+			uint32_t cr_val = xspi->CR;
+			cr_val &= ~(XSPI_CR_FMODE | XSPI_CR_TCEN);
+			cr_val |= (XSPI_FUNCTIONAL_MODE_MEMORY_MAPPED);
+
+			xspi->CR = cr_val;
+		__DSB(); __ISB();
+
+
+		// 6. Cache Invalidation (Crucial for N6)
+		SCB_InvalidateICache();
+
+
+
+		SCB_InvalidateDCache_by_Addr((uint32_t*)addr, 4096);
+
+		__enable_irq();
+		return HAL_OK;
+
+	}
+/**
+ * @brief Safely read from external memory from RAM code
+ * @param ext_addr: External memory address to read (0x70000000+ range)
+ * @return: 32-bit value read from external memory
+ * @note This function executes from RAM - safe for memory operations
+ */
+__attribute__((section(".ramcode"))) uint32_t Read_External_Memory_Safe(uint32_t ext_addr) {
+    // NO printf calls - they execute from flash!
+
+    volatile uint32_t *mem_ptr = (volatile uint32_t*)ext_addr;
+    uint32_t value;
+
+    // Simple disable interrupts during read
+    __disable_irq();
+
+    // Read from external memory (memory-mapped mode)
+    value = *mem_ptr;
+
+    // Re-enable interrupts
+    __enable_irq();
+
+    return value;
+}
+
+/**
+ * @brief Safely update a RAM variable from RAM code (MUST execute from RAM!)
+ * @param var_addr: Pointer to the variable to update
+ * @param new_value: New value to write
+ * @note This function MUST execute from RAM - NO printf calls allowed!
+ */
+__attribute__((section(".ramcode"))) void Update_RAM_Variable_Safe(uint32_t *var_addr, uint32_t new_value) {
+    // NO printf calls - they execute from flash!
+
+    // Simple disable interrupts
+    __disable_irq();
+
+    // Update the variable
+    *var_addr = new_value;
+
+    // Re-enable interrupts
+    __enable_irq();
+}
+
+
+void CopyRamCode(void)
+{
+	uint32_t *src = &_siramcode;
+	uint32_t *dst = &_sramcode;
+
+	while (dst < &_eramcode)
+	{
+		*dst++ = *src++;
+	}
+}
+/**
+ * @brief Test function to demonstrate RAM code execution and external memory reading
+ */
+void Test_External_Flag_Update(void) {
+    printf("=== Testing RAM Code Execution ===\r\n");
+
+    // Test 1: Update a global variable
+    printf("Test 1: Updating global test_ram_var\r\n");
+    printf("Before: test_ram_var = 0x%08lX\r\n", test_ram_var);
+
+    Update_RAM_Variable_Safe((uint32_t*)&test_ram_var, 0x12345678);
+
+    printf("After: test_ram_var = 0x%08lX\r\n", test_ram_var);
+    printf("Test 1 %s\r\n", (test_ram_var == 0x12345678) ? "PASSED" : "FAILED");
+
+    // Test 2: Update flag variable
+    printf("\r\nTest 2: Updating global test_flag\r\n");
+    printf("Before: test_flag = 0x%02X\r\n", test_flag);
+
+    Update_RAM_Variable_Safe((uint32_t*)&test_flag, 0xAB);
+
+    printf("After: test_flag = 0x%02X\r\n", test_flag);
+    printf("Test 2 %s\r\n", (test_flag == 0xAB) ? "PASSED" : "FAILED");
+
+    // NEW Test 3: Read from external memory using RAM code
+    printf("\r\nTest 3: Reading external memory from RAM code\r\n");
+
+    // Test some addresses in external flash
+    uint32_t test_addresses[] = {
+        0x70000000,    // Start of external flash
+        0x70100000,    // 1MB into flash
+        TEST_FLASH_ADDRESS,  // Our test address
+        0x70000100     // Near start of flash
+    };
+
+    for (int i = 0; i < 4; i++) {
+        uint32_t addr = test_addresses[i];
+        printf("Reading from 0x%08lX... ", addr);
+
+        // Use RAM function to safely read external memory
+        uint32_t value = Read_External_Memory_Safe(addr);
+
+        printf("Value: 0x%08lX\r\n", value);
+
+        // Check if we got a valid reading (not all 0xFF which might indicate error)
+        if (value != 0xFFFFFFFF && value != 0x00000000) {
+            printf("  -> Looks like valid data\r\n");
+        } else {
+            printf("  -> Might be empty/erased area\r\n");
+        }
+    }
+
+    printf("\r\nTest 3: External memory reading COMPLETED\r\n");
+
+    // NEW Test 4: Write to external flash using RAM code
+    printf("\r\nTest 4: Writing external flash flag from RAM code\r\n");
+
+    uint32_t flag_address = TEST_FLASH_ADDRESS; // Use our test address (4KB aligned)
+    uint32_t test_value = UPDATE_FLAG_VALUE;
+
+    // Read current value
+    printf("Reading current value at 0x%08lX... ", flag_address);
+    uint32_t current_value = Read_External_Memory_Safe(flag_address);
+    printf("Current: 0x%08lX\r\n", current_value);
+
+    // Perform update
+    printf("Updating external flash with value 0x%08lX...\r\n", (unsigned long)test_value);
+
+    HAL_StatusTypeDef result = Update_External_Flag_Safe(flag_address, test_value);
+
+#if 0
+      volatile int x = 1;
+      while (x >0)
+        {
+            x++;
+        }
+#endif
+                //SD:
+    if (result == HAL_OK) {
+        printf("Flash update command completed successfully\r\n");
+
+        // Small delay and read back
+        HAL_Delay(50);
+        uint32_t new_value = Read_External_Memory_Safe(flag_address);
+
+        printf("Verification read: 0x%08lX\r\n", new_value);
+
+        if (new_value == test_value) {
+            printf("Test 4: External flash update SUCCESS!\r\n");
+        } else {
+            printf("Test 4: External flash update FAILED - value mismatch\r\n");
+        }
+    } else {
+        printf("Flash update command FAILED with error %d\r\n", result);
+        printf("Test 4: External flash update FAILED\r\n");
+    }
+
+    printf("\r\nTest 4: External flash writing COMPLETED\r\n");
+    printf("=== All Tests Complete ===\r\n");
+}
+
+
+void Setup_Application_XSPI_Handle(void) {
+    // 1. Point the handle to the physical hardware address
+    hxspi2.Instance = XSPI2;
+
+    // 2. (Optional but Recommended) Manually fill in the critical fields
+    // so the HAL doesn't think the handle is uninitialized.
+    hxspi2.State = HAL_XSPI_STATE_READY;
+
+    // Note: Do NOT call MX_XSPI2_Init() or HAL_XSPI_Init()
+}
+
 
 void SystemClock_Config(void)
 {
@@ -633,6 +1119,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   HAL_Init();
+  CopyRamCode();
 
 #if !defined(XIP_BUILD) || (XIP_BUILD == 0)
   /* USER CODE BEGIN Init */
@@ -709,7 +1196,17 @@ int main(void)
   // Verify critical clocks are stable
 
   //read write loop back test to verify I2C communication with touch controller
+  /*ADDING MEMORY FLAG VERIFICATION CHANGES*/
 
+  Setup_Application_XSPI_Handle();  // Take this from FSBL, we are not initializing again
+  	if (XSPI2->CR & XSPI_CR_FMODE) {
+  		printf("XSPI is in  Mapped mode\r\n");
+  	    // Peripheral is indeed in Memory-Mapped mode (FSBL did its job)
+  	}
+  	printf("Testing RAM Code Execution\r\n");
+
+	Test_External_Flag_Update();
+	printf("RAM code test completed\r\n");
   //debug logics - I2C Address Scan
   printf("\n=== Starting I2C Address Scan ===\n");
   NVIC_DisableIRQ(EXTI8_IRQn);
