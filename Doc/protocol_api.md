@@ -29,13 +29,13 @@ All messages use a flat JSON envelope:
 On failure the device sends a NACK. **No response is sent on success.**
 
 ```json
-{"action": "nack", "payload": {"error": "ERROR STRING", "value": -1}}
+{"action": "nack", "payload": {"error": "ERROR STRING", "index": -1}}
 ```
 
 | Field            | Type   | Description                                 |
 |------------------|--------|---------------------------------------------|
-| `error`          | string | Human-readable error description            |
-| `value`          | int    | Error code (negative = parse error, 4xxx = action error) |
+| `error`          | string | Failed action name (`setGain`, `setMute`, `identity`, etc.) |
+| `index`          | int    | Zone index when available, else `-1`       |
 
 ---
 
@@ -50,6 +50,7 @@ Device identity information sent from the connected device.
   "action": "identity",
   "payload": {
     "Id":      "0984621562",
+    "Serial":  "SN12345678",
     "Version": "0.0.1",
     "Mac":     "AA:BB:CC:DD:EE:01",
     "Ip":      "192.168.1.100",
@@ -63,6 +64,7 @@ Device identity information sent from the connected device.
 | Field     | Type    | Required | Description             |
 |-----------|---------|----------|-------------------------|
 | `Id`      | string  | Yes      | Device identifier       |
+| `Serial`  | string  | Yes      | Device serial number    |
 | `Version` | string  | Yes      | Firmware version        |
 | `Mac`     | string  | Yes      | MAC address             |
 | `Ip`      | string  | Yes      | IP address              |
@@ -70,17 +72,11 @@ Device identity information sent from the connected device.
 | `Gateway` | string  | Yes      | Default gateway         |
 | `Dhcp`    | boolean | Yes      | DHCP enabled flag       |
 
-**NACK codes:**
+**NACK behavior:**
 
-| Code | Error                      |
-|------|----------------------------|
-| 4201 | `MISSING IDENTITY.ID`      |
-| 4202 | `MISSING IDENTITY.VERSION` |
-| 4203 | `MISSING IDENTITY.MAC`     |
-| 4204 | `MISSING IDENTITY.IP`      |
-| 4205 | `MISSING IDENTITY.IPMASK`  |
-| 4206 | `MISSING IDENTITY.GATEWAY` |
-| 4207 | `MISSING IDENTITY.DHCP`    |
+| `error` value | `index` |
+|---------------|---------|
+| `identity`    | `-1`    |
 
 ---
 
@@ -114,13 +110,11 @@ Defines or updates a zone. Zones are applied one-by-one. The visible zone count 
 > Zone count only grows — sending a lower index will not reduce visible icons.  
 > `DefMute` is applied before `DefGain` to ensure gain is always the authoritative value.
 
-**NACK codes:**
+**NACK behavior:**
 
-| Code | Error                |
-|------|----------------------|
-| 4301 | `MISSING ZONE.INDEX` |
-| 4302 | `INVALID ZONE.INDEX` |
-| 4303 | `MISSING ZONE.NAME`  |
+| `error` value | `index` |
+|---------------|---------|
+| `zone`        | Parsed `Index` when available, else `-1` |
 
 ---
 
@@ -147,13 +141,11 @@ Sets the gain (volume) for a zone at runtime.
 
 > `norm` takes priority over `db` if both are present.
 
-**NACK codes:**
+**NACK behavior:**
 
-| Code | Error                           |
-|------|---------------------------------|
-| 4401 | `MISSING GAIN.ZONE`             |
-| 4402 | `INVALID GAIN.ZONE`             |
-| 4403 | `MISSING GAIN.NORM OR GAIN.DB`  |
+| `error` value | `index` |
+|---------------|---------|
+| `setGain`     | Parsed `zone` when available, else `-1` |
 
 ---
 
@@ -179,13 +171,44 @@ Sets the mute state for a zone at runtime.
 > Muting saves the current volume. Unmuting restores the last saved volume if the current value is zero.  
 > Volume set via `setGain` is preserved through mute/unmute transitions.
 
-**NACK codes:**
+**NACK behavior:**
 
-| Code | Error                |
-|------|----------------------|
-| 4501 | `MISSING MUTE.ZONE`  |
-| 4502 | `INVALID MUTE.ZONE`  |
-| 4503 | `MISSING MUTE.STATE` |
+| `error` value | `index` |
+|---------------|---------|
+| `setMute`     | Parsed `zone` when available, else `-1` |
+
+---
+
+### `zoneEnd`
+
+Signals end of zone list transfer and validates total zone count.
+
+```json
+{
+  "action": "zoneEnd",
+  "payload": {
+    "zones": 4
+  }
+}
+```
+
+| Field   | Type | Required | Description                         |
+|---------|------|----------|-------------------------------------|
+| `zones` | int  | Yes      | Expected total number of zones      |
+
+**Device response:**
+
+If current zone count matches `zones`:
+
+```json
+{"action":"zoneEndAck"}
+```
+
+If count does not match or payload is invalid:
+
+```json
+{"action":"zoneEndNack"}
+```
 
 ---
 
@@ -208,28 +231,27 @@ Controls the PWM fan output.
 | `MID`         | 60%           |
 | `HIGH`        | 100%          |
 
-**NACK codes:**
+**NACK behavior:**
 
-| Code | Error                 |
-|------|-----------------------|
-| 4001 | `MISSING SPEED`       |
-| 4002 | `INVALID SPEED`       |
+| `error` value | `index` |
+|---------------|---------|
+| `setFanSpeed` | `-1`    |
 
 ---
 
-## General NACK Codes
+## General NACK Behavior
 
-| Code | Error            | Trigger                              |
-|------|------------------|--------------------------------------|
-| -1   | `INVALID PACKET` | JSON parse failure or missing action |
-| 4004 | `FAILED ACTION`  | Action string not recognised         |
+| Case                     | NACK payload                          |
+|--------------------------|----------------------------------------|
+| Invalid packet           | `{"error":"parse","index":-1}`   |
+| Unknown action           | `{"error":"<action>","index":-1}` |
 
 ---
 
 ## Example Session
 
 ```
-→ {"action":"identity","payload":{"Id":"001","Version":"0.0.1","Mac":"AA:BB:CC:DD:EE:01","Ip":"192.168.1.100","IpMask":"255.255.255.0","Gateway":"192.168.1.1","Dhcp":false}}
+→ {"action":"identity","payload":{"Id":"001","Serial":"SN12345678","Version":"0.0.1","Mac":"AA:BB:CC:DD:EE:01","Ip":"192.168.1.100","IpMask":"255.255.255.0","Gateway":"192.168.1.1","Dhcp":false}}
 ← (no response — success)
 
 → {"action":"zone","payload":{"Index":0,"Name":"Living Room","Gain":{"DefGain":75,"DefMute":false},"sources":["HDMI 1","Bluetooth"]}}
@@ -244,9 +266,12 @@ Controls the PWM fan output.
 → {"action":"setMute","payload":{"zone":1,"state":false}}
 ← (no response — success)
 
+→ {"action":"zoneEnd","payload":{"zones":2}}
+← {"action":"zoneEndAck"}
+
 → {"action":"setGain","payload":{"zone":99,"norm":0.5}}
-← {"action":"nack","payload":{"error":"INVALID GAIN.ZONE","value":4402}}
+← {"action":"nack","payload":{"error":"setGain","index":99}}
 
 → bad json here
-← {"action":"nack","payload":{"error":"INVALID PACKET","value":-1}}
+← {"action":"nack","payload":{"error":"parse","index":-1}}
 ```

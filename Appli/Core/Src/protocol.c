@@ -50,12 +50,12 @@ int ParseGenericMessage(const char *json, GenericMessage *msg)
 
 
 // Send NACK (failure) message only
-void SendNack(UART_HandleTypeDef *huart, const char *failedAction, const char *errorMsg, int errorCode) {
-  (void)failedAction;
+void SendNack(UART_HandleTypeDef *huart, const char *failedAction, const char *errorMsg, int index) {
+  (void)errorMsg;
     char buffer[256];
     int len = snprintf(buffer, sizeof(buffer),
-        "{\"action\":\"nack\",\"payload\":{\"error\":\"%s\",\"value\":%d}}\r\n",
-        errorMsg, errorCode);
+        "{\"action\":\"nack\",\"payload\":{\"error\":\"%s\",\"index\":%d}}\r\n",
+        failedAction, index);
     HAL_UART_Transmit(huart, (uint8_t*)buffer, len, 100);
 }
 
@@ -75,6 +75,12 @@ static UART_HandleTypeDef *p_huart = NULL;
 static uint32_t tim_pwm_channel = TIM_CHANNEL_2;
 
 /* Private function prototypes -----------------------------------------------*/
+static void HandleSetFanSpeed(const GenericMessage *msg);
+static void HandleIdentity(const GenericMessage *msg);
+static void HandleZone(const GenericMessage *msg);
+static void HandleZoneEnd(const GenericMessage *msg);
+static void HandleSetGain(const GenericMessage *msg);
+static void HandleSetMute(const GenericMessage *msg);
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -292,6 +298,192 @@ void FanControl_SetSpeed(uint8_t percent)
   __HAL_TIM_SET_COMPARE(p_htim, tim_pwm_channel, pulse_value);
 }
 
+static void HandleSetFanSpeed(const GenericMessage *msg)
+{
+  char speed[16];
+
+  if (JSON_GetStringValue(msg->payload, "speed", speed, sizeof(speed)))
+  {
+    if (strcmp(speed, "LOW") == 0)
+      FanControl_SetSpeed(SPEED_LOW_PERCENT);
+    else if (strcmp(speed, "MID") == 0)
+      FanControl_SetSpeed(SPEED_MID_PERCENT);
+    else if (strcmp(speed, "HIGH") == 0)
+      FanControl_SetSpeed(SPEED_HIGH_PERCENT);
+    else
+      SendNack(p_huart, "setFanSpeed", "INVALID SPEED", -1);
+  }
+  else
+  {
+    SendNack(p_huart, "setFanSpeed", "MISSING SPEED", -1);
+  }
+}
+
+static void HandleIdentity(const GenericMessage *msg)
+{
+  char tmp[32];
+
+  if (!JSON_GetStringValue(msg->payload, "Id", tmp, sizeof(tmp))) {
+    SendNack(p_huart, "identity", "MISSING IDENTITY.ID", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "Serial", tmp, sizeof(tmp))) {
+    SendNack(p_huart, "identity", "MISSING IDENTITY.SERIAL", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "Version", tmp, sizeof(tmp))) {
+    SendNack(p_huart, "identity", "MISSING IDENTITY.VERSION", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "Mac", tmp, sizeof(tmp))) {
+    SendNack(p_huart, "identity", "MISSING IDENTITY.MAC", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "Ip", tmp, sizeof(tmp))) {
+    SendNack(p_huart, "identity", "MISSING IDENTITY.IP", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "IpMask", tmp, sizeof(tmp))) {
+    SendNack(p_huart, "identity", "MISSING IDENTITY.IPMASK", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "Gateway", tmp, sizeof(tmp))) {
+    SendNack(p_huart, "identity", "MISSING IDENTITY.GATEWAY", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "Dhcp", tmp, sizeof(tmp))) {
+    SendNack(p_huart, "identity", "MISSING IDENTITY.DHCP", -1);
+    return;
+  }
+}
+
+static void HandleZone(const GenericMessage *msg)
+{
+  char indexBuf[12];
+  char nameBuf[64];
+  char gainBuf[12];
+  char muteBuf[8];
+  int zoneIndex;
+
+  if (!JSON_GetStringValue(msg->payload, "Index", indexBuf, sizeof(indexBuf))) {
+    SendNack(p_huart, "zone", "MISSING ZONE.INDEX", -1);
+    return;
+  }
+
+  zoneIndex = atoi(indexBuf);
+  if (zoneIndex < 0) {
+    SendNack(p_huart, "zone", "INVALID ZONE.INDEX", zoneIndex);
+    return;
+  }
+
+  if (!JSON_GetStringValue(msg->payload, "Name", nameBuf, sizeof(nameBuf))) {
+    SendNack(p_huart, "zone", "MISSING ZONE.NAME", zoneIndex);
+    return;
+  }
+
+  // Apply one-by-one zone update and grow the visible zone count.
+  set_zone_name_c(zoneIndex, nameBuf);
+  if ((zoneIndex + 1) > get_zone_count_c()) {
+    set_zone_count_c(zoneIndex + 1);
+  }
+
+  if (JSON_GetObjectChildValue(msg->payload, "Gain", "DefMute", muteBuf, sizeof(muteBuf))) {
+    int muted = (strcmp(muteBuf, "true") == 0 || strcmp(muteBuf, "1") == 0) ? 1 : 0;
+    set_zone_muted_c(zoneIndex, muted);
+  }
+
+  if (JSON_GetObjectChildValue(msg->payload, "Gain", "DefGain", gainBuf, sizeof(gainBuf))) {
+    set_zone_volume_c(zoneIndex, atoi(gainBuf));
+  }
+
+  // sources[] is accepted in payload for future UI binding.
+}
+
+static void HandleZoneEnd(const GenericMessage *msg)
+{
+  char zonesBuf[12];
+  int expectedZones;
+  int currentZones;
+  const char *ackMsg = "{\"action\":\"zoneEndAck\"}\r\n";
+  const char *nackMsg = "{\"action\":\"zoneEndNack\"}\r\n";
+
+  if (!JSON_GetStringValue(msg->payload, "zones", zonesBuf, sizeof(zonesBuf))) {
+    HAL_UART_Transmit(p_huart, (uint8_t*)nackMsg, strlen(nackMsg), 100);
+    return;
+  }
+
+  expectedZones = atoi(zonesBuf);
+  if (expectedZones < 0) {
+    expectedZones = 0;
+  }
+
+  currentZones = get_zone_count_c();
+
+  if (currentZones == expectedZones) {
+    HAL_UART_Transmit(p_huart, (uint8_t*)ackMsg, strlen(ackMsg), 100);
+  } else {
+    HAL_UART_Transmit(p_huart, (uint8_t*)nackMsg, strlen(nackMsg), 100);
+  }
+}
+
+static void HandleSetGain(const GenericMessage *msg)
+{
+  char zoneBuf[12];
+  char normBuf[24];
+  char dbBuf[24];
+  int  zoneIndex;
+
+  if (!JSON_GetStringValue(msg->payload, "zone", zoneBuf, sizeof(zoneBuf))) {
+    SendNack(p_huart, "setGain", "MISSING GAIN.ZONE", -1);
+    return;
+  }
+
+  zoneIndex = atoi(zoneBuf);
+  if (zoneIndex < 0 || zoneIndex >= get_zone_count_c()) {
+    SendNack(p_huart, "setGain", "INVALID GAIN.ZONE", zoneIndex);
+    return;
+  }
+
+  // norm is a direct volume value (0-100); round to nearest integer and clamp
+  if (JSON_GetStringValue(msg->payload, "norm", normBuf, sizeof(normBuf))) {
+    float norm = (float)atof(normBuf);
+    if (norm < 0.0f)   norm = 0.0f;
+    if (norm > 100.0f) norm = 100.0f;
+    set_zone_volume_c(zoneIndex, (int)(norm + 0.5f));
+  } else if (JSON_GetStringValue(msg->payload, "db", dbBuf, sizeof(dbBuf))) {
+    // Store dB value directly as volume integer (caller responsibility)
+    set_zone_volume_c(zoneIndex, (int)(atof(dbBuf) + 0.5f));
+  } else {
+    SendNack(p_huart, "setGain", "MISSING GAIN.NORM OR GAIN.DB", zoneIndex);
+    return;
+  }
+}
+
+static void HandleSetMute(const GenericMessage *msg)
+{
+  char zoneBuf[12];
+  char stateBuf[8];
+  int  zoneIndex;
+
+  if (!JSON_GetStringValue(msg->payload, "zone", zoneBuf, sizeof(zoneBuf))) {
+    SendNack(p_huart, "setMute", "MISSING MUTE.ZONE", -1);
+    return;
+  }
+
+  zoneIndex = atoi(zoneBuf);
+  if (zoneIndex < 0 || zoneIndex >= get_zone_count_c()) {
+    SendNack(p_huart, "setMute", "INVALID MUTE.ZONE", zoneIndex);
+    return;
+  }
+
+  if (!JSON_GetStringValue(msg->payload, "state", stateBuf, sizeof(stateBuf))) {
+    SendNack(p_huart, "setMute", "MISSING MUTE.STATE", zoneIndex);
+    return;
+  }
+
+  set_zone_muted_c(zoneIndex, (strcmp(stateBuf, "true") == 0 || strcmp(stateBuf, "1") == 0) ? 1 : 0);
+}
+
 /**
   * @brief  Process received JSON packet and control PWM
   * @param  data: Pointer to JSON string
@@ -312,181 +504,44 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
     return;
   }
 
-  if (strcmp(msg.action, "setFanSpeed") == 0)
-  {
-    char speed[16];
-    if (JSON_GetStringValue(msg.payload, "speed", speed, sizeof(speed)))
-    {
-      if (strcmp(speed, "LOW") == 0)
-        FanControl_SetSpeed(SPEED_LOW_PERCENT);
-      else if (strcmp(speed, "MID") == 0)
-        FanControl_SetSpeed(SPEED_MID_PERCENT);
-      else if (strcmp(speed, "HIGH") == 0)
-        FanControl_SetSpeed(SPEED_HIGH_PERCENT);
-      else
-        SendNack(p_huart, "setFanSpeed", "INVALID SPEED", 4002);
-    }
-    else
-    {
-      SendNack(p_huart, "setFanSpeed", "MISSING SPEED", 4001);
-    }
+  if (strcmp(msg.action, "setFanSpeed") == 0) {
+    HandleSetFanSpeed(&msg);
     return;
   }
 
-  if (strcmp(msg.action, "identity") == 0)
-  {
-    char tmp[32];
-
-    if (!JSON_GetStringValue(msg.payload, "Id", tmp, sizeof(tmp))) {
-      SendNack(p_huart, "identity", "MISSING IDENTITY.ID", 4201);
-      return;
-    }
-    if (!JSON_GetStringValue(msg.payload, "Version", tmp, sizeof(tmp))) {
-      SendNack(p_huart, "identity", "MISSING IDENTITY.VERSION", 4202);
-      return;
-    }
-    if (!JSON_GetStringValue(msg.payload, "Mac", tmp, sizeof(tmp))) {
-      SendNack(p_huart, "identity", "MISSING IDENTITY.MAC", 4203);
-      return;
-    }
-    if (!JSON_GetStringValue(msg.payload, "Ip", tmp, sizeof(tmp))) {
-      SendNack(p_huart, "identity", "MISSING IDENTITY.IP", 4204);
-      return;
-    }
-    if (!JSON_GetStringValue(msg.payload, "IpMask", tmp, sizeof(tmp))) {
-      SendNack(p_huart, "identity", "MISSING IDENTITY.IPMASK", 4205);
-      return;
-    }
-    if (!JSON_GetStringValue(msg.payload, "Gateway", tmp, sizeof(tmp))) {
-      SendNack(p_huart, "identity", "MISSING IDENTITY.GATEWAY", 4206);
-      return;
-    }
-    if (!JSON_GetStringValue(msg.payload, "Dhcp", tmp, sizeof(tmp))) {
-      SendNack(p_huart, "identity", "MISSING IDENTITY.DHCP", 4207);
-      return;
-    }
-
-    // No response on success
+  if (strcmp(msg.action, "identity") == 0) {
+    HandleIdentity(&msg);
     return;
   }
 
-  if (strcmp(msg.action, "zone") == 0)
-  {
-    char indexBuf[12];
-    char nameBuf[64];
-    char gainBuf[12];
-    char muteBuf[8];
-    int zoneIndex;
-
-    if (!JSON_GetStringValue(msg.payload, "Index", indexBuf, sizeof(indexBuf))) {
-      SendNack(p_huart, "zone", "MISSING ZONE.INDEX", 4301);
-      return;
-    }
-
-    zoneIndex = atoi(indexBuf);
-    if (zoneIndex < 0) {
-      SendNack(p_huart, "zone", "INVALID ZONE.INDEX", 4302);
-      return;
-    }
-
-    if (!JSON_GetStringValue(msg.payload, "Name", nameBuf, sizeof(nameBuf))) {
-      SendNack(p_huart, "zone", "MISSING ZONE.NAME", 4303);
-      return;
-    }
-
-    // Apply one-by-one zone update and grow the visible zone count.
-    set_zone_name_c(zoneIndex, nameBuf);
-    if ((zoneIndex + 1) > get_zone_count_c()) {
-      set_zone_count_c(zoneIndex + 1);
-    }
-
-    if (JSON_GetObjectChildValue(msg.payload, "Gain", "DefMute", muteBuf, sizeof(muteBuf))) {
-      int muted = (strcmp(muteBuf, "true") == 0 || strcmp(muteBuf, "1") == 0) ? 1 : 0;
-      set_zone_muted_c(zoneIndex, muted);
-    }
-
-    if (JSON_GetObjectChildValue(msg.payload, "Gain", "DefGain", gainBuf, sizeof(gainBuf))) {
-      set_zone_volume_c(zoneIndex, atoi(gainBuf));
-    }
-
-    // sources[] is accepted in payload for future UI binding.
-    // No response on success
+  if (strcmp(msg.action, "zone") == 0) {
+    HandleZone(&msg);
     return;
   }
 
-  if (strcmp(msg.action, "setGain") == 0)
-  {
-    char zoneBuf[12];
-    char normBuf[24];
-    char dbBuf[24];
-    int  zoneIndex;
-
-    if (!JSON_GetStringValue(msg.payload, "zone", zoneBuf, sizeof(zoneBuf))) {
-      SendNack(p_huart, "setGain", "MISSING GAIN.ZONE", 4401);
-      return;
-    }
-
-    zoneIndex = atoi(zoneBuf);
-    if (zoneIndex < 0 || zoneIndex >= get_zone_count_c()) {
-      SendNack(p_huart, "setGain", "INVALID GAIN.ZONE", 4402);
-      return;
-    }
-
-    // norm is a direct volume value (0–100); round to nearest integer and clamp
-    if (JSON_GetStringValue(msg.payload, "norm", normBuf, sizeof(normBuf))) {
-      float norm = (float)atof(normBuf);
-      if (norm < 0.0f)   norm = 0.0f;
-      if (norm > 100.0f) norm = 100.0f;
-      set_zone_volume_c(zoneIndex, (int)(norm + 0.5f));
-    } else if (JSON_GetStringValue(msg.payload, "db", dbBuf, sizeof(dbBuf))) {
-      // Store dB value directly as volume integer (caller responsibility)
-      set_zone_volume_c(zoneIndex, (int)(atof(dbBuf) + 0.5f));
-    } else {
-      SendNack(p_huart, "setGain", "MISSING GAIN.NORM OR GAIN.DB", 4403);
-      return;
-    }
-
-    // No response on success
+  if (strcmp(msg.action, "zoneEnd") == 0) {
+    HandleZoneEnd(&msg);
     return;
   }
 
-  if (strcmp(msg.action, "setMute") == 0)
-  {
-    char zoneBuf[12];
-    char stateBuf[8];
-    int  zoneIndex;
-
-    if (!JSON_GetStringValue(msg.payload, "zone", zoneBuf, sizeof(zoneBuf))) {
-      SendNack(p_huart, "setMute", "MISSING MUTE.ZONE", 4501);
-      return;
-    }
-
-    zoneIndex = atoi(zoneBuf);
-    if (zoneIndex < 0 || zoneIndex >= get_zone_count_c()) {
-      SendNack(p_huart, "setMute", "INVALID MUTE.ZONE", 4502);
-      return;
-    }
-
-    if (!JSON_GetStringValue(msg.payload, "state", stateBuf, sizeof(stateBuf))) {
-      SendNack(p_huart, "setMute", "MISSING MUTE.STATE", 4503);
-      return;
-    }
-
-    int muted = (strcmp(stateBuf, "true") == 0 || strcmp(stateBuf, "1") == 0) ? 1 : 0;
-    set_zone_muted_c(zoneIndex, muted);
-
-    // No response on success
+  if (strcmp(msg.action, "setGain") == 0) {
+    HandleSetGain(&msg);
     return;
   }
 
-  SendNack(p_huart, msg.action, "FAILED ACTION", 4004);
+  if (strcmp(msg.action, "setMute") == 0) {
+    HandleSetMute(&msg);
+    return;
+  }
+
+  SendNack(p_huart, msg.action, "FAILED ACTION", -1);
 }
 
 void Protocol_SendSetGain(int zone, int norm)
 {
   char buffer[128];
   int len = snprintf(buffer, sizeof(buffer),
-      "{\"action\":\"setGain\",\"payload\":{\"zone\":%d,\"norm\":%d}}\r\n",
+      "{\"action\":\"setGain\",\"payload\":{\"zone\":%d,\"db\":0.0,\"norm\":%d}}\r\n",
       zone, norm);
   HAL_UART_Transmit(p_huart, (uint8_t*)buffer, len, 100);
 }
