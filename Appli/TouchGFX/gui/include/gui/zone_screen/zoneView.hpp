@@ -3,8 +3,11 @@
 
 #include <gui_generated/zone_screen/zoneViewBase.hpp>
 #include <gui/zone_screen/zonePresenter.hpp>
-#include <gui/containers/CustomContainer2.hpp>
 #include <touchgfx/Callback.hpp>
+#include <gui/containers/CustomContainer2.hpp>
+#include <touchgfx/events/DragEvent.hpp>
+#include <touchgfx/events/GestureEvent.hpp>
+#include <touchgfx/events/ClickEvent.hpp>
 
 class zoneView : public zoneViewBase
 {
@@ -14,14 +17,25 @@ public:
 
     virtual void setupScreen();
     virtual void tearDownScreen();
+    virtual void handleTickEvent();
 
-    virtual void scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex);
+    void scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex);
+
+    void zoneSelected(int index);
+
     void zoneNamesUpdated();
 
-    void zoneSelected(int16_t index);
+    virtual void handleDragEvent(const touchgfx::DragEvent& event);
+    virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
+    virtual void handleClickEvent(const touchgfx::ClickEvent& event);
+
+    void setScrollPerformanceMode(bool enabled);
 
 protected:
-    touchgfx::Callback<zoneView, int16_t> zoneSelectedCallback;
+    touchgfx::Callback<zoneView, int> zoneSelectedCallback;
+    bool scrollOccurred;
+    bool scrollPerformanceMode;
+    uint8_t scrollSettleTicks;
 };
 
 #endif

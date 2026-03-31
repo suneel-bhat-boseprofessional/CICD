@@ -1,40 +1,64 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
+enum { MODEL_MAX_ZONES = 16, MODEL_ZONE_NAME_MAX_LEN = 32 };
+
+extern int zoneCount;
+
 class ModelListener;
-
-
-#define ZONE_COUNT 4
-#define ZONE_NAME_MAX_LEN 20
 
 class Model
 {
 public:
     Model();
 
-    void bind(ModelListener* listener);
+    void bind(ModelListener* listener)
+    {
+        modelListener = listener;
+    }
+
     void tick();
 
-    // selected zone
     void setSelectedZone(int index);
-    int getSelectedZone();
+    int  getSelectedZone();
 
-    // volume per zone
     void setZoneVolume(int index, int value);
-    int getZoneVolume(int index);
+    int  getZoneVolume(int index);
 
-    // zone names
-    void setZoneName(int index, const char* name);
-    const char* getZoneName(int index) const;
-    void setAllZoneNames(const char* names[], int count);
+    void setZoneMuted(int index, bool muted);
+    bool getZoneMuted(int index);
 
-    static char zoneNames[ZONE_COUNT][ZONE_NAME_MAX_LEN];
+    void setZoneCount(int count);
+    int  getZoneCount() const;
 
-private:
+    void        setZoneName(int index, const char* name);
+    const char* getZoneName(int index);
+
+    volatile bool zoneNamesChanged;
+
+protected:
     ModelListener* modelListener;
-
-    int selectedZone;
-    int zoneVolume[ZONE_COUNT];
+    int  selectedZone;
+    int  zoneVolumes[MODEL_MAX_ZONES];
+    int  zonePrevVolumes[MODEL_MAX_ZONES];
+    bool zoneMuted[MODEL_MAX_ZONES];
+    char zoneNames[MODEL_MAX_ZONES][MODEL_ZONE_NAME_MAX_LEN];
 };
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void set_zone_name_c(int idx, const char* name);
+void set_zone_count_c(int count);
+int  get_zone_count_c(void);
+void set_zone_volume_c(int idx, int value);
+void set_zone_muted_c(int idx, int muted);
+
+#ifdef __cplusplus
+}
+#endif
+
+extern Model* modelInstance;
 
 #endif

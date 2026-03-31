@@ -35,7 +35,7 @@ extern int notifyTouch;
 // UART RX queue handle definition (not extern)
 QueueHandle_t uartRxQueue = NULL;
 #include "stm32n6xx_it.h"
-#include "fan_control.h"
+#include <protocol.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -781,7 +781,7 @@ int main(void)
    uint32_t hClk = HAL_RCC_GetHCLKFreq();
    printf("System Clock: %lu Hz, HCLK: %lu Hz\r\n", sysClk, hClk);
 #endif
-
+   printf("{\"action\":\"startup\",\"payload\":\"ready\"}\r\n");
    //UART message reception queue
    uartRxQueue = xQueueCreate(10, RX_BUFFER_SIZE);
 
@@ -1696,7 +1696,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
     // Use the same buffer as fan_control.c
-    extern uint8_t uart_rx_buffer[512];
+  extern uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
     FanControl_UART_RxIdleCallback(huart, uart_rx_buffer, Size);
 }
 

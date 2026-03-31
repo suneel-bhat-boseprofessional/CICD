@@ -178,7 +178,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/touchUI_BringUP/Appli/Middlewares/ST/touchgfx_components/gpu2d/NemaGFX/lib/core/cortex_m55/gcc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/touchUI_BringUP/Appli/Middlewares/ST/touchgfx_components/gpu2d/TouchGFXNema/lib/cortex_m55/gcc}&quot;"/>
 								</option>
-								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script.1249291097" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script" value="C:\ST\touchUI_Development\touchUI_Bringup\Appli\STM32N645L0HXQ_XIP.ld" valueType="string"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script.1249291097" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.option.script" value="${ProjDirPath}\STM32N645L0HXQ_XIP.ld" valueType="string"/>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input.877985830" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -297,7 +297,14 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/touchUI_BringUP_Appli"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/touchUI_BringUP_Appli"/>
+		</configuration>
+	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.708542725;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.708542725.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.711621968;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1374707857">

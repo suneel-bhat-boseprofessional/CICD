@@ -5,6 +5,8 @@
 #include <gui/home_screen/homePresenter.hpp>
 #include <gui/containers/CustomContainer1.hpp>
 #include <touchgfx/Callback.hpp>
+#include <touchgfx/events/DragEvent.hpp>
+#include <touchgfx/events/GestureEvent.hpp>
 
 class homeView : public homeViewBase
 {
@@ -19,8 +21,12 @@ public:
 
     void itemSelected(int index);
 
+    virtual void handleDragEvent(const touchgfx::DragEvent& event);
+    virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
+
 private:
     touchgfx::Callback<homeView, int> itemSelectedCallback;
+    bool scrollOccurred;
 };
 
 #endif

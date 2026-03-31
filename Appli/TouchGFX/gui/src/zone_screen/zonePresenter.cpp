@@ -5,17 +5,14 @@
 zonePresenter::zonePresenter(zoneView& v)
     : view(v)
 {
-
 }
 
 void zonePresenter::activate()
 {
-
 }
 
 void zonePresenter::deactivate()
 {
-
 }
 
 void zonePresenter::zoneNamesUpdated()

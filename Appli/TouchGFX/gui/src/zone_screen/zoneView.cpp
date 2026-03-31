@@ -1,17 +1,37 @@
 #include <gui/zone_screen/zoneView.hpp>
+#include <gui/model/Model.hpp>
 
 zoneView::zoneView() :
-    zoneSelectedCallback(this, &zoneView::zoneSelected)
+    zoneSelectedCallback(this, &zoneView::zoneSelected),
+    scrollOccurred(false),
+    scrollPerformanceMode(false),
+    scrollSettleTicks(0)
 {
 }
 
 void zoneView::setupScreen()
 {
     zoneViewBase::setupScreen();
+    scrollOccurred = false;
+    scrollPerformanceMode = false;
+    scrollSettleTicks = 0;
 
-    scrollList1.setNumberOfItems(4);
+    // Use softer motion parameters to reduce perceived drag/lag.
+    scrollList1.setSwipeAcceleration(5);
+    scrollList1.setDragAcceleration(4);
+    scrollList1.setOvershootPercentage(20);
 
-    scrollList1.setItemSelectedCallback(zoneSelectedCallback);
+    int containers = (zoneCount + 3) / 4;
+
+    scrollList1.setNumberOfItems(containers);
+    scrollList1.initialize();
+
+    for (int i = 0; i < scrollList1ListItems.getNumberOfDrawables(); i++)
+    {
+        scrollList1.itemChanged(i);
+    }
+
+    scrollList1.invalidate();
 }
 
 void zoneView::tearDownScreen()
@@ -22,21 +42,103 @@ void zoneView::tearDownScreen()
 void zoneView::scrollList1UpdateItem(CustomContainer2& item, int16_t itemIndex)
 {
     item.setListElements(itemIndex);
+    item.setAction(zoneSelectedCallback);
+}
+
+void zoneView::zoneSelected(int index)
+{
+    if(scrollOccurred)
+    {
+        scrollOccurred = false;
+        return;
+    }
+
+    presenter->setSelectedZone(index);
+    application().gotozone2ScreenNoTransition();
 }
 
 void zoneView::zoneNamesUpdated()
 {
-    // Force visible list items to refresh immediately on the current screen.
-    for (int i = 0; i < 4; i++)
+    scrollList1.setSwipeAcceleration(5);
+    scrollList1.setDragAcceleration(4);
+    scrollList1.setOvershootPercentage(20);
+
+    int containers = (zoneCount + 3) / 4;
+    scrollList1.setNumberOfItems(containers);
+    scrollList1.initialize();
+
+    for (int i = 0; i < scrollList1ListItems.getNumberOfDrawables(); i++)
     {
         scrollList1.itemChanged(i);
     }
-    scrollList1.initialize();
+
     scrollList1.invalidate();
 }
 
-void zoneView::zoneSelected(int16_t index)
+void zoneView::setScrollPerformanceMode(bool enabled)
 {
-    presenter->setSelectedZone(index);
-    application().gotozone2ScreenNoTransition();
+    if(scrollPerformanceMode == enabled)
+    {
+        return;
+    }
+
+    scrollPerformanceMode = enabled;
+
+    for (int i = 0; i < scrollList1ListItems.getNumberOfDrawables(); i++)
+    {
+        scrollList1ListItems[i].setReducedRenderingMode(enabled);
+    }
+}
+
+void zoneView::handleTickEvent()
+{
+    if(scrollPerformanceMode && scrollSettleTicks > 0)
+    {
+        scrollSettleTicks--;
+        if(scrollSettleTicks == 0)
+        {
+            setScrollPerformanceMode(false);
+        }
+    }
+
+    zoneViewBase::handleTickEvent();
+}
+
+void zoneView::handleDragEvent(const touchgfx::DragEvent& event)
+{
+    scrollOccurred = true;
+
+    // Keep full visuals while finger is down; avoid visible flicker on touch.
+    if(scrollPerformanceMode)
+    {
+        setScrollPerformanceMode(false);
+    }
+    scrollSettleTicks = 0;
+
+    scrollList1.handleDragEvent(event);
+}
+
+void zoneView::handleGestureEvent(const touchgfx::GestureEvent& event)
+{
+    scrollOccurred = true;
+
+    if(scrollPerformanceMode)
+    {
+        setScrollPerformanceMode(false);
+    }
+    scrollSettleTicks = 0;
+
+    scrollList1.handleGestureEvent(event);
+}
+
+void zoneView::handleClickEvent(const touchgfx::ClickEvent& event)
+{
+    if(event.getType() == touchgfx::ClickEvent::RELEASED && scrollOccurred)
+    {
+        // Use lightweight rendering only after release during inertial settling.
+        setScrollPerformanceMode(true);
+        scrollSettleTicks = 6;
+    }
+
+    zoneViewBase::handleClickEvent(event);
 }

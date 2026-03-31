@@ -16,11 +16,21 @@ public:
 
     virtual void function1();
 
+    virtual void handleDragEvent(const touchgfx::DragEvent& event);
+    virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
+    virtual void handleClickEvent(const touchgfx::ClickEvent& event);
+
 private:
     int itemIndex;
     touchgfx::GenericCallback<int>* action;
+    bool isDragging;
+    bool suppressNextClick;
 
     touchgfx::Unicode::UnicodeChar textArea1Buffer[20];
+
+    // Our own button callback to replace the base class one
+    touchgfx::Callback<CustomContainer1, const touchgfx::AbstractButton&> myButtonCallback;
+    void myButtonCallbackHandler(const touchgfx::AbstractButton& src);
 };
 
 #endif
