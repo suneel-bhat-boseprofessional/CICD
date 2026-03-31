@@ -62,6 +62,7 @@ void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, u
 /* UI → Device outgoing message helpers */
 void Protocol_SendSetGain(int zone, int norm);
 void Protocol_SendSetMute(int zone, int state);
+void Protocol_SendSetSource(int zone, int index);
 
 /* Generic JSON Helper Functions ---------------------------------------------*/
 /**

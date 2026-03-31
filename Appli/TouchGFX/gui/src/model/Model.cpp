@@ -268,6 +268,13 @@ extern "C" void set_zone_source_count_c(int zoneIdx, int count)
         modelInstance->setZoneSourceCount(zoneIdx, count);
 }
 
+extern "C" int get_zone_source_count_c(int zoneIdx)
+{
+    if(modelInstance != 0)
+        return modelInstance->getZoneSourceCount(zoneIdx);
+    return 0;
+}
+
 extern "C" void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name)
 {
     if(modelInstance != 0)

@@ -29,7 +29,9 @@ extern int get_zone_count_c(void);
 extern void set_zone_volume_c(int idx, int value);
 extern void set_zone_muted_c(int idx, int muted);
 extern void set_zone_source_count_c(int zoneIdx, int count);
+extern int get_zone_source_count_c(int zoneIdx);
 extern void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name);
+extern void set_selected_source_c(int zoneIdx, int srcIdx);
 
 #include <stdlib.h> // for atoi, atof
 
@@ -83,6 +85,7 @@ static void HandleZone(const GenericMessage *msg);
 static void HandleZoneEnd(const GenericMessage *msg);
 static void HandleSetGain(const GenericMessage *msg);
 static void HandleSetMute(const GenericMessage *msg);
+static void HandleSetSource(const GenericMessage *msg);
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -519,6 +522,40 @@ static void HandleSetMute(const GenericMessage *msg)
   set_zone_muted_c(zoneIndex, (strcmp(stateBuf, "true") == 0 || strcmp(stateBuf, "1") == 0) ? 1 : 0);
 }
 
+static void HandleSetSource(const GenericMessage *msg)
+{
+  char zoneBuf[12];
+  char indexBuf[12];
+  int zoneIndex;
+  int sourceIndex;
+  int sourceCount;
+
+  if (!JSON_GetStringValue(msg->payload, "zone", zoneBuf, sizeof(zoneBuf))) {
+    SendNack(p_huart, "setSource", "MISSING SOURCE.ZONE", -1);
+    return;
+  }
+
+  zoneIndex = atoi(zoneBuf);
+  if (zoneIndex < 0 || zoneIndex >= get_zone_count_c()) {
+    SendNack(p_huart, "setSource", "INVALID SOURCE.ZONE", zoneIndex);
+    return;
+  }
+
+  if (!JSON_GetStringValue(msg->payload, "index", indexBuf, sizeof(indexBuf))) {
+    SendNack(p_huart, "setSource", "MISSING SOURCE.INDEX", zoneIndex);
+    return;
+  }
+
+  sourceIndex = atoi(indexBuf);
+  sourceCount = get_zone_source_count_c(zoneIndex);
+  if (sourceIndex < 0 || sourceIndex >= sourceCount) {
+    SendNack(p_huart, "setSource", "INVALID SOURCE.INDEX", zoneIndex);
+    return;
+  }
+
+  set_selected_source_c(zoneIndex, sourceIndex);
+}
+
 /**
   * @brief  Process received JSON packet and control PWM
   * @param  data: Pointer to JSON string
@@ -569,6 +606,11 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
     return;
   }
 
+  if (strcmp(msg.action, "setSource") == 0) {
+    HandleSetSource(&msg);
+    return;
+  }
+
   SendNack(p_huart, msg.action, "FAILED ACTION", -1);
 }
 
@@ -587,6 +629,15 @@ void Protocol_SendSetMute(int zone, int state)
   int len = snprintf(buffer, sizeof(buffer),
       "{\"action\":\"setMute\",\"payload\":{\"zone\":%d,\"state\":%s}}\r\n",
       zone, state ? "true" : "false");
+  HAL_UART_Transmit(p_huart, (uint8_t*)buffer, len, 100);
+}
+
+void Protocol_SendSetSource(int zone, int index)
+{
+  char buffer[96];
+  int len = snprintf(buffer, sizeof(buffer),
+      "{\"action\":\"setSource\",\"payload\":{\"zone\":%d,\"index\":%d}}\r\n",
+      zone, index);
   HAL_UART_Transmit(p_huart, (uint8_t*)buffer, len, 100);
 }
 

@@ -179,6 +179,33 @@ Sets the mute state for a zone at runtime.
 
 ---
 
+### `setSource`
+
+Sets the selected source index for a zone.
+
+```json
+{
+  "action": "setSource",
+  "payload": {
+    "zone": 0,
+    "index": 1
+  }
+}
+```
+
+| Field   | Type | Required | Description                                              |
+|---------|------|----------|----------------------------------------------------------|
+| `zone`  | int  | Yes      | Target zone index (must be within current zone count)   |
+| `index` | int  | Yes      | Source index for the zone (`0` to `sourceCount-1`)      |
+
+**NACK behavior:**
+
+| `error` value | `index` |
+|---------------|---------|
+| `setSource`   | Parsed `zone` when available, else `-1` |
+
+---
+
 ### `zoneEnd`
 
 Signals end of zone list transfer and validates total zone count.
@@ -264,6 +291,9 @@ Controls the PWM fan output.
 ← (no response — success)
 
 → {"action":"setMute","payload":{"zone":1,"state":false}}
+← (no response — success)
+
+→ {"action":"setSource","payload":{"zone":0,"index":1}}
 ← (no response — success)
 
 → {"action":"zoneEnd","payload":{"zones":2}}
