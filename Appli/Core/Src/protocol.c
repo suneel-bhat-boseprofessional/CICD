@@ -28,6 +28,8 @@ extern void set_zone_count_c(int count);
 extern int get_zone_count_c(void);
 extern void set_zone_volume_c(int idx, int value);
 extern void set_zone_muted_c(int idx, int muted);
+extern void set_zone_source_count_c(int zoneIdx, int count);
+extern void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name);
 
 #include <stdlib.h> // for atoi, atof
 
@@ -396,7 +398,40 @@ static void HandleZone(const GenericMessage *msg)
     set_zone_volume_c(zoneIndex, atoi(gainBuf));
   }
 
-  // sources[] is accepted in payload for future UI binding.
+  /* Parse sources[] array if present */
+  {
+    jsmn_parser srcParser;
+    jsmntok_t srcTokens[JSON_MAX_TOKENS];
+    int numTokens, i;
+
+    jsmn_init(&srcParser);
+    numTokens = jsmn_parse(&srcParser, msg->payload, strlen(msg->payload), srcTokens, JSON_MAX_TOKENS);
+
+    for (i = 1; i < numTokens; i++) {
+      if (srcTokens[i].type == JSMN_STRING &&
+          (srcTokens[i].end - srcTokens[i].start) == 7 &&
+          strncmp(msg->payload + srcTokens[i].start, "sources", 7) == 0) {
+        int arrTok = i + 1;
+        if (arrTok < numTokens && srcTokens[arrTok].type == JSMN_ARRAY) {
+          int srcCount = srcTokens[arrTok].size;
+          int si, ti = arrTok + 1;
+          if (srcCount > 8) srcCount = 8;
+          /* Write all source names BEFORE setting the count,
+             so the UI never sees a non-zero count with empty names */
+          for (si = 0; si < srcCount && ti < numTokens; si++, ti++) {
+            int len = srcTokens[ti].end - srcTokens[ti].start;
+            char srcBuf[32];
+            if (len > 31) len = 31;
+            strncpy(srcBuf, msg->payload + srcTokens[ti].start, len);
+            srcBuf[len] = '\0';
+            set_zone_source_name_c(zoneIndex, si, srcBuf);
+          }
+          set_zone_source_count_c(zoneIndex, srcCount);
+        }
+        break;
+      }
+    }
+  }
 }
 
 static void HandleZoneEnd(const GenericMessage *msg)

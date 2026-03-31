@@ -15,8 +15,6 @@ void zoneView::setupScreen()
     scrollOccurred = false;
     scrollPerformanceMode = false;
     scrollSettleTicks = 0;
-
-    // Use softer motion parameters to reduce perceived drag/lag.
     scrollList1.setSwipeAcceleration(5);
     scrollList1.setDragAcceleration(4);
     scrollList1.setOvershootPercentage(20);
@@ -107,8 +105,6 @@ void zoneView::handleTickEvent()
 void zoneView::handleDragEvent(const touchgfx::DragEvent& event)
 {
     scrollOccurred = true;
-
-    // Keep full visuals while finger is down; avoid visible flicker on touch.
     if(scrollPerformanceMode)
     {
         setScrollPerformanceMode(false);
@@ -135,7 +131,6 @@ void zoneView::handleClickEvent(const touchgfx::ClickEvent& event)
 {
     if(event.getType() == touchgfx::ClickEvent::RELEASED && scrollOccurred)
     {
-        // Use lightweight rendering only after release during inertial settling.
         setScrollPerformanceMode(true);
         scrollSettleTicks = 6;
     }

@@ -24,5 +24,4 @@ private:
 
     zoneView& view;
 };
-
 #endif
