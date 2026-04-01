@@ -23,6 +23,7 @@ public:
     void setSelectedSource(int srcIdx);
 
     virtual void zoneNamesUpdated();
+    virtual void notifyGoToLaunch();
 
     virtual ~Source_SelectPresenter() {}
 

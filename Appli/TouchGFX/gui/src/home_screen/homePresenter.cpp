@@ -16,3 +16,8 @@ void homePresenter::deactivate()
 {
 
 }
+
+void homePresenter::notifyGoToLaunch()
+{
+    view.goToLaunchScreen();
+}

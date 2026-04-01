@@ -10,7 +10,8 @@ Model::Model() :
     modelListener(0),
     selectedZone(0),
     zoneNamesChanged(false),
-    readyReceived(false)
+    readyReceived(false),
+    goToLaunchRequested(false)
 {
     modelInstance = this;
 
@@ -57,6 +58,14 @@ void Model::tick()
         if(modelListener != 0)
         {
             modelListener->notifyReadyReceived();
+        }
+    }
+    if(goToLaunchRequested)
+    {
+        goToLaunchRequested = false;
+        if(modelListener != 0)
+        {
+            modelListener->notifyGoToLaunch();
         }
     }
 }
@@ -300,4 +309,10 @@ extern "C" void set_ready_received_c(void)
 {
     if(modelInstance != 0)
         modelInstance->readyReceived = true;
+}
+
+extern "C" void set_go_to_launch_c(void)
+{
+    if(modelInstance != 0)
+        modelInstance->goToLaunchRequested = true;
 }

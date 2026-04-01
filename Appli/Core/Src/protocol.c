@@ -33,6 +33,7 @@ extern int get_zone_source_count_c(int zoneIdx);
 extern void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name);
 extern void set_selected_source_c(int zoneIdx, int srcIdx);
 extern void set_ready_received_c(void);
+extern void set_go_to_launch_c(void);
 
 #include <stdlib.h> // for atoi, atof
 
@@ -88,6 +89,7 @@ static void HandleSetGain(const GenericMessage *msg);
 static void HandleSetMute(const GenericMessage *msg);
 static void HandleSetSource(const GenericMessage *msg);
 static void HandleReady(const GenericMessage *msg);
+static void HandleNack(const GenericMessage *msg);
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -236,8 +238,6 @@ void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_
   
   // Display welcome messages
   HAL_UART_Transmit(p_huart, (uint8_t*)"Application\r\n", 13, 100);
-  HAL_UART_Transmit(p_huart, (uint8_t*)"Fan Control Ready\r\n", 19, 100);
-  HAL_UART_Transmit(p_huart, (uint8_t*)"Send JSON: {\"speed\":\"LOW\"} or {\"speed\":\"MID\"} or {\"speed\":\"HIGH\"}\r\n", 68, 100);
   
   // Start PWM
   HAL_TIM_PWM_Start(p_htim, tim_pwm_channel);
@@ -373,18 +373,27 @@ static void HandleZone(const GenericMessage *msg)
   int zoneIndex;
 
   if (!JSON_GetStringValue(msg->payload, "Index", indexBuf, sizeof(indexBuf))) {
-    SendNack(p_huart, "zone", "MISSING ZONE.INDEX", -1);
+    const char *nackMsg = "{\"action\":\"zoneEndNack\"}\r\n";
+    HAL_UART_Transmit(p_huart, (uint8_t*)nackMsg, strlen(nackMsg), 100);
+    set_zone_count_c(0);
+    set_go_to_launch_c();
     return;
   }
 
   zoneIndex = atoi(indexBuf);
   if (zoneIndex < 0) {
-    SendNack(p_huart, "zone", "INVALID ZONE.INDEX", zoneIndex);
+    const char *nackMsg = "{\"action\":\"zoneEndNack\"}\r\n";
+    HAL_UART_Transmit(p_huart, (uint8_t*)nackMsg, strlen(nackMsg), 100);
+    set_zone_count_c(0);
+    set_go_to_launch_c();
     return;
   }
 
   if (!JSON_GetStringValue(msg->payload, "Name", nameBuf, sizeof(nameBuf))) {
-    SendNack(p_huart, "zone", "MISSING ZONE.NAME", zoneIndex);
+    const char *nackMsg = "{\"action\":\"zoneEndNack\"}\r\n";
+    HAL_UART_Transmit(p_huart, (uint8_t*)nackMsg, strlen(nackMsg), 100);
+    set_zone_count_c(0);
+    set_go_to_launch_c();
     return;
   }
 
@@ -566,6 +575,13 @@ static void HandleReady(const GenericMessage *msg)
   set_ready_received_c();
 }
 
+static void HandleNack(const GenericMessage *msg)
+{
+  (void)msg;
+  set_zone_count_c(0);
+  set_go_to_launch_c();
+}
+
 /**
   * @brief  Process received JSON packet and control PWM
   * @param  data: Pointer to JSON string
@@ -588,6 +604,11 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
 
   if (strcmp(msg.action, "ready") == 0) {
     HandleReady(&msg);
+    return;
+  }
+
+  if (strcmp(msg.action, "nack") == 0) {
+    HandleNack(&msg);
     return;
   }
 
@@ -623,6 +644,11 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
 
   if (strcmp(msg.action, "setSource") == 0) {
     HandleSetSource(&msg);
+    return;
+  }
+
+  if (strcmp(msg.action, "otarequest") == 0) {
+    // OTA implementation function call here
     return;
   }
 

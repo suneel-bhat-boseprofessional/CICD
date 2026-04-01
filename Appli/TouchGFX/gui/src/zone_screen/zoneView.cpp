@@ -137,3 +137,8 @@ void zoneView::handleClickEvent(const touchgfx::ClickEvent& event)
 
     zoneViewBase::handleClickEvent(event);
 }
+
+void zoneView::goToLaunchScreen()
+{
+    application().gotolaunchScreenNoTransition();
+}

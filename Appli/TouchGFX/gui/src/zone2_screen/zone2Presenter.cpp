@@ -34,3 +34,8 @@ void zone2Presenter::zoneNamesUpdated()
 {
     view.zoneUpdated();
 }
+
+void zone2Presenter::notifyGoToLaunch()
+{
+    view.goToLaunchScreen();
+}

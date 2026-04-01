@@ -1,3 +1,7 @@
+
+
+
+
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -696,65 +700,16 @@ int main(void)
   MX_LTDC_Init();
 
   MX_USART1_UART_Init();
-  HAL_UART_Transmit(&huart1, (uint8_t *)"App Entered\r\n", 13, HAL_MAX_DELAY);
   MX_TIM4_Init();
 
   // Initialize fan control system (PWM + UART interrupt)
   FanControl_Init(&htim4, &huart1, TIM_CHANNEL_2);
 
   /* USER CODE BEGIN I2C1_Diagnostics */
-  // Run comprehensive I2C diagnostics
-  I2C_DiagnosticCheck();
   /* USER CODE END I2C1_Diagnostics */
   // Verify critical clocks are stable
 
   //read write loop back test to verify I2C communication with touch controller
-
-  //debug logics - I2C Address Scan
-  printf("\n=== Starting I2C Address Scan ===\n");
-  NVIC_DisableIRQ(EXTI8_IRQn);
-  HAL_StatusTypeDef result;
-  int devices_found = 0;
-  
-  for (int i=1; i<128; i++)
-  {
-      /*
-       * the HAL wants a left aligned i2c address
-       * &hi2c1 is the handle
-       * (uint16_t)(i<<1) is the i2c address left aligned
-       * retries 2
-       * timeout 2
-       */
-      result = HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t)(i<<1), 2, 10);  // FIXED: was using 55 instead of i
-      
-      if (result == HAL_OK)
-      {
-          printf("\nDevice found at 7-bit addr: 0x%02X (8-bit write: 0x%02X, read: 0x%02X)\n", 
-                 i, i<<1, (i<<1)|1);
-          devices_found++;
-      }
-      else if (result == HAL_BUSY)
-      {
-          printf("\n[ERROR] I2C Bus BUSY at address 0x%02X - stopping scan\n", i);
-          break;
-      }
-      else
-      {
-          printf(".");  // No device at this address
-      }
-      
-      if(i % 16 == 0) printf("\n");  // New line every 16 addresses
-  }
-  
-  NVIC_EnableIRQ(EXTI8_IRQn);
-  printf("\n\nI2C scan complete - Found %d device(s)\n", devices_found);
-  
-  // Test specific address 0x55
-  printf("\nTesting device at 0x55...\n");
-  result = HAL_I2C_IsDeviceReady(&hi2c1, 0x55<<1, 3, 100);
-  printf("Result for 0x55: %s\n", 
-         result == HAL_OK ? "ACK" : 
-         result == HAL_BUSY ? "BUSY" : "NACK/ERROR");
 
   MX_RAMCFG_Init();
 #if !MANUAL_FB_ENABLE
@@ -781,7 +736,6 @@ int main(void)
    uint32_t hClk = HAL_RCC_GetHCLKFreq();
    printf("System Clock: %lu Hz, HCLK: %lu Hz\r\n", sysClk, hClk);
 #endif
-   printf("{\"action\":\"startup\",\"payload\":\"ready\"}\r\n");
    //UART message reception queue
    uartRxQueue = xQueueCreate(10, RX_BUFFER_SIZE);
 

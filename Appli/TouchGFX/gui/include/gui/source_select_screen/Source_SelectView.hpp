@@ -16,6 +16,7 @@ public:
     virtual void scrollList1UpdateItem(CustomContainer3& item, int16_t itemIndex);
 
     void sourcesUpdated();
+    void goToLaunchScreen();
 
 protected:
     touchgfx::Callback<Source_SelectView, int16_t> itemSelectedCb;

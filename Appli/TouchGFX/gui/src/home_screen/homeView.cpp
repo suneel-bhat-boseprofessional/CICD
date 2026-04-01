@@ -48,3 +48,8 @@ void homeView::handleGestureEvent(const touchgfx::GestureEvent& event)
     scrollOccurred = true;
     scrollList1.handleGestureEvent(event);
 }
+
+void homeView::goToLaunchScreen()
+{
+    application().gotolaunchScreenNoTransition();
+}

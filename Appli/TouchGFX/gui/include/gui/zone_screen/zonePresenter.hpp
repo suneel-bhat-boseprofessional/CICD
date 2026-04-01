@@ -16,6 +16,7 @@ public:
     virtual void activate();
     virtual void deactivate();
     virtual void zoneNamesUpdated();
+    virtual void notifyGoToLaunch();
 
     void setSelectedZone(int index);
 

@@ -17,6 +17,7 @@ public:
 
     virtual void zoneNamesUpdated() {}
     virtual void notifyReadyReceived() {}
+    virtual void notifyGoToLaunch() {}
 
 protected:
     Model* model;

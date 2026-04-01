@@ -177,3 +177,8 @@ void zone2View::updateSliderFill(int value)
     int fillerWidth = cs.getIndicatorX() + (cs.getIndicatorWidth() / 2);
     cs.setFillerWidth(fillerWidth);
 }
+
+void zone2View::goToLaunchScreen()
+{
+    application().gotolaunchScreenNoTransition();
+}

@@ -73,3 +73,8 @@ void Source_SelectView::itemSelectedHandler(int16_t itemIndex)
 
     scrollList1.invalidate();
 }
+
+void Source_SelectView::goToLaunchScreen()
+{
+    application().gotolaunchScreenNoTransition();
+}

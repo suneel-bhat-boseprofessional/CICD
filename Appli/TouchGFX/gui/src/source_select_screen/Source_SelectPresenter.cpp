@@ -44,3 +44,8 @@ void Source_SelectPresenter::zoneNamesUpdated()
 {
     view.sourcesUpdated();
 }
+
+void Source_SelectPresenter::notifyGoToLaunch()
+{
+    view.goToLaunchScreen();
+}

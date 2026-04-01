@@ -27,6 +27,8 @@ public:
 
     virtual ~homePresenter() {}
 
+    virtual void notifyGoToLaunch();
+
 private:
     homePresenter();
 

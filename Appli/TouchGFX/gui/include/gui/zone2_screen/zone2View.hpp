@@ -38,6 +38,7 @@ public:
 
     void volumeChanged(int value);
     void zoneUpdated();
+    void goToLaunchScreen();
 
 protected:
     touchgfx::Callback<zone2View, const touchgfx::Slider&, int> sliderCallback;
