@@ -16,3 +16,8 @@ void launchPresenter::deactivate()
 {
 
 }
+
+void launchPresenter::notifyReadyReceived()
+{
+    view.goToHomeScreen();
+}

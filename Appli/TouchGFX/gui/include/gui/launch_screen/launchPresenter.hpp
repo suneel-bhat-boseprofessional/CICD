@@ -27,6 +27,8 @@ public:
 
     virtual ~launchPresenter() {}
 
+    virtual void notifyReadyReceived();
+
 private:
     launchPresenter();
 

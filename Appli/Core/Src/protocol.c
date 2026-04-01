@@ -32,6 +32,7 @@ extern void set_zone_source_count_c(int zoneIdx, int count);
 extern int get_zone_source_count_c(int zoneIdx);
 extern void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name);
 extern void set_selected_source_c(int zoneIdx, int srcIdx);
+extern void set_ready_received_c(void);
 
 #include <stdlib.h> // for atoi, atof
 
@@ -86,6 +87,7 @@ static void HandleZoneEnd(const GenericMessage *msg);
 static void HandleSetGain(const GenericMessage *msg);
 static void HandleSetMute(const GenericMessage *msg);
 static void HandleSetSource(const GenericMessage *msg);
+static void HandleReady(const GenericMessage *msg);
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -556,6 +558,14 @@ static void HandleSetSource(const GenericMessage *msg)
   set_selected_source_c(zoneIndex, sourceIndex);
 }
 
+static void HandleReady(const GenericMessage *msg)
+{
+  (void)msg;
+  const char *ack = "{\"action\":\"readyAck\"}\r\n";
+  HAL_UART_Transmit(p_huart, (uint8_t*)ack, strlen(ack), 100);
+  set_ready_received_c();
+}
+
 /**
   * @brief  Process received JSON packet and control PWM
   * @param  data: Pointer to JSON string
@@ -573,6 +583,11 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
   if (ParseGenericMessage((char*)data, &msg) != 0)
   {
     SendNack(p_huart, "parse", "INVALID PACKET", -1);
+    return;
+  }
+
+  if (strcmp(msg.action, "ready") == 0) {
+    HandleReady(&msg);
     return;
   }
 

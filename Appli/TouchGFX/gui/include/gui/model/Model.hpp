@@ -42,6 +42,7 @@ public:
     int  getSelectedSource(int zoneIdx) const;
 
     volatile bool zoneNamesChanged;
+    volatile bool readyReceived;
 
 protected:
     ModelListener* modelListener;
@@ -68,6 +69,7 @@ void set_zone_source_count_c(int zoneIdx, int count);
 int  get_zone_source_count_c(int zoneIdx);
 void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name);
 void set_selected_source_c(int zoneIdx, int srcIdx);
+void set_ready_received_c(void);
 
 #ifdef __cplusplus
 }

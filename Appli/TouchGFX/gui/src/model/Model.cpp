@@ -9,7 +9,8 @@ Model* modelInstance = 0;
 Model::Model() :
     modelListener(0),
     selectedZone(0),
-    zoneNamesChanged(false)
+    zoneNamesChanged(false),
+    readyReceived(false)
 {
     modelInstance = this;
 
@@ -48,6 +49,14 @@ void Model::tick()
         if(modelListener != 0)
         {
             modelListener->zoneNamesUpdated();
+        }
+    }
+    if(readyReceived)
+    {
+        readyReceived = false;
+        if(modelListener != 0)
+        {
+            modelListener->notifyReadyReceived();
         }
     }
 }
@@ -285,4 +294,10 @@ extern "C" void set_selected_source_c(int zoneIdx, int srcIdx)
 {
     if(modelInstance != 0)
         modelInstance->setSelectedSource(zoneIdx, srcIdx);
+}
+
+extern "C" void set_ready_received_c(void)
+{
+    if(modelInstance != 0)
+        modelInstance->readyReceived = true;
 }
