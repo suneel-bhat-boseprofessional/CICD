@@ -156,9 +156,11 @@ void StartDefaultTask(void *argument)
 	            rxBuffer,
 	            0
 	        );
-          // Process the received message (JSON command)
-          extern void JSON_ProcessMessage(uint8_t *data, uint16_t length);
-          JSON_ProcessMessage(rxBuffer, strlen((char*)rxBuffer));
+          // Extract actual size from first 2 bytes (little-endian)
+          uint16_t rxLen = (uint16_t)rxBuffer[0] | ((uint16_t)rxBuffer[1] << 8);
+          // Process the received framed packet (header + payload)
+          extern void Protocol_ProcessReceivedData(uint8_t *data, uint16_t length);
+          Protocol_ProcessReceivedData(&rxBuffer[2], rxLen);
 	      }
     osDelay(1);
   }
