@@ -25,7 +25,6 @@ void homeView::scrollList1UpdateItem(CustomContainer1& item, int16_t itemIndex)
 
 void homeView::itemSelected(int index)
 {
-    // Block navigation if a scroll/drag happened
     if(scrollOccurred)
     {
         scrollOccurred = false;
@@ -48,4 +47,9 @@ void homeView::handleGestureEvent(const touchgfx::GestureEvent& event)
 {
     scrollOccurred = true;
     scrollList1.handleGestureEvent(event);
+}
+
+void homeView::goToLaunchScreen()
+{
+    application().gotolaunchScreenNoTransition();
 }

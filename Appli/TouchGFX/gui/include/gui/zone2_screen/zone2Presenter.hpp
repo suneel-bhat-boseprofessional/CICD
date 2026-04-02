@@ -21,6 +21,7 @@ public:
     void setZoneVolume(int index, int value);
 
     virtual void zoneNamesUpdated();
+    virtual void notifyGoToLaunch();
 
 private:
     zone2Presenter();

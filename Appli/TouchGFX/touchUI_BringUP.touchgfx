@@ -13,7 +13,7 @@
           {
             "Type": "Image",
             "Name": "image1",
-            "X": 198,
+            "X": 211,
             "Y": 45,
             "Width": 59,
             "Height": 39,
@@ -43,8 +43,8 @@
             "Name": "scrollList1",
             "X": 24,
             "Y": 4,
-            "Width": 432,
-            "Height": 128,
+            "Width": 430,
+            "Height": 124,
             "IsHorizontal": true,
             "ItemTemplateName": "CustomContainer1",
             "NumberofItems": 7,
@@ -56,23 +56,22 @@
           },
           {
             "Type": "ScalableImage",
-            "Name": "scalableImage1",
-            "X": 12,
-            "Y": 57,
-            "Width": 8,
-            "Height": 14,
-            "Filename": "Union_1.png",
-            "ScalingAlgorithm": "Nearest-neighbor"
-          },
-          {
-            "Type": "ScalableImage",
             "Name": "scalableImage2",
             "X": 460,
             "Y": 57,
             "Width": 8,
             "Height": 14,
-            "Filename": "Union_2.png",
+            "Filename": "Vector.png",
             "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
           }
         ],
         "Interactions": []
@@ -138,14 +137,13 @@
             ]
           },
           {
-            "Type": "ScalableImage",
-            "Name": "scalableImage1",
+            "Type": "Image",
+            "Name": "image5",
             "X": 12,
             "Y": 57,
-            "Width": 8,
-            "Height": 14,
-            "Filename": "Union_1.png",
-            "ScalingAlgorithm": "Nearest-neighbor"
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
           }
         ],
         "Interactions": [
@@ -175,7 +173,7 @@
           {
             "Type": "Image",
             "Name": "image4",
-            "X": 68,
+            "X": 64,
             "Y": 73,
             "Width": 32,
             "Height": 32,
@@ -203,7 +201,7 @@
           {
             "Type": "Slider",
             "Name": "slider1",
-            "X": 115,
+            "X": 112,
             "Y": 74,
             "Width": 235,
             "Height": 30,
@@ -217,7 +215,7 @@
           {
             "Type": "TextArea",
             "Name": "textArea2",
-            "X": 363,
+            "X": 369,
             "Y": 71,
             "Width": 57,
             "Height": 34,
@@ -233,7 +231,7 @@
           {
             "Type": "TextArea",
             "Name": "textArea3",
-            "X": 54,
+            "X": 70,
             "Width": 366,
             "Height": 21,
             "TextId": "__SingleUse_JK4L",
@@ -246,33 +244,155 @@
             "Wildcard1": {}
           },
           {
-            "Type": "Image",
-            "Name": "image3",
-            "X": 64,
-            "Y": 25,
-            "Width": 345,
-            "Height": 33,
-            "RelativeFilename": "Group 3.png"
-          },
-          {
-            "Type": "ScalableImage",
-            "Name": "scalableImage1",
-            "X": 12,
-            "Y": 57,
-            "Width": 8,
-            "Height": 14,
-            "Filename": "Union_1.png",
-            "ScalingAlgorithm": "Nearest-neighbor"
-          },
-          {
             "Type": "Button",
             "Name": "button1",
-            "X": 74,
+            "X": 70,
             "Y": 79,
             "Width": 20,
             "Height": 20,
             "Pressed": "Unmute.png",
             "Released": "Unmute.png"
+          },
+          {
+            "Type": "Button",
+            "Name": "button2",
+            "X": 64,
+            "Y": 25,
+            "Width": 345,
+            "Height": 33,
+            "Pressed": "Source_select_bg.png",
+            "Released": "Source_select_bg.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea4",
+            "X": 100,
+            "Y": 29,
+            "Width": 157,
+            "Height": 29,
+            "TextId": "__SingleUse_39TF",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "Image",
+            "Name": "image5",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction2",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "button2"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Source_Select"
+            }
+          },
+          {
+            "InteractionName": "Interaction3",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "zone"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Source_Select",
+        "Components": [
+          {
+            "Type": "ScrollList",
+            "Name": "scrollList1",
+            "X": 54,
+            "Y": 26,
+            "Width": 366,
+            "Height": 94,
+            "ItemTemplateName": "CustomContainer3",
+            "NumberofItems": 10,
+            "Easing": "Back",
+            "EasingOption": "Out",
+            "SwipeAcceleration": 1.0,
+            "DragAcceleration": 1.0,
+            "OverShootPercentage": 75
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 70,
+            "Width": 404,
+            "Height": 26,
+            "TextId": "__SingleUse_ATL6",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 37,
+            "Width": 35,
+            "Height": 54,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 35,
+                "Height": 54,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
           }
         ],
         "Interactions": [
@@ -285,7 +405,7 @@
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "zone"
+              "ActionComponent": "zone2"
             }
           }
         ]
@@ -703,6 +823,47 @@
             }
           }
         ]
+      },
+      {
+        "Name": "CustomContainer3",
+        "X": 36,
+        "Width": 366,
+        "Height": 49,
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "Width": 366,
+            "Height": 48,
+            "RelativeFilename": "Highlighted.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 16,
+            "Y": 13,
+            "Width": 125,
+            "Height": 22,
+            "TextId": "__SingleUse_QH0Z",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 16,
+            "Y": 48,
+            "Width": 334,
+            "Height": 1,
+            "RelativeFilename": "Divider.png"
+          }
+        ],
+        "Interactions": []
       }
     ],
     "Name": "touchUI_BringUP",

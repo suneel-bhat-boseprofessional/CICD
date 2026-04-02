@@ -24,6 +24,7 @@ public:
     void zoneSelected(int index);
 
     void zoneNamesUpdated();
+    void goToLaunchScreen();
 
     virtual void handleDragEvent(const touchgfx::DragEvent& event);
     virtual void handleGestureEvent(const touchgfx::GestureEvent& event);

@@ -28,6 +28,12 @@ extern void set_zone_count_c(int count);
 extern int get_zone_count_c(void);
 extern void set_zone_volume_c(int idx, int value);
 extern void set_zone_muted_c(int idx, int muted);
+extern void set_zone_source_count_c(int zoneIdx, int count);
+extern int get_zone_source_count_c(int zoneIdx);
+extern void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name);
+extern void set_selected_source_c(int zoneIdx, int srcIdx);
+extern void set_ready_received_c(void);
+extern void set_go_to_launch_c(void);
 
 #include <stdlib.h> // for atoi, atof
 
@@ -49,14 +55,18 @@ int ParseGenericMessage(const char *json, GenericMessage *msg)
 }
 
 
+/* Forward declaration for framed send helper */
+static void Protocol_SendFramed(const char *json, uint16_t jsonLen);
+
 // Send NACK (failure) message only
 void SendNack(UART_HandleTypeDef *huart, const char *failedAction, const char *errorMsg, int index) {
   (void)errorMsg;
+  (void)huart;
     char buffer[256];
     int len = snprintf(buffer, sizeof(buffer),
-        "{\"action\":\"nack\",\"payload\":{\"error\":\"%s\",\"index\":%d}}\r\n",
+        "{\"action\":\"nack\",\"payload\":{\"error\":\"%s\",\"index\":%d}}",
         failedAction, index);
-    HAL_UART_Transmit(huart, (uint8_t*)buffer, len, 100);
+    Protocol_SendFramed(buffer, len);
 }
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,11 +78,242 @@ void SendNack(UART_HandleTypeDef *huart, const char *failedAction, const char *e
 /* Private variables ---------------------------------------------------------*/
 uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
 
-
 // Module handles - set during initialization
 static TIM_HandleTypeDef *p_htim = NULL;
 static UART_HandleTypeDef *p_huart = NULL;
 static uint32_t tim_pwm_channel = TIM_CHANNEL_2;
+
+/* TUII Packet Framing -------------------------------------------------------*/
+
+/**
+  * @brief  Send a JSON string wrapped in a TUII Normal frame over UART
+  * @param  json: Pointer to JSON payload string
+  * @param  jsonLen: Length of JSON payload
+  * @retval None
+  */
+static void Protocol_SendFramed(const char *json, uint16_t jsonLen)
+{
+  uint8_t pktBuf[PROTOCOL_MAX_PACKET];
+  int pktLen;
+
+  if (jsonLen > PROTOCOL_MAX_PAYLOAD) jsonLen = PROTOCOL_MAX_PAYLOAD;
+
+  pktLen = Protocol_BuildPacket(PACKET_TYPE_NORMAL, (const uint8_t*)json, (uint8_t)jsonLen, pktBuf, sizeof(pktBuf));
+  if (pktLen > 0)
+    HAL_UART_Transmit(p_huart, pktBuf, (uint16_t)pktLen, 200);
+}
+
+/**
+  * @brief  CRC16-CCITT-FALSE calculation
+  * @param  data: Pointer to data buffer
+  * @param  length: Number of bytes
+  * @retval CRC16 value
+  */
+uint16_t Protocol_CRC16_CCITT(uint8_t *data, uint16_t length)
+{
+  uint16_t crc = PROTOCOL_CRC_INITIAL;
+
+  for (uint16_t i = 0; i < length; i++)
+  {
+    crc ^= (uint16_t)data[i] << 8;
+    for (uint8_t j = 0; j < 8; j++)
+    {
+      if (crc & PROTOCOL_CRC_MSB_MASK)
+        crc = (crc << 1) ^ PROTOCOL_CRC_POLYNOMIAL;
+      else
+        crc <<= 1;
+    }
+  }
+
+  return crc;
+}
+
+/**
+  * @brief  Build a TUII framed packet from a payload
+  * @param  type: Packet type (PACKET_TYPE_OTA or PACKET_TYPE_NORMAL)
+  * @param  payload: Pointer to payload data (e.g. JSON string)
+  * @param  payloadLen: Length of payload (max 255)
+  * @param  outBuf: Output buffer (must be at least PROTOCOL_HEADER_SIZE + payloadLen)
+  * @param  outBufSize: Size of outBuf
+  * @retval Total packet length on success, -1 on error
+  *
+  * Packet layout:
+  *   | SOF (4B) | CRC16_LO CRC16_HI (2B) | LEN (1B) | Payload (LEN bytes) |
+  *   CRC is computed over LEN + Payload bytes.
+  */
+int Protocol_BuildPacket(PacketType_t type, const uint8_t *payload, uint8_t payloadLen, uint8_t *outBuf, uint16_t outBufSize)
+{
+  uint16_t totalLen = PROTOCOL_HEADER_SIZE + payloadLen;
+  uint16_t crc;
+
+  if (payload == NULL || outBuf == NULL)
+    return -1;
+  if (totalLen > outBufSize)
+    return -1;
+
+  /* SOF based on packet type */
+  switch (type)
+  {
+    case PACKET_TYPE_OTA:
+      outBuf[0] = PROTOCOL_SOF_OTA_BYTE0;
+      outBuf[1] = PROTOCOL_SOF_OTA_BYTE1;
+      outBuf[2] = PROTOCOL_SOF_OTA_BYTE2;
+      outBuf[3] = PROTOCOL_SOF_OTA_BYTE3;
+      break;
+    case PACKET_TYPE_NORMAL:
+      outBuf[0] = PROTOCOL_SOF_NORM_BYTE0;
+      outBuf[1] = PROTOCOL_SOF_NORM_BYTE1;
+      outBuf[2] = PROTOCOL_SOF_NORM_BYTE2;
+      outBuf[3] = PROTOCOL_SOF_NORM_BYTE3;
+      break;
+    default:
+      return -1;
+  }
+
+  /* LEN */
+  outBuf[6] = payloadLen;
+
+  /* Copy payload after header */
+  memcpy(&outBuf[PROTOCOL_HEADER_SIZE], payload, payloadLen);
+
+  /* CRC16 over LEN + Payload (starts at outBuf[6]) */
+  crc = Protocol_CRC16_CCITT(&outBuf[6], 1 + payloadLen);
+
+  /* CRC (little-endian) */
+  outBuf[4] = (uint8_t)(crc & 0xFF);         /* CRC16_LO */
+  outBuf[5] = (uint8_t)((crc >> 8) & 0xFF);  /* CRC16_HI */
+
+  return (int)totalLen;
+}
+
+/**
+  * @brief  Parse and validate a TUII framed packet
+  * @param  packet: Pointer to raw received packet
+  * @param  packetLen: Length of raw data
+  * @param  payloadOut: Buffer to receive the extracted payload
+  * @param  payloadLenOut: Pointer to receive the payload length
+  * @param  packetType: Pointer to receive detected packet type (OTA or NORMAL)
+  * @retval 0 on success, -1 on invalid/unknown SOF, -2 on CRC mismatch, -3 on length error
+  */
+int Protocol_ParsePacket(const uint8_t *packet, uint16_t packetLen, uint8_t *payloadOut, uint8_t *payloadLenOut, PacketType_t *packetType)
+{
+  uint16_t crcReceived, crcComputed;
+  uint8_t len;
+
+  if (packet == NULL || payloadOut == NULL || payloadLenOut == NULL || packetType == NULL)
+    return -3;
+
+  *packetType = PACKET_TYPE_UNKNOWN;
+
+  /* Minimum packet is header only (7 bytes) */
+  if (packetLen < PROTOCOL_HEADER_SIZE)
+    return -3;
+
+  /* Detect SOF type */
+  if (packet[0] == PROTOCOL_SOF_OTA_BYTE0 &&
+      packet[1] == PROTOCOL_SOF_OTA_BYTE1 &&
+      packet[2] == PROTOCOL_SOF_OTA_BYTE2 &&
+      packet[3] == PROTOCOL_SOF_OTA_BYTE3)
+  {
+    *packetType = PACKET_TYPE_OTA;
+  }
+  else if (packet[0] == PROTOCOL_SOF_NORM_BYTE0 &&
+           packet[1] == PROTOCOL_SOF_NORM_BYTE1 &&
+           packet[2] == PROTOCOL_SOF_NORM_BYTE2 &&
+           packet[3] == PROTOCOL_SOF_NORM_BYTE3)
+  {
+    *packetType = PACKET_TYPE_NORMAL;
+  }
+  else
+  {
+    return -1;  /* Unknown SOF */
+  }
+
+  /* Extract CRC (little-endian) */
+  crcReceived = (uint16_t)packet[4] | ((uint16_t)packet[5] << 8);
+
+  /* Extract LEN */
+  len = packet[6];
+
+  /* Validate total length */
+  if ((PROTOCOL_HEADER_SIZE + len) > packetLen)
+    return -3;
+
+  /* Compute CRC over LEN + Payload */
+  crcComputed = Protocol_CRC16_CCITT((uint8_t *)&packet[6], 1 + len);
+
+  if (crcComputed != crcReceived)
+    return -2;
+
+  /* Copy payload out */
+  memcpy(payloadOut, &packet[PROTOCOL_HEADER_SIZE], len);
+  *payloadLenOut = len;
+
+  return 0;
+}
+
+/**
+  * @brief  Top-level handler: parse framed packet and route by SOF type
+  *         - OTA SOF (0xA1B1C1D1) -> OTA handler
+  *         - Normal SOF (0xA2B2C2D2) -> JSON payload processing
+  * @param  data: Pointer to raw received packet (header + payload)
+  * @param  length: Total number of bytes received
+  * @retval None
+  */
+void Protocol_ProcessReceivedData(uint8_t *data, uint16_t length)
+{
+  uint8_t payload[PROTOCOL_MAX_PAYLOAD];
+  uint8_t payloadLen = 0;
+  PacketType_t type;
+  int result;
+
+  result = Protocol_ParsePacket(data, length, payload, &payloadLen, &type);
+
+  if (result == -1)
+  {
+    /* Unknown / invalid SOF */
+    SendNack(p_huart, "packet", "INVALID SOF", result);
+    return;
+  }
+  if (result == -2)
+  {
+    /* CRC mismatch */
+    SendNack(p_huart, "packet", "CRC MISMATCH", result);
+    return;
+  }
+  if (result == -3)
+  {
+    /* Length error */
+    SendNack(p_huart, "packet", "LENGTH ERROR", result);
+    return;
+  }
+
+  switch (type)
+  {
+    case PACKET_TYPE_OTA:
+    {
+      const char *otaAck = "{\"action\":\"otaAck\",\"payload\":{\"status\":\"OTA triggered\"}}";
+      Protocol_SendFramed(otaAck, strlen(otaAck));
+      /* TODO: call OTA handler with payload */
+      /* OTA_ProcessPayload(payload, payloadLen); */
+      break;
+    }
+
+    case PACKET_TYPE_NORMAL:
+      /* Null-terminate for JSON string processing */
+      if (payloadLen < PROTOCOL_MAX_PAYLOAD)
+        payload[payloadLen] = '\0';
+      else
+        payload[PROTOCOL_MAX_PAYLOAD - 1] = '\0';
+      JSON_ProcessMessage(payload, payloadLen);
+      break;
+
+    default:
+      SendNack(p_huart, "packet", "UNKNOWN TYPE", -1);
+      break;
+  }
+}
+
 
 /* Private function prototypes -----------------------------------------------*/
 static void HandleSetFanSpeed(const GenericMessage *msg);
@@ -81,6 +322,9 @@ static void HandleZone(const GenericMessage *msg);
 static void HandleZoneEnd(const GenericMessage *msg);
 static void HandleSetGain(const GenericMessage *msg);
 static void HandleSetMute(const GenericMessage *msg);
+static void HandleSetSource(const GenericMessage *msg);
+static void HandleReady(const GenericMessage *msg);
+static void HandleNack(const GenericMessage *msg);
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -229,8 +473,6 @@ void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_
   
   // Display welcome messages
   HAL_UART_Transmit(p_huart, (uint8_t*)"Application\r\n", 13, 100);
-  HAL_UART_Transmit(p_huart, (uint8_t*)"Fan Control Ready\r\n", 19, 100);
-  HAL_UART_Transmit(p_huart, (uint8_t*)"Send JSON: {\"speed\":\"LOW\"} or {\"speed\":\"MID\"} or {\"speed\":\"HIGH\"}\r\n", 68, 100);
   
   // Start PWM
   HAL_TIM_PWM_Start(p_htim, tim_pwm_channel);
@@ -252,24 +494,20 @@ void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_
   */
 void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
 {
-  if (huart == p_huart && Size > 0 && Size <= sizeof(uart_rx_buffer))
+  if (huart == p_huart && Size > 0 && Size <= (sizeof(uart_rx_buffer) - 2))
   {
-    // Null-terminate the received data for string processing
-    if (Size < sizeof(uart_rx_buffer))
-      pData[Size] = '\0';
-    else
-      pData[sizeof(uart_rx_buffer) - 1] = '\0';
+    // Prepend actual size (2 bytes, little-endian) so the receiver knows
+    // the true length without relying on strlen (binary packets may contain 0x00)
+    uint8_t txBuf[UART_RX_BUFFER_SIZE];
+    txBuf[0] = (uint8_t)(Size & 0xFF);
+    txBuf[1] = (uint8_t)((Size >> 8) & 0xFF);
+    memcpy(&txBuf[2], pData, Size);
 
     // Only enqueue the received message to the queue for processing in the default task
     extern QueueHandle_t uartRxQueue;
     if (uartRxQueue != NULL)
     {
-      // Ensure null-termination for string processing in the task
-      size_t msg_len = strlen((char*)pData);
-      if (msg_len > 0 && msg_len < sizeof(uart_rx_buffer))
-      {
-        xQueueSend(uartRxQueue, pData, 0);
-      }
+      xQueueSend(uartRxQueue, txBuf, 0);
     }
   }
   // Restart UART receive to idle interrupt
@@ -366,18 +604,27 @@ static void HandleZone(const GenericMessage *msg)
   int zoneIndex;
 
   if (!JSON_GetStringValue(msg->payload, "Index", indexBuf, sizeof(indexBuf))) {
-    SendNack(p_huart, "zone", "MISSING ZONE.INDEX", -1);
+    const char *nackMsg = "{\"action\":\"zoneEndNack\"}";
+    Protocol_SendFramed(nackMsg, strlen(nackMsg));
+    set_zone_count_c(0);
+    set_go_to_launch_c();
     return;
   }
 
   zoneIndex = atoi(indexBuf);
   if (zoneIndex < 0) {
-    SendNack(p_huart, "zone", "INVALID ZONE.INDEX", zoneIndex);
+    const char *nackMsg = "{\"action\":\"zoneEndNack\"}";
+    Protocol_SendFramed(nackMsg, strlen(nackMsg));
+    set_zone_count_c(0);
+    set_go_to_launch_c();
     return;
   }
 
   if (!JSON_GetStringValue(msg->payload, "Name", nameBuf, sizeof(nameBuf))) {
-    SendNack(p_huart, "zone", "MISSING ZONE.NAME", zoneIndex);
+    const char *nackMsg = "{\"action\":\"zoneEndNack\"}";
+    Protocol_SendFramed(nackMsg, strlen(nackMsg));
+    set_zone_count_c(0);
+    set_go_to_launch_c();
     return;
   }
 
@@ -396,7 +643,40 @@ static void HandleZone(const GenericMessage *msg)
     set_zone_volume_c(zoneIndex, atoi(gainBuf));
   }
 
-  // sources[] is accepted in payload for future UI binding.
+  /* Parse sources[] array if present */
+  {
+    jsmn_parser srcParser;
+    jsmntok_t srcTokens[JSON_MAX_TOKENS];
+    int numTokens, i;
+
+    jsmn_init(&srcParser);
+    numTokens = jsmn_parse(&srcParser, msg->payload, strlen(msg->payload), srcTokens, JSON_MAX_TOKENS);
+
+    for (i = 1; i < numTokens; i++) {
+      if (srcTokens[i].type == JSMN_STRING &&
+          (srcTokens[i].end - srcTokens[i].start) == 7 &&
+          strncmp(msg->payload + srcTokens[i].start, "sources", 7) == 0) {
+        int arrTok = i + 1;
+        if (arrTok < numTokens && srcTokens[arrTok].type == JSMN_ARRAY) {
+          int srcCount = srcTokens[arrTok].size;
+          int si, ti = arrTok + 1;
+          if (srcCount > 8) srcCount = 8;
+          /* Write all source names BEFORE setting the count,
+             so the UI never sees a non-zero count with empty names */
+          for (si = 0; si < srcCount && ti < numTokens; si++, ti++) {
+            int len = srcTokens[ti].end - srcTokens[ti].start;
+            char srcBuf[32];
+            if (len > 31) len = 31;
+            strncpy(srcBuf, msg->payload + srcTokens[ti].start, len);
+            srcBuf[len] = '\0';
+            set_zone_source_name_c(zoneIndex, si, srcBuf);
+          }
+          set_zone_source_count_c(zoneIndex, srcCount);
+        }
+        break;
+      }
+    }
+  }
 }
 
 static void HandleZoneEnd(const GenericMessage *msg)
@@ -404,11 +684,11 @@ static void HandleZoneEnd(const GenericMessage *msg)
   char zonesBuf[12];
   int expectedZones;
   int currentZones;
-  const char *ackMsg = "{\"action\":\"zoneEndAck\"}\r\n";
-  const char *nackMsg = "{\"action\":\"zoneEndNack\"}\r\n";
+  const char *ackMsg = "{\"action\":\"zoneEndAck\"}";
+  const char *nackMsg = "{\"action\":\"zoneEndNack\"}";
 
   if (!JSON_GetStringValue(msg->payload, "zones", zonesBuf, sizeof(zonesBuf))) {
-    HAL_UART_Transmit(p_huart, (uint8_t*)nackMsg, strlen(nackMsg), 100);
+    Protocol_SendFramed(nackMsg, strlen(nackMsg));
     return;
   }
 
@@ -420,9 +700,9 @@ static void HandleZoneEnd(const GenericMessage *msg)
   currentZones = get_zone_count_c();
 
   if (currentZones == expectedZones) {
-    HAL_UART_Transmit(p_huart, (uint8_t*)ackMsg, strlen(ackMsg), 100);
+    Protocol_SendFramed(ackMsg, strlen(ackMsg));
   } else {
-    HAL_UART_Transmit(p_huart, (uint8_t*)nackMsg, strlen(nackMsg), 100);
+    Protocol_SendFramed(nackMsg, strlen(nackMsg));
   }
 }
 
@@ -484,6 +764,55 @@ static void HandleSetMute(const GenericMessage *msg)
   set_zone_muted_c(zoneIndex, (strcmp(stateBuf, "true") == 0 || strcmp(stateBuf, "1") == 0) ? 1 : 0);
 }
 
+static void HandleSetSource(const GenericMessage *msg)
+{
+  char zoneBuf[12];
+  char indexBuf[12];
+  int zoneIndex;
+  int sourceIndex;
+  int sourceCount;
+
+  if (!JSON_GetStringValue(msg->payload, "zone", zoneBuf, sizeof(zoneBuf))) {
+    SendNack(p_huart, "setSource", "MISSING SOURCE.ZONE", -1);
+    return;
+  }
+
+  zoneIndex = atoi(zoneBuf);
+  if (zoneIndex < 0 || zoneIndex >= get_zone_count_c()) {
+    SendNack(p_huart, "setSource", "INVALID SOURCE.ZONE", zoneIndex);
+    return;
+  }
+
+  if (!JSON_GetStringValue(msg->payload, "index", indexBuf, sizeof(indexBuf))) {
+    SendNack(p_huart, "setSource", "MISSING SOURCE.INDEX", zoneIndex);
+    return;
+  }
+
+  sourceIndex = atoi(indexBuf);
+  sourceCount = get_zone_source_count_c(zoneIndex);
+  if (sourceIndex < 0 || sourceIndex >= sourceCount) {
+    SendNack(p_huart, "setSource", "INVALID SOURCE.INDEX", zoneIndex);
+    return;
+  }
+
+  set_selected_source_c(zoneIndex, sourceIndex);
+}
+
+static void HandleReady(const GenericMessage *msg)
+{
+  (void)msg;
+  const char *ack = "{\"action\":\"readyAck\"}";
+  Protocol_SendFramed(ack, strlen(ack));
+  set_ready_received_c();
+}
+
+static void HandleNack(const GenericMessage *msg)
+{
+  (void)msg;
+  set_zone_count_c(0);
+  set_go_to_launch_c();
+}
+
 /**
   * @brief  Process received JSON packet and control PWM
   * @param  data: Pointer to JSON string
@@ -501,6 +830,16 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
   if (ParseGenericMessage((char*)data, &msg) != 0)
   {
     SendNack(p_huart, "parse", "INVALID PACKET", -1);
+    return;
+  }
+
+  if (strcmp(msg.action, "ready") == 0) {
+    HandleReady(&msg);
+    return;
+  }
+
+  if (strcmp(msg.action, "nack") == 0) {
+    HandleNack(&msg);
     return;
   }
 
@@ -534,6 +873,16 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
     return;
   }
 
+  if (strcmp(msg.action, "setSource") == 0) {
+    HandleSetSource(&msg);
+    return;
+  }
+
+  if (strcmp(msg.action, "otarequest") == 0) {
+    // OTA implementation function call here
+    return;
+  }
+
   SendNack(p_huart, msg.action, "FAILED ACTION", -1);
 }
 
@@ -541,18 +890,27 @@ void Protocol_SendSetGain(int zone, int norm)
 {
   char buffer[128];
   int len = snprintf(buffer, sizeof(buffer),
-      "{\"action\":\"setGain\",\"payload\":{\"zone\":%d,\"db\":0.0,\"norm\":%d}}\r\n",
+      "{\"action\":\"setGain\",\"payload\":{\"zone\":%d,\"db\":0.0,\"norm\":%d}}",
       zone, norm);
-  HAL_UART_Transmit(p_huart, (uint8_t*)buffer, len, 100);
+  Protocol_SendFramed(buffer, len);
 }
 
 void Protocol_SendSetMute(int zone, int state)
 {
   char buffer[96];
   int len = snprintf(buffer, sizeof(buffer),
-      "{\"action\":\"setMute\",\"payload\":{\"zone\":%d,\"state\":%s}}\r\n",
+      "{\"action\":\"setMute\",\"payload\":{\"zone\":%d,\"state\":%s}}",
       zone, state ? "true" : "false");
-  HAL_UART_Transmit(p_huart, (uint8_t*)buffer, len, 100);
+  Protocol_SendFramed(buffer, len);
+}
+
+void Protocol_SendSetSource(int zone, int index)
+{
+  char buffer[96];
+  int len = snprintf(buffer, sizeof(buffer),
+      "{\"action\":\"setSource\",\"payload\":{\"zone\":%d,\"index\":%d}}",
+      zone, index);
+  Protocol_SendFramed(buffer, len);
 }
 
 

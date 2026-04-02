@@ -39,7 +39,42 @@ extern "C" {
 #define SPEED_MID_PERCENT   60
 #define SPEED_HIGH_PERCENT  100
 
+/* TUII Packet Framing -------------------------------------------------------*/
+/* SOF markers (4 bytes each, big-endian on wire) */
+/* OTA SOF:    0xA1B1C1D1 → bytes: A1 B1 C1 D1 */
+#define PROTOCOL_SOF_OTA_BYTE0   0xA1
+#define PROTOCOL_SOF_OTA_BYTE1   0xB1
+#define PROTOCOL_SOF_OTA_BYTE2   0xC1
+#define PROTOCOL_SOF_OTA_BYTE3   0xD1
+#define PROTOCOL_SOF_OTA_WORD    0xA1B1C1D1U
+
+/* Normal SOF: 0xA2B2C2D2 → bytes: A2 B2 C2 D2 */
+#define PROTOCOL_SOF_NORM_BYTE0  0xA2
+#define PROTOCOL_SOF_NORM_BYTE1  0xB2
+#define PROTOCOL_SOF_NORM_BYTE2  0xC2
+#define PROTOCOL_SOF_NORM_BYTE3  0xD2
+#define PROTOCOL_SOF_NORM_WORD   0xA2B2C2D2U
+
+#define PROTOCOL_SOF_SIZE        4   /* bytes */
+#define PROTOCOL_CRC_SIZE        2   /* bytes (little-endian) */
+#define PROTOCOL_LEN_SIZE        1   /* bytes */
+#define PROTOCOL_HEADER_SIZE     (PROTOCOL_SOF_SIZE + PROTOCOL_CRC_SIZE + PROTOCOL_LEN_SIZE)  /* 7 bytes */
+#define PROTOCOL_MAX_PAYLOAD     255
+#define PROTOCOL_MAX_PACKET      (PROTOCOL_HEADER_SIZE + PROTOCOL_MAX_PAYLOAD)  /* 262 bytes */
+
+/* CRC16-CCITT-FALSE constants */
+#define PROTOCOL_CRC_INITIAL     0xFFFF
+#define PROTOCOL_CRC_POLYNOMIAL  0x1021
+#define PROTOCOL_CRC_MSB_MASK    0x8000
+
 /* Exported types ------------------------------------------------------------*/
+
+/* Packet type returned by Protocol_ParsePacket */
+typedef enum {
+  PACKET_TYPE_UNKNOWN = 0,
+  PACKET_TYPE_OTA,       /* SOF = 0xA1B1C1D1 */
+  PACKET_TYPE_NORMAL     /* SOF = 0xA2B2C2D2 */
+} PacketType_t;
 
 
 /* Exported variables --------------------------------------------------------*/
@@ -59,9 +94,16 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length);
 void SendNack(UART_HandleTypeDef *huart, const char *failedAction, const char *errorMsg, int errorCode);
 void FanControl_UART_RxIdleCallback(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);
 
+/* TUII Packet Framing API ---------------------------------------------------*/
+uint16_t Protocol_CRC16_CCITT(uint8_t *data, uint16_t length);
+int Protocol_BuildPacket(PacketType_t type, const uint8_t *payload, uint8_t payloadLen, uint8_t *outBuf, uint16_t outBufSize);
+int Protocol_ParsePacket(const uint8_t *packet, uint16_t packetLen, uint8_t *payloadOut, uint8_t *payloadLenOut, PacketType_t *packetType);
+void Protocol_ProcessReceivedData(uint8_t *data, uint16_t length);
+
 /* UI → Device outgoing message helpers */
 void Protocol_SendSetGain(int zone, int norm);
 void Protocol_SendSetMute(int zone, int state);
+void Protocol_SendSetSource(int zone, int index);
 
 /* Generic JSON Helper Functions ---------------------------------------------*/
 /**

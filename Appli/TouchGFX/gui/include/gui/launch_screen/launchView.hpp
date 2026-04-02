@@ -11,6 +11,8 @@ public:
     virtual ~launchView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+    virtual void handleTickEvent();
+    void goToHomeScreen();
 protected:
 };
 

@@ -24,3 +24,8 @@ void zonePresenter::setSelectedZone(int index)
 {
     model->setSelectedZone(index);
 }
+
+void zonePresenter::notifyGoToLaunch()
+{
+    view.goToLaunchScreen();
+}

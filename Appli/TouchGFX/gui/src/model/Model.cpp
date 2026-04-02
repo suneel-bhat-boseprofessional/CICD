@@ -9,7 +9,9 @@ Model* modelInstance = 0;
 Model::Model() :
     modelListener(0),
     selectedZone(0),
-    zoneNamesChanged(false)
+    zoneNamesChanged(false),
+    readyReceived(false),
+    goToLaunchRequested(false)
 {
     modelInstance = this;
 
@@ -19,6 +21,24 @@ Model::Model() :
         zonePrevVolumes[i] = 0;
         zoneMuted[i]       = false;
         zoneNames[i][0]    = '\0';
+        zoneSourceCount[i] = 0;
+        selectedSource[i]  = 0;
+        for(int j = 0; j < MODEL_MAX_SOURCES_PER_ZONE; j++)
+        {
+            zoneSources[i][j][0] = '\0';
+        }
+    }
+
+    // Test data so Source_Select has items to display
+    static const char* testSources[] = { "HDMI 1", "HDMI 2", "Bluetooth", "AUX", "USB" };
+    for(int z = 0; z < MODEL_MAX_ZONES; z++)
+    {
+        for(int s = 0; s < 5; s++)
+        {
+            strncpy(zoneSources[z][s], testSources[s], MODEL_SOURCE_NAME_MAX_LEN - 1);
+            zoneSources[z][s][MODEL_SOURCE_NAME_MAX_LEN - 1] = '\0';
+        }
+        zoneSourceCount[z] = 5;
     }
 }
 
@@ -30,6 +50,22 @@ void Model::tick()
         if(modelListener != 0)
         {
             modelListener->zoneNamesUpdated();
+        }
+    }
+    if(readyReceived)
+    {
+        readyReceived = false;
+        if(modelListener != 0)
+        {
+            modelListener->notifyReadyReceived();
+        }
+    }
+    if(goToLaunchRequested)
+    {
+        goToLaunchRequested = false;
+        if(modelListener != 0)
+        {
+            modelListener->notifyGoToLaunch();
         }
     }
 }
@@ -188,4 +224,95 @@ extern "C" void set_zone_muted_c(int idx, int muted)
     {
         modelInstance->setZoneMuted(idx, muted ? true : false);
     }
+}
+
+void Model::setZoneSourceCount(int zoneIdx, int count)
+{
+    if(zoneIdx >= 0 && zoneIdx < MODEL_MAX_ZONES)
+    {
+        if(count < 0) count = 0;
+        if(count > MODEL_MAX_SOURCES_PER_ZONE) count = MODEL_MAX_SOURCES_PER_ZONE;
+        zoneSourceCount[zoneIdx] = count;
+        zoneNamesChanged = true;
+    }
+}
+
+int Model::getZoneSourceCount(int zoneIdx) const
+{
+    if(zoneIdx >= 0 && zoneIdx < MODEL_MAX_ZONES)
+        return zoneSourceCount[zoneIdx];
+    return 0;
+}
+
+void Model::setZoneSourceName(int zoneIdx, int srcIdx, const char* name)
+{
+    if(zoneIdx >= 0 && zoneIdx < MODEL_MAX_ZONES &&
+       srcIdx >= 0 && srcIdx < MODEL_MAX_SOURCES_PER_ZONE)
+    {
+        strncpy(zoneSources[zoneIdx][srcIdx], name, MODEL_SOURCE_NAME_MAX_LEN - 1);
+        zoneSources[zoneIdx][srcIdx][MODEL_SOURCE_NAME_MAX_LEN - 1] = '\0';
+        zoneNamesChanged = true;
+    }
+}
+
+const char* Model::getZoneSourceName(int zoneIdx, int srcIdx) const
+{
+    if(zoneIdx >= 0 && zoneIdx < MODEL_MAX_ZONES &&
+       srcIdx >= 0 && srcIdx < MODEL_MAX_SOURCES_PER_ZONE)
+        return zoneSources[zoneIdx][srcIdx];
+    return "";
+}
+
+void Model::setSelectedSource(int zoneIdx, int srcIdx)
+{
+    if(zoneIdx >= 0 && zoneIdx < MODEL_MAX_ZONES &&
+       srcIdx >= 0 && srcIdx < MODEL_MAX_SOURCES_PER_ZONE)
+    {
+        selectedSource[zoneIdx] = srcIdx;
+        zoneNamesChanged = true;
+    }
+}
+
+int Model::getSelectedSource(int zoneIdx) const
+{
+    if(zoneIdx >= 0 && zoneIdx < MODEL_MAX_ZONES)
+        return selectedSource[zoneIdx];
+    return 0;
+}
+
+extern "C" void set_zone_source_count_c(int zoneIdx, int count)
+{
+    if(modelInstance != 0)
+        modelInstance->setZoneSourceCount(zoneIdx, count);
+}
+
+extern "C" int get_zone_source_count_c(int zoneIdx)
+{
+    if(modelInstance != 0)
+        return modelInstance->getZoneSourceCount(zoneIdx);
+    return 0;
+}
+
+extern "C" void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name)
+{
+    if(modelInstance != 0)
+        modelInstance->setZoneSourceName(zoneIdx, srcIdx, name);
+}
+
+extern "C" void set_selected_source_c(int zoneIdx, int srcIdx)
+{
+    if(modelInstance != 0)
+        modelInstance->setSelectedSource(zoneIdx, srcIdx);
+}
+
+extern "C" void set_ready_received_c(void)
+{
+    if(modelInstance != 0)
+        modelInstance->readyReceived = true;
+}
+
+extern "C" void set_go_to_launch_c(void)
+{
+    if(modelInstance != 0)
+        modelInstance->goToLaunchRequested = true;
 }

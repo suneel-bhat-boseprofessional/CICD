@@ -63,6 +63,19 @@ void zone2View::setupScreen()
     }
 
     button1.invalidate();
+
+    int selSrc = modelInstance->getSelectedSource(zone);
+    const char* srcName = modelInstance->getZoneSourceName(zone, selSrc);
+    if (srcName && srcName[0] != '\0')
+    {
+        Unicode::fromUTF8((const uint8_t*)srcName, sourceNameBuffer, 32);
+    }
+    else
+    {
+        Unicode::snprintf(sourceNameBuffer, 32, "Source");
+    }
+    textArea4.setWildcard(sourceNameBuffer);
+    textArea4.invalidate();
 }
 
 void zone2View::tearDownScreen()
@@ -147,6 +160,15 @@ void zone2View::zoneUpdated()
     else
         button1.setBitmaps(Bitmap(BITMAP_UNMUTE_ID), Bitmap(BITMAP_UNMUTE_ID));
     button1.invalidate();
+
+    int selSrc = modelInstance->getSelectedSource(zone);
+    const char* srcName = modelInstance->getZoneSourceName(zone, selSrc);
+    if (srcName && srcName[0] != '\0')
+        Unicode::fromUTF8((const uint8_t*)srcName, sourceNameBuffer, 32);
+    else
+        Unicode::snprintf(sourceNameBuffer, 32, "Source");
+    textArea4.setWildcard(sourceNameBuffer);
+    textArea4.invalidate();
 }
 
 void zone2View::updateSliderFill(int value)
@@ -154,4 +176,9 @@ void zone2View::updateSliderFill(int value)
     CustomSlider& cs = static_cast<CustomSlider&>(slider1);
     int fillerWidth = cs.getIndicatorX() + (cs.getIndicatorWidth() / 2);
     cs.setFillerWidth(fillerWidth);
+}
+
+void zone2View::goToLaunchScreen()
+{
+    application().gotolaunchScreenNoTransition();
 }

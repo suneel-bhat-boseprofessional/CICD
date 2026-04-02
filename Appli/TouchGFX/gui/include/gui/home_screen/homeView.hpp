@@ -20,6 +20,7 @@ public:
     virtual void scrollList1UpdateItem(CustomContainer1& item, int16_t itemIndex);
 
     void itemSelected(int index);
+    void goToLaunchScreen();
 
     virtual void handleDragEvent(const touchgfx::DragEvent& event);
     virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
