@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "ram_functions.h"
+#include "firmware_updater.h"
 #include <string.h>  /* For memcmp */
 
 /* Private includes ----------------------------------------------------------*/
@@ -432,6 +433,33 @@ FlashUpdateStatus_t RAM_WriteFlashSimple(uint32_t address, const uint8_t* data, 
     return RAM_UpdateFlashFlag(&config);
 }
 
+
+/**
+ * @brief Write an update flag to a given flash address
+ * @param address: Flash address to write the flag to
+ * @param flag: 32-bit flag value to write
+ * @retval FlashUpdateStatus_t: Status of the operation
+ */
+__attribute__((section(".ramcode")))
+FlashUpdateStatus_t FW_WriteUpdateFlag(uint32_t address, uint32_t flag)
+{
+    uint8_t flag_data[4] = {
+        (uint8_t)(flag),
+        (uint8_t)(flag >> 8U),
+        (uint8_t)(flag >> 16U),
+        (uint8_t)(flag >> 24U)
+    };
+
+    FlashUpdateConfig_t config = {
+        .flash_base_address = address,
+        .offset = 0,
+        .data = flag_data,
+        .size = sizeof(flag_data),
+        .verify_after_write = 1
+    };
+
+    return RAM_UpdateFlashFlag(&config);
+}
 
 /**
  * @brief Example function showing how to use RAM-based flash functions

@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ram_functions.h"
-
+#include "firmware_updater.h"
 extern int notifyTouch;
 // FreeRTOS includes for queue usage
 #include "FreeRTOS.h"
@@ -822,37 +822,17 @@ int main(void)
   Setup_Application_XSPI_Handle();
   printf("XSPI handle setup completed\r\n");
   
-  /* Test simplified RAM flash write */
-  // FlashUpdateStatus_t val;
-  // uint32_t test_address = 0x70200000; /* Example address in external flash */
-  // uint32_t testdata = 0xAAEECCDD;
-  // FlashUpdateConfig_t flash_config = {
-  //        .flash_base_address = test_address,
-  //        .offset = 0,  /* Start at base address */
-  //        .data = (uint8_t*)&testdata,
-  //        .size = sizeof(testdata),
-  //        .verify_after_write = 1  /* Enable verification */
-  //    };
+  /* Example: Write update flag to flash */
+  FlashUpdateStatus_t status = FW_WriteUpdateFlag(FW_UPDATE_FLAG_ADDRESS, FW_UPDATE_FLAG_VALUE);
+  if (status == FLASH_UPDATE_OK)
+  {
+      printf("Flash update flag written successfully\r\n");
+  }
+  else
+  {
+      printf("Failed to write flash update flag: %d\r\n", status);
+  }
 
-  //    printf("Starting simplified RAM flash test...\r\n");
-     
-  //    /* Measure flash update timing */
-  //    uint32_t tick_start = HAL_GetTick();
-  //    val = RAM_UpdateFlashFlag(&flash_config);
-  //    uint32_t tick_end = HAL_GetTick();
-  //    uint32_t elapsed_ms = tick_end - tick_start;
-     
-  //    if (val == FLASH_UPDATE_OK) {
-  //        printf("✅ Simplified data written successfully: 0x%08X\r\n", testdata);
-  //        printf("   Written to address: 0x%08X\r\n", test_address);
-  //        printf("   Data size: %d bytes\r\n", (int)sizeof(testdata));
-  //        printf("   ⏱️  Flash update time: %lu ms\r\n", elapsed_ms);
-  //        printf("   📊 Performance: ~%.2f KB/s\r\n", (float)(sizeof(testdata)) / elapsed_ms);
-  //    } else {
-  //        printf("❌ Simplified write failed with error: %d\r\n", val);
-  //        printf("   Check XSPI setup and address validity\r\n");
-  //        printf("   ⏱️  Failed operation time: %lu ms\r\n", elapsed_ms);
-  //    }
 
    
 #if MANUAL_FB_ENABLE

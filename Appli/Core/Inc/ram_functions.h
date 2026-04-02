@@ -139,6 +139,15 @@ FlashUpdateStatus_t RAM_WriteFlashArray(uint32_t flash_address, uint32_t offset,
                                         const uint8_t* data, uint32_t size) __attribute__((section(".ramcode")));
 
 
+/**
+ * @brief Write an update flag to a given flash address
+ * @param address: Flash address to write the flag to
+ * @param flag: 32-bit flag value to write
+ * @retval FlashUpdateStatus_t: Status of the operation
+ * @note This function executes from RAM
+ */
+FlashUpdateStatus_t FW_WriteUpdateFlag(uint32_t address, uint32_t flag) __attribute__((section(".ramcode")));
+
 /**********EXAMPLE CODE TO VERIFY THE FLASH FLAG************************/
 void Example_UseRAMFlashFunctions(void);
 
