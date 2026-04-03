@@ -64,7 +64,7 @@ typedef uint16_t u16;
 /* Manual Framebuffer Configuration */
 #define MANUAL_FB_ENABLE 0 // Set to 1 to use manual framebuffer instead of TouchGFX
 
-#define XIP_BUILD 1
+//#define XIP_BUILD 1
 
 /* USER CODE END PD */
 
@@ -644,6 +644,13 @@ int main(void)
   /* USER CODE END Init */
   /* Configure the system clock */
   SystemClock_Config();
+
+ // Enable AXISRMAM3 - AXISRAM6 memory spaces
+  __HAL_RCC_AXISRAM3_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM4_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM5_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM6_MEM_CLK_ENABLE();
+
 #else
   //
   // Tick clock is enabled by HAL_Init(). But its IRQ priority is
@@ -739,7 +746,7 @@ int main(void)
    //UART message reception queue
    uartRxQueue = xQueueCreate(10, RX_BUFFER_SIZE);
 
-  /* USER CODE END 2 */
+     /* USER CODE END 2 */
 
   /* Init scheduler */
   osKernelInitialize();
