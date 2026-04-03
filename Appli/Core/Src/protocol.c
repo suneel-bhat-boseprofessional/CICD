@@ -20,6 +20,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include <protocol.h>
 #include "json_parser.h"
+#include "firmware_updater.h"
+#include "ram_functions.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -262,6 +264,18 @@ int Protocol_ParsePacket(const uint8_t *packet, uint16_t packetLen, uint8_t *pay
   */
 void Protocol_ProcessReceivedData(uint8_t *data, uint16_t length)
 {
+  /* Route OTA binary packets first — different frame format than JSON */
+  if (length >= OTA_REQUEST_MIN_SIZE &&
+      data[0] == PROTOCOL_SOF_OTA_BYTE0 &&
+      data[1] == PROTOCOL_SOF_OTA_BYTE1 &&
+      data[2] == PROTOCOL_SOF_OTA_BYTE2 &&
+      data[3] == PROTOCOL_SOF_OTA_BYTE3)
+  {
+    OTA_ProcessBinaryCommand(data, length);
+    return;
+  }
+
+  /* Existing normal protocol path */
   uint8_t payload[PROTOCOL_MAX_PAYLOAD];
   uint8_t payloadLen = 0;
   PacketType_t type;
@@ -291,13 +305,8 @@ void Protocol_ProcessReceivedData(uint8_t *data, uint16_t length)
   switch (type)
   {
     case PACKET_TYPE_OTA:
-    {
-      const char *otaAck = "{\"action\":\"otaAck\",\"payload\":{\"status\":\"OTA triggered\"}}";
-      Protocol_SendFramed(otaAck, strlen(otaAck));
-      /* TODO: call OTA handler with payload */
-      /* OTA_ProcessPayload(payload, payloadLen); */
+      /* Should not reach here — OTA is handled above before ParsePacket */
       break;
-    }
 
     case PACKET_TYPE_NORMAL:
       /* Null-terminate for JSON string processing */
@@ -911,6 +920,118 @@ void Protocol_SendSetSource(int zone, int index)
       "{\"action\":\"setSource\",\"payload\":{\"zone\":%d,\"index\":%d}}",
       zone, index);
   Protocol_SendFramed(buffer, len);
+}
+
+
+/* OTA Binary Protocol -------------------------------------------------------*/
+
+/**
+  * @brief  Send an OTA binary response frame
+  *         Response: | SOF(4) | CMD(1) | STATUS(1) | LEN_HI(1) LEN_LO(1) | Payload(LEN) | CRC16(2) |
+  *         Uses Normal SOF (A2B2C2D2) for responses
+  * @param  cmd: Command ID being responded to
+  * @param  status: OTA_STATUS_OK or OTA_STATUS_ERROR
+  * @param  payload: Pointer to response payload (can be NULL if payloadLen == 0)
+  * @param  payloadLen: Length of payload
+  * @retval None
+  */
+static void OTA_SendResponse(uint8_t cmd, uint8_t status,
+                             const uint8_t *payload, uint16_t payloadLen)
+{
+  uint8_t buf[64];
+  uint16_t idx = 0;
+  uint16_t crc;
+
+  /* SOF — Normal SOF for application responses */
+  buf[idx++] = PROTOCOL_SOF_NORM_BYTE0;
+  buf[idx++] = PROTOCOL_SOF_NORM_BYTE1;
+  buf[idx++] = PROTOCOL_SOF_NORM_BYTE2;
+  buf[idx++] = PROTOCOL_SOF_NORM_BYTE3;
+
+  /* CMD */
+  buf[idx++] = cmd;
+
+  /* STATUS */
+  buf[idx++] = status;
+
+  /* LEN (2 bytes, big-endian) */
+  buf[idx++] = (uint8_t)((payloadLen >> 8) & 0xFF);
+  buf[idx++] = (uint8_t)(payloadLen & 0xFF);
+
+  /* Payload */
+  if (payload != NULL && payloadLen > 0)
+  {
+    if (payloadLen > (sizeof(buf) - idx - PROTOCOL_CRC_SIZE))
+      return;  /* overflow guard */
+    memcpy(&buf[idx], payload, payloadLen);
+  }
+  idx += payloadLen;
+
+  /* CRC16 over everything after SOF (CMD + STATUS + LEN + Payload) */
+  crc = Protocol_CRC16_CCITT(&buf[4], idx - 4);
+  buf[idx++] = (uint8_t)(crc & 0xFF);
+  buf[idx++] = (uint8_t)((crc >> 8) & 0xFF);
+
+  HAL_UART_Transmit(p_huart, buf, idx, 200);
+}
+
+/**
+  * @brief  Process an OTA binary command received with OTA SOF (0xA1B1C1D1)
+  *         Request: | SOF(4) | CMD(1) | LEN_HI(1) LEN_LO(1) | CRC16(2) | Payload(LEN) |
+  * @param  data: Pointer to raw received data including SOF
+  * @param  length: Total number of bytes received
+  * @retval None
+  */
+void OTA_ProcessBinaryCommand(uint8_t *data, uint16_t length)
+{
+  if (length < OTA_REQUEST_MIN_SIZE)
+    return;
+
+  uint8_t cmd = data[4];
+  uint16_t payloadLen = ((uint16_t)data[5] << 8) | data[6];
+
+  /* CRC sits right after LEN when payloadLen == 0, or after payload */
+  uint16_t crcOffset = 7 + payloadLen;
+  if ((crcOffset + PROTOCOL_CRC_SIZE) > length)
+    return;  /* truncated packet */
+
+  uint16_t crcReceived = (uint16_t)data[crcOffset] | ((uint16_t)data[crcOffset + 1] << 8);
+  /* CRC over CMD(1) + LEN(2) + Payload(payloadLen) */
+  uint16_t crcComputed = Protocol_CRC16_CCITT(&data[4], 3 + payloadLen);
+  if (crcComputed != crcReceived)
+    return;  /* CRC mismatch — silently drop */
+
+  switch (cmd)
+  {
+    case OTA_CMD_IDENTIFY:
+    {
+      OTA_IdentifyResponse_t resp;
+      resp.mode      = OTA_MODE_APPLICATION;
+      resp.version   = ((uint32_t)FW_VERSION_MAJOR << 16) |
+                       ((uint32_t)FW_VERSION_MINOR << 8)  |
+                       (uint32_t)FW_VERSION_PATCH;
+      resp.device_id = HAL_GetDEVID();
+
+      OTA_SendResponse(OTA_CMD_IDENTIFY, OTA_STATUS_OK,
+                       (const uint8_t *)&resp, sizeof(resp));
+      break;
+    }
+
+    case OTA_CMD_ENTER_BOOTLOADER:
+    {
+      /* ACK first, then write flag and reset */
+      OTA_SendResponse(OTA_CMD_ENTER_BOOTLOADER, OTA_STATUS_OK, NULL, 0);
+      HAL_Delay(FW_RESTART_DELAY_MS);
+      FW_WriteUpdateFlag(FW_UPDATE_FLAG_ADDRESS, FW_UPDATE_FLAG_VALUE);
+      NVIC_SystemReset();
+      break;  /* unreachable */
+    }
+
+    default:
+      /* Unknown OTA command */
+      OTA_SendResponse(cmd, OTA_STATUS_ERROR, NULL, 0);
+      break;
+  }
 }
 
 

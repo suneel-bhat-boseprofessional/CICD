@@ -105,6 +105,33 @@ void Protocol_SendSetGain(int zone, int norm);
 void Protocol_SendSetMute(int zone, int state);
 void Protocol_SendSetSource(int zone, int index);
 
+/* OTA Binary Protocol -------------------------------------------------------*/
+/* OTA binary frame layout (different from JSON framing):
+ * Request:  | SOF(4) | CMD(1) | LEN_HI(1) LEN_LO(1) | CRC16(2) | Payload(LEN) |
+ * Response: | SOF(4) | CMD(1) | STATUS(1) | LEN_HI(1) LEN_LO(1) | Payload(LEN) | CRC16(2) |
+ */
+#define OTA_CMD_IDENTIFY         0x01
+#define OTA_CMD_ENTER_BOOTLOADER 0x02
+
+#define OTA_STATUS_OK            0x00
+#define OTA_STATUS_ERROR         0x01
+
+#define OTA_MODE_APPLICATION     0x01
+#define OTA_MODE_BOOTLOADER      0x02
+
+/* OTA request minimum size: SOF(4) + CMD(1) + LEN(2) + CRC(2) = 9 */
+#define OTA_REQUEST_MIN_SIZE     9
+/* OTA response header: SOF(4) + CMD(1) + STATUS(1) + LEN(2) = 8 */
+#define OTA_RESPONSE_HEADER_SIZE 8
+
+typedef struct __attribute__((packed)) {
+    uint8_t  mode;       /* OTA_MODE_APPLICATION or OTA_MODE_BOOTLOADER */
+    uint32_t version;    /* (major<<16) | (minor<<8) | patch */
+    uint32_t device_id;  /* HAL_GetDEVID() */
+} OTA_IdentifyResponse_t;  /* 9 bytes */
+
+void OTA_ProcessBinaryCommand(uint8_t *data, uint16_t length);
+
 /* Generic JSON Helper Functions ---------------------------------------------*/
 /**
   * @brief  Extract string value from JSON for any key using JSMN parser
