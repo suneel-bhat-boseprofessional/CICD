@@ -41,7 +41,7 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 
 extern I2C_HandleTypeDef hi2c1;
-extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart;
 
 // Touch processing constants
 #define MAX_NUM_TOUCHES 10
@@ -117,6 +117,43 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
+/* UART Configuration - Change USE_UART2 to switch between UARTs */
+/* UART1 = Debug port, UART2 = Product port */
+#define USE_UART2                   0  // Set to 1 for UART2 (product), 0 for UART1 (debug)
+
+#if USE_UART2
+    #define UART_INSTANCE           USART2
+    #define UART_CLK_ENABLE()       __HAL_RCC_USART2_CLK_ENABLE()
+    #define UART_CLK_DISABLE()      __HAL_RCC_USART2_CLK_DISABLE()
+    #define UART_IRQn               USART2_IRQn
+    #define UART_PERIPH_CLKSOURCE   RCC_PERIPHCLK_USART2
+    #define UART_CLKSOURCE_PCLK     RCC_USART2CLKSOURCE_PCLK1
+    #define UART_TX_GPIO_PORT       GPIOD
+    #define UART_TX_PIN             GPIO_PIN_5
+    #define UART_RX_GPIO_PORT       GPIOF
+    #define UART_RX_PIN             GPIO_PIN_6
+    #define UART_GPIO_AF            GPIO_AF7_USART2
+    #define UART_TX_GPIO_CLK_ENABLE() __HAL_RCC_GPIOD_CLK_ENABLE()
+    #define UART_RX_GPIO_CLK_ENABLE() __HAL_RCC_GPIOF_CLK_ENABLE()
+    #define DEBUG_PRINTF(...)       printf(__VA_ARGS__)  // Debug output over UART2
+#else
+    #define UART_INSTANCE           USART1
+    #define UART_CLK_ENABLE()       __HAL_RCC_USART1_CLK_ENABLE()
+    #define UART_CLK_DISABLE()      __HAL_RCC_USART1_CLK_DISABLE()
+    #define UART_IRQn               USART1_IRQn
+    #define UART_PERIPH_CLKSOURCE   RCC_PERIPHCLK_USART1
+    #define UART_CLKSOURCE_PCLK     RCC_USART1CLKSOURCE_PCLK2
+    #define UART_TX_GPIO_PORT       GPIOE
+    #define UART_TX_PIN             GPIO_PIN_5
+    #define UART_RX_GPIO_PORT       GPIOE
+    #define UART_RX_PIN             GPIO_PIN_6
+    #define UART_GPIO_AF            GPIO_AF7_USART1
+    #define UART_TX_GPIO_CLK_ENABLE() __HAL_RCC_GPIOE_CLK_ENABLE()
+    #define UART_RX_GPIO_CLK_ENABLE() __HAL_RCC_GPIOE_CLK_ENABLE()
+    #define DEBUG_PRINTF(...)       printf(__VA_ARGS__)  // Debug output enabled
+#endif
+
 #define LCD_BL_Pin GPIO_PIN_12
 #define LCD_BL_GPIO_Port GPIOC
 #define VCOM_RX_Pin GPIO_PIN_6

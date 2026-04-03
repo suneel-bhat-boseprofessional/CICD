@@ -180,10 +180,10 @@ int stx_get_mutualRaw_value(void)
 
 	sitronix_get_xy_chs();
 	// Send channel info over UART
-	extern UART_HandleTypeDef huart1;
+	extern UART_HandleTypeDef huart;
 	char uart_buf[64];
 	int uart_len = snprintf(uart_buf, sizeof(uart_buf), "RAW:(tx_chs = %d,rx_chs = %d)\r\n", tx_chs, rx_chs);
-	HAL_UART_Transmit(&huart1, (uint8_t*)uart_buf, uart_len, HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart, (uint8_t*)uart_buf, uart_len, HAL_MAX_DELAY);
 
 	printf("RAW:(tx_chs = %d,rx_chs = %d)\n",tx_chs,rx_chs);
 	

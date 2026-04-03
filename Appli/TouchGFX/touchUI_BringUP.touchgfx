@@ -44,7 +44,7 @@
             "X": 24,
             "Y": 4,
             "Width": 430,
-            "Height": 124,
+            "Height": 128,
             "IsHorizontal": true,
             "ItemTemplateName": "CustomContainer1",
             "NumberofItems": 7,
