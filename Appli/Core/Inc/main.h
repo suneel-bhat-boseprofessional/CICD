@@ -120,7 +120,7 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
 
 /* UART Configuration - Change USE_UART2 to switch between UARTs */
 /* UART1 = Debug port, UART2 = Product port */
-#define USE_UART2                   0  // Set to 1 for UART2 (product), 0 for UART1 (debug)
+#define USE_UART2                   1  // Set to 1 for UART2 (product), 0 for UART1 (debug)
 
 #if USE_UART2
     #define UART_INSTANCE           USART2

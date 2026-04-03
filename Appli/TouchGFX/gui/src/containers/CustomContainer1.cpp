@@ -143,7 +143,6 @@ void CustomContainer1::handleTickEvent()
                 scrollTickDiv = 0;
                 scrollOffset++;
 
-                // Seamless loop: when scrolled by one full cycle, reset
                 if (scrollOffset >= loopWidth)
                 {
                     scrollOffset = 0;

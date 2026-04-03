@@ -88,7 +88,7 @@
     <Typography Id="Default" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="0-9,A-Z" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Typography1" Font="EaseStandard-Bold.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="/, &quot; &quot;" WildcardCharacterRanges="A-Z,a-z,0-9" />
+    <Typography Id="Typography1" Font="EaseStandard-Bold.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="/" WildcardCharacterRanges="A-Z,a-z,0-9" />
     <Typography Id="ver" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="a-z,A-Z" />
     <Typography Id="Typography2" Font="EaseStandard-Bold.ttf" Size="32" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="0-9" />
     <Typography Id="Typography3" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />

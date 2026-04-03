@@ -41,7 +41,7 @@
           {
             "Type": "ScrollList",
             "Name": "scrollList1",
-            "X": 24,
+            "X": 25,
             "Y": 4,
             "Width": 430,
             "Height": 128,
@@ -55,23 +55,22 @@
             "OverShootPercentage": 75
           },
           {
-            "Type": "ScalableImage",
-            "Name": "scalableImage2",
-            "X": 460,
-            "Y": 57,
-            "Width": 8,
-            "Height": 14,
-            "Filename": "Vector.png",
-            "ScalingAlgorithm": "Nearest-neighbor"
-          },
-          {
             "Type": "Image",
-            "Name": "image3",
+            "Name": "image1",
             "X": 12,
             "Y": 57,
             "Width": 10,
             "Height": 16,
             "RelativeFilename": "Vector_left.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 460,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector.png"
           }
         ],
         "Interactions": []
