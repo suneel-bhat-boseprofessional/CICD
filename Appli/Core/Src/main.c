@@ -778,17 +778,6 @@ int main(void)
   Setup_Application_XSPI_Handle();
   printf("XSPI handle setup completed\r\n");
   
-  /* Example: Write update flag to flash */
-  FlashUpdateStatus_t status = FW_WriteUpdateFlag(FW_UPDATE_FLAG_ADDRESS, FW_UPDATE_FLAG_VALUE);
-//  if (status == FLASH_UPDATE_OK)
-//  {
-//      printf("Flash update flag written successfully\r\n");
-//  }
-//  else
-//  {
-//      printf("Failed to write flash update flag: %d\r\n", status);
-//  }
-
 
    
 #if MANUAL_FB_ENABLE
