@@ -40,7 +40,7 @@ extern "C" {
 #define SPEED_HIGH_PERCENT  100
 
 /* TUII Packet Framing -------------------------------------------------------*/
-/* SOF markers (4 bytes each, big-endian on wire) */
+/* SOF markers (4 bytes each, big-endian on wire for JSON protocol) */
 /* OTA SOF:    0xA1B1C1D1 → bytes: A1 B1 C1 D1 */
 #define PROTOCOL_SOF_OTA_BYTE0   0xA1
 #define PROTOCOL_SOF_OTA_BYTE1   0xB1
@@ -54,6 +54,18 @@ extern "C" {
 #define PROTOCOL_SOF_NORM_BYTE2  0xC2
 #define PROTOCOL_SOF_NORM_BYTE3  0xD2
 #define PROTOCOL_SOF_NORM_WORD   0xA2B2C2D2U
+
+/* OTA binary SOF bytes (little-endian on wire) */
+/* OTA request SOF:  0xA1B1C1D1 LE → D1 C1 B1 A1 */
+#define OTA_SOF_REQ_BYTE0  0xD1
+#define OTA_SOF_REQ_BYTE1  0xC1
+#define OTA_SOF_REQ_BYTE2  0xB1
+#define OTA_SOF_REQ_BYTE3  0xA1
+/* OTA response SOF: 0xA2B2C2D2 LE → D2 C2 B2 A2 */
+#define OTA_SOF_RSP_BYTE0  0xD2
+#define OTA_SOF_RSP_BYTE1  0xC2
+#define OTA_SOF_RSP_BYTE2  0xB2
+#define OTA_SOF_RSP_BYTE3  0xA2
 
 #define PROTOCOL_SOF_SIZE        4   /* bytes */
 #define PROTOCOL_CRC_SIZE        2   /* bytes (little-endian) */
@@ -106,9 +118,9 @@ void Protocol_SendSetMute(int zone, int state);
 void Protocol_SendSetSource(int zone, int index);
 
 /* OTA Binary Protocol -------------------------------------------------------*/
-/* OTA binary frame layout (different from JSON framing):
- * Request:  | SOF(4) | CMD(1) | LEN_HI(1) LEN_LO(1) | CRC16(2) | Payload(LEN) |
- * Response: | SOF(4) | CMD(1) | STATUS(1) | LEN_HI(1) LEN_LO(1) | Payload(LEN) | CRC16(2) |
+/* OTA binary frame layout (all multi-byte fields are LITTLE-ENDIAN):
+ * Request:  | SOF(4) | CMD(1) | LEN_LO(1) LEN_HI(1) | CRC16_LO(1) CRC16_HI(1) | Payload(LEN) |
+ * Response: | SOF(4) | CMD(1) | STATUS(1) | LEN_LO(1) LEN_HI(1) | Payload(LEN) | CRC16_LO(1) CRC16_HI(1) |
  */
 #define OTA_CMD_IDENTIFY         0x01
 #define OTA_CMD_ENTER_BOOTLOADER 0x02
@@ -127,7 +139,7 @@ void Protocol_SendSetSource(int zone, int index);
 typedef struct __attribute__((packed)) {
     uint8_t  mode;       /* OTA_MODE_APPLICATION or OTA_MODE_BOOTLOADER */
     uint32_t version;    /* (major<<16) | (minor<<8) | patch */
-    uint32_t device_id;  /* HAL_GetDEVID() */
+    uint32_t device_id;  /* DEVICE_ID (0x00000486) */
 } OTA_IdentifyResponse_t;  /* 9 bytes */
 
 void OTA_ProcessBinaryCommand(uint8_t *data, uint16_t length);

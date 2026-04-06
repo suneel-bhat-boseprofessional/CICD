@@ -10,9 +10,9 @@ def crc16_ccitt(data):
     return crc
 
 def build_ota_request(cmd, payload=b''):
-    sof = bytes([0xA1, 0xB1, 0xC1, 0xD1])
+    sof = bytes([0xD1, 0xC1, 0xB1, 0xA1])
     length = len(payload)
-    crc_data = bytes([cmd, (length >> 8) & 0xFF, length & 0xFF]) + payload
+    crc_data = bytes([cmd, length & 0xFF, (length >> 8) & 0xFF]) + payload
     crc = crc16_ccitt(crc_data)
     return sof + crc_data + struct.pack('<H', crc)
 
@@ -30,7 +30,7 @@ def send_ota(ser, name, cmd, payload=b''):
         if len(resp) >= 8:
             cmd_r = resp[4]
             status = resp[5]
-            plen = (resp[6] << 8) | resp[7]
+            plen = resp[6] | (resp[7] << 8)
             print(f'  CMD=0x{cmd_r:02X}  STATUS={"OK" if status==0 else "ERROR"}  PayloadLen={plen}')
             if plen > 0 and len(resp) >= 8 + plen:
                 print(f'  Payload: {resp[8:8+plen].hex(" ").upper()}')
@@ -45,4 +45,4 @@ send_ota(ser, 'IDENTIFY', 0x01)
 #send_ota(ser, 'UNKNOWN CMD', 0xFF)
 send_ota(ser, 'ENTER BOOTLOADER', 0x02)  # uncomment to reboot!
 
-ser.close()
+ser.close() 

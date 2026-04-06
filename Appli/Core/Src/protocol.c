@@ -264,12 +264,12 @@ int Protocol_ParsePacket(const uint8_t *packet, uint16_t packetLen, uint8_t *pay
   */
 void Protocol_ProcessReceivedData(uint8_t *data, uint16_t length)
 {
-  /* Route OTA binary packets first — different frame format than JSON */
+  /* Route OTA binary packets first — LE SOF: D1 C1 B1 A1 */
   if (length >= OTA_REQUEST_MIN_SIZE &&
-      data[0] == PROTOCOL_SOF_OTA_BYTE0 &&
-      data[1] == PROTOCOL_SOF_OTA_BYTE1 &&
-      data[2] == PROTOCOL_SOF_OTA_BYTE2 &&
-      data[3] == PROTOCOL_SOF_OTA_BYTE3)
+      data[0] == OTA_SOF_REQ_BYTE0 &&
+      data[1] == OTA_SOF_REQ_BYTE1 &&
+      data[2] == OTA_SOF_REQ_BYTE2 &&
+      data[3] == OTA_SOF_REQ_BYTE3)
   {
     OTA_ProcessBinaryCommand(data, length);
     return;
@@ -927,8 +927,8 @@ void Protocol_SendSetSource(int zone, int index)
 
 /**
   * @brief  Send an OTA binary response frame
-  *         Response: | SOF(4) | CMD(1) | STATUS(1) | LEN_HI(1) LEN_LO(1) | Payload(LEN) | CRC16(2) |
-  *         Uses Normal SOF (A2B2C2D2) for responses
+  *         Response: | SOF(4) | CMD(1) | STATUS(1) | LEN_LO(1) LEN_HI(1) | Payload(LEN) | CRC16_LO(1) CRC16_HI(1) |
+  *         All multi-byte fields are little-endian. Uses Normal SOF (A2B2C2D2) for responses
   * @param  cmd: Command ID being responded to
   * @param  status: OTA_STATUS_OK or OTA_STATUS_ERROR
   * @param  payload: Pointer to response payload (can be NULL if payloadLen == 0)
@@ -942,11 +942,11 @@ static void OTA_SendResponse(uint8_t cmd, uint8_t status,
   uint16_t idx = 0;
   uint16_t crc;
 
-  /* SOF — Normal SOF for application responses */
-  buf[idx++] = PROTOCOL_SOF_NORM_BYTE0;
-  buf[idx++] = PROTOCOL_SOF_NORM_BYTE1;
-  buf[idx++] = PROTOCOL_SOF_NORM_BYTE2;
-  buf[idx++] = PROTOCOL_SOF_NORM_BYTE3;
+  /* SOF — OTA response SOF, little-endian: D2 C2 B2 A2 */
+  buf[idx++] = OTA_SOF_RSP_BYTE0;
+  buf[idx++] = OTA_SOF_RSP_BYTE1;
+  buf[idx++] = OTA_SOF_RSP_BYTE2;
+  buf[idx++] = OTA_SOF_RSP_BYTE3;
 
   /* CMD */
   buf[idx++] = cmd;
@@ -954,9 +954,9 @@ static void OTA_SendResponse(uint8_t cmd, uint8_t status,
   /* STATUS */
   buf[idx++] = status;
 
-  /* LEN (2 bytes, big-endian) */
-  buf[idx++] = (uint8_t)((payloadLen >> 8) & 0xFF);
+  /* LEN (2 bytes, little-endian) */
   buf[idx++] = (uint8_t)(payloadLen & 0xFF);
+  buf[idx++] = (uint8_t)((payloadLen >> 8) & 0xFF);
 
   /* Payload */
   if (payload != NULL && payloadLen > 0)
@@ -977,7 +977,7 @@ static void OTA_SendResponse(uint8_t cmd, uint8_t status,
 
 /**
   * @brief  Process an OTA binary command received with OTA SOF (0xA1B1C1D1)
-  *         Request: | SOF(4) | CMD(1) | LEN_HI(1) LEN_LO(1) | CRC16(2) | Payload(LEN) |
+  *         Request: | SOF(4) | CMD(1) | LEN_LO(1) LEN_HI(1) | CRC16_LO(1) CRC16_HI(1) | Payload(LEN) |
   * @param  data: Pointer to raw received data including SOF
   * @param  length: Total number of bytes received
   * @retval None
@@ -988,7 +988,7 @@ void OTA_ProcessBinaryCommand(uint8_t *data, uint16_t length)
     return;
 
   uint8_t cmd = data[4];
-  uint16_t payloadLen = ((uint16_t)data[5] << 8) | data[6];
+  uint16_t payloadLen = (uint16_t)data[5] | ((uint16_t)data[6] << 8);
 
   /* CRC sits right after LEN when payloadLen == 0, or after payload */
   uint16_t crcOffset = 7 + payloadLen;
@@ -1010,7 +1010,7 @@ void OTA_ProcessBinaryCommand(uint8_t *data, uint16_t length)
       resp.version   = ((uint32_t)FW_VERSION_MAJOR << 16) |
                        ((uint32_t)FW_VERSION_MINOR << 8)  |
                        (uint32_t)FW_VERSION_PATCH;
-      resp.device_id = HAL_GetDEVID();
+      resp.device_id = DEVICE_ID;
 
       OTA_SendResponse(OTA_CMD_IDENTIFY, OTA_STATUS_OK,
                        (const uint8_t *)&resp, sizeof(resp));
