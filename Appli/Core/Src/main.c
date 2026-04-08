@@ -772,13 +772,10 @@ int main(void)
   /* Initialize RAM functions - copy from ROM to RAM */
 
   RAM_InitializeFunctions();
-  printf("RAM functions initialized successfully\r\n");
   
   /* Setup XSPI handle for RAM functions */
   Setup_Application_XSPI_Handle();
-  printf("XSPI handle setup completed\r\n");
   
-
    
 #if MANUAL_FB_ENABLE
   // Initialize and demo manual framebuffer

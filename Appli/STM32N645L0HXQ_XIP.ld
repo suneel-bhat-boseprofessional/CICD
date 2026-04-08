@@ -38,6 +38,7 @@ ENTRY(Reset_Handler)
 /* Memories definition */
 MEMORY
 {
+  ITCM           (xrw)    : ORIGIN = 0x00000000,   LENGTH = 0x00010000
   DTCM_RAM       (xrw)    : ORIGIN = 0x30000000,   LENGTH = 0x00020000
   LRUN_APPLI_RAM (xr)     : ORIGIN = 0x34000000,   LENGTH = 0x000FFC00
   RAM            (xrw)    : ORIGIN = 0x34100000,   LENGTH = 0x00040000
@@ -299,7 +300,7 @@ SECTIONS
   *(.rodata.ramcode*)  /* Force constants into this section */
   . = ALIGN(4);
   _eramcode = .;
-} >RAM AT> ROM
+} >ITCM AT> ROM
 
 _siramcode = LOADADDR(.ramcode);
 
