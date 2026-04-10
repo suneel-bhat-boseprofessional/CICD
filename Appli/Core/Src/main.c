@@ -64,7 +64,7 @@ typedef uint16_t u16;
 /* Manual Framebuffer Configuration */
 #define MANUAL_FB_ENABLE 0 // Set to 1 to use manual framebuffer instead of TouchGFX
 
-//#define XIP_BUILD 1
+#define XIP_BUILD 1
 
 /* USER CODE END PD */
 

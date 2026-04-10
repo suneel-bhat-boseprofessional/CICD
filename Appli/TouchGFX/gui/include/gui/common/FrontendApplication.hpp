@@ -18,7 +18,16 @@ public:
         model.tick();
         FrontendApplicationBase::handleTickEvent();
     }
+
+    void gotoSettingsScreenNoTransition();
+    void gotoBrightnessScreenNoTransition();
+
 private:
+    void gotoSettingsScreenNoTransitionImpl();
+    void gotoBrightnessScreenNoTransitionImpl();
+
+    touchgfx::Callback<FrontendApplication> settingsTransitionCb;
+    touchgfx::Callback<FrontendApplication> brightnessTransitionCb;
 };
 
 #endif // FRONTENDAPPLICATION_HPP

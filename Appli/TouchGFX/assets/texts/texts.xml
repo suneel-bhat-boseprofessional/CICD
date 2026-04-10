@@ -40,6 +40,9 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_UJ44" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
       <Text Id="__SingleUse_ATL6" Alignment="Left" TypographyId="ver">
         <Translation Language="GB">SOURCES</Translation>
       </Text>

@@ -36,6 +36,10 @@ void homeView::itemSelected(int index)
     {
         application().gotozoneScreenNoTransition();
     }
+    else if(index == 3)
+    {
+        application().gotoSettingsScreenNoTransition();
+    }
 }
 
 void homeView::handleClickEvent(const touchgfx::ClickEvent& event)
