@@ -43,7 +43,7 @@ MEMORY
   RAM            (xrw)    : ORIGIN = 0x34100000,   LENGTH = 0x00040000
   CMDLIST_RAM    (xrw)    : ORIGIN = 0x34140000,   LENGTH = 0x00006000
   FB_RAM         (xrw)    : ORIGIN = 0x34146000,   LENGTH = 0x002DA000
-  ROM            (xr)     : ORIGIN = 0x70100400,   LENGTH = 0x000FFC00
+  ROM            (xr)     : ORIGIN = 0x70100400,   LENGTH = 0x00400000
 }
 /* Highest address of the user mode stack */
 _estack = ORIGIN(LRUN_APPLI_RAM) + LENGTH(LRUN_APPLI_RAM); /* end of "RAM" Ram type memory */
