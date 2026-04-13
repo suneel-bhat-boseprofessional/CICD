@@ -163,10 +163,10 @@ int Protocol_BuildPacket(PacketType_t type, const uint8_t *payload, uint8_t payl
       outBuf[3] = PROTOCOL_SOF_OTA_BYTE3;
       break;
     case PACKET_TYPE_NORMAL:
-      outBuf[0] = PROTOCOL_SOF_NORM_BYTE0;
-      outBuf[1] = PROTOCOL_SOF_NORM_BYTE1;
-      outBuf[2] = PROTOCOL_SOF_NORM_BYTE2;
-      outBuf[3] = PROTOCOL_SOF_NORM_BYTE3;
+      outBuf[0] = PROTOCOL_SOF_NORM_BYTE3;
+      outBuf[1] = PROTOCOL_SOF_NORM_BYTE2;
+      outBuf[2] = PROTOCOL_SOF_NORM_BYTE1;
+      outBuf[3] = PROTOCOL_SOF_NORM_BYTE0;
       break;
     default:
       return -1;
@@ -219,10 +219,10 @@ int Protocol_ParsePacket(const uint8_t *packet, uint16_t packetLen, uint8_t *pay
   {
     *packetType = PACKET_TYPE_OTA;
   }
-  else if (packet[0] == PROTOCOL_SOF_NORM_BYTE0 &&
-           packet[1] == PROTOCOL_SOF_NORM_BYTE1 &&
-           packet[2] == PROTOCOL_SOF_NORM_BYTE2 &&
-           packet[3] == PROTOCOL_SOF_NORM_BYTE3)
+  else if (packet[0] == PROTOCOL_SOF_NORM_BYTE3 &&
+           packet[1] == PROTOCOL_SOF_NORM_BYTE2 &&
+           packet[2] == PROTOCOL_SOF_NORM_BYTE1 &&
+           packet[3] == PROTOCOL_SOF_NORM_BYTE0)
   {
     *packetType = PACKET_TYPE_NORMAL;
   }
@@ -481,8 +481,8 @@ void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_
   tim_pwm_channel = tim_channel;
   
   // Display welcome messages
-  HAL_UART_Transmit(p_huart, (uint8_t*)"Application\r\n", 13, 100);
-  
+  //HAL_UART_Transmit(p_huart, (uint8_t*)"Application\r\n", 13, 100);
+
   // Start PWM
   HAL_TIM_PWM_Start(p_htim, tim_pwm_channel);
   
@@ -492,6 +492,7 @@ void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_
 
   // Set initial fan speed to LOW
   FanControl_SetSpeed(SPEED_LOW_PERCENT);
+
 }
 
 /**

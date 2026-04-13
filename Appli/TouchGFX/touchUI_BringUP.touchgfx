@@ -41,7 +41,7 @@
           {
             "Type": "ScrollList",
             "Name": "scrollList1",
-            "X": 24,
+            "X": 25,
             "Y": 4,
             "Width": 430,
             "Height": 128,
@@ -55,23 +55,22 @@
             "OverShootPercentage": 75
           },
           {
-            "Type": "ScalableImage",
-            "Name": "scalableImage2",
-            "X": 460,
-            "Y": 57,
-            "Width": 8,
-            "Height": 14,
-            "Filename": "Vector.png",
-            "ScalingAlgorithm": "Nearest-neighbor"
-          },
-          {
             "Type": "Image",
-            "Name": "image3",
+            "Name": "image1",
             "X": 12,
             "Y": 57,
             "Width": 10,
             "Height": 16,
             "RelativeFilename": "Vector_left.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 460,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector.png"
           }
         ],
         "Interactions": []
@@ -406,6 +405,93 @@
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "zone2"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Settings",
+        "Components": [
+          {
+            "Type": "ScrollList",
+            "Name": "scrollList1",
+            "X": 64,
+            "Y": 29,
+            "Width": 250,
+            "Height": 91,
+            "ItemTemplateName": "CustomContainer4",
+            "NumberofItems": 4,
+            "Easing": "Back",
+            "EasingOption": "Out",
+            "SwipeAcceleration": 1.0,
+            "DragAcceleration": 1.0,
+            "OverShootPercentage": 75
+          },
+          {
+            "Type": "Button",
+            "Name": "button1",
+            "X": 34,
+            "Y": 57,
+            "Width": 10,
+            "Height": 17,
+            "Pressed": "vector_2.png",
+            "Released": "vector_2.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "button1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "home"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Brightness",
+        "Components": [
+          {
+            "Type": "Slider",
+            "Name": "slider1",
+            "X": 75,
+            "Y": 48,
+            "Width": 330,
+            "Height": 30,
+            "IsHorizontalSlider": true,
+            "BackgroundUnselected": "Brightness.png",
+            "BackgroundSelected": "Brighness_fill.png",
+            "Indicator": "Grabber.png",
+            "IndicatorMax": 300,
+            "ValueMax": 100
+          },
+          {
+            "Type": "Button",
+            "Name": "button1",
+            "X": 24,
+            "Y": 55,
+            "Width": 10,
+            "Height": 17,
+            "Pressed": "vector_2.png",
+            "Released": "vector_2.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "button1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Settings"
             }
           }
         ]
@@ -861,6 +947,25 @@
             "Width": 334,
             "Height": 1,
             "RelativeFilename": "Divider.png"
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "CustomContainer4",
+        "Width": 250,
+        "Height": 47,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 29,
+            "Y": 14,
+            "Width": 154,
+            "Height": 21,
+            "TextId": "__SingleUse_UJ44",
+            "TextRotation": "0",
+            "Wildcard1": {}
           }
         ],
         "Interactions": []

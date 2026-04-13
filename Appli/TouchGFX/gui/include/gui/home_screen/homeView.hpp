@@ -7,6 +7,7 @@
 #include <touchgfx/Callback.hpp>
 #include <touchgfx/events/DragEvent.hpp>
 #include <touchgfx/events/GestureEvent.hpp>
+#include <touchgfx/events/ClickEvent.hpp>
 
 class homeView : public homeViewBase
 {
@@ -22,12 +23,21 @@ public:
     void itemSelected(int index);
     void goToLaunchScreen();
 
+    virtual void handleClickEvent(const touchgfx::ClickEvent& event);
     virtual void handleDragEvent(const touchgfx::DragEvent& event);
     virtual void handleGestureEvent(const touchgfx::GestureEvent& event);
 
 private:
     touchgfx::Callback<homeView, int> itemSelectedCallback;
-    bool scrollOccurred;
+    int currentPage;
+
+    static const int PAGE_SIZES[2];
+    static const int PAGE_OFFSETS[2];
+    static const int TOTAL_ITEMS = 7;
+    static const int TOTAL_PAGES = 2;
+
+    void goToPage(int page);
+    void updateArrows();
 };
 
 #endif

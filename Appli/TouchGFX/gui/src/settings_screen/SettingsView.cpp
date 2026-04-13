@@ -1,0 +1,31 @@
+#include <gui/settings_screen/SettingsView.hpp>
+
+SettingsView::SettingsView() :
+    itemSelectedCallback(this, &SettingsView::itemSelected)
+{
+
+}
+
+void SettingsView::setupScreen()
+{
+    SettingsViewBase::setupScreen();
+    scrollList1.setItemSelectedCallback(itemSelectedCallback);
+}
+
+void SettingsView::tearDownScreen()
+{
+    SettingsViewBase::tearDownScreen();
+}
+
+void SettingsView::scrollList1UpdateItem(CustomContainer4& item, int16_t itemIndex)
+{
+    item.setSettingItem(itemIndex);
+}
+
+void SettingsView::itemSelected(int16_t itemIndex)
+{
+    if (itemIndex == 2) // "Display" item
+    {
+        application().gotoBrightnessScreenNoTransition();
+    }
+}

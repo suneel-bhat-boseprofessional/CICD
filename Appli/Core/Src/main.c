@@ -691,6 +691,46 @@ int main(void)
   /* USER CODE END Init */
   /* Configure the system clock */
   SystemClock_Config();
+
+ // Enable AXISRMAM3 - AXISRAM6 memory spaces
+  __HAL_RCC_AXISRAM3_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM4_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM5_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM6_MEM_CLK_ENABLE();
+
+
+  // Enable AXISRMAM3 - AXISRAM6 memory spaces
+  __HAL_RCC_AXISRAM3_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM4_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM5_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM6_MEM_CLK_ENABLE();
+
+  RAMCFG_SRAM3_AXI_NS->ERKEYR = 0xCA;
+  RAMCFG_SRAM3_AXI_NS->ERKEYR = 0x53;
+  __DSB();
+  __ISB();
+
+  RAMCFG_SRAM4_AXI_NS->ERKEYR = 0xCA;
+  RAMCFG_SRAM4_AXI_NS->ERKEYR = 0x53;
+  __DSB();
+  __ISB();
+
+  RAMCFG_SRAM5_AXI_NS->ERKEYR = 0xCA;
+  RAMCFG_SRAM5_AXI_NS->ERKEYR = 0x53;
+  __DSB();
+  __ISB();
+
+  RAMCFG_SRAM6_AXI_NS->ERKEYR = 0xCA;
+  RAMCFG_SRAM6_AXI_NS->ERKEYR = 0x53;
+  __DSB();
+  __ISB();
+
+  // Power the RAM
+  RAMCFG_SRAM3_AXI_NS->CR &= ~RAMCFG_CR_SRAMSD;
+  RAMCFG_SRAM4_AXI_NS->CR &= ~RAMCFG_CR_SRAMSD;
+  RAMCFG_SRAM5_AXI_NS->CR &= ~RAMCFG_CR_SRAMSD;
+  RAMCFG_SRAM6_AXI_NS->CR &= ~RAMCFG_CR_SRAMSD;
+
 #else
   //
   // Tick clock is enabled by HAL_Init(). But its IRQ priority is
@@ -794,7 +834,7 @@ int main(void)
    //UART message reception queue
    uartRxQueue = xQueueCreate(10, RX_BUFFER_SIZE);
 
-  /* USER CODE END 2 */
+     /* USER CODE END 2 */
 
   /* Init scheduler */
   osKernelInitialize();
