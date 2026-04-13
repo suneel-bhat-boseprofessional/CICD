@@ -38,6 +38,7 @@ ENTRY(Reset_Handler)
 /* Memories definition */
 MEMORY
 {
+  ITCM           (xrw)    : ORIGIN = 0x00000000,   LENGTH = 0x00010000
   DTCM_RAM       (xrw)    : ORIGIN = 0x30000000,   LENGTH = 0x00020000
   HEAP_SRAM      (xrw)    : ORIGIN = 0x34000400,   LENGTH = 0x00004000
   /*TXT_DTA_SRAM   (xrw)    : ORIGIN = 0x34004400,   LENGTH = 0x00090000*/
@@ -291,6 +292,17 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
   } >HEAP_SRAM
+
+  .ramcode :
+{
+  . = ALIGN(4);
+  _sramcode = .;
+  *(.ramcode)
+  *(.ramcode*)
+  *(.rodata.ramcode*)  /* Force constants into this section */
+  . = ALIGN(4);
+  _eramcode = .;
+} >ITCM AT> ROM
 
   /* Remove information from the compiler libraries */
   /DISCARD/ :

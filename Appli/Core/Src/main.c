@@ -30,7 +30,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
-
+#include <string.h>
+#include "ram_functions.h"
+#include "firmware_updater.h"
 extern int notifyTouch;
 // FreeRTOS includes for queue usage
 #include "FreeRTOS.h"
@@ -40,6 +42,7 @@ extern int notifyTouch;
 QueueHandle_t uartRxQueue = NULL;
 #include "stm32n6xx_it.h"
 #include <protocol.h>
+#include "ram_functions.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,6 +70,15 @@ typedef uint16_t u16;
 #define XIP_BUILD 1
 
 /* USER CODE END PD */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
@@ -100,6 +112,22 @@ UART_HandleTypeDef huart;
 int max_touches = MAX_NUM_TOUCHES;
 struct coop_data finger[MAX_NUM_TOUCHES];
 TIM_HandleTypeDef htim4;
+
+
+XSPI_HandleTypeDef hxspi2;
+// External declaration for ExtMem configuration array
+//extern EXTMEM_DefinitionTypeDef extmem_list_config[];
+
+// Simple test variables for RAM code execution
+static volatile uint32_t test_ram_var = 0xDEADBEEF;
+static volatile uint8_t test_flag = 0x55;
+
+// Linker symbols for .ramcode section
+extern uint32_t _sramcode;   // Start of ramcode in RAM
+extern uint32_t _eramcode;   // End of ramcode in RAM
+extern uint32_t _siramcode;  // Start of ramcode in Flash (load address)
+/* USER CODE END PV */
+
 
 #if MANUAL_FB_ENABLE
 // Allocate smaller framebuffer to fit within FB2_RAM constraints (200x50 = 20KB)
@@ -146,6 +174,9 @@ static void Manual_FB_DrawRectangle(uint16_t x, uint16_t y, uint16_t width, uint
 void Manual_FB_DrawTestPattern(void);
 static void Manual_FB_UpdateLTDC(void);
 #endif
+
+/* RAM Functions Examples */
+void RAM_Flash_Update_Example(void);
 
 /* USER CODE END PFP */
 
@@ -250,6 +281,21 @@ void process_touch_data(void)
     }
     notifyTouch = 0;
 }
+
+
+
+
+void Setup_Application_XSPI_Handle(void) {
+    // 1. Point the handle to the physical hardware address
+    hxspi2.Instance = XSPI2;
+
+    // 2. (Optional but Recommended) Manually fill in the critical fields
+    // so the HAL doesn't think the handle is uninitialized.
+    hxspi2.State = HAL_XSPI_STATE_READY;
+
+    // Note: Do NOT call MX_XSPI2_Init() or HAL_XSPI_Init()
+}
+
 
 void SystemClock_Config(void)
 {
@@ -637,6 +683,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   HAL_Init();
+ // CopyRamCode();
 
 #if !defined(XIP_BUILD) || (XIP_BUILD == 0)
   /* USER CODE BEGIN Init */
@@ -761,7 +808,15 @@ int main(void)
   MX_TouchGFX_PreOSInit();
 #endif
   /* USER CODE BEGIN 2 */
+  
+  /* Initialize RAM functions - copy from ROM to RAM */
 
+  RAM_InitializeFunctions();
+  
+  /* Setup XSPI handle for RAM functions */
+  Setup_Application_XSPI_Handle();
+  
+   
 #if MANUAL_FB_ENABLE
   // Initialize and demo manual framebuffer
   Manual_FB_Init();
@@ -1535,6 +1590,8 @@ void Manual_FB_DrawTestPattern(void)
     printf("Test pattern drawn to reduced framebuffer (200x50, 20KB)\n");
 }
 #endif
+
+
 
 /* USER CODE END 4 */
 

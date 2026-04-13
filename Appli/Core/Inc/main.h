@@ -128,7 +128,7 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
     #define UART_CLK_DISABLE()      __HAL_RCC_USART2_CLK_DISABLE()
     #define UART_IRQn               USART2_IRQn
     #define UART_PERIPH_CLKSOURCE   RCC_PERIPHCLK_USART2
-    #define UART_CLKSOURCE_PCLK     RCC_USART2CLKSOURCE_PCLK1
+    #define UART_CLKSOURCE_PCLK     RCC_USART2CLKSOURCE_CLKP
     #define UART_TX_GPIO_PORT       GPIOD
     #define UART_TX_PIN             GPIO_PIN_5
     #define UART_RX_GPIO_PORT       GPIOF
@@ -143,7 +143,7 @@ HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t
     #define UART_CLK_DISABLE()      __HAL_RCC_USART1_CLK_DISABLE()
     #define UART_IRQn               USART1_IRQn
     #define UART_PERIPH_CLKSOURCE   RCC_PERIPHCLK_USART1
-    #define UART_CLKSOURCE_PCLK     RCC_USART1CLKSOURCE_PCLK2
+    #define UART_CLKSOURCE_PCLK     RCC_USART1CLKSOURCE_CLKP
     #define UART_TX_GPIO_PORT       GPIOE
     #define UART_TX_PIN             GPIO_PIN_5
     #define UART_RX_GPIO_PORT       GPIOE
