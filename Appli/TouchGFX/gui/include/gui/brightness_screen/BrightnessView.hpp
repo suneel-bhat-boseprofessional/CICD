@@ -11,6 +11,7 @@ public:
     virtual ~BrightnessView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+    virtual void sliderUpdate(int value);
 protected:
 };
 

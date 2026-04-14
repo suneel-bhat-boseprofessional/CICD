@@ -336,7 +336,7 @@
           {
             "Type": "TextArea",
             "Name": "textArea2",
-            "X": 70,
+            "X": 67,
             "Width": 404,
             "Height": 26,
             "TextId": "__SingleUse_ATL6",
@@ -430,7 +430,7 @@
           {
             "Type": "Button",
             "Name": "button1",
-            "X": 34,
+            "X": 12,
             "Y": 57,
             "Width": 10,
             "Height": 17,
@@ -459,26 +459,43 @@
           {
             "Type": "Slider",
             "Name": "slider1",
-            "X": 75,
-            "Y": 48,
-            "Width": 330,
+            "X": 54,
+            "Y": 49,
+            "Width": 359,
             "Height": 30,
             "IsHorizontalSlider": true,
             "BackgroundUnselected": "Brightness.png",
-            "BackgroundSelected": "Brighness_fill.png",
+            "BackgroundSelected": "Brightness_fill.png",
             "Indicator": "Grabber.png",
-            "IndicatorMax": 300,
-            "ValueMax": 100
+            "IndicatorMax": 328,
+            "ValueMax": 100,
+            "ValueMin": 10,
+            "InitValue": 10
           },
           {
             "Type": "Button",
             "Name": "button1",
-            "X": 24,
-            "Y": 55,
+            "X": 12,
+            "Y": 57,
             "Width": 10,
             "Height": 17,
             "Pressed": "vector_2.png",
             "Released": "vector_2.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 54,
+            "Y": 5,
+            "Width": 273,
+            "Height": 22,
+            "TextId": "__SingleUse_GNI5",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
           }
         ],
         "Interactions": [
@@ -492,6 +509,17 @@
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Settings"
+            }
+          },
+          {
+            "InteractionName": "Interaction2",
+            "Trigger": {
+              "Type": "TriggerSliderValueChanged",
+              "TriggerComponent": "slider1"
+            },
+            "Action": {
+              "Type": "ActionCustom",
+              "FunctionName": "sliderUpdate"
             }
           }
         ]

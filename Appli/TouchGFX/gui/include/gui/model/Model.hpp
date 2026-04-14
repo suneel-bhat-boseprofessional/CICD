@@ -41,6 +41,9 @@ public:
     void setSelectedSource(int zoneIdx, int srcIdx);
     int  getSelectedSource(int zoneIdx) const;
 
+    void setLcdBrightness(int value);
+    int  getLcdBrightness() const;
+
     volatile bool zoneNamesChanged;
     volatile bool readyReceived;
     volatile bool goToLaunchRequested;
@@ -55,6 +58,7 @@ protected:
     char zoneSources[MODEL_MAX_ZONES][MODEL_MAX_SOURCES_PER_ZONE][MODEL_SOURCE_NAME_MAX_LEN];
     int  zoneSourceCount[MODEL_MAX_ZONES];
     int  selectedSource[MODEL_MAX_ZONES];
+    int  lcdBrightness;
 };
 
 #ifdef __cplusplus

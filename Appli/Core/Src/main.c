@@ -112,6 +112,7 @@ UART_HandleTypeDef huart;
 int max_touches = MAX_NUM_TOUCHES;
 struct coop_data finger[MAX_NUM_TOUCHES];
 TIM_HandleTypeDef htim4;
+TIM_HandleTypeDef htim15;
 
 
 XSPI_HandleTypeDef hxspi2;
@@ -163,7 +164,7 @@ void I2C_Force_BusRecovery(void);
 void I2C_DiagnosticCheck(void);
 void I2C_ClearBusyFlag(void);
 static void MX_TIM4_Init(void);
-
+static void MX_TIM15_Init(void);
 /* Manual Framebuffer Functions */
 #if MANUAL_FB_ENABLE
 void Manual_FB_Init(void);
@@ -450,6 +451,13 @@ static void OpenDebug(void)
 }
 #endif
 
+void LCD_SetBacklight(uint8_t brightness_percent)
+{
+  if (brightness_percent > 100) brightness_percent = 100;
+  uint32_t ccr = ((uint32_t)brightness_percent * (htim15.Init.Period + 1)) / 100;
+  __HAL_TIM_SET_COMPARE(&htim15, TIM_CHANNEL_1, ccr);
+}
+
 /* USER CODE END 4 */
 
 
@@ -652,6 +660,51 @@ static void MX_TIM4_Init(void)
 }
 
 
+static void MX_TIM15_Init(void)
+{
+
+  /* USER CODE BEGIN TIM15_Init 0 */
+
+  /* USER CODE END TIM15_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM15_Init 1 */
+
+  /* USER CODE END TIM15_Init 1 */
+  htim15.Instance = TIM15;
+  htim15.Init.Prescaler = 7;           /* Divides 400 MHz → 50 MHz tick rate  */
+  htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim15.Init.Period = 999;            /* ARR: 1000 counts → 50 kHz PWM, 1000-step resolution */
+  htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_PWM_Init(&htim15) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim15, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 500;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim15, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM15_Init 2 */
+
+  /* USER CODE END TIM15_Init 2 */
+  HAL_TIM_MspPostInit(&htim15);
+
+}
+
+
 /* USER CODE END 0 */
 
 
@@ -788,8 +841,11 @@ int main(void)
 
   MX_UART_Init();
   MX_TIM4_Init();
-
-  // Initialize fan control system (PWM + UART interrupt)
+  MX_TIM15_Init();
+  LCD_SetBacklight(10);
+  //Initialize LCD backlit control system-PWM
+  HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
+  //Initialize fan control system (PWM + UART interrupt)
   FanControl_Init(&htim4, &huart, TIM_CHANNEL_2);
 
   /* USER CODE BEGIN I2C1_Diagnostics */

@@ -114,6 +114,9 @@ void uart_printf(const char* format, ...);
 // I2C functions
 HAL_StatusTypeDef I2C_ReadRegister_0x55(uint8_t regAddr, uint8_t *data, uint16_t dataSize);
 
+// LCD backlight control
+void LCD_SetBacklight(uint8_t brightness_percent);
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

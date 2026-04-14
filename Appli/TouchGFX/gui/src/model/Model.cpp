@@ -1,6 +1,9 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
+#include <stdint.h>
 #include <string.h>
+
+extern "C" void LCD_SetBacklight(uint8_t brightness_percent);
 
 int zoneCount = 0;
 
@@ -9,6 +12,7 @@ Model* modelInstance = 0;
 Model::Model() :
     modelListener(0),
     selectedZone(0),
+    lcdBrightness(10),
     zoneNamesChanged(false),
     readyReceived(false),
     goToLaunchRequested(false)
@@ -278,6 +282,26 @@ int Model::getSelectedSource(int zoneIdx) const
     if(zoneIdx >= 0 && zoneIdx < MODEL_MAX_ZONES)
         return selectedSource[zoneIdx];
     return 0;
+}
+
+void Model::setLcdBrightness(int value)
+{
+    if(value < 10)
+    {
+        value = 10;
+    }
+    else if(value > 100)
+    {
+        value = 100;
+    }
+
+    lcdBrightness = value;
+    LCD_SetBacklight((uint8_t)lcdBrightness);
+}
+
+int Model::getLcdBrightness() const
+{
+    return lcdBrightness;
 }
 
 extern "C" void set_zone_source_count_c(int zoneIdx, int count)

@@ -304,6 +304,7 @@ SECTIONS
   _eramcode = .;
 } >ITCM AT> ROM
 
+_siramcode = LOADADDR(.ramcode);
   /* Remove information from the compiler libraries */
   /DISCARD/ :
   {

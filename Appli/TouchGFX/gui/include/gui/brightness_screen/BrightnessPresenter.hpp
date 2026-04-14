@@ -25,6 +25,9 @@ public:
      */
     virtual void deactivate();
 
+    int  getBrightness() const;
+    void setBrightness(int value);
+
     virtual ~BrightnessPresenter() {}
 
 private:
