@@ -5,6 +5,9 @@
   </Languages>
   <Texts>
     <TextGroup Id="Group1">
+      <Text Id="ResourceId1" Alignment="Left" TypographyId="Typography1">
+        <Translation Language="GB">New Text</Translation>
+      </Text>
       <Text Id="T_GYM" Alignment="Left" TypographyId="Typography1">
         <Translation Language="GB">Gym</Translation>
       </Text>
@@ -40,6 +43,18 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_T0WK" Alignment="Center" TypographyId="Typography4">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_SOOB" Alignment="Center" TypographyId="Typography4">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_KSIS" Alignment="Center" TypographyId="Typography4">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_VZ20" Alignment="Center" TypographyId="Typography4">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
       <Text Id="__SingleUse_GNI5" Alignment="Left" TypographyId="ver">
         <Translation Language="GB">BRIGHTNESS</Translation>
       </Text>
@@ -98,5 +113,6 @@
     <Typography Id="ver" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="a-z,A-Z" />
     <Typography Id="Typography2" Font="EaseStandard-Bold.ttf" Size="32" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="0-9" />
     <Typography Id="Typography3" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Typography4" Font="EaseStandard-Regular.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="A-Z,a-z" />
   </Typographies>
 </TextDatabase>

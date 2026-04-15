@@ -36,6 +36,10 @@ void homeView::itemSelected(int index)
     {
         application().gotozoneScreenNoTransition();
     }
+    else if(index == 2)
+    {
+        application().gotoMeteringScreenNoTransition();
+    }
     else if(index == 3)
     {
         application().gotoSettingsScreenNoTransition();

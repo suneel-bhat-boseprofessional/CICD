@@ -21,13 +21,16 @@ public:
 
     void gotoSettingsScreenNoTransition();
     void gotoBrightnessScreenNoTransition();
+    void gotoMeteringScreenNoTransition();
 
 private:
     void gotoSettingsScreenNoTransitionImpl();
     void gotoBrightnessScreenNoTransitionImpl();
+    void gotoMeteringScreenNoTransitionImpl();
 
     touchgfx::Callback<FrontendApplication> settingsTransitionCb;
     touchgfx::Callback<FrontendApplication> brightnessTransitionCb;
+    touchgfx::Callback<FrontendApplication> meteringTransitionCb;
 };
 
 #endif // FRONTENDAPPLICATION_HPP
