@@ -38,6 +38,7 @@ ENTRY(Reset_Handler)
 /* Memories definition */
 MEMORY
 {
+  ITCM           (xrw)    : ORIGIN = 0x00000000,   LENGTH = 0x00010000
   DTCM_RAM       (xrw)    : ORIGIN = 0x30000000,   LENGTH = 0x00020000
   HEAP_SRAM      (xrw)    : ORIGIN = 0x34000400,   LENGTH = 0x00004000
   /*TXT_DTA_SRAM   (xrw)    : ORIGIN = 0x34004400,   LENGTH = 0x00090000*/
@@ -280,6 +281,18 @@ SECTIONS
   PROVIDE( __bss_start = __tbss_start );
   PROVIDE( __bss_size = __bss_end - __bss_start );
 
+  .ramcode :
+  {
+      . = ALIGN(4);
+      _sramcode = .;
+      *(.ramcode)
+          *(.ramcode*)
+          *(.rodata.ramcode*)  /* Force constants into this section */
+          . = ALIGN(4);
+          _eramcode = .;
+  } >SRAM12
+
+  _siramcode = LOADADDR(.ramcode);
 
   /* User_heap_stack section, used to check that there is enough "HEAP_SRAM" Ram  type memory left */
   ._user_heap_stack (NOLOAD) :

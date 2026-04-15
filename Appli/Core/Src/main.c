@@ -163,6 +163,7 @@ void process_touch_data(void);
 void I2C_Force_BusRecovery(void);
 void I2C_DiagnosticCheck(void);
 void I2C_ClearBusyFlag(void);
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 static void MX_TIM4_Init(void);
 static void MX_TIM15_Init(void);
 /* Manual Framebuffer Functions */
@@ -736,7 +737,6 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   HAL_Init();
- // CopyRamCode();
 
 #if !defined(XIP_BUILD) || (XIP_BUILD == 0)
   /* USER CODE BEGIN Init */
@@ -867,7 +867,10 @@ int main(void)
   
   /* Initialize RAM functions - copy from ROM to RAM */
 
+#if XIP_BUILD
+  // Call this only in XIP mode
   RAM_InitializeFunctions();
+#endif
   
   /* Setup XSPI handle for RAM functions */
   Setup_Application_XSPI_Handle();
