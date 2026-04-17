@@ -43,6 +43,27 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_9TLF" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Power Settings:</Translation>
+      </Text>
+      <Text Id="__SingleUse_R6SM" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Temperature:</Translation>
+      </Text>
+      <Text Id="__SingleUse_P871" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Clock:</Translation>
+      </Text>
+      <Text Id="__SingleUse_NK6P" Alignment="Left" TypographyId="Typography1">
+        <Translation Language="GB">Version:</Translation>
+      </Text>
+      <Text Id="__SingleUse_IX0A" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Name:</Translation>
+      </Text>
+      <Text Id="__SingleUse_CALN" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">SETTINGS</Translation>
+      </Text>
+      <Text Id="__SingleUse_U3CF" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">SYSTEM INFORMATION</Translation>
+      </Text>
       <Text Id="__SingleUse_T0WK" Alignment="Center" TypographyId="Typography4">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>

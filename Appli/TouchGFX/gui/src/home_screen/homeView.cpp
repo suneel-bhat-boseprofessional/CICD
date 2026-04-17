@@ -5,7 +5,8 @@ const int homeView::PAGE_OFFSETS[2] = { 0, 4 };
 
 homeView::homeView() :
     itemSelectedCallback(this, &homeView::itemSelected),
-    currentPage(0)
+    currentPage(0),
+    suppressNavigation(false)
 {
 }
 
@@ -31,6 +32,12 @@ void homeView::scrollList1UpdateItem(CustomContainer1& item, int16_t itemIndex)
 
 void homeView::itemSelected(int index)
 {
+    if (suppressNavigation)
+    {
+        suppressNavigation = false;
+        return;
+    }
+
     // index is global item index from setListElements
     if(index == 0)
     {
@@ -48,6 +55,11 @@ void homeView::itemSelected(int index)
 
 void homeView::handleClickEvent(const touchgfx::ClickEvent& event)
 {
+    if (event.getType() == touchgfx::ClickEvent::PRESSED)
+    {
+        suppressNavigation = false;
+    }
+
     if (event.getType() == touchgfx::ClickEvent::RELEASED)
     {
         int16_t x = event.getX();
@@ -82,8 +94,9 @@ void homeView::handleClickEvent(const touchgfx::ClickEvent& event)
 
 void homeView::handleDragEvent(const touchgfx::DragEvent& event)
 {
-    // Block free drag to prevent mid-page stops.
-    // Swipe gesture still fires via handleGestureEvent.
+    // Forward to base so containers can detect drag and suppress accidental clicks.
+    // ScrollList free-scroll is blocked by the gesture handler doing page flips instead.
+    homeViewBase::handleDragEvent(event);
 }
 
 void homeView::handleGestureEvent(const touchgfx::GestureEvent& event)
@@ -91,6 +104,8 @@ void homeView::handleGestureEvent(const touchgfx::GestureEvent& event)
     // Convert swipe into page flip
     if (event.getType() == touchgfx::GestureEvent::SWIPE_HORIZONTAL)
     {
+        suppressNavigation = true;
+
         if (event.getVelocity() < 0 && currentPage < TOTAL_PAGES - 1)
         {
             goToPage(currentPage + 1); // swipe left = next page

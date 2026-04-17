@@ -18,7 +18,7 @@ public:
     virtual void handleTickEvent();
 
 protected:
-    static const int TICKS_PER_STEP = 3; // 0.2 seconds at 60 fps
+    static const int TICKS_PER_STEP = 1; // 0.2 seconds at 60 fps
     static const int NUM_LEVELS = 6;      // levels 0-5: green, green, green, lightgreen, orange, red
     static const int TOTAL_PHASES = 2 * NUM_LEVELS; // full up+down cycle = 12 phases
     static const int NAME_BUF_SIZE = 16;

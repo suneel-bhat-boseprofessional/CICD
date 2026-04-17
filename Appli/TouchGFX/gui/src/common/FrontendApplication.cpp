@@ -7,6 +7,8 @@
 #include <gui/brightness_screen/BrightnessPresenter.hpp>
 #include <gui/metering_screen/MeteringView.hpp>
 #include <gui/metering_screen/MeteringPresenter.hpp>
+#include <gui/system_information_screen/System_InformationView.hpp>
+#include <gui/system_information_screen/System_InformationPresenter.hpp>
 
 FrontendApplication::FrontendApplication(Model& m, FrontendHeap& heap)
     : FrontendApplicationBase(m, heap)
@@ -45,4 +47,15 @@ void FrontendApplication::gotoMeteringScreenNoTransition()
 void FrontendApplication::gotoMeteringScreenNoTransitionImpl()
 {
     touchgfx::makeTransition<MeteringView, MeteringPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+void FrontendApplication::gotoSystem_InformationScreenNoTransition()
+{
+    sysInfoTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoSystem_InformationScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &sysInfoTransitionCb;
+}
+
+void FrontendApplication::gotoSystem_InformationScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<System_InformationView, System_InformationPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

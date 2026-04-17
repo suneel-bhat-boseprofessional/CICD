@@ -30,6 +30,7 @@ public:
 private:
     touchgfx::Callback<homeView, int> itemSelectedCallback;
     int currentPage;
+    bool suppressNavigation;
 
     static const int PAGE_SIZES[2];
     static const int PAGE_OFFSETS[2];
