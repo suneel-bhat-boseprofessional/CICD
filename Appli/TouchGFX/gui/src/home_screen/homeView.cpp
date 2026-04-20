@@ -6,7 +6,11 @@ const int homeView::PAGE_OFFSETS[2] = { 0, 4 };
 homeView::homeView() :
     itemSelectedCallback(this, &homeView::itemSelected),
     currentPage(0),
-    suppressNavigation(false)
+    suppressNavigation(false),
+    animating(false),
+    animFrame(0),
+    animDirection(0),
+    targetPage(0)
 {
 }
 
@@ -69,9 +73,9 @@ void homeView::handleClickEvent(const touchgfx::ClickEvent& event)
         if (x >= image1.getX() && x < image1.getX() + image1.getWidth() &&
             y >= image1.getY() && y < image1.getY() + image1.getHeight())
         {
-            if (currentPage > 0)
+            if (currentPage > 0 && !animating)
             {
-                goToPage(currentPage - 1);
+                animateToPage(currentPage - 1);
             }
             return;
         }
@@ -80,9 +84,9 @@ void homeView::handleClickEvent(const touchgfx::ClickEvent& event)
         if (x >= image2.getX() && x < image2.getX() + image2.getWidth() &&
             y >= image2.getY() && y < image2.getY() + image2.getHeight())
         {
-            if (currentPage < TOTAL_PAGES - 1)
+            if (currentPage < TOTAL_PAGES - 1 && !animating)
             {
-                goToPage(currentPage + 1);
+                animateToPage(currentPage + 1);
             }
             return;
         }
@@ -101,19 +105,51 @@ void homeView::handleDragEvent(const touchgfx::DragEvent& event)
 
 void homeView::handleGestureEvent(const touchgfx::GestureEvent& event)
 {
-    // Convert swipe into page flip
-    if (event.getType() == touchgfx::GestureEvent::SWIPE_HORIZONTAL)
+    // Convert swipe into page flip with animation
+    if (event.getType() == touchgfx::GestureEvent::SWIPE_HORIZONTAL && !animating)
     {
         suppressNavigation = true;
 
         if (event.getVelocity() < 0 && currentPage < TOTAL_PAGES - 1)
         {
-            goToPage(currentPage + 1); // swipe left = next page
+            animateToPage(currentPage + 1);
         }
         else if (event.getVelocity() > 0 && currentPage > 0)
         {
-            goToPage(currentPage - 1); // swipe right = prev page
+            animateToPage(currentPage - 1);
         }
+    }
+}
+
+void homeView::animateToPage(int page)
+{
+    targetPage = page;
+    animDirection = (page > currentPage) ? -1 : 1; // next=-1 (slide left), prev=+1 (slide right)
+    animFrame = 0;
+    animating = true;
+}
+
+void homeView::handleTickEvent()
+{
+    if (!animating)
+        return;
+
+    animFrame++;
+
+    // Ease-out: fast start, slow finish
+    float t = (float)animFrame / (float)ANIM_FRAMES;
+    float eased = 1.0f - (1.0f - t) * (1.0f - t); // quadratic ease-out
+    int16_t offset = (int16_t)(eased * SLIDE_WIDTH);
+
+    // Slide old page out
+    scrollList1.moveTo(LIST_X + (animDirection * offset), scrollList1.getY());
+    scrollList1.invalidate();
+
+    if (animFrame >= ANIM_FRAMES)
+    {
+        // Animation done — swap to new page
+        animating = false;
+        goToPage(targetPage);
     }
 }
 
@@ -126,6 +162,7 @@ void homeView::goToPage(int page)
     {
         scrollList1ListItems[i].initialize();
     }
+    scrollList1.moveTo(LIST_X, scrollList1.getY());
     scrollList1.invalidate();
     updateArrows();
 }
