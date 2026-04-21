@@ -812,6 +812,7 @@ static void HandleReady(const GenericMessage *msg)
 {
   (void)msg;
   const char *ack = "{\"action\":\"readyAck\"}";
+  set_zone_count_c(0);
   Protocol_SendFramed(ack, strlen(ack));
   set_ready_received_c();
 }
