@@ -140,5 +140,5 @@ void zoneView::handleClickEvent(const touchgfx::ClickEvent& event)
 
 void zoneView::goToLaunchScreen()
 {
-    application().gotolaunchScreenNoTransition();
+    application().gotoScreen1ScreenNoTransition();
 }

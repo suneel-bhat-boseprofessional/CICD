@@ -76,5 +76,5 @@ void Source_SelectView::itemSelectedHandler(int16_t itemIndex)
 
 void Source_SelectView::goToLaunchScreen()
 {
-    application().gotolaunchScreenNoTransition();
+    application().gotoScreen1ScreenNoTransition();
 }

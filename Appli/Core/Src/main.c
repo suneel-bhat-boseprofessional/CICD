@@ -842,7 +842,7 @@ int main(void)
   MX_UART_Init();
   MX_TIM4_Init();
   MX_TIM15_Init();
-  LCD_SetBacklight(10);
+  LCD_SetBacklight(100);
   //Initialize LCD backlit control system-PWM
   HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
   //Initialize fan control system (PWM + UART interrupt)
