@@ -36,6 +36,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32n6xx_hal.h"
+#include "buildflags.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -173,8 +174,6 @@ void LCD_SetBacklight(uint8_t brightness_percent);
 #define RX_BUFFER_SIZE   1024
 #define UART_QUEUE_LEN   sizeof(uint8_t)
 
-/* GGEC Mode: 1 = Start directly on Screen1 (home), 0 = Start on launch screen */
-#define GGEC_MODE        1
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

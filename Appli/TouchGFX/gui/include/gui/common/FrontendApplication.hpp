@@ -2,11 +2,7 @@
 #define FRONTENDAPPLICATION_HPP
 
 #include <gui_generated/common/FrontendApplicationBase.hpp>
-
-/* GGEC_MODE can be set via compiler flag (-DGGEC_MODE=1) or in main.h */
-#ifndef GGEC_MODE
-#define GGEC_MODE 1
-#endif
+#include "buildflags.h"
 
 class FrontendHeap;
 
@@ -29,7 +25,7 @@ public:
 #if GGEC_MODE
         gotoScreen1ScreenNoTransition();
 #else
-        gotohomeScreenNoTransition();
+        gotolaunchScreenNoTransition();
 #endif
     }
 
