@@ -30,6 +30,7 @@ extern int notifyTouch;
 
 // Fix: Declare uartRxQueue as extern (defined in main.c)
 extern QueueHandle_t uartRxQueue;
+extern IWDG_HandleTypeDef hiwdg;
 
 // Fix: Define rxBuffer for queue receive
 uint8_t rxBuffer[RX_BUFFER_SIZE];
@@ -84,15 +85,8 @@ void Manual_FB_Init(void);
 /* USER CODE BEGIN 2 */
 void vApplicationIdleHook( void )
 {
-   /* vApplicationIdleHook() will only be called if configUSE_IDLE_HOOK is set
-   to 1 in FreeRTOSConfig.h. It will be called on each iteration of the idle
-   task. It is essential that code added to this hook function never attempts
-   to block in any way (for example, call xQueueReceive() with a block time
-   specified, or call vTaskDelay()). If the application makes use of the
-   vTaskDelete() API function (as this demo application does) then it is also
-   important that vApplicationIdleHook() is permitted to return to its calling
-   function, because it is the responsibility of the idle task to clean up
-   memory allocated by the kernel to any task that has since been deleted. */
+   /* Refresh the IWDG to prevent watchdog reset */
+   HAL_IWDG_Refresh(&hiwdg);
 }
 /* USER CODE END 2 */
 

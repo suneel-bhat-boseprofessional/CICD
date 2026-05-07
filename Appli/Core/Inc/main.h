@@ -42,6 +42,7 @@ extern "C" {
 
 extern I2C_HandleTypeDef hi2c1;
 extern UART_HandleTypeDef huart;
+extern IWDG_HandleTypeDef hiwdg;
 
 // Touch processing constants
 #define MAX_NUM_TOUCHES 10
