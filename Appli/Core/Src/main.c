@@ -1821,6 +1821,22 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 }
 
 /**
+  * @brief  UART error callback - recovers from ORE/FE/NE/PE errors
+  * @param  huart_err: UART handle that encountered the error
+  * @retval None
+  */
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart_err)
+{
+  if (huart_err->Instance == huart.Instance)
+  {
+    __HAL_UART_CLEAR_FLAG(huart_err, UART_CLEAR_OREF | UART_CLEAR_NEF |
+                                      UART_CLEAR_PEF  | UART_CLEAR_FEF);
+    extern uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
+    HAL_UARTEx_ReceiveToIdle_IT(huart_err, uart_rx_buffer, sizeof(uart_rx_buffer));
+  }
+}
+
+/**
   * @brief  This function is executed in case of error occurrence.
   * @retval None
   */
