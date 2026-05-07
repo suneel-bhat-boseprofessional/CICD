@@ -317,6 +317,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer5.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/CustomContainer6.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer6.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/homePresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/home_screen/homePresenter.cpp</locationURI>
@@ -370,6 +375,16 @@
 			<name>Application/User/gui/Source_SelectView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/source_select_screen/Source_SelectView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/System_InformationPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/system_information_screen/System_InformationPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/System_InformationView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/system_information_screen/System_InformationView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/zone2Presenter.cpp</name>
@@ -572,6 +587,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer5Base.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/CustomContainer6Base.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer6Base.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/homeViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp</locationURI>
@@ -595,6 +615,11 @@
 			<name>Application/User/generated/Source_SelectViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/source_select_screen/Source_SelectViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/System_InformationViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/system_information_screen/System_InformationViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/zone2ViewBase.cpp</name>

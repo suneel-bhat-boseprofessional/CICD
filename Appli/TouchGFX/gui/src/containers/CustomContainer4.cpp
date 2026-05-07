@@ -30,15 +30,8 @@ void CustomContainer4::setSettingItem(int16_t index)
     // White text on black background
     textArea1.setColor(touchgfx::Color::getColorFromRGB(255, 255, 255));
 
-    // Grey out non-touchable items (only Display index 2 is active)
-    if (index != 2)
-    {
-        textArea1.setAlpha(100);
-    }
-    else
-    {
-        textArea1.setAlpha(255);
-    }
+    // All items at full brightness
+    textArea1.setAlpha(255);
 
     textArea1.invalidate();
 }
