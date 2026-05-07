@@ -11,7 +11,10 @@ public:
     virtual ~Screen1View() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    void changeScreenColor();
 protected:
+    uint8_t currentColorState;
 };
 
 #endif // SCREEN1VIEW_HPP
