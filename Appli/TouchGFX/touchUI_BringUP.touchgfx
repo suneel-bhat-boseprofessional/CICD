@@ -715,6 +715,513 @@
             }
           }
         ]
+      },
+      {
+        "Name": "Bluetooth_2",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 127,
+            "Y": 15,
+            "Width": 100,
+            "Height": 99,
+            "RelativeFilename": "Frame 6.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 37,
+            "Y": 33,
+            "Width": 58,
+            "Height": 61,
+            "RelativeFilename": "Bluetooth_BG.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image4",
+            "X": 37,
+            "Y": 33,
+            "Width": 58,
+            "Height": 61,
+            "RelativeFilename": "Bluetooth_g.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image5",
+            "X": 235,
+            "Y": 15,
+            "Width": 100,
+            "Height": 99,
+            "RelativeFilename": "Frame 6.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image6",
+            "X": 343,
+            "Y": 15,
+            "Width": 100,
+            "Height": 99,
+            "RelativeFilename": "Frame 6.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image7",
+            "X": 53,
+            "Y": 42,
+            "Width": 27,
+            "Height": 42,
+            "RelativeFilename": "bt.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image8",
+            "X": 151,
+            "Y": 21,
+            "Width": 53,
+            "Height": 57,
+            "RelativeFilename": "Bluetooth_big.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image9",
+            "X": 263,
+            "Y": 27,
+            "Width": 44,
+            "Height": 44,
+            "RelativeFilename": "devices.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image10",
+            "X": 371,
+            "Y": 27,
+            "Width": 44,
+            "Height": 44,
+            "RelativeFilename": "Settings.png",
+            "Alpha": 69
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 141,
+            "Y": 78,
+            "Width": 73,
+            "Height": 19,
+            "TextId": "__SingleUse_J0IT",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 254,
+            "Y": 78,
+            "Width": 62,
+            "Height": 19,
+            "TextId": "__SingleUse_U859",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 360,
+            "Y": 78,
+            "Width": 67,
+            "Height": 19,
+            "TextId": "__SingleUse_ZI5N",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 66,
+            "AutoSize": true
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 15,
+            "Width": 37,
+            "Height": 99,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 37,
+                "Height": 99,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image11",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "home"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Studio_Gold",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 95,
+            "Y": 39,
+            "Width": 50,
+            "Height": 51,
+            "RelativeFilename": "SG.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 153,
+            "Y": 39,
+            "Width": 50,
+            "Height": 51,
+            "RelativeFilename": "SG.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 269,
+            "Y": 39,
+            "Width": 50,
+            "Height": 51,
+            "RelativeFilename": "SG.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image4",
+            "X": 211,
+            "Y": 39,
+            "Width": 50,
+            "Height": 51,
+            "RelativeFilename": "SG.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image5",
+            "X": 327,
+            "Y": 39,
+            "Width": 50,
+            "Height": 51,
+            "RelativeFilename": "SG.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image6",
+            "X": 385,
+            "Y": 39,
+            "Width": 50,
+            "Height": 51,
+            "RelativeFilename": "SG.png"
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 25,
+            "Width": 50,
+            "Height": 81,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 50,
+                "Height": 81,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image7",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 397,
+            "Y": 52,
+            "Width": 27,
+            "Height": 25,
+            "TextId": "__SingleUse_AL3B",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 281,
+            "Y": 52,
+            "Width": 27,
+            "Height": 25,
+            "TextId": "__SingleUse_RKQW",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea4",
+            "X": 223,
+            "Y": 52,
+            "Width": 27,
+            "Height": 25,
+            "TextId": "__SingleUse_3TYC",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea5",
+            "X": 165,
+            "Y": 52,
+            "Width": 27,
+            "Height": 25,
+            "TextId": "__SingleUse_PC7A",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea6",
+            "X": 107,
+            "Y": 52,
+            "Width": 27,
+            "Height": 25,
+            "TextId": "__SingleUse_MYO9",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea7",
+            "X": 339,
+            "Y": 52,
+            "Width": 27,
+            "Height": 25,
+            "TextId": "__SingleUse_JQHP",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea8",
+            "X": 180,
+            "Y": 6,
+            "Width": 120,
+            "Height": 19,
+            "TextId": "__SingleUse_NMUI",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "BT_Devices",
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 56,
+            "Y": 4,
+            "Width": 183,
+            "Height": 18,
+            "TextId": "__SingleUse_ZCTZ",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
+          },
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 56,
+            "Y": 40,
+            "Width": 366,
+            "Height": 48,
+            "RelativeFilename": "Highlighted.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 76,
+            "Y": 52,
+            "Width": 24,
+            "Height": 24,
+            "RelativeFilename": "equal.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 380,
+            "Y": 52,
+            "Width": 20,
+            "Height": 20,
+            "RelativeFilename": "Delete.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 111,
+            "Y": 51,
+            "Width": 144,
+            "Height": 25,
+            "TextId": "__SingleUse_1YBA",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          },
+          {
+            "Type": "Image",
+            "Name": "image4",
+            "X": 56,
+            "Y": 105,
+            "Width": 134,
+            "Height": 15,
+            "RelativeFilename": "Forget All Devices.png"
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 13,
+            "Width": 44,
+            "Height": 107,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 44,
+                "Height": 107,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image5",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Bluetooth_2"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Screen1",
+        "Components": [],
+        "Interactions": []
       }
     ],
     "CustomContainerDefinitions": [

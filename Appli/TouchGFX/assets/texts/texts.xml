@@ -43,6 +43,42 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_1YBA" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_ZCTZ" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">CONNECTED DEVICES</Translation>
+      </Text>
+      <Text Id="__SingleUse_NMUI" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">STUDIO GOLD</Translation>
+      </Text>
+      <Text Id="__SingleUse_JQHP" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_MYO9" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_PC7A" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_3TYC" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_RKQW" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_AL3B" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_ZI5N" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Settings</Translation>
+      </Text>
+      <Text Id="__SingleUse_U859" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Devices</Translation>
+      </Text>
+      <Text Id="__SingleUse_J0IT" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Pair</Translation>
+      </Text>
       <Text Id="__SingleUse_9TLF" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">Power Settings:</Translation>
       </Text>

@@ -23,17 +23,26 @@ public:
     void gotoBrightnessScreenNoTransition();
     void gotoMeteringScreenNoTransition();
     void gotoSystem_InformationScreenNoTransition();
+    void gotoBluetooth_2ScreenNoTransition();
+    void gotoStudio_GoldScreenNoTransition();
+    void gotoBT_DevicesScreenNoTransition();
 
 private:
     void gotoSettingsScreenNoTransitionImpl();
     void gotoBrightnessScreenNoTransitionImpl();
     void gotoMeteringScreenNoTransitionImpl();
     void gotoSystem_InformationScreenNoTransitionImpl();
+    void gotoBluetooth_2ScreenNoTransitionImpl();
+    void gotoStudio_GoldScreenNoTransitionImpl();
+    void gotoBT_DevicesScreenNoTransitionImpl();
 
     touchgfx::Callback<FrontendApplication> settingsTransitionCb;
     touchgfx::Callback<FrontendApplication> brightnessTransitionCb;
     touchgfx::Callback<FrontendApplication> meteringTransitionCb;
     touchgfx::Callback<FrontendApplication> sysInfoTransitionCb;
+    touchgfx::Callback<FrontendApplication> bluetooth2TransitionCb;
+    touchgfx::Callback<FrontendApplication> studioGoldTransitionCb;
+    touchgfx::Callback<FrontendApplication> btDevicesTransitionCb;
 };
 
 #endif // FRONTENDAPPLICATION_HPP

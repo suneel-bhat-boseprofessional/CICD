@@ -55,6 +55,10 @@ void homeView::itemSelected(int index)
     {
         application().gotoSettingsScreenNoTransition();
     }
+    else if(index == 4)
+    {
+        application().gotoBluetooth_2ScreenNoTransition();
+    }
 }
 
 void homeView::handleClickEvent(const touchgfx::ClickEvent& event)

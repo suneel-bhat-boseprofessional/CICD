@@ -277,6 +277,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/Bluetooth_2Presenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/bluetooth_2_screen/Bluetooth_2Presenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Bluetooth_2View.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/bluetooth_2_screen/Bluetooth_2View.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/BrightnessPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/brightness_screen/BrightnessPresenter.cpp</locationURI>
@@ -285,6 +295,16 @@
 			<name>Application/User/gui/BrightnessView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/brightness_screen/BrightnessView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/BT_DevicesPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/bt_devices_screen/BT_DevicesPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/BT_DevicesView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/bt_devices_screen/BT_DevicesView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/FrontendApplication.cpp</name>
@@ -357,6 +377,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/model/Model.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/Screen1Presenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen1_screen/Screen1Presenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Screen1View.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen1_screen/Screen1View.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/SettingsPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/settings_screen/SettingsPresenter.cpp</locationURI>
@@ -375,6 +405,16 @@
 			<name>Application/User/gui/Source_SelectView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/source_select_screen/Source_SelectView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Studio_GoldPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/studio_gold_screen/Studio_GoldPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Studio_GoldView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/studio_gold_screen/Studio_GoldView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/System_InformationPresenter.cpp</name>
@@ -552,9 +592,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/VectorFontRendererBuffers.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Bluetooth_2ViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/bluetooth_2_screen/Bluetooth_2ViewBase.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/BrightnessViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/brightness_screen/BrightnessViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/BT_DevicesViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/bt_devices_screen/BT_DevicesViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/FrontendApplicationBase.cpp</name>
@@ -607,6 +657,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/metering_screen/MeteringViewBase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Screen1ViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/SettingsViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/settings_screen/SettingsViewBase.cpp</locationURI>
@@ -615,6 +670,11 @@
 			<name>Application/User/generated/Source_SelectViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/source_select_screen/Source_SelectViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Studio_GoldViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/studio_gold_screen/Studio_GoldViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/System_InformationViewBase.cpp</name>
@@ -647,6 +707,21 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Background_image.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Bluetooth_BG.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Bluetooth_BG.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Bluetooth_big.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Bluetooth_big.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Bluetooth_g.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Bluetooth_g.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Bluetooth_image.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Bluetooth_image.cpp</locationURI>
@@ -662,6 +737,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Brightness_fill.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Delete.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Delete.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Divider.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Divider.cpp</locationURI>
@@ -670,6 +750,11 @@
 			<name>Application/User/generated/image_Filler_image.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Filler_image.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Forget_All_Devices.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Forget_All_Devices.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Frame.cpp</name>
@@ -685,6 +770,11 @@
 			<name>Application/User/generated/image_Frame_49.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_49.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Frame_6.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_6.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Frame_Green.cpp</name>
@@ -757,6 +847,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Rectangle_1.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_SG.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_SG.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Settings.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Settings.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Settings_image.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Settings_image.cpp</locationURI>
@@ -775,6 +875,16 @@
 			<name>Application/User/generated/image_Source_select_bg.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Source_select_bg.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Toggle.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Toggle.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Toggle_g.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Toggle_g.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Union.cpp</name>
@@ -810,6 +920,21 @@
 			<name>Application/User/generated/image_Zone.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Zone.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_bt.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_bt.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_devices.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_devices.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_equal.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_equal.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/LanguageGb.cpp</name>
