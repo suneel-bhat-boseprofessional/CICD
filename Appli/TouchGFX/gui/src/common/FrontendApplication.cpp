@@ -15,6 +15,8 @@
 #include <gui/bluetooth_2_screen/Bluetooth_2Presenter.hpp>
 #include <gui/bt_devices_screen/BT_DevicesView.hpp>
 #include <gui/bt_devices_screen/BT_DevicesPresenter.hpp>
+#include <gui/bt_settings_screen/BT_SettingsView.hpp>
+#include <gui/bt_settings_screen/BT_SettingsPresenter.hpp>
 
 FrontendApplication::FrontendApplication(Model& m, FrontendHeap& heap)
     : FrontendApplicationBase(m, heap)
@@ -97,4 +99,15 @@ void FrontendApplication::gotoBT_DevicesScreenNoTransition()
 void FrontendApplication::gotoBT_DevicesScreenNoTransitionImpl()
 {
     touchgfx::makeTransition<BT_DevicesView, BT_DevicesPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+void FrontendApplication::gotoBT_SettingsScreenNoTransition()
+{
+    btSettingsTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoBT_SettingsScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &btSettingsTransitionCb;
+}
+
+void FrontendApplication::gotoBT_SettingsScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<BT_SettingsView, BT_SettingsPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

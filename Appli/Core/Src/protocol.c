@@ -493,6 +493,9 @@ void FanControl_Init(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart, uint32_
   // Set initial fan speed to LOW
   FanControl_SetSpeed(SPEED_LOW_PERCENT);
 
+  // Send readyAck on powerup, same as when we receive a ready message
+  const char *ack = "{\"action\":\"readyAck\"}";
+  Protocol_SendFramed(ack, strlen(ack));
 }
 
 /**
@@ -812,6 +815,7 @@ static void HandleReady(const GenericMessage *msg)
 {
   (void)msg;
   const char *ack = "{\"action\":\"readyAck\"}";
+  set_zone_count_c(0);
   Protocol_SendFramed(ack, strlen(ack));
   set_ready_received_c();
 }

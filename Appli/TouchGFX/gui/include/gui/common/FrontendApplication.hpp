@@ -26,6 +26,7 @@ public:
     void gotoBluetooth_2ScreenNoTransition();
     void gotoStudio_GoldScreenNoTransition();
     void gotoBT_DevicesScreenNoTransition();
+    void gotoBT_SettingsScreenNoTransition();
 
 private:
     void gotoSettingsScreenNoTransitionImpl();
@@ -35,6 +36,7 @@ private:
     void gotoBluetooth_2ScreenNoTransitionImpl();
     void gotoStudio_GoldScreenNoTransitionImpl();
     void gotoBT_DevicesScreenNoTransitionImpl();
+    void gotoBT_SettingsScreenNoTransitionImpl();
 
     touchgfx::Callback<FrontendApplication> settingsTransitionCb;
     touchgfx::Callback<FrontendApplication> brightnessTransitionCb;
@@ -43,6 +45,7 @@ private:
     touchgfx::Callback<FrontendApplication> bluetooth2TransitionCb;
     touchgfx::Callback<FrontendApplication> studioGoldTransitionCb;
     touchgfx::Callback<FrontendApplication> btDevicesTransitionCb;
+    touchgfx::Callback<FrontendApplication> btSettingsTransitionCb;
 };
 
 #endif // FRONTENDAPPLICATION_HPP

@@ -43,31 +43,40 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_DQPP" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">BLUETOOTH SETTINGS</Translation>
+      </Text>
+      <Text Id="__SingleUse_RQ95" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Forget All Devices&#10;</Translation>
+      </Text>
+      <Text Id="__SingleUse_PIYN" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Automatic Pairing</Translation>
+      </Text>
       <Text Id="__SingleUse_1YBA" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_ZCTZ" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">CONNECTED DEVICES</Translation>
       </Text>
-      <Text Id="__SingleUse_NMUI" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">STUDIO GOLD</Translation>
+      <Text Id="__SingleUse_NMUI" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">PIN</Translation>
       </Text>
-      <Text Id="__SingleUse_JQHP" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_JQHP" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_MYO9" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_MYO9" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_PC7A" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_PC7A" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_3TYC" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_3TYC" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_RKQW" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_RKQW" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_AL3B" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_AL3B" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_ZI5N" Alignment="Left" TypographyId="Default">

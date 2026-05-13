@@ -48,6 +48,14 @@ void Bluetooth_2View::handleClickEvent(const touchgfx::ClickEvent& event)
             application().gotoBT_DevicesScreenNoTransition();
             return;
         }
+
+        if (image6.isTouchable() &&
+            x >= image6.getX() && x < image6.getX() + image6.getWidth() &&
+            y >= image6.getY() && y < image6.getY() + image6.getHeight())
+        {
+            application().gotoBT_SettingsScreenNoTransition();
+            return;
+        }
     }
     Bluetooth_2ViewBase::handleClickEvent(event);
 }
@@ -64,6 +72,7 @@ void Bluetooth_2View::updateBluetoothWidgetsAlpha()
     textArea3.setAlpha(alpha);
     image2.setTouchable(btOn);
     image5.setTouchable(btOn);
+    image6.setTouchable(btOn);
     image8.setTouchable(btOn);
     image9.setTouchable(btOn);
     image10.setTouchable(btOn);

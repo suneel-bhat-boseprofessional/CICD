@@ -899,7 +899,7 @@
           {
             "Type": "Image",
             "Name": "image1",
-            "X": 95,
+            "X": 70,
             "Y": 39,
             "Width": 50,
             "Height": 51,
@@ -908,7 +908,7 @@
           {
             "Type": "Image",
             "Name": "image2",
-            "X": 153,
+            "X": 128,
             "Y": 39,
             "Width": 50,
             "Height": 51,
@@ -917,7 +917,7 @@
           {
             "Type": "Image",
             "Name": "image3",
-            "X": 269,
+            "X": 244,
             "Y": 39,
             "Width": 50,
             "Height": 51,
@@ -926,7 +926,7 @@
           {
             "Type": "Image",
             "Name": "image4",
-            "X": 211,
+            "X": 186,
             "Y": 39,
             "Width": 50,
             "Height": 51,
@@ -935,7 +935,7 @@
           {
             "Type": "Image",
             "Name": "image5",
-            "X": 327,
+            "X": 302,
             "Y": 39,
             "Width": 50,
             "Height": 51,
@@ -944,7 +944,7 @@
           {
             "Type": "Image",
             "Name": "image6",
-            "X": 385,
+            "X": 360,
             "Y": 39,
             "Width": 50,
             "Height": 51,
@@ -981,9 +981,9 @@
           {
             "Type": "TextArea",
             "Name": "textArea1",
-            "X": 397,
-            "Y": 52,
-            "Width": 27,
+            "X": 360,
+            "Y": 53,
+            "Width": 50,
             "Height": 25,
             "TextId": "__SingleUse_AL3B",
             "TextRotation": "0",
@@ -997,9 +997,9 @@
           {
             "Type": "TextArea",
             "Name": "textArea3",
-            "X": 281,
+            "X": 244,
             "Y": 52,
-            "Width": 27,
+            "Width": 50,
             "Height": 25,
             "TextId": "__SingleUse_RKQW",
             "TextRotation": "0",
@@ -1013,9 +1013,9 @@
           {
             "Type": "TextArea",
             "Name": "textArea4",
-            "X": 223,
+            "X": 186,
             "Y": 52,
-            "Width": 27,
+            "Width": 50,
             "Height": 25,
             "TextId": "__SingleUse_3TYC",
             "TextRotation": "0",
@@ -1029,9 +1029,9 @@
           {
             "Type": "TextArea",
             "Name": "textArea5",
-            "X": 165,
+            "X": 128,
             "Y": 52,
-            "Width": 27,
+            "Width": 50,
             "Height": 25,
             "TextId": "__SingleUse_PC7A",
             "TextRotation": "0",
@@ -1045,9 +1045,9 @@
           {
             "Type": "TextArea",
             "Name": "textArea6",
-            "X": 107,
+            "X": 70,
             "Y": 52,
-            "Width": 27,
+            "Width": 50,
             "Height": 25,
             "TextId": "__SingleUse_MYO9",
             "TextRotation": "0",
@@ -1061,9 +1061,9 @@
           {
             "Type": "TextArea",
             "Name": "textArea7",
-            "X": 339,
+            "X": 302,
             "Y": 52,
-            "Width": 27,
+            "Width": 50,
             "Height": 25,
             "TextId": "__SingleUse_JQHP",
             "TextRotation": "0",
@@ -1219,9 +1219,113 @@
         ]
       },
       {
-        "Name": "Screen1",
-        "Components": [],
-        "Interactions": []
+        "Name": "BT_Settings",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 64,
+            "Y": 20,
+            "Width": 366,
+            "Height": 48,
+            "RelativeFilename": "Highlighted.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 64,
+            "Y": 72,
+            "Width": 366,
+            "Height": 48,
+            "RelativeFilename": "Highlighted.png"
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 10,
+            "Width": 50,
+            "Height": 110,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 50,
+                "Height": 110,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 82,
+            "Y": 31,
+            "Width": 158,
+            "Height": 26,
+            "TextId": "__SingleUse_PIYN",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 82,
+            "Y": 85,
+            "Width": 158,
+            "Height": 22,
+            "TextId": "__SingleUse_RQ95",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 64,
+            "Width": 211,
+            "Height": 17,
+            "TextId": "__SingleUse_DQPP",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Bluetooth_2"
+            }
+          }
+        ]
       }
     ],
     "CustomContainerDefinitions": [

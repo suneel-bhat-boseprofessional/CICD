@@ -38,6 +38,7 @@ private:
     static const int PAGE_OFFSETS[2];
     static const int TOTAL_ITEMS = 7;
     static const int TOTAL_PAGES = 2;
+    static int savedPage;
 
     // Slide animation
     static const int16_t LIST_X = 25;
