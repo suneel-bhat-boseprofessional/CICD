@@ -111,6 +111,9 @@ IWDG_HandleTypeDef hiwdg;
 UART_HandleTypeDef huart;
 
 /* USER CODE BEGIN PV */
+/* Boot cause string populated early in main() from RCC_RSR / PWR_CPUCR flags */
+char g_bootCauseStr[30] = "Boot:Unknown";
+
 int max_touches = MAX_NUM_TOUCHES;
 struct coop_data finger[MAX_NUM_TOUCHES];
 TIM_HandleTypeDef htim4;
@@ -738,6 +741,29 @@ static void MX_IWDG_Init(void)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+
+  /* Read reset-source flags before any driver clears them */
+  {
+    uint32_t rsr     = RCC->RSR;
+    uint32_t pwrCpuCr = PWR->CPUCR;
+    const char *cause;
+
+    if      (pwrCpuCr & PWR_CPUCR_SBF)      cause = "Standby wakeup";
+    else if (rsr & RCC_RSR_PORRSTF)          cause = "Power-on";
+    else if (rsr & RCC_RSR_IWDGRSTF)         cause = "IWDG watchdog";
+    else if (rsr & RCC_RSR_WWDGRSTF)         cause = "WWDG watchdog";
+    else if (rsr & RCC_RSR_LPWRRSTF)         cause = "Illegal LP mode";
+    else if (rsr & RCC_RSR_LCKRSTF)          cause = "CPU lockup";
+    else if (rsr & RCC_RSR_SFTRSTF)          cause = "Software reset";
+    else if (rsr & RCC_RSR_BORRSTF)          cause = "Brownout";
+    else if (rsr & RCC_RSR_PINRSTF)          cause = "Pin reset";
+    else                                     cause = "Unknown";
+
+    snprintf(g_bootCauseStr, sizeof(g_bootCauseStr), "%s", cause);
+
+    /* Clear reset flags for next boot */
+    RCC->RSR |= RCC_RSR_RMVF;
+  }
 
 #if !defined(XIP_BUILD) || (XIP_BUILD == 0)
   OpenDebug();

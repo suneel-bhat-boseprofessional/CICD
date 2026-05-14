@@ -1,5 +1,10 @@
 #include <gui/screen1_screen/Screen1View.hpp>
 #include <touchgfx/Color.hpp>
+#include <touchgfx/Unicode.hpp>
+
+extern "C" {
+#include "main.h"
+}
 
 Screen1View::Screen1View()
     : currentColorState(0)
@@ -12,6 +17,11 @@ void Screen1View::setupScreen()
     Screen1ViewBase::setupScreen();
     // Ensure button is touchable even with alpha=0
     imageChangeBtn.setTouchable(true);
+
+    // Display boot cause in the text area
+    // Use fromUTF8 to correctly convert char* to UnicodeChar* (snprintf %s expects UnicodeChar*)
+    touchgfx::Unicode::fromUTF8((const uint8_t*)g_bootCauseStr, textArea1Buffer, TEXTAREA1_SIZE);
+    textArea1.invalidate();
 }
 
 void Screen1View::tearDownScreen()

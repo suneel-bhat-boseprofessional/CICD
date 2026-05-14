@@ -575,10 +575,28 @@
             "Type": "Image",
             "Name": "boseLogo",
             "X": 151,
-            "Y": 31,
+            "Y": 16,
             "Width": 179,
             "Height": 67,
             "RelativeFilename": "Frame 1.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "Y": 93,
+            "Width": 480,
+            "Height": 20,
+            "TextId": "__SingleUse_I5DK",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 20
+            }
           },
           {
             "Type": "Box",
