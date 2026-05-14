@@ -154,7 +154,6 @@ static void MX_DMA2D_Init(void);
 static void MX_GPU2D_Init(void);
 static void MX_JPEG_Init(void);
 static void MX_LTDC_Init(void);
-static void MX_IWDG_Init(void);
 
 static void MX_ICACHE_Init(void);
 static void MX_CRC_Init(void);
@@ -714,12 +713,12 @@ static void MX_TIM15_Init(void)
   * @param None
   * @retval None
   */
-static void MX_IWDG_Init(void)
+void MX_IWDG_Init(void)
 {
   hiwdg.Instance = IWDG;
   hiwdg.Init.Prescaler = IWDG_PRESCALER_64;
-  hiwdg.Init.Window = 4095;
-  hiwdg.Init.Reload = 500;
+  hiwdg.Init.Window = 500;   // Window disabled
+  hiwdg.Init.Reload = 500;   // 1s
   hiwdg.Init.EWI = 0;
   if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
   {
@@ -849,8 +848,6 @@ int main(void)
   MX_DMA2D_Init();
   MX_GPU2D_Init();
   MX_ICACHE_Init();
-
-  MX_IWDG_Init();
 
   /* USER CODE BEGIN I2C1_BusRecovery */
   // Perform bus recovery before I2C initialization
