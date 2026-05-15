@@ -11,9 +11,11 @@ public:
     virtual ~BT_DevicesView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+    virtual void handleClickEvent(const touchgfx::ClickEvent& event);
 protected:
     static const uint16_t TEXTAREA2_SIZE = 30;
     touchgfx::Unicode::UnicodeChar textArea2Buffer[TEXTAREA2_SIZE];
+    bool popupVisible;
 };
 
 #endif // BT_DEVICESVIEW_HPP

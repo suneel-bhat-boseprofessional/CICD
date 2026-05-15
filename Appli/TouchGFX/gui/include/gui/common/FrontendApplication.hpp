@@ -27,6 +27,14 @@ public:
     void gotoStudio_GoldScreenNoTransition();
     void gotoBT_DevicesScreenNoTransition();
     void gotoBT_SettingsScreenNoTransition();
+    void gotoSettings_NetworkScreenNoTransition();
+    void gotoInoutScreenNoTransition();
+    void gotoGPIOScreenNoTransition();
+    void gotoInScreenNoTransition();
+    void gotoOutScreenNoTransition();
+    void gotoNotificationsScreenNoTransition();
+    void gotoEthernet_SettingsScreenNoTransition();
+    void gotoNetwork_ConfigScreenNoTransition();
 
 private:
     void gotoSettingsScreenNoTransitionImpl();
@@ -37,6 +45,14 @@ private:
     void gotoStudio_GoldScreenNoTransitionImpl();
     void gotoBT_DevicesScreenNoTransitionImpl();
     void gotoBT_SettingsScreenNoTransitionImpl();
+    void gotoSettings_NetworkScreenNoTransitionImpl();
+    void gotoInoutScreenNoTransitionImpl();
+    void gotoGPIOScreenNoTransitionImpl();
+    void gotoInScreenNoTransitionImpl();
+    void gotoOutScreenNoTransitionImpl();
+    void gotoNotificationsScreenNoTransitionImpl();
+    void gotoEthernet_SettingsScreenNoTransitionImpl();
+    void gotoNetwork_ConfigScreenNoTransitionImpl();
 
     touchgfx::Callback<FrontendApplication> settingsTransitionCb;
     touchgfx::Callback<FrontendApplication> brightnessTransitionCb;
@@ -46,6 +62,14 @@ private:
     touchgfx::Callback<FrontendApplication> studioGoldTransitionCb;
     touchgfx::Callback<FrontendApplication> btDevicesTransitionCb;
     touchgfx::Callback<FrontendApplication> btSettingsTransitionCb;
+    touchgfx::Callback<FrontendApplication> settingsNetworkTransitionCb;
+    touchgfx::Callback<FrontendApplication> inoutTransitionCb;
+    touchgfx::Callback<FrontendApplication> gpioTransitionCb;
+    touchgfx::Callback<FrontendApplication> inTransitionCb;
+    touchgfx::Callback<FrontendApplication> outTransitionCb;
+    touchgfx::Callback<FrontendApplication> notificationsTransitionCb;
+    touchgfx::Callback<FrontendApplication> ethernetSettingsTransitionCb;
+    touchgfx::Callback<FrontendApplication> networkConfigTransitionCb;
 };
 
 #endif // FRONTENDAPPLICATION_HPP

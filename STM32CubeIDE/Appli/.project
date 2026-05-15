@@ -352,6 +352,31 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer6.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/CustomContainer7.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer7.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Ethernet_SettingsPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/ethernet_settings_screen/Ethernet_SettingsPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Ethernet_SettingsView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/ethernet_settings_screen/Ethernet_SettingsView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/GPIOPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/gpio_screen/GPIOPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/GPIOView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/gpio_screen/GPIOView.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/homePresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/home_screen/homePresenter.cpp</locationURI>
@@ -360,6 +385,26 @@
 			<name>Application/User/gui/homeView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/home_screen/homeView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/InPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/in_screen/InPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/InView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/in_screen/InView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/InoutPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/inout_screen/InoutPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/InoutView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/inout_screen/InoutView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/launchPresenter.cpp</name>
@@ -385,6 +430,46 @@
 			<name>Application/User/gui/Model.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/model/Model.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Network_ConfigPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/network_config_screen/Network_ConfigPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Network_ConfigView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/network_config_screen/Network_ConfigView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/NotificationsPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/notifications_screen/NotificationsPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/NotificationsView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/notifications_screen/NotificationsView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/OutPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/out_screen/OutPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/OutView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/out_screen/OutView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Settings_NetworkPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/settings_network_screen/Settings_NetworkPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Settings_NetworkView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/settings_network_screen/Settings_NetworkView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/SettingsPresenter.cpp</name>
@@ -647,9 +732,34 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer6Base.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/CustomContainer7Base.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer7Base.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Ethernet_SettingsViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/ethernet_settings_screen/Ethernet_SettingsViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/GPIOViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/gpio_screen/GPIOViewBase.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/homeViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/InViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/in_screen/InViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/InoutViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/inout_screen/InoutViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/launchViewBase.cpp</name>
@@ -660,6 +770,26 @@
 			<name>Application/User/generated/MeteringViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/metering_screen/MeteringViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Network_ConfigViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/network_config_screen/Network_ConfigViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/NotificationsViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/notifications_screen/NotificationsViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/OutViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/out_screen/OutViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Settings_NetworkViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/settings_network_screen/Settings_NetworkViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/SettingsViewBase.cpp</name>
@@ -702,9 +832,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/SVGDatabase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_AT_BG.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_AT_BG.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Background_image.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Background_image.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Blue.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Blue.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Bluetooth_BG.cpp</name>
@@ -737,6 +877,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Brightness_fill.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_CNce.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_CNce.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Delete.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Delete.cpp</locationURI>
@@ -747,19 +892,24 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Divider.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Ellipse_1.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Ellipse_1.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Filler_image.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Filler_image.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_Forget_All_Devices.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Forget_All_Devices.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_Frame.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Frame_4.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_4.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Frame_48.cpp</name>
@@ -777,6 +927,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_6.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Frame_8.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_8.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Frame_Green.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_Green.cpp</locationURI>
@@ -785,6 +940,11 @@
 			<name>Application/User/generated/image_Grabber.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Grabber.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Grey.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Grey.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Group_3.cpp</name>
@@ -840,6 +1000,21 @@
 			<name>Application/User/generated/image_Notifications_image.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Notifications_image.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_PopUP.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_PopUP.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Primary.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Primary.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Primary1.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Primary1.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Rectangle_1.cpp</name>
@@ -917,9 +1092,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Volume_green.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Warning.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Warning.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Zone.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Zone.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_alert-triangle.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_alert-triangle.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_bt.cpp</name>
@@ -932,9 +1117,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_devices.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_ell2.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_ell2.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_equal.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_equal.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_green_1.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_green_1.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/LanguageGb.cpp</name>

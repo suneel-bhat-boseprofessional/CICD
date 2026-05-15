@@ -49,6 +49,10 @@ void homeView::itemSelected(int index)
     {
         application().gotozoneScreenNoTransition();
     }
+    else if(index == 1)
+    {
+        application().gotoInoutScreenNoTransition();
+    }
     else if(index == 2)
     {
         application().gotoMeteringScreenNoTransition();
@@ -60,6 +64,10 @@ void homeView::itemSelected(int index)
     else if(index == 4)
     {
         application().gotoBluetooth_2ScreenNoTransition();
+    }
+    else if(index == 5)
+    {
+        application().gotoNotificationsScreenNoTransition();
     }
 }
 

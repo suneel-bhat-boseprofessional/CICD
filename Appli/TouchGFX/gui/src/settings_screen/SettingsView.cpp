@@ -28,6 +28,10 @@ void SettingsView::itemSelected(int16_t itemIndex)
     {
         application().gotoSystem_InformationScreenNoTransition();
     }
+    else if (itemIndex == 1) // "Network" item
+    {
+        application().gotoSettings_NetworkScreenNoTransition();
+    }
     else if (itemIndex == 2) // "Display" item
     {
         application().gotoBrightnessScreenNoTransition();
