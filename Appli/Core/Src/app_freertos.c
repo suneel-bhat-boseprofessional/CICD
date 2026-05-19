@@ -101,8 +101,6 @@ void WdogPet_Task(void *argument);
 
 void vApplicationIdleHook( void )
 {
-   /* Refresh the IWDG to prevent watchdog reset */
-   HAL_IWDG_Refresh(&hiwdg);
 }
 /* USER CODE END 2 */
 
