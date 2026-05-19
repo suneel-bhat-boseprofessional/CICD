@@ -937,7 +937,6 @@ int main(void)
 #endif
    //UART message reception queue
    uartRxQueue = xQueueCreate(10, RX_BUFFER_SIZE);
-
      /* USER CODE END 2 */
 
   /* Init scheduler */

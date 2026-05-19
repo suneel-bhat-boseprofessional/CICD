@@ -98,9 +98,9 @@
             "Type": "FlexButton",
             "Name": "flexButton1",
             "X": 2,
-            "Y": 39,
-            "Width": 20,
-            "Height": 50,
+            "Y": 10,
+            "Width": 22,
+            "Height": 115,
             "Alpha": 0,
             "ButtonTrigger": {
               "Type": "ClickButtonTrigger"
@@ -108,8 +108,8 @@
             "ButtonStyles": [
               {
                 "Type": "BoxWithBorderButtonStyle",
-                "Width": 20,
-                "Height": 50,
+                "Width": 22,
+                "Height": 115,
                 "LockToFlexButtonSize": true,
                 "BorderSize": 5,
                 "ColorReleased": {
@@ -181,9 +181,9 @@
           {
             "Type": "FlexButton",
             "Name": "flexButton1",
-            "Y": 41,
+            "Y": 10,
             "Width": 45,
-            "Height": 48,
+            "Height": 118,
             "ButtonTrigger": {
               "Type": "ClickButtonTrigger"
             },
@@ -191,7 +191,7 @@
               {
                 "Type": "BoxWithBorderButtonStyle",
                 "Width": 45,
-                "Height": 48,
+                "Height": 118,
                 "LockToFlexButtonSize": true,
                 "BorderSize": 5
               }
@@ -221,9 +221,9 @@
             "TextId": "__SingleUse_2HRC",
             "TextRotation": "0",
             "Color": {
-              "Red": 51,
-              "Green": 127,
-              "Blue": 92
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
             },
             "Wildcard1": {}
           },
@@ -350,9 +350,9 @@
           {
             "Type": "FlexButton",
             "Name": "flexButton1",
-            "Y": 37,
-            "Width": 35,
-            "Height": 54,
+            "Y": 13,
+            "Width": 36,
+            "Height": 107,
             "Alpha": 0,
             "ButtonTrigger": {
               "Type": "ClickButtonTrigger"
@@ -360,8 +360,8 @@
             "ButtonStyles": [
               {
                 "Type": "BoxWithBorderButtonStyle",
-                "Width": 35,
-                "Height": 54,
+                "Width": 36,
+                "Height": 107,
                 "LockToFlexButtonSize": true,
                 "BorderSize": 5,
                 "ColorReleased": {
@@ -413,11 +413,30 @@
         "Name": "Settings",
         "Components": [
           {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 13,
+            "Width": 43,
+            "Height": 104,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 43,
+                "Height": 104,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
             "Type": "ScrollList",
             "Name": "scrollList1",
-            "X": 64,
-            "Y": 29,
-            "Width": 250,
+            "X": 51,
+            "Y": 26,
+            "Width": 366,
             "Height": 91,
             "ItemTemplateName": "CustomContainer4",
             "NumberofItems": 4,
@@ -436,6 +455,21 @@
             "Height": 16,
             "Pressed": "Vector_left.png",
             "Released": "Vector_left.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 53,
+            "Y": 4,
+            "Width": 176,
+            "Height": 19,
+            "TextId": "__SingleUse_CALN",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
           }
         ],
         "Interactions": [
@@ -443,7 +477,7 @@
             "InteractionName": "Interaction1",
             "Trigger": {
               "Type": "TriggerClicked",
-              "TriggerComponent": "button1"
+              "TriggerComponent": "flexButton1"
             },
             "Action": {
               "Type": "ActionGotoScreen",
@@ -473,6 +507,25 @@
             "InitValue": 10
           },
           {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 16,
+            "Width": 43,
+            "Height": 106,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 43,
+                "Height": 106,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
             "Type": "Button",
             "Name": "button1",
             "X": 12,
@@ -500,18 +553,6 @@
         ],
         "Interactions": [
           {
-            "InteractionName": "Interaction1",
-            "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "button1"
-            },
-            "Action": {
-              "Type": "ActionGotoScreen",
-              "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "Settings"
-            }
-          },
-          {
             "InteractionName": "Interaction2",
             "Trigger": {
               "Type": "TriggerSliderValueChanged",
@@ -520,6 +561,18 @@
             "Action": {
               "Type": "ActionCustom",
               "FunctionName": "sliderUpdate"
+            }
+          },
+          {
+            "InteractionName": "Interaction3",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Settings"
             }
           }
         ]
@@ -543,6 +596,25 @@
             "OverShootPercentage": 75
           },
           {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 15,
+            "Width": 28,
+            "Height": 99,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 28,
+                "Height": 99,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
             "Type": "Button",
             "Name": "button1",
             "X": 12,
@@ -558,12 +630,88 @@
             "InteractionName": "Interaction1",
             "Trigger": {
               "Type": "TriggerClicked",
-              "TriggerComponent": "button1"
+              "TriggerComponent": "flexButton1"
             },
             "Action": {
               "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "home"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "System_Information",
+        "Components": [
+          {
+            "Type": "ScrollList",
+            "Name": "scrollList1",
+            "X": 35,
+            "Y": 22,
+            "Width": 296,
+            "Height": 106,
+            "ItemTemplateName": "CustomContainer6",
+            "NumberofItems": 1,
+            "Easing": "Back",
+            "EasingOption": "Out",
+            "SwipeAcceleration": 1.0,
+            "DragAcceleration": 1.0,
+            "OverShootPercentage": 75
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 63,
+            "Width": 197,
+            "Height": 22,
+            "TextId": "__SingleUse_U3CF",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 22,
+            "Width": 35,
+            "Height": 88,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 35,
+                "Height": 88,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Settings"
             }
           }
         ]
@@ -586,7 +734,7 @@
             "Y": 93,
             "Width": 480,
             "Height": 20,
-            "TextId": "__SingleUse_I5DK",
+            "TextId": "__SingleUse_UUW2",
             "TextRotation": "0",
             "Color": {
               "Red": 255,
@@ -1141,15 +1289,15 @@
       },
       {
         "Name": "CustomContainer4",
-        "Width": 250,
-        "Height": 47,
+        "Width": 366,
+        "Height": 48,
         "Components": [
           {
             "Type": "TextArea",
             "Name": "textArea1",
             "X": 29,
             "Y": 14,
-            "Width": 154,
+            "Width": 188,
             "Height": 21,
             "TextId": "__SingleUse_UJ44",
             "TextRotation": "0",
@@ -1581,6 +1729,88 @@
             "Width": 22,
             "Height": 6,
             "RelativeFilename": "Meters_Orange.png"
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "CustomContainer6",
+        "Width": 296,
+        "Height": 116,
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 27,
+            "Width": 131,
+            "Height": 23,
+            "TextId": "__SingleUse_IX0A",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 27,
+            "Y": 23,
+            "Width": 131,
+            "Height": 21,
+            "TextId": "__SingleUse_NK6P",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 27,
+            "Y": 44,
+            "Width": 131,
+            "Height": 21,
+            "TextId": "__SingleUse_P871",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea4",
+            "X": 27,
+            "Y": 65,
+            "Width": 131,
+            "Height": 19,
+            "TextId": "__SingleUse_R6SM",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea5",
+            "X": 27,
+            "Y": 84,
+            "Width": 131,
+            "Height": 18,
+            "TextId": "__SingleUse_9TLF",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
           }
         ],
         "Interactions": []

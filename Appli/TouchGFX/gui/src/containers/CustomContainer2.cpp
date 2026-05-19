@@ -2,14 +2,47 @@
 #include <gui/model/Model.hpp>
 #include <touchgfx/Unicode.hpp>
 
+// Viewport widths matching generated textArea1-4 widths: 87, 83, 89, 81
+const int16_t CustomContainer2::VIEWPORT_WIDTHS[NUM_SLOTS] = { 87, 83, 89, 81 };
+
 CustomContainer2::CustomContainer2() :
     itemIndex(-1),
     action(0),
     isDragging(false),
     suppressNextClick(false),
     reducedRenderingMode(false),
-    myButtonCallback(this, &CustomContainer2::handleButtonPress)
+    myButtonCallback(this, &CustomContainer2::handleButtonPress),
+    scrollNeeded(false)
 {
+    touchgfx::TextAreaWithOneWildcard* textAreas[NUM_SLOTS] = { &textArea1, &textArea2, &textArea3, &textArea4 };
+
+    for (int i = 0; i < NUM_SLOTS; i++)
+    {
+        slotScrolling[i] = false;
+        scrollOffset[i] = 0;
+        loopWidth[i] = 0;
+        scrollPauseCount[i] = 0;
+        scrollTickDiv[i] = 0;
+        scrollState[i] = PAUSE;
+        textCopyBuffer[i][0] = 0;
+
+        // Move textArea into a clipping container
+        remove(*textAreas[i]);
+        textClip[i].setPosition(textAreas[i]->getX(), textAreas[i]->getY(), VIEWPORT_WIDTHS[i], VIEWPORT_HEIGHT);
+        textAreas[i]->setXY(0, 0);
+        textClip[i].add(*textAreas[i]);
+
+        // Create copy for seamless loop
+        textCopy[i].setColor(textAreas[i]->getColor());
+        textCopy[i].setLinespacing(0);
+        textCopy[i].setTypedText(textAreas[i]->getTypedText());
+        textCopy[i].setWildcard(textCopyBuffer[i]);
+        textCopy[i].setVisible(false);
+        textClip[i].add(textCopy[i]);
+
+        add(textClip[i]);
+    }
+
     textArea1.setWildcard(zoneName[0]);
     textArea2.setWildcard(zoneName[1]);
     textArea3.setWildcard(zoneName[2]);
@@ -31,6 +64,8 @@ void CustomContainer2::setListElements(int item)
     itemIndex = item;
     int base  = itemIndex * 4;
 
+    stopScrollTimer();
+
     // hide everything first
     button1.setVisible(false);
     button2.setVisible(false);
@@ -42,10 +77,10 @@ void CustomContainer2::setListElements(int item)
     button3.setTouchable(false);
     button4.setTouchable(false);
 
-    textArea1.setVisible(false);
-    textArea2.setVisible(false);
-    textArea3.setVisible(false);
-    textArea4.setVisible(false);
+    textClip[0].setVisible(false);
+    textClip[1].setVisible(false);
+    textClip[2].setVisible(false);
+    textClip[3].setVisible(false);
 
     textArea5.setVisible(false);
     textArea6.setVisible(false);
@@ -61,6 +96,8 @@ void CustomContainer2::setListElements(int item)
     image2.setVisible(false);
     image3.setVisible(false);
     image4.setVisible(false);
+
+    touchgfx::TextAreaWithOneWildcard* textAreas[NUM_SLOTS] = { &textArea1, &textArea2, &textArea3, &textArea4 };
 
     // populate active slots
     for(int i = 0; i < 4; i++)
@@ -90,9 +127,11 @@ void CustomContainer2::setListElements(int item)
 
             bool muted = (modelInstance != 0) && modelInstance->getZoneMuted(zoneIndex);
 
+            textClip[i].setVisible(true);
+            setupSlotScroll(i, *textAreas[i]);
+
             if(i == 0)
             {
-                textArea1.setVisible(true);
                 button1.setVisible(true);
                 button1.setTouchable(!isDragging);
                 textArea5.setVisible(!muted);
@@ -102,7 +141,6 @@ void CustomContainer2::setListElements(int item)
             }
             else if(i == 1)
             {
-                textArea2.setVisible(true);
                 button2.setVisible(true);
                 button2.setTouchable(!isDragging);
                 textArea6.setVisible(!muted);
@@ -112,7 +150,6 @@ void CustomContainer2::setListElements(int item)
             }
             else if(i == 2)
             {
-                textArea3.setVisible(true);
                 button3.setVisible(true);
                 button3.setTouchable(!isDragging);
                 textArea7.setVisible(!muted);
@@ -122,7 +159,6 @@ void CustomContainer2::setListElements(int item)
             }
             else if(i == 3)
             {
-                textArea4.setVisible(true);
                 button4.setVisible(true);
                 button4.setTouchable(!isDragging);
                 textArea8.setVisible(!muted);
@@ -130,6 +166,16 @@ void CustomContainer2::setListElements(int item)
                 circleProgress4.setVisible(!reducedRenderingMode);
                 circleProgress4.setValue(vol);
             }
+        }
+    }
+
+    // Start scroll timer if any slot needs it
+    for (int i = 0; i < NUM_SLOTS; i++)
+    {
+        if (slotScrolling[i])
+        {
+            startScrollTimer();
+            break;
         }
     }
 
@@ -268,5 +314,104 @@ void CustomContainer2::handleGestureEvent(const touchgfx::GestureEvent& event)
     if(parent)
     {
         parent->handleGestureEvent(event);
+    }
+}
+
+void CustomContainer2::setupSlotScroll(int slot, touchgfx::TextAreaWithOneWildcard& textArea)
+{
+    slotScrolling[slot] = false;
+    scrollOffset[slot] = 0;
+    scrollPauseCount[slot] = 0;
+    scrollTickDiv[slot] = 0;
+    scrollState[slot] = PAUSE;
+
+    // Measure single text width
+    textArea.setWidth(300);
+    textArea.resizeToCurrentText();
+    int16_t singleWidth = textArea.getWidth();
+
+    // Reset position
+    textArea.setXY(0, 0);
+    textArea.setWidth(VIEWPORT_WIDTHS[slot]);
+    textArea.setHeight(VIEWPORT_HEIGHT);
+    textCopy[slot].setVisible(false);
+
+    if (singleWidth > VIEWPORT_WIDTHS[slot])
+    {
+        textArea.setWidth(singleWidth + 4);
+
+        loopWidth[slot] = singleWidth + TEXT_GAP;
+        Unicode::strncpy(textCopyBuffer[slot], zoneName[slot], 20);
+        textCopy[slot].setWildcard(textCopyBuffer[slot]);
+        textCopy[slot].setPosition(loopWidth[slot], 0, singleWidth + 4, VIEWPORT_HEIGHT);
+        textCopy[slot].setVisible(true);
+
+        slotScrolling[slot] = true;
+    }
+}
+
+void CustomContainer2::handleTickEvent()
+{
+    if (!scrollNeeded)
+        return;
+
+    for (int i = 0; i < NUM_SLOTS; i++)
+    {
+        if (!slotScrolling[i])
+            continue;
+
+        touchgfx::TextAreaWithOneWildcard* textAreas[NUM_SLOTS] = { &textArea1, &textArea2, &textArea3, &textArea4 };
+
+        switch (scrollState[i])
+        {
+            case PAUSE:
+                if (++scrollPauseCount[i] >= SCROLL_PAUSE_TICKS)
+                {
+                    scrollState[i] = SCROLLING;
+                    scrollPauseCount[i] = 0;
+                    scrollTickDiv[i] = 0;
+                }
+                break;
+
+            case SCROLLING:
+                if (++scrollTickDiv[i] >= SCROLL_TICK_DIVIDER)
+                {
+                    scrollTickDiv[i] = 0;
+                    scrollOffset[i]++;
+
+                    if (scrollOffset[i] >= loopWidth[i])
+                    {
+                        scrollOffset[i] = 0;
+                    }
+
+                    textAreas[i]->moveTo(-scrollOffset[i], 0);
+                    textCopy[i].moveTo(loopWidth[i] - scrollOffset[i], 0);
+                    textClip[i].invalidate();
+                }
+                break;
+        }
+    }
+}
+
+void CustomContainer2::startScrollTimer()
+{
+    if (!scrollNeeded)
+    {
+        scrollNeeded = true;
+        touchgfx::Application::getInstance()->registerTimerWidget(this);
+    }
+}
+
+void CustomContainer2::stopScrollTimer()
+{
+    if (scrollNeeded)
+    {
+        touchgfx::Application::getInstance()->unregisterTimerWidget(this);
+        scrollNeeded = false;
+    }
+    for (int i = 0; i < NUM_SLOTS; i++)
+    {
+        slotScrolling[i] = false;
+        scrollOffset[i] = 0;
     }
 }

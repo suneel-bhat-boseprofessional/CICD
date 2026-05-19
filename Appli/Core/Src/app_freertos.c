@@ -94,11 +94,6 @@ void WdogPet_Task(void *argument);
 /* USER CODE END FunctionPrototypes */
 
 /* USER CODE BEGIN 2 */
-//
-//  This is the Watchdog Pet periodic timer callback.
-//  This will unblock the task that PETs the watchdog
-//
-
 void vApplicationIdleHook( void )
 {
 }
@@ -145,8 +140,6 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_EVENTS */
   /* add events, ... */
-  // Periodic timer for Petting watchdog.
-
   /* USER CODE END RTOS_EVENTS */
 
 }
