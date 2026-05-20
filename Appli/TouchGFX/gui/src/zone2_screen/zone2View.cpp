@@ -180,5 +180,5 @@ void zone2View::updateSliderFill(int value)
 
 void zone2View::goToLaunchScreen()
 {
-    application().gotolaunchScreenNoTransition();
+    application().gotoScreen1ScreenNoTransition();
 }

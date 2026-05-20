@@ -43,6 +43,9 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_UUW2" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Boot Cause: &lt;value&gt;</Translation>
+      </Text>
       <Text Id="__SingleUse_9TLF" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">Power Settings:</Translation>
       </Text>
@@ -63,6 +66,9 @@
       </Text>
       <Text Id="__SingleUse_U3CF" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">SYSTEM INFORMATION</Translation>
+      </Text>
+      <Text Id="__SingleUse_I5DK" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">Boot Cause: &lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_T0WK" Alignment="Center" TypographyId="Typography4">
         <Translation Language="GB">&lt;value&gt;</Translation>
@@ -127,7 +133,7 @@
     </TextGroup>
   </Texts>
   <Typographies>
-    <Typography Id="Default" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="0-9,A-Z" />
+    <Typography Id="Default" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="-" WildcardCharacterRanges="0-9,A-Z,a-z" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Typography1" Font="EaseStandard-Bold.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="/" WildcardCharacterRanges="A-Z,a-z,0-9" />

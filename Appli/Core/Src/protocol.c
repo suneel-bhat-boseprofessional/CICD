@@ -1026,7 +1026,11 @@ void OTA_ProcessBinaryCommand(uint8_t *data, uint16_t length)
     {
       /* ACK first, then write flag and reset */
       OTA_SendResponse(OTA_CMD_ENTER_BOOTLOADER, OTA_STATUS_OK, NULL, 0);
-      HAL_Delay(FW_RESTART_DELAY_MS);
+      /* Short delay for UART TX to flush */
+      HAL_Delay(50);
+      /* Refresh watchdog before flash op (erase+program takes ~100ms) */
+      extern IWDG_HandleTypeDef hiwdg;
+      HAL_IWDG_Refresh(&hiwdg);
       FW_WriteUpdateFlag(FW_UPDATE_FLAG_ADDRESS, FW_UPDATE_FLAG_VALUE);
       NVIC_SystemReset();
       break;  /* unreachable */

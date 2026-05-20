@@ -2,6 +2,7 @@
 #define FRONTENDAPPLICATION_HPP
 
 #include <gui_generated/common/FrontendApplicationBase.hpp>
+#include "buildflags.h"
 
 class FrontendHeap;
 
@@ -17,6 +18,15 @@ public:
     {
         model.tick();
         FrontendApplicationBase::handleTickEvent();
+    }
+
+    virtual void changeToStartScreen()
+    {
+#if GGEC_MODE
+        gotoScreen1ScreenNoTransition();
+#else
+        gotolaunchScreenNoTransition();
+#endif
     }
 
     void gotoSettingsScreenNoTransition();
