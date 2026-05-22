@@ -2,6 +2,8 @@
 #include <gui/brightness_screen/BrightnessPresenter.hpp>
 #include <gui/model/Model.hpp>
 
+extern "C" void Protocol_SendSetBrightness(int value);
+
 BrightnessPresenter::BrightnessPresenter(BrightnessView& v)
     : view(v)
 {
@@ -26,4 +28,5 @@ int BrightnessPresenter::getBrightness() const
 void BrightnessPresenter::setBrightness(int value)
 {
     model->setLcdBrightness(value);
+    Protocol_SendSetBrightness(model->getLcdBrightness());
 }

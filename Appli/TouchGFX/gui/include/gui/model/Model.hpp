@@ -76,6 +76,7 @@ void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name);
 void set_selected_source_c(int zoneIdx, int srcIdx);
 void set_ready_received_c(void);
 void set_go_to_launch_c(void);
+void set_lcd_brightness_c(int value);
 
 #ifdef __cplusplus
 }
