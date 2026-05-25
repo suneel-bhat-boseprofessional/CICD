@@ -17,7 +17,7 @@ void CustomContainer4::setSettingItem(int16_t index)
     itemIndex = index;
 
     static const char* names[] = {
-        "System Information",
+        "Device Information",
         "Network",
         "Display",
         "Factory Reset"

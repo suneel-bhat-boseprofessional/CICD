@@ -31,3 +31,51 @@ void CustomContainer6::setValue(int row, const char* value)
     touchgfx::Unicode::fromUTF8((const uint8_t*)value, valueBuf[row], BUF_SIZE);
     valueArea[row].invalidate();
 }
+
+void CustomContainer6::hideContent()
+{
+    textArea1.setVisible(false);
+    textArea2.setVisible(false);
+    textArea3.setVisible(false);
+    textArea4.setVisible(false);
+    textArea5.setVisible(false);
+    textArea6.setVisible(false);
+    textArea7.setVisible(false);
+    textArea9.setVisible(false);
+    textArea10.setVisible(false);
+    textArea12.setVisible(false);
+    textArea13.setVisible(false);
+    textArea14.setVisible(false);
+    textArea15.setVisible(false);
+    textArea16.setVisible(false);
+    textArea17.setVisible(false);
+    textArea18.setVisible(false);
+    for (int i = 0; i < NUM_ROWS; i++)
+    {
+        valueArea[i].setVisible(false);
+    }
+}
+
+void CustomContainer6::showContent()
+{
+    textArea1.setVisible(true);
+    textArea2.setVisible(true);
+    textArea3.setVisible(true);
+    textArea4.setVisible(true);
+    textArea5.setVisible(true);
+    textArea6.setVisible(true);
+    textArea7.setVisible(true);
+    textArea9.setVisible(true);
+    textArea10.setVisible(true);
+    textArea12.setVisible(true);
+    textArea13.setVisible(true);
+    textArea14.setVisible(true);
+    textArea15.setVisible(true);
+    textArea16.setVisible(true);
+    textArea17.setVisible(true);
+    textArea18.setVisible(true);
+    for (int i = 0; i < NUM_ROWS; i++)
+    {
+        valueArea[i].setVisible(true);
+    }
+}

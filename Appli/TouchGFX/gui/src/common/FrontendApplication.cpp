@@ -7,8 +7,6 @@
 #include <gui/brightness_screen/BrightnessPresenter.hpp>
 #include <gui/metering_screen/MeteringView.hpp>
 #include <gui/metering_screen/MeteringPresenter.hpp>
-#include <gui/system_information_screen/System_InformationView.hpp>
-#include <gui/system_information_screen/System_InformationPresenter.hpp>
 #include <gui/studio_gold_screen/Studio_GoldView.hpp>
 #include <gui/studio_gold_screen/Studio_GoldPresenter.hpp>
 #include <gui/bluetooth_2_screen/Bluetooth_2View.hpp>
@@ -33,6 +31,12 @@
 #include <gui/ethernet_settings_screen/Ethernet_SettingsPresenter.hpp>
 #include <gui/network_config_screen/Network_ConfigView.hpp>
 #include <gui/network_config_screen/Network_ConfigPresenter.hpp>
+#include <gui/network_mode_screen/Network_ModeView.hpp>
+#include <gui/network_mode_screen/Network_ModePresenter.hpp>
+#include <gui/ip_adress_screen/IP_AdressView.hpp>
+#include <gui/ip_adress_screen/IP_AdressPresenter.hpp>
+#include <gui/device_information_screen/Device_InformationView.hpp>
+#include <gui/device_information_screen/Device_InformationPresenter.hpp>
 
 FrontendApplication::FrontendApplication(Model& m, FrontendHeap& heap)
     : FrontendApplicationBase(m, heap)
@@ -75,13 +79,12 @@ void FrontendApplication::gotoMeteringScreenNoTransitionImpl()
 
 void FrontendApplication::gotoSystem_InformationScreenNoTransition()
 {
-    sysInfoTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoSystem_InformationScreenNoTransitionImpl);
-    pendingScreenTransitionCallback = &sysInfoTransitionCb;
+    // Screen removed from Designer - no-op
 }
 
 void FrontendApplication::gotoSystem_InformationScreenNoTransitionImpl()
 {
-    touchgfx::makeTransition<System_InformationView, System_InformationPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    // Screen removed from Designer - no-op
 }
 
 void FrontendApplication::gotoBluetooth_2ScreenNoTransition()
@@ -214,4 +217,37 @@ void FrontendApplication::gotoNetwork_ConfigScreenNoTransition()
 void FrontendApplication::gotoNetwork_ConfigScreenNoTransitionImpl()
 {
     touchgfx::makeTransition<Network_ConfigView, Network_ConfigPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+void FrontendApplication::gotoNetwork_Mode_ScreenNoTransition()
+{
+    networkModeTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoNetwork_Mode_ScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &networkModeTransitionCb;
+}
+
+void FrontendApplication::gotoNetwork_Mode_ScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<Network_ModeView, Network_ModePresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+void FrontendApplication::gotoIP_AdressScreenNoTransition()
+{
+    ipAdressTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoIP_AdressScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &ipAdressTransitionCb;
+}
+
+void FrontendApplication::gotoIP_AdressScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<IP_AdressView, IP_AdressPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+void FrontendApplication::gotoDevice_InformationScreenNoTransition()
+{
+    deviceInfoTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoDevice_InformationScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &deviceInfoTransitionCb;
+}
+
+void FrontendApplication::gotoDevice_InformationScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<Device_InformationView, Device_InformationPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

@@ -22,6 +22,7 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
     virtual void scrollList1UpdateItem(CustomContainer7& item, int16_t itemIndex);
+    virtual void handleClickEvent(const touchgfx::ClickEvent& event);
 
     // Update a single field by index and refresh the list (optional API).
     static void setField(int index, const char* value);

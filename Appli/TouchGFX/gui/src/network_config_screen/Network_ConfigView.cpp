@@ -1,5 +1,6 @@
 #include <gui/network_config_screen/Network_ConfigView.hpp>
 #include <gui/ethernet_settings_screen/Ethernet_SettingsView.hpp>
+#include <gui/network_mode_screen/Network_ModeView.hpp>
 
 Network_ConfigView::NetworkField Network_ConfigView::fields[FIELD_COUNT] =
 {
@@ -57,4 +58,42 @@ void Network_ConfigView::setField(int index, const char* value)
     {
         fields[index].value = value;
     }
+}
+
+void Network_ConfigView::handleClickEvent(const touchgfx::ClickEvent& event)
+{
+    if (event.getType() == touchgfx::ClickEvent::RELEASED)
+    {
+        int16_t x = event.getX();
+        int16_t y = event.getY();
+
+        // Check if click is within scrollList1 bounds
+        int16_t slX = scrollList1.getX();
+        int16_t slY = scrollList1.getY();
+        int16_t slW = static_cast<int16_t>(scrollList1.getWidth());
+        int16_t slH = static_cast<int16_t>(scrollList1.getHeight());
+
+        if (x >= slX && x < slX + slW && y >= slY && y < slY + slH)
+        {
+            // Each item is 51px tall (drawable size). Calculate which item was tapped.
+            int16_t localY = y - slY;
+            int itemIndex = localY / 51;
+
+            // Index 0 = Network Mode
+            if (itemIndex == 0)
+            {
+                application().gotoNetwork_Mode_ScreenNoTransition();
+                return;
+            }
+
+            // Index 1 = IP Address
+            if (itemIndex == 1)
+            {
+                application().gotoIP_AdressScreenNoTransition();
+                return;
+            }
+        }
+    }
+
+    Network_ConfigViewBase::handleClickEvent(event);
 }

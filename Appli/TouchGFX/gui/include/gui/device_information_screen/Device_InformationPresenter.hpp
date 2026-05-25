@@ -1,17 +1,17 @@
-#ifndef SYSTEM_INFORMATIONPRESENTER_HPP
-#define SYSTEM_INFORMATIONPRESENTER_HPP
+#ifndef DEVICE_INFORMATIONPRESENTER_HPP
+#define DEVICE_INFORMATIONPRESENTER_HPP
 
 #include <gui/model/ModelListener.hpp>
 #include <mvp/Presenter.hpp>
 
 using namespace touchgfx;
 
-class System_InformationView;
+class Device_InformationView;
 
-class System_InformationPresenter : public touchgfx::Presenter, public ModelListener
+class Device_InformationPresenter : public touchgfx::Presenter, public ModelListener
 {
 public:
-    System_InformationPresenter(System_InformationView& v);
+    Device_InformationPresenter(Device_InformationView& v);
 
     /**
      * The activate function is called automatically when this screen is "switched in"
@@ -25,12 +25,12 @@ public:
      */
     virtual void deactivate();
 
-    virtual ~System_InformationPresenter() {}
+    virtual ~Device_InformationPresenter() {}
 
 private:
-    System_InformationPresenter();
+    Device_InformationPresenter();
 
-    System_InformationView& view;
+    Device_InformationView& view;
 };
 
-#endif // SYSTEM_INFORMATIONPRESENTER_HPP
+#endif // DEVICE_INFORMATIONPRESENTER_HPP

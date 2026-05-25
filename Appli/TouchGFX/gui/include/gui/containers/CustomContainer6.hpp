@@ -14,6 +14,8 @@ public:
     virtual void initialize();
 
     void setValue(int row, const char* value);
+    void hideContent();
+    void showContent();
 
 protected:
     static const int NUM_ROWS = 5;

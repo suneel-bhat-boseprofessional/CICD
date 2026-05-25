@@ -24,9 +24,9 @@ void SettingsView::scrollList1UpdateItem(CustomContainer4& item, int16_t itemInd
 
 void SettingsView::itemSelected(int16_t itemIndex)
 {
-    if (itemIndex == 0) // "System Information" item
+    if (itemIndex == 0) // "Device Information" item
     {
-        application().gotoSystem_InformationScreenNoTransition();
+        application().gotoDevice_InformationScreenNoTransition();
     }
     else if (itemIndex == 1) // "Network" item
     {

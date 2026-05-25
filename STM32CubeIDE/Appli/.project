@@ -357,6 +357,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer7.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/Device_InformationPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/device_information_screen/Device_InformationPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Device_InformationView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/device_information_screen/Device_InformationView.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/Ethernet_SettingsPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/ethernet_settings_screen/Ethernet_SettingsPresenter.cpp</locationURI>
@@ -407,6 +417,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/inout_screen/InoutView.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/IP_AdressPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/ip_adress_screen/IP_AdressPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/IP_AdressView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/ip_adress_screen/IP_AdressView.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/launchPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/launch_screen/launchPresenter.cpp</locationURI>
@@ -440,6 +460,16 @@
 			<name>Application/User/gui/Network_ConfigView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/network_config_screen/Network_ConfigView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Network_ModePresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/network_mode_screen/Network_ModePresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Network_ModeView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/network_mode_screen/Network_ModeView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/NotificationsPresenter.cpp</name>
@@ -500,16 +530,6 @@
 			<name>Application/User/gui/Studio_GoldView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/studio_gold_screen/Studio_GoldView.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/gui/System_InformationPresenter.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/system_information_screen/System_InformationPresenter.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/gui/System_InformationView.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/system_information_screen/System_InformationView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/zone2Presenter.cpp</name>
@@ -737,6 +757,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer7Base.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Device_InformationViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/device_information_screen/Device_InformationViewBase.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Ethernet_SettingsViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/ethernet_settings_screen/Ethernet_SettingsViewBase.cpp</locationURI>
@@ -762,6 +787,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/inout_screen/InoutViewBase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/IP_AdressViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/ip_adress_screen/IP_AdressViewBase.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/launchViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/launch_screen/launchViewBase.cpp</locationURI>
@@ -775,6 +805,11 @@
 			<name>Application/User/generated/Network_ConfigViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/network_config_screen/Network_ConfigViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Network_ModeViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/network_mode_screen/Network_ModeViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/NotificationsViewBase.cpp</name>
@@ -805,11 +840,6 @@
 			<name>Application/User/generated/Studio_GoldViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/studio_gold_screen/Studio_GoldViewBase.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/System_InformationViewBase.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/system_information_screen/System_InformationViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/zone2ViewBase.cpp</name>
@@ -955,6 +985,11 @@
 			<name>Application/User/generated/image_Highlighted.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Highlighted.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_IP_Bg.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_IP_Bg.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Inout_image.cpp</name>

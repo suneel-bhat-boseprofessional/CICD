@@ -43,6 +43,87 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_8VBA" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_H8IT" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_U395" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Clock Status:</Translation>
+      </Text>
+      <Text Id="__SingleUse_G6Q7" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Disk Storage:</Translation>
+      </Text>
+      <Text Id="__SingleUse_1OTH" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_QAHZ" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">CPU Usage:</Translation>
+      </Text>
+      <Text Id="__SingleUse_WVKD" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_W3JL" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_0UZQ" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_0TCN" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_17J7" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_N04N" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_06YR" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_88EM" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_4FUU" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_ALML" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_IST8" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_0IVO" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_TSA9" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_Q2JI" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">IP ADRESS</Translation>
+      </Text>
+      <Text Id="__SingleUse_M1C1" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Static</Translation>
+      </Text>
+      <Text Id="__SingleUse_SUH3" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">DHCP</Translation>
+      </Text>
+      <Text Id="__SingleUse_4PCZ" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Network Mode</Translation>
+      </Text>
+      <Text Id="__SingleUse_3XC1" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_I4SI" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_KMRN" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_2BO8" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
       <Text Id="__SingleUse_RNKA" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
@@ -182,16 +263,16 @@
         <Translation Language="GB">Pair</Translation>
       </Text>
       <Text Id="__SingleUse_9TLF" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Power Settings:</Translation>
+        <Translation Language="GB">Serial Number:</Translation>
       </Text>
       <Text Id="__SingleUse_R6SM" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">Temperature:</Translation>
       </Text>
       <Text Id="__SingleUse_P871" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Clock:</Translation>
+        <Translation Language="GB">Firmware Version:</Translation>
       </Text>
-      <Text Id="__SingleUse_NK6P" Alignment="Left" TypographyId="Typography1">
-        <Translation Language="GB">Version:</Translation>
+      <Text Id="__SingleUse_NK6P" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Model:</Translation>
       </Text>
       <Text Id="__SingleUse_IX0A" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">Name:</Translation>
@@ -200,7 +281,7 @@
         <Translation Language="GB">SETTINGS</Translation>
       </Text>
       <Text Id="__SingleUse_U3CF" Alignment="Center" TypographyId="Default">
-        <Translation Language="GB">SYSTEM INFORMATION</Translation>
+        <Translation Language="GB">DEVICE INFORMATION</Translation>
       </Text>
       <Text Id="__SingleUse_T0WK" Alignment="Center" TypographyId="Typography4">
         <Translation Language="GB">&lt;value&gt;</Translation>
@@ -265,7 +346,7 @@
     </TextGroup>
   </Texts>
   <Typographies>
-    <Typography Id="Default" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="." WildcardCharacterRanges="0-9,A-Z" />
+    <Typography Id="Default" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters=".,%,-, " WildcardCharacterRanges="0-9,A-Z" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Typography1" Font="EaseStandard-Bold.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="/" WildcardCharacterRanges="A-Z,a-z,0-9" />
