@@ -340,3 +340,9 @@ extern "C" void set_go_to_launch_c(void)
     if(modelInstance != 0)
         modelInstance->goToLaunchRequested = true;
 }
+
+extern "C" void set_lcd_brightness_c(int value)
+{
+    if(modelInstance != 0)
+        modelInstance->setLcdBrightness(value);
+}

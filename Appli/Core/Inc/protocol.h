@@ -39,6 +39,10 @@ extern "C" {
 #define SPEED_MID_PERCENT   60
 #define SPEED_HIGH_PERCENT  100
 
+/* Brightness limits */
+#define BRIGHTNESS_MIN      10
+#define BRIGHTNESS_MAX      100
+
 /* TUII Packet Framing -------------------------------------------------------*/
 /* SOF markers (4 bytes each, big-endian on wire for JSON protocol) */
 /* OTA SOF:    0xA1B1C1D1 → bytes: A1 B1 C1 D1 */
@@ -116,6 +120,7 @@ void Protocol_ProcessReceivedData(uint8_t *data, uint16_t length);
 void Protocol_SendSetGain(int zone, int norm);
 void Protocol_SendSetMute(int zone, int state);
 void Protocol_SendSetSource(int zone, int index);
+void Protocol_SendSetBrightness(int value);
 
 /* OTA Binary Protocol -------------------------------------------------------*/
 /* OTA binary frame layout (all multi-byte fields are LITTLE-ENDIAN):

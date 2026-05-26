@@ -266,6 +266,37 @@ Controls the PWM fan output.
 
 ---
 
+### `setBrightness`
+
+Sets the display backlight brightness.
+
+```json
+{
+  "action": "setBrightness",
+  "payload": {
+    "value": 75
+  }
+}
+```
+
+| Field   | Type | Required | Description                                      |
+|---------|------|----------|--------------------------------------------------|
+| `value` | int  | Yes      | Brightness percentage. Range: **10–100** (inclusive). Values below 10 or above 100 are rejected. |
+
+> Minimum brightness is 10% to keep the display visible. The value maps directly to the LCD PWM backlight duty cycle.
+>
+> Both directions use this message:
+> - **Host → Device**: set the current brightness.
+> - **Device → Host**: report the current brightness (e.g. after a local slider change). Use `Protocol_SendSetBrightness(value)` on the firmware side.
+
+**NACK behavior:**
+
+| `error` value   | `index` | Reason                        |
+|-----------------|---------|-------------------------------|
+| `setBrightness` | `-1`    | Missing or out-of-range `value` |
+
+---
+
 ## General NACK Behavior
 
 | Case                     | NACK payload                          |

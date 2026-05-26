@@ -36,6 +36,7 @@ extern void set_zone_source_name_c(int zoneIdx, int srcIdx, const char* name);
 extern void set_selected_source_c(int zoneIdx, int srcIdx);
 extern void set_ready_received_c(void);
 extern void set_go_to_launch_c(void);
+extern void set_lcd_brightness_c(int value);
 
 #include <stdlib.h> // for atoi, atof
 
@@ -332,6 +333,7 @@ static void HandleZoneEnd(const GenericMessage *msg);
 static void HandleSetGain(const GenericMessage *msg);
 static void HandleSetMute(const GenericMessage *msg);
 static void HandleSetSource(const GenericMessage *msg);
+static void HandleSetBrightness(const GenericMessage *msg);
 static void HandleReady(const GenericMessage *msg);
 static void HandleNack(const GenericMessage *msg);
 
@@ -811,6 +813,25 @@ static void HandleSetSource(const GenericMessage *msg)
   set_selected_source_c(zoneIndex, sourceIndex);
 }
 
+static void HandleSetBrightness(const GenericMessage *msg)
+{
+  char valueBuf[12];
+  int value;
+
+  if (!JSON_GetStringValue(msg->payload, "value", valueBuf, sizeof(valueBuf))) {
+    SendNack(p_huart, "setBrightness", "MISSING BRIGHTNESS.VALUE", -1);
+    return;
+  }
+
+  value = atoi(valueBuf);
+  if (value < BRIGHTNESS_MIN || value > BRIGHTNESS_MAX) {
+    SendNack(p_huart, "setBrightness", "INVALID BRIGHTNESS.VALUE", -1);
+    return;
+  }
+
+  set_lcd_brightness_c(value);
+}
+
 static void HandleReady(const GenericMessage *msg)
 {
   (void)msg;
@@ -892,6 +913,11 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
     return;
   }
 
+  if (strcmp(msg.action, "setBrightness") == 0) {
+    HandleSetBrightness(&msg);
+    return;
+  }
+
   if (strcmp(msg.action, "otarequest") == 0) {
     // OTA implementation function call here
     return;
@@ -924,6 +950,20 @@ void Protocol_SendSetSource(int zone, int index)
   int len = snprintf(buffer, sizeof(buffer),
       "{\"action\":\"setSource\",\"payload\":{\"zone\":%d,\"index\":%d}}",
       zone, index);
+  Protocol_SendFramed(buffer, len);
+}
+
+void Protocol_SendSetBrightness(int value)
+{
+  char buffer[80];
+  int len;
+
+  if (value < BRIGHTNESS_MIN) value = BRIGHTNESS_MIN;
+  if (value > BRIGHTNESS_MAX) value = BRIGHTNESS_MAX;
+
+  len = snprintf(buffer, sizeof(buffer),
+      "{\"action\":\"setBrightness\",\"payload\":{\"value\":%d}}",
+      value);
   Protocol_SendFramed(buffer, len);
 }
 
