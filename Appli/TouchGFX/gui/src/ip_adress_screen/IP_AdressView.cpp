@@ -1,6 +1,8 @@
 #include <gui/ip_adress_screen/IP_AdressView.hpp>
+#include <gui/network_config_screen/Network_ConfigView.hpp>
 
-uint8_t IP_AdressView::octetValues[IP_AdressView::OCTET_COUNT] = { 192, 168, 1, 5 };
+uint8_t IP_AdressView::octetValues[2][IP_AdressView::OCTET_COUNT] = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
+int IP_AdressView::activeSource = 0;
 
 IP_AdressView::IP_AdressView()
     : activeOctet(-1), dragStartY(0), dragAnchorValue(0), visibleOctet(-1)
@@ -16,6 +18,8 @@ IP_AdressView::IP_AdressView()
 void IP_AdressView::setupScreen()
 {
     IP_AdressViewBase::setupScreen();
+
+    activeSource = static_cast<int>(Network_ConfigView::configSource);
 
     textArea1.setWildcard(bufC[0]);
     textArea2.setWildcard(bufC[1]);
@@ -76,7 +80,7 @@ void IP_AdressView::showUDForOctet(int index)
 void IP_AdressView::refreshOctet(int i)
 {
     if (i < 0 || i >= OCTET_COUNT) return;
-    uint8_t c = octetValues[i];
+    uint8_t c = octetValues[activeSource][i];
     uint8_t u = static_cast<uint8_t>((c == 0) ? 255 : (c - 1));
     uint8_t d = static_cast<uint8_t>((c == 255) ? 0 : (c + 1));
 
@@ -127,7 +131,7 @@ void IP_AdressView::handleClickEvent(const touchgfx::ClickEvent& event)
         {
             activeOctet = hit;
             dragStartY = y;
-            dragAnchorValue = octetValues[hit];
+            dragAnchorValue = octetValues[activeSource][hit];
             showUDForOctet(hit);
             return;
         }
@@ -154,9 +158,9 @@ void IP_AdressView::handleDragEvent(const touchgfx::DragEvent& event)
         int newValue = (static_cast<int>(dragAnchorValue) + steps) % 256;
         if (newValue < 0) newValue += 256;
 
-        if (static_cast<uint8_t>(newValue) != octetValues[activeOctet])
+        if (static_cast<uint8_t>(newValue) != octetValues[activeSource][activeOctet])
         {
-            octetValues[activeOctet] = static_cast<uint8_t>(newValue);
+            octetValues[activeSource][activeOctet] = static_cast<uint8_t>(newValue);
             refreshOctet(activeOctet);
         }
         return;

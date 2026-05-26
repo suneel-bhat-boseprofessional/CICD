@@ -367,24 +367,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/device_information_screen/Device_InformationView.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/gui/Ethernet_SettingsPresenter.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/ethernet_settings_screen/Ethernet_SettingsPresenter.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/gui/Ethernet_SettingsView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/ethernet_settings_screen/Ethernet_SettingsView.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/gui/GPIOPresenter.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/gpio_screen/GPIOPresenter.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/gui/GPIOView.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/gpio_screen/GPIOView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/homePresenter.cpp</name>
@@ -480,16 +465,6 @@
 			<name>Application/User/gui/NotificationsView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/notifications_screen/NotificationsView.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/gui/OutPresenter.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/out_screen/OutPresenter.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/gui/OutView.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/out_screen/OutView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/Screen1Presenter.cpp</name>
@@ -772,16 +747,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/device_information_screen/Device_InformationViewBase.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Ethernet_SettingsViewBase.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/ethernet_settings_screen/Ethernet_SettingsViewBase.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/GPIOViewBase.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/gpio_screen/GPIOViewBase.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/homeViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/home_screen/homeViewBase.cpp</locationURI>
@@ -825,11 +790,6 @@
 			<name>Application/User/generated/NotificationsViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/notifications_screen/NotificationsViewBase.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/OutViewBase.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/out_screen/OutViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Screen1ViewBase.cpp</name>
@@ -1072,6 +1032,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_PopUP.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_Preset.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Preset.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Primary.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Primary.cpp</locationURI>
@@ -1115,6 +1080,11 @@
 			<name>Application/User/generated/image_Source_select_bg.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Source_select_bg.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Spotify.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Spotify.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Toggle.cpp</name>

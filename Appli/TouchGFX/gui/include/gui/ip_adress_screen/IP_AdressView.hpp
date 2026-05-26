@@ -19,9 +19,11 @@ public:
     virtual void handleClickEvent(const touchgfx::ClickEvent& event);
     virtual void handleDragEvent(const touchgfx::DragEvent& event);
 
-    static uint8_t getOctet(int index) { return (index >= 0 && index < OCTET_COUNT) ? octetValues[index] : 0; }
+    static uint8_t getOctet(int index) { return (index >= 0 && index < OCTET_COUNT) ? octetValues[activeSource][index] : 0; }
+    static uint8_t getOctet(int source, int index) { return (source >= 0 && source < 2 && index >= 0 && index < OCTET_COUNT) ? octetValues[source][index] : 0; }
 protected:
-    static uint8_t octetValues[OCTET_COUNT];
+    static uint8_t octetValues[2][OCTET_COUNT]; // [0]=Ethernet, [1]=WiFi
+    static int activeSource;
 
     int activeOctet;
     int16_t dragStartY;

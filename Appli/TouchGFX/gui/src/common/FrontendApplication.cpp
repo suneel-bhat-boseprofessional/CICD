@@ -19,16 +19,10 @@
 #include <gui/settings_network_screen/Settings_NetworkPresenter.hpp>
 #include <gui/inout_screen/InoutView.hpp>
 #include <gui/inout_screen/InoutPresenter.hpp>
-#include <gui/gpio_screen/GPIOView.hpp>
-#include <gui/gpio_screen/GPIOPresenter.hpp>
 #include <gui/in_screen/InView.hpp>
 #include <gui/in_screen/InPresenter.hpp>
-#include <gui/out_screen/OutView.hpp>
-#include <gui/out_screen/OutPresenter.hpp>
 #include <gui/notifications_screen/NotificationsView.hpp>
 #include <gui/notifications_screen/NotificationsPresenter.hpp>
-#include <gui/ethernet_settings_screen/Ethernet_SettingsView.hpp>
-#include <gui/ethernet_settings_screen/Ethernet_SettingsPresenter.hpp>
 #include <gui/network_config_screen/Network_ConfigView.hpp>
 #include <gui/network_config_screen/Network_ConfigPresenter.hpp>
 #include <gui/network_mode_screen/Network_ModeView.hpp>
@@ -153,17 +147,6 @@ void FrontendApplication::gotoInoutScreenNoTransitionImpl()
     touchgfx::makeTransition<InoutView, InoutPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-void FrontendApplication::gotoGPIOScreenNoTransition()
-{
-    gpioTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoGPIOScreenNoTransitionImpl);
-    pendingScreenTransitionCallback = &gpioTransitionCb;
-}
-
-void FrontendApplication::gotoGPIOScreenNoTransitionImpl()
-{
-    touchgfx::makeTransition<GPIOView, GPIOPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
 void FrontendApplication::gotoInScreenNoTransition()
 {
     inTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoInScreenNoTransitionImpl);
@@ -175,17 +158,6 @@ void FrontendApplication::gotoInScreenNoTransitionImpl()
     touchgfx::makeTransition<InView, InPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-void FrontendApplication::gotoOutScreenNoTransition()
-{
-    outTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoOutScreenNoTransitionImpl);
-    pendingScreenTransitionCallback = &outTransitionCb;
-}
-
-void FrontendApplication::gotoOutScreenNoTransitionImpl()
-{
-    touchgfx::makeTransition<OutView, OutPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
 void FrontendApplication::gotoNotificationsScreenNoTransition()
 {
     notificationsTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoNotificationsScreenNoTransitionImpl);
@@ -195,17 +167,6 @@ void FrontendApplication::gotoNotificationsScreenNoTransition()
 void FrontendApplication::gotoNotificationsScreenNoTransitionImpl()
 {
     touchgfx::makeTransition<NotificationsView, NotificationsPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-void FrontendApplication::gotoEthernet_SettingsScreenNoTransition()
-{
-    ethernetSettingsTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoEthernet_SettingsScreenNoTransitionImpl);
-    pendingScreenTransitionCallback = &ethernetSettingsTransitionCb;
-}
-
-void FrontendApplication::gotoEthernet_SettingsScreenNoTransitionImpl()
-{
-    touchgfx::makeTransition<Ethernet_SettingsView, Ethernet_SettingsPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 void FrontendApplication::gotoNetwork_ConfigScreenNoTransition()

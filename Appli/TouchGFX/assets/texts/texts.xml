@@ -43,6 +43,18 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_V0QJ" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_9N5X" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_GME6" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_ATWC" Alignment="Center" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
       <Text Id="__SingleUse_UUW2" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">Boot Cause: &lt;value&gt;</Translation>
       </Text>
@@ -127,7 +139,7 @@
       <Text Id="__SingleUse_2BO8" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_RNKA" Alignment="Left" TypographyId="Default">
+      <Text Id="__SingleUse_RNKA" Alignment="Right" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_UATT" Alignment="Left" TypographyId="Default">
@@ -135,15 +147,6 @@
       </Text>
       <Text Id="__SingleUse_SXZW" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
-      </Text>
-      <Text Id="__SingleUse_WY84" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Secondary Port</Translation>
-      </Text>
-      <Text Id="__SingleUse_DQ2B" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Primary Port</Translation>
-      </Text>
-      <Text Id="__SingleUse_51Z5" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">ETHERNET SETTINGS</Translation>
       </Text>
       <Text Id="__SingleUse_NJKP" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">Off</Translation>
@@ -174,42 +177,6 @@
       </Text>
       <Text Id="__SingleUse_CTNM" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">Laptio_Lab</Translation>
-      </Text>
-      <Text Id="__SingleUse_7DOR" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 4</Translation>
-      </Text>
-      <Text Id="__SingleUse_T8HE" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 3</Translation>
-      </Text>
-      <Text Id="__SingleUse_QFLW" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 2</Translation>
-      </Text>
-      <Text Id="__SingleUse_X31A" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 1</Translation>
-      </Text>
-      <Text Id="__SingleUse_92LZ" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 4</Translation>
-      </Text>
-      <Text Id="__SingleUse_BS78" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 3</Translation>
-      </Text>
-      <Text Id="__SingleUse_AHAJ" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 2</Translation>
-      </Text>
-      <Text Id="__SingleUse_0KRA" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 1</Translation>
-      </Text>
-      <Text Id="__SingleUse_9G9D" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 4</Translation>
-      </Text>
-      <Text Id="__SingleUse_BROP" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 3</Translation>
-      </Text>
-      <Text Id="__SingleUse_2D5G" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 2</Translation>
-      </Text>
-      <Text Id="__SingleUse_ZH3F" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Analog 1</Translation>
       </Text>
       <Text Id="__SingleUse_EN25" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">NETWORK</Translation>

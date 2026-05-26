@@ -39,11 +39,8 @@ public:
     void gotoBT_SettingsScreenNoTransition();
     void gotoSettings_NetworkScreenNoTransition();
     void gotoInoutScreenNoTransition();
-    void gotoGPIOScreenNoTransition();
     void gotoInScreenNoTransition();
-    void gotoOutScreenNoTransition();
     void gotoNotificationsScreenNoTransition();
-    void gotoEthernet_SettingsScreenNoTransition();
     void gotoNetwork_ConfigScreenNoTransition();
     void gotoNetwork_Mode_ScreenNoTransition();
     void gotoIP_AdressScreenNoTransition();
@@ -60,11 +57,8 @@ private:
     void gotoBT_SettingsScreenNoTransitionImpl();
     void gotoSettings_NetworkScreenNoTransitionImpl();
     void gotoInoutScreenNoTransitionImpl();
-    void gotoGPIOScreenNoTransitionImpl();
     void gotoInScreenNoTransitionImpl();
-    void gotoOutScreenNoTransitionImpl();
     void gotoNotificationsScreenNoTransitionImpl();
-    void gotoEthernet_SettingsScreenNoTransitionImpl();
     void gotoNetwork_ConfigScreenNoTransitionImpl();
     void gotoNetwork_Mode_ScreenNoTransitionImpl();
     void gotoIP_AdressScreenNoTransitionImpl();
@@ -80,11 +74,8 @@ private:
     touchgfx::Callback<FrontendApplication> btSettingsTransitionCb;
     touchgfx::Callback<FrontendApplication> settingsNetworkTransitionCb;
     touchgfx::Callback<FrontendApplication> inoutTransitionCb;
-    touchgfx::Callback<FrontendApplication> gpioTransitionCb;
     touchgfx::Callback<FrontendApplication> inTransitionCb;
-    touchgfx::Callback<FrontendApplication> outTransitionCb;
     touchgfx::Callback<FrontendApplication> notificationsTransitionCb;
-    touchgfx::Callback<FrontendApplication> ethernetSettingsTransitionCb;
     touchgfx::Callback<FrontendApplication> networkConfigTransitionCb;
     touchgfx::Callback<FrontendApplication> networkModeTransitionCb;
     touchgfx::Callback<FrontendApplication> ipAdressTransitionCb;

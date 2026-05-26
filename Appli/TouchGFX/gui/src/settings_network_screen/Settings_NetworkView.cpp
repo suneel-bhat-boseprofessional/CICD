@@ -1,4 +1,5 @@
 #include <gui/settings_network_screen/Settings_NetworkView.hpp>
+#include <gui/network_config_screen/Network_ConfigView.hpp>
 
 Settings_NetworkView::Settings_NetworkView()
 {
@@ -34,7 +35,8 @@ void Settings_NetworkView::handleClickEvent(const touchgfx::ClickEvent& event)
             image2.setVisible(false);
             image1.invalidate();
             image2.invalidate();
-            application().gotoEthernet_SettingsScreenNoTransition();
+            Network_ConfigView::configSource = Network_ConfigView::SOURCE_ETHERNET;
+            application().gotoNetwork_ConfigScreenNoTransition();
             return;
         }
 
@@ -46,6 +48,8 @@ void Settings_NetworkView::handleClickEvent(const touchgfx::ClickEvent& event)
             image1.setVisible(false);
             image1.invalidate();
             image2.invalidate();
+            Network_ConfigView::configSource = Network_ConfigView::SOURCE_WIFI;
+            application().gotoNetwork_ConfigScreenNoTransition();
             return;
         }
     }

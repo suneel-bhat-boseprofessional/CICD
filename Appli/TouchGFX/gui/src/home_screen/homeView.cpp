@@ -207,5 +207,5 @@ void homeView::updateArrows()
 
 void homeView::goToLaunchScreen()
 {
-    application().gotoScreen1ScreenNoTransition();
+    application().gotolaunchScreenNoTransition();
 }

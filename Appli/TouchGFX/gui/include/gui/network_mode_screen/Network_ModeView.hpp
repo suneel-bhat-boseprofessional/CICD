@@ -13,7 +13,7 @@ public:
     virtual void tearDownScreen();
     virtual void handleClickEvent(const touchgfx::ClickEvent& event);
 
-    static bool dhcpSelected;
+    static bool dhcpSelected[2]; // [0]=Ethernet, [1]=WiFi
 protected:
 };
 
