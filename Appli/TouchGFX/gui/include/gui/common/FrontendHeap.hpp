@@ -63,6 +63,11 @@ public:
     Model model;
     FrontendApplication app;
 
+    virtual void gotoStartScreen(FrontendApplication& app)
+    {
+        app.changeToStartScreen();
+    }
+
 private:
     FrontendHeap() : FrontendHeapBase(presenters, views, transitions, app),
                      app(model, *this)

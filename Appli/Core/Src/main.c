@@ -106,9 +106,14 @@ RAMCFG_HandleTypeDef hramcfg_SRAM4;
 RAMCFG_HandleTypeDef hramcfg_SRAM5;
 RAMCFG_HandleTypeDef hramcfg_SRAM6;
 
+IWDG_HandleTypeDef hiwdg;
+
 UART_HandleTypeDef huart;
 
 /* USER CODE BEGIN PV */
+/* Boot cause string populated early in main() from RCC_RSR / PWR_CPUCR flags */
+char g_bootCauseStr[30] = "Boot:Unknown";
+
 int max_touches = MAX_NUM_TOUCHES;
 struct coop_data finger[MAX_NUM_TOUCHES];
 TIM_HandleTypeDef htim4;
@@ -706,6 +711,25 @@ static void MX_TIM15_Init(void)
 }
 
 
+/**
+  * @brief IWDG Initialization Function
+  * @param None
+  * @retval None
+  */
+void MX_IWDG_Init(void)
+{
+  hiwdg.Instance = IWDG;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_64;
+  hiwdg.Init.Window = 500;   // Window disabled
+  hiwdg.Init.Reload = 500;   // 1s
+  hiwdg.Init.EWI = 0;
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+
 /* USER CODE END 0 */
 
 
@@ -716,6 +740,29 @@ static void MX_TIM15_Init(void)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+
+  /* Read reset-source flags before any driver clears them */
+  {
+    uint32_t rsr     = RCC->RSR;
+    uint32_t pwrCpuCr = PWR->CPUCR;
+    const char *cause;
+
+    if      (pwrCpuCr & PWR_CPUCR_SBF)      cause = "Standby wakeup";
+    else if (rsr & RCC_RSR_PORRSTF)          cause = "Power-on";
+    else if (rsr & RCC_RSR_IWDGRSTF)         cause = "IWDG watchdog";
+    else if (rsr & RCC_RSR_WWDGRSTF)         cause = "WWDG watchdog";
+    else if (rsr & RCC_RSR_LPWRRSTF)         cause = "Illegal LP mode";
+    else if (rsr & RCC_RSR_LCKRSTF)          cause = "CPU lockup";
+    else if (rsr & RCC_RSR_SFTRSTF)          cause = "Software reset";
+    else if (rsr & RCC_RSR_BORRSTF)          cause = "Brownout";
+    else if (rsr & RCC_RSR_PINRSTF)          cause = "Pin reset";
+    else                                     cause = "Unknown";
+
+    snprintf(g_bootCauseStr, sizeof(g_bootCauseStr), "%s", cause);
+
+    /* Clear reset flags for next boot */
+    RCC->RSR |= RCC_RSR_RMVF;
+  }
 
 #if !defined(XIP_BUILD) || (XIP_BUILD == 0)
   OpenDebug();
@@ -827,8 +874,6 @@ int main(void)
   MX_DMA2D_Init();
   MX_GPU2D_Init();
   MX_ICACHE_Init();
-  
-
 
   /* USER CODE BEGIN I2C1_BusRecovery */
   // Perform bus recovery before I2C initialization
@@ -842,7 +887,7 @@ int main(void)
   MX_UART_Init();
   MX_TIM4_Init();
   MX_TIM15_Init();
-  LCD_SetBacklight(10);
+  LCD_SetBacklight(100);
   //Initialize LCD backlit control system-PWM
   HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
   //Initialize fan control system (PWM + UART interrupt)
@@ -1795,6 +1840,22 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
     // Use the same buffer as fan_control.c
   extern uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
     FanControl_UART_RxIdleCallback(huart, uart_rx_buffer, Size);
+}
+
+/**
+  * @brief  UART error callback - recovers from ORE/FE/NE/PE errors
+  * @param  huart_err: UART handle that encountered the error
+  * @retval None
+  */
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart_err)
+{
+  if (huart_err->Instance == huart.Instance)
+  {
+    __HAL_UART_CLEAR_FLAG(huart_err, UART_CLEAR_OREF | UART_CLEAR_NEF |
+                                      UART_CLEAR_PEF  | UART_CLEAR_FEF);
+    extern uint8_t uart_rx_buffer[UART_RX_BUFFER_SIZE];
+    HAL_UARTEx_ReceiveToIdle_IT(huart_err, uart_rx_buffer, sizeof(uart_rx_buffer));
+  }
 }
 
 /**
