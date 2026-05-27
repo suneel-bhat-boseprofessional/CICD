@@ -41,5 +41,5 @@ void Studio_GoldView::tearDownScreen()
 
 void Studio_GoldView::flexButtonClicked(const touchgfx::AbstractButtonContainer& src)
 {
-    application().gotohomeScreenNoTransition();
+    application().gotoBluetooth_2ScreenNoTransition();
 }

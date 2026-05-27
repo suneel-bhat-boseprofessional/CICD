@@ -25,6 +25,8 @@ public:
      */
     virtual void deactivate();
 
+    virtual void notifyDeviceInfoChanged();
+
     virtual ~Device_InformationPresenter() {}
 
 private:

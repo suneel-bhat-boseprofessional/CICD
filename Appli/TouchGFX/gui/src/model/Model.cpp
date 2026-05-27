@@ -15,7 +15,9 @@ Model::Model() :
     lcdBrightness(10),
     zoneNamesChanged(false),
     readyReceived(false),
-    goToLaunchRequested(false)
+    goToLaunchRequested(false),
+    ioColorsChanged(false),
+    deviceInfoChanged(false)
 {
     modelInstance = this;
 
@@ -70,6 +72,22 @@ void Model::tick()
         if(modelListener != 0)
         {
             modelListener->notifyGoToLaunch();
+        }
+    }
+    if(ioColorsChanged)
+    {
+        ioColorsChanged = false;
+        if(modelListener != 0)
+        {
+            modelListener->notifyIOColorsChanged();
+        }
+    }
+    if(deviceInfoChanged)
+    {
+        deviceInfoChanged = false;
+        if(modelListener != 0)
+        {
+            modelListener->notifyDeviceInfoChanged();
         }
     }
 }
@@ -339,6 +357,18 @@ extern "C" void set_go_to_launch_c(void)
 {
     if(modelInstance != 0)
         modelInstance->goToLaunchRequested = true;
+}
+
+extern "C" void set_io_colors_changed_c(void)
+{
+    if(modelInstance != 0)
+        modelInstance->ioColorsChanged = true;
+}
+
+extern "C" void set_device_info_changed_c(void)
+{
+    if(modelInstance != 0)
+        modelInstance->deviceInfoChanged = true;
 }
 
 extern "C" void set_lcd_brightness_c(int value)

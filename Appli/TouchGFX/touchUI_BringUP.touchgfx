@@ -662,9 +662,9 @@
           {
             "Type": "ScrollList",
             "Name": "scrollList1",
-            "X": 51,
+            "X": 47,
             "Y": 22,
-            "Width": 317,
+            "Width": 387,
             "Height": 106,
             "ItemTemplateName": "CustomContainer6",
             "NumberofItems": 1,
@@ -689,6 +689,15 @@
             }
           },
           {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          },
+          {
             "Type": "FlexButton",
             "Name": "flexButton1",
             "Y": 22,
@@ -707,15 +716,6 @@
                 "BorderSize": 5
               }
             ]
-          },
-          {
-            "Type": "Image",
-            "Name": "image1",
-            "X": 12,
-            "Y": 57,
-            "Width": 10,
-            "Height": 16,
-            "RelativeFilename": "Vector_left.png"
           }
         ],
         "Interactions": [
@@ -3696,20 +3696,21 @@
       },
       {
         "Name": "CustomContainer6",
-        "Width": 317,
-        "Height": 203,
+        "X": 43,
+        "Width": 387,
+        "Height": 211,
         "Components": [
           {
             "Type": "Box",
             "Name": "box1",
-            "Width": 317,
-            "Height": 203
+            "Width": 387,
+            "Height": 211
           },
           {
             "Type": "TextArea",
             "Name": "textArea2",
-            "X": 28,
-            "Y": 25,
+            "X": 32,
+            "Y": 30,
             "Width": 54,
             "Height": 20,
             "TextId": "__SingleUse_NK6P",
@@ -3723,7 +3724,8 @@
           {
             "Type": "TextArea",
             "Name": "textArea1",
-            "X": 28,
+            "X": 32,
+            "Y": 5,
             "Width": 54,
             "Height": 20,
             "TextId": "__SingleUse_IX0A",
@@ -3737,10 +3739,10 @@
           {
             "Type": "TextArea",
             "Name": "textArea3",
-            "X": 28,
-            "Y": 50,
+            "X": 32,
+            "Y": 55,
             "Width": 144,
-            "Height": 18,
+            "Height": 20,
             "TextId": "__SingleUse_P871",
             "TextRotation": "0",
             "Color": {
@@ -3752,8 +3754,8 @@
           {
             "Type": "TextArea",
             "Name": "textArea4",
-            "X": 28,
-            "Y": 100,
+            "X": 32,
+            "Y": 105,
             "Width": 105,
             "Height": 20,
             "TextId": "__SingleUse_R6SM",
@@ -3767,10 +3769,10 @@
           {
             "Type": "TextArea",
             "Name": "textArea5",
-            "X": 28,
-            "Y": 75,
+            "X": 32,
+            "Y": 80,
             "Width": 119,
-            "Height": 18,
+            "Height": 20,
             "TextId": "__SingleUse_9TLF",
             "TextRotation": "0",
             "Color": {
@@ -3781,11 +3783,11 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textArea6",
-            "X": 78,
-            "Y": 2,
-            "Width": 131,
-            "Height": 16,
+            "Name": "Name_1",
+            "X": 193,
+            "Y": 5,
+            "Width": 190,
+            "Height": 20,
             "TextId": "__SingleUse_2BO8",
             "TextRotation": "0",
             "Color": {
@@ -3797,11 +3799,11 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textArea7",
-            "X": 81,
-            "Y": 26,
-            "Width": 131,
-            "Height": 19,
+            "Name": "Model_1",
+            "X": 193,
+            "Y": 30,
+            "Width": 190,
+            "Height": 20,
             "TextId": "__SingleUse_KMRN",
             "TextRotation": "0",
             "Color": {
@@ -3813,11 +3815,11 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textArea9",
-            "X": 172,
-            "Y": 50,
-            "Width": 131,
-            "Height": 18,
+            "Name": "FW_V_1",
+            "X": 193,
+            "Y": 55,
+            "Width": 190,
+            "Height": 20,
             "TextId": "__SingleUse_I4SI",
             "TextRotation": "0",
             "Color": {
@@ -3829,11 +3831,11 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textArea10",
-            "X": 146,
-            "Y": 75,
-            "Width": 131,
-            "Height": 18,
+            "Name": "Serial_N_1",
+            "X": 193,
+            "Y": 80,
+            "Width": 190,
+            "Height": 20,
             "TextId": "__SingleUse_3XC1",
             "TextRotation": "0",
             "Color": {
@@ -3845,11 +3847,11 @@
           },
           {
             "Type": "TextArea",
-            "Name": "textArea12",
-            "X": 136,
-            "Y": 175,
-            "Width": 131,
-            "Height": 19,
+            "Name": "Clock_status_1",
+            "X": 189,
+            "Y": 180,
+            "Width": 190,
+            "Height": 20,
             "TextId": "__SingleUse_WVKD",
             "TextRotation": "0",
             "Color": {
@@ -3857,32 +3859,30 @@
               "Green": 255,
               "Blue": 255
             },
-            "AutoSize": true,
             "Wildcard1": {}
           },
           {
             "Type": "TextArea",
             "Name": "textArea13",
-            "X": 28,
-            "Y": 125,
+            "X": 32,
+            "Y": 130,
             "Width": 91,
-            "Height": 19,
+            "Height": 20,
             "TextId": "__SingleUse_QAHZ",
             "TextRotation": "0",
             "Color": {
               "Red": 255,
               "Green": 255,
               "Blue": 255
-            },
-            "AutoSize": true
+            }
           },
           {
             "Type": "TextArea",
-            "Name": "textArea14",
-            "X": 133,
-            "Y": 100,
-            "Width": 131,
-            "Height": 19,
+            "Name": "Temparature_1",
+            "X": 193,
+            "Y": 105,
+            "Width": 190,
+            "Height": 20,
             "TextId": "__SingleUse_1OTH",
             "TextRotation": "0",
             "Color": {
@@ -3890,48 +3890,45 @@
               "Green": 255,
               "Blue": 255
             },
-            "AutoSize": true,
             "Wildcard1": {}
           },
           {
             "Type": "TextArea",
             "Name": "textArea15",
-            "X": 28,
-            "Y": 150,
+            "X": 33,
+            "Y": 155,
             "Width": 107,
-            "Height": 19,
+            "Height": 20,
             "TextId": "__SingleUse_G6Q7",
             "TextRotation": "0",
             "Color": {
               "Red": 255,
               "Green": 255,
               "Blue": 255
-            },
-            "AutoSize": true
+            }
           },
           {
             "Type": "TextArea",
             "Name": "textArea16",
-            "X": 28,
-            "Y": 175,
+            "X": 33,
+            "Y": 180,
             "Width": 108,
-            "Height": 19,
+            "Height": 20,
             "TextId": "__SingleUse_U395",
             "TextRotation": "0",
             "Color": {
               "Red": 255,
               "Green": 255,
               "Blue": 255
-            },
-            "AutoSize": true
+            }
           },
           {
             "Type": "TextArea",
-            "Name": "textArea17",
-            "X": 135,
-            "Y": 150,
-            "Width": 131,
-            "Height": 19,
+            "Name": "Disk_S_1",
+            "X": 189,
+            "Y": 155,
+            "Width": 194,
+            "Height": 20,
             "TextId": "__SingleUse_H8IT",
             "TextRotation": "0",
             "Color": {
@@ -3939,16 +3936,15 @@
               "Green": 255,
               "Blue": 255
             },
-            "AutoSize": true,
             "Wildcard1": {}
           },
           {
             "Type": "TextArea",
-            "Name": "textArea18",
-            "X": 119,
-            "Y": 125,
-            "Width": 131,
-            "Height": 19,
+            "Name": "CPU_U_1",
+            "X": 189,
+            "Y": 130,
+            "Width": 194,
+            "Height": 20,
             "TextId": "__SingleUse_8VBA",
             "TextRotation": "0",
             "Color": {
@@ -3956,7 +3952,6 @@
               "Green": 255,
               "Blue": 255
             },
-            "AutoSize": true,
             "Wildcard1": {}
           }
         ],

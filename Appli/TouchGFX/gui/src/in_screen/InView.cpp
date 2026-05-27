@@ -3,13 +3,8 @@
 InView::IOMode InView::currentMode = InView::MODE_IN;
 
 static const char* inLabels[4]   = { "Analog 1", "Analog 2", "Analog 3", "USB" };
-static const uint32_t inColors[4] = { InView::COLOR_GREEN, InView::COLOR_ORANGE, InView::COLOR_GRAY, InView::COLOR_GREEN };
-
 static const char* outLabels[4]  = { "Analog 1", "Analog 2", "Analog 3", "Analog 4" };
-static const uint32_t outColors[4] = { InView::COLOR_GREEN, InView::COLOR_RED, InView::COLOR_GREEN, InView::COLOR_GREEN };
-
 static const char* gpioLabels[4] = { "Pin 1", "Pin 2", "Pin 3", "Pin 4" };
-static const uint32_t gpioColors[4] = { InView::COLOR_BLUE, InView::COLOR_BLUE, InView::COLOR_BLUE, InView::COLOR_BLUE };
 
 InView::InView()
 {
@@ -29,22 +24,22 @@ void InView::tearDownScreen()
 void InView::applyConfig()
 {
     const char** labels;
-    const uint32_t* colors;
+    uint8_t modeIdx;
 
     switch (currentMode)
     {
     case MODE_OUT:
         labels = outLabels;
-        colors = outColors;
+        modeIdx = 1;
         break;
     case MODE_GPIO:
         labels = gpioLabels;
-        colors = gpioColors;
+        modeIdx = 2;
         break;
     case MODE_IN:
     default:
         labels = inLabels;
-        colors = inColors;
+        modeIdx = 0;
         break;
     }
 
@@ -62,6 +57,11 @@ void InView::applyConfig()
     textArea2.invalidate();
     textArea3.invalidate();
     textArea4.invalidate();
+
+    // Read colors from shared state
+    uint32_t colors[4];
+    for (int i = 0; i < 4; i++)
+        colors[i] = IOColors_IndexToRGB(IOColors_Get(modeIdx, i));
 
     // Set circle colors
     uint8_t r, g, b;

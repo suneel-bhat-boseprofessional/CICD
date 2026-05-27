@@ -18,6 +18,8 @@ public:
     virtual void zoneNamesUpdated() {}
     virtual void notifyReadyReceived() {}
     virtual void notifyGoToLaunch() {}
+    virtual void notifyIOColorsChanged() {}
+    virtual void notifyDeviceInfoChanged() {}
 
 protected:
     Model* model;

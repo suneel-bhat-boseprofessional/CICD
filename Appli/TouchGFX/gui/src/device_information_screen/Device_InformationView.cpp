@@ -56,6 +56,20 @@ void Device_InformationView::scrollList1UpdateItem(CustomContainer6& item, int16
     else
     {
         item.showContent();
+        // Map device info fields to container rows (matches CustomContainer6 wildcard order)
+        item.setValue(0, DeviceInfo_Get(DEVINFO_NAME));
+        item.setValue(1, DeviceInfo_Get(DEVINFO_MODEL));
+        item.setValue(2, DeviceInfo_Get(DEVINFO_FIRMWARE_VERSION));
+        item.setValue(3, DeviceInfo_Get(DEVINFO_SERIAL_NUMBER));
+        item.setValue(4, DeviceInfo_Get(DEVINFO_CLOCK_STATUS));
+        item.setValue(5, DeviceInfo_Get(DEVINFO_TEMPERATURE));
+        item.setValue(6, DeviceInfo_Get(DEVINFO_DISK_USAGE));
+        item.setValue(7, DeviceInfo_Get(DEVINFO_CPU_USAGE));
     }
     item.invalidate();
+}
+
+void Device_InformationView::updateDeviceInfo()
+{
+    scrollList1.invalidate();
 }

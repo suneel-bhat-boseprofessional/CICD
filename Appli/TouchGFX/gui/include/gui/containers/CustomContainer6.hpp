@@ -18,10 +18,9 @@ public:
     void showContent();
 
 protected:
-    static const int NUM_ROWS = 5;
+    static const int NUM_ROWS = 8;
     static const int BUF_SIZE = 24;
 
-    touchgfx::TextAreaWithOneWildcard valueArea[NUM_ROWS];
     touchgfx::Unicode::UnicodeChar valueBuf[NUM_ROWS][BUF_SIZE];
 };
 

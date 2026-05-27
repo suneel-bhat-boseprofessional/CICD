@@ -4,6 +4,10 @@
 #include <gui_generated/device_information_screen/Device_InformationViewBase.hpp>
 #include <gui/device_information_screen/Device_InformationPresenter.hpp>
 
+extern "C" {
+#include "ui_variables.h"
+}
+
 class Device_InformationView : public Device_InformationViewBase
 {
 public:
@@ -13,6 +17,7 @@ public:
     virtual void tearDownScreen();
     virtual void handleTickEvent();
     virtual void scrollList1UpdateItem(CustomContainer6& item, int16_t itemIndex);
+    void updateDeviceInfo();
 protected:
     static int32_t savedScrollOffset;
     bool pendingScrollRestore;

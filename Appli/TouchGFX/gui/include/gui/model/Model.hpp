@@ -47,6 +47,8 @@ public:
     volatile bool zoneNamesChanged;
     volatile bool readyReceived;
     volatile bool goToLaunchRequested;
+    volatile bool ioColorsChanged;
+    volatile bool deviceInfoChanged;
 
 protected:
     ModelListener* modelListener;
@@ -77,6 +79,8 @@ void set_selected_source_c(int zoneIdx, int srcIdx);
 void set_ready_received_c(void);
 void set_go_to_launch_c(void);
 void set_lcd_brightness_c(int value);
+void set_io_colors_changed_c(void);
+void set_device_info_changed_c(void);
 
 #ifdef __cplusplus
 }

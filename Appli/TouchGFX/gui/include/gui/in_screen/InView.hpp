@@ -6,6 +6,10 @@
 #include <touchgfx/Color.hpp>
 #include <touchgfx/Unicode.hpp>
 
+extern "C" {
+#include "ui_variables.h"
+}
+
 class InView : public InViewBase
 {
 public:
@@ -26,9 +30,9 @@ public:
     virtual ~InView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+    void applyConfig();
 protected:
     touchgfx::Unicode::UnicodeChar labelBuf[ITEM_COUNT][LABEL_BUF_SIZE];
-    void applyConfig();
 };
 
 #endif // INVIEW_HPP
