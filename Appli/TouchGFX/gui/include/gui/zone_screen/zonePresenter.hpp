@@ -19,10 +19,11 @@ public:
     virtual void notifyGoToLaunch();
 
     void setSelectedZone(int index);
+    int  getZoneCount() const;      // used by zoneView instead of global zoneCount
 
 private:
     zonePresenter();
-
     zoneView& view;
 };
-#endif
+
+#endif // ZONEPRESENTER_HPP

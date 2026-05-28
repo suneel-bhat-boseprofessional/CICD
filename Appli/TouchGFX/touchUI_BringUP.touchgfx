@@ -294,6 +294,7 @@
             "Y": 31,
             "Width": 20,
             "Height": 20,
+            "Visible": false,
             "RelativeFilename": "Preset.png"
           },
           {
@@ -599,7 +600,7 @@
           {
             "Type": "ScrollList",
             "Name": "scrollList1",
-            "X": 31,
+            "X": 43,
             "Y": 16,
             "Width": 419,
             "Height": 99,
@@ -3282,7 +3283,7 @@
           {
             "Type": "Image",
             "Name": "image2",
-            "X": 106,
+            "X": 102,
             "Width": 100,
             "Height": 99,
             "RelativeFilename": "Frame 48.png"
@@ -3290,7 +3291,7 @@
           {
             "Type": "Image",
             "Name": "image3",
-            "X": 213,
+            "X": 207,
             "Width": 100,
             "Height": 99,
             "RelativeFilename": "Frame 48.png"
@@ -3298,7 +3299,7 @@
           {
             "Type": "Image",
             "Name": "image4",
-            "X": 319,
+            "X": 311,
             "Width": 100,
             "Height": 99,
             "RelativeFilename": "Frame 48.png"
@@ -3322,7 +3323,7 @@
           {
             "Type": "TextArea",
             "Name": "textArea2",
-            "X": 113,
+            "X": 107,
             "Y": 67,
             "Width": 86,
             "Height": 24,
@@ -3338,7 +3339,7 @@
           {
             "Type": "TextArea",
             "Name": "textArea3",
-            "X": 220,
+            "X": 207,
             "Y": 67,
             "Width": 86,
             "Height": 24,
@@ -3354,8 +3355,8 @@
           {
             "Type": "TextArea",
             "Name": "textArea4",
-            "X": 326,
-            "Y": 67,
+            "X": 318,
+            "Y": 64,
             "Width": 86,
             "Height": 24,
             "TextId": "__SingleUse_T0WK",
@@ -3369,7 +3370,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image5",
+            "Name": "L11",
             "X": 26,
             "Y": 52,
             "Width": 22,
@@ -3378,7 +3379,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image6",
+            "Name": "R11",
             "X": 52,
             "Y": 52,
             "Width": 22,
@@ -3387,7 +3388,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image7",
+            "Name": "L12",
             "X": 26,
             "Y": 44,
             "Width": 22,
@@ -3396,7 +3397,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image8",
+            "Name": "R12",
             "X": 52,
             "Y": 44,
             "Width": 22,
@@ -3405,7 +3406,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image9",
+            "Name": "L13",
             "X": 26,
             "Y": 36,
             "Width": 22,
@@ -3414,7 +3415,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image10",
+            "Name": "R13",
             "X": 52,
             "Y": 36,
             "Width": 22,
@@ -3423,7 +3424,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image11",
+            "Name": "L14",
             "X": 26,
             "Y": 28,
             "Width": 22,
@@ -3432,7 +3433,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image12",
+            "Name": "R14",
             "X": 52,
             "Y": 28,
             "Width": 22,
@@ -3441,7 +3442,25 @@
           },
           {
             "Type": "Image",
-            "Name": "image13",
+            "Name": "L15",
+            "X": 26,
+            "Y": 20,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Orange.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R15",
+            "X": 52,
+            "Y": 20,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Orange.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "L16",
             "X": 26,
             "Y": 12,
             "Width": 22,
@@ -3450,7 +3469,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image14",
+            "Name": "R16",
             "X": 52,
             "Y": 12,
             "Width": 22,
@@ -3459,8 +3478,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image15",
-            "X": 145,
+            "Name": "L21",
+            "X": 126,
             "Y": 52,
             "Width": 22,
             "Height": 6,
@@ -3468,8 +3487,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image16",
-            "X": 145,
+            "Name": "L22",
+            "X": 126,
             "Y": 44,
             "Width": 22,
             "Height": 6,
@@ -3477,8 +3496,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image17",
-            "X": 145,
+            "Name": "L23",
+            "X": 126,
             "Y": 36,
             "Width": 22,
             "Height": 6,
@@ -3486,8 +3505,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image18",
-            "X": 145,
+            "Name": "L24",
+            "X": 126,
             "Y": 28,
             "Width": 22,
             "Height": 6,
@@ -3495,8 +3514,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image19",
-            "X": 145,
+            "Name": "L26",
+            "X": 126,
             "Y": 12,
             "Width": 22,
             "Height": 6,
@@ -3504,8 +3523,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image20",
-            "X": 252,
+            "Name": "L31",
+            "X": 234,
             "Y": 52,
             "Width": 22,
             "Height": 6,
@@ -3513,8 +3532,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image21",
-            "X": 252,
+            "Name": "L32",
+            "X": 234,
             "Y": 44,
             "Width": 22,
             "Height": 6,
@@ -3522,8 +3541,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image22",
-            "X": 252,
+            "Name": "L33",
+            "X": 234,
             "Y": 36,
             "Width": 22,
             "Height": 6,
@@ -3531,8 +3550,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image23",
-            "X": 252,
+            "Name": "L34",
+            "X": 234,
             "Y": 28,
             "Width": 22,
             "Height": 6,
@@ -3540,8 +3559,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image24",
-            "X": 252,
+            "Name": "L36",
+            "X": 234,
             "Y": 12,
             "Width": 22,
             "Height": 6,
@@ -3549,8 +3568,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image25",
-            "X": 347,
+            "Name": "L41",
+            "X": 334,
             "Y": 52,
             "Width": 22,
             "Height": 6,
@@ -3558,8 +3577,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image26",
-            "X": 372,
+            "Name": "R41",
+            "X": 361,
             "Y": 52,
             "Width": 22,
             "Height": 6,
@@ -3567,8 +3586,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image27",
-            "X": 347,
+            "Name": "L42",
+            "X": 334,
             "Y": 44,
             "Width": 22,
             "Height": 6,
@@ -3576,8 +3595,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image28",
-            "X": 372,
+            "Name": "R42",
+            "X": 361,
             "Y": 44,
             "Width": 22,
             "Height": 6,
@@ -3585,8 +3604,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image29",
-            "X": 347,
+            "Name": "L43",
+            "X": 334,
             "Y": 36,
             "Width": 22,
             "Height": 6,
@@ -3594,8 +3613,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image30",
-            "X": 372,
+            "Name": "R43",
+            "X": 361,
             "Y": 36,
             "Width": 22,
             "Height": 6,
@@ -3603,8 +3622,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image31",
-            "X": 347,
+            "Name": "L44",
+            "X": 334,
             "Y": 28,
             "Width": 22,
             "Height": 6,
@@ -3612,8 +3631,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image32",
-            "X": 372,
+            "Name": "R44",
+            "X": 361,
             "Y": 28,
             "Width": 22,
             "Height": 6,
@@ -3621,8 +3640,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image33",
-            "X": 347,
+            "Name": "L46",
+            "X": 334,
             "Y": 12,
             "Width": 22,
             "Height": 6,
@@ -3630,8 +3649,8 @@
           },
           {
             "Type": "Image",
-            "Name": "image34",
-            "X": 372,
+            "Name": "R46",
+            "X": 361,
             "Y": 12,
             "Width": 22,
             "Height": 6,
@@ -3639,8 +3658,8 @@
           },
           {
             "Type": "Image",
-            "Name": "extra1",
-            "X": 26,
+            "Name": "L25",
+            "X": 126,
             "Y": 20,
             "Width": 22,
             "Height": 6,
@@ -3648,8 +3667,8 @@
           },
           {
             "Type": "Image",
-            "Name": "extra2",
-            "X": 52,
+            "Name": "L35",
+            "X": 234,
             "Y": 20,
             "Width": 22,
             "Height": 6,
@@ -3657,8 +3676,8 @@
           },
           {
             "Type": "Image",
-            "Name": "extra3",
-            "X": 145,
+            "Name": "L45",
+            "X": 334,
             "Y": 20,
             "Width": 22,
             "Height": 6,
@@ -3666,8 +3685,8 @@
           },
           {
             "Type": "Image",
-            "Name": "extra4",
-            "X": 252,
+            "Name": "R45",
+            "X": 361,
             "Y": 20,
             "Width": 22,
             "Height": 6,
@@ -3675,8 +3694,44 @@
           },
           {
             "Type": "Image",
-            "Name": "extra5",
-            "X": 347,
+            "Name": "R21",
+            "X": 152,
+            "Y": 52,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R22",
+            "X": 152,
+            "Y": 44,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R23",
+            "X": 152,
+            "Y": 36,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R24",
+            "X": 152,
+            "Y": 28,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Lightgreen.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R25",
+            "X": 152,
             "Y": 20,
             "Width": 22,
             "Height": 6,
@@ -3684,12 +3739,282 @@
           },
           {
             "Type": "Image",
-            "Name": "image35",
-            "X": 372,
+            "Name": "R26",
+            "X": 152,
+            "Y": 12,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_red.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R31",
+            "X": 259,
+            "Y": 52,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R32",
+            "X": 259,
+            "Y": 44,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R33",
+            "X": 259,
+            "Y": 36,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R34",
+            "X": 259,
+            "Y": 28,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Lightgreen.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R35",
+            "X": 259,
             "Y": 20,
             "Width": 22,
             "Height": 6,
             "RelativeFilename": "Meters_Orange.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "R36",
+            "X": 259,
+            "Y": 12,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_red.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono11",
+            "X": 41,
+            "Y": 52,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono12",
+            "X": 41,
+            "Y": 44,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono13",
+            "X": 41,
+            "Y": 36,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono14",
+            "X": 41,
+            "Y": 28,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Lightgreen.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono15",
+            "X": 41,
+            "Y": 20,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Orange.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono16",
+            "X": 41,
+            "Y": 12,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_red.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono21",
+            "X": 139,
+            "Y": 52,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono22",
+            "X": 139,
+            "Y": 44,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono23",
+            "X": 139,
+            "Y": 36,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono24",
+            "X": 139,
+            "Y": 28,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Lightgreen.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono25",
+            "X": 139,
+            "Y": 20,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Orange.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono26",
+            "X": 139,
+            "Y": 12,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_red.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono31",
+            "X": 246,
+            "Y": 52,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono32",
+            "X": 246,
+            "Y": 44,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono33",
+            "X": 246,
+            "Y": 36,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono34",
+            "X": 246,
+            "Y": 28,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Lightgreen.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono35",
+            "X": 246,
+            "Y": 20,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Orange.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono36",
+            "X": 246,
+            "Y": 12,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_red.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono41",
+            "X": 350,
+            "Y": 52,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono42",
+            "X": 350,
+            "Y": 44,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono43",
+            "X": 350,
+            "Y": 36,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Indicator.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono44",
+            "X": 350,
+            "Y": 28,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Lightgreen.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono45",
+            "X": 350,
+            "Y": 20,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_Orange.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Mono46",
+            "X": 350,
+            "Y": 12,
+            "Width": 22,
+            "Height": 6,
+            "RelativeFilename": "Meters_red.png"
           }
         ],
         "Interactions": []

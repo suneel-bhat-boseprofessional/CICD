@@ -7,6 +7,10 @@
 extern "C" {
 #endif
 
+// --- For MeteringView/CustomContainer5 global source info ---
+extern int g_source_count;
+extern const char* g_source_names[32];
+
 /* ======================================================================
  * IO Colors
  * Color index mapping:

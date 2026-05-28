@@ -699,13 +699,17 @@ static void HandleZone(const GenericMessage *msg)
           if (srcCount > 8) srcCount = 8;
           /* Write all source names BEFORE setting the count,
              so the UI never sees a non-zero count with empty names */
+          extern int g_source_count;
+          extern const char* g_source_names[32];
+          g_source_count = srcCount;
           for (si = 0; si < srcCount && ti < numTokens; si++, ti++) {
             int len = srcTokens[ti].end - srcTokens[ti].start;
-            char srcBuf[32];
+            static char srcBufs[32][32];
             if (len > 31) len = 31;
-            strncpy(srcBuf, msg->payload + srcTokens[ti].start, len);
-            srcBuf[len] = '\0';
-            set_zone_source_name_c(zoneIndex, si, srcBuf);
+            strncpy(srcBufs[si], msg->payload + srcTokens[ti].start, len);
+            srcBufs[si][len] = '\0';
+            g_source_names[si] = srcBufs[si];
+            set_zone_source_name_c(zoneIndex, si, srcBufs[si]);
           }
           set_zone_source_count_c(zoneIndex, srcCount);
         }

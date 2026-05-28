@@ -34,9 +34,9 @@ public:
 
 protected:
     touchgfx::Callback<zoneView, int> zoneSelectedCallback;
-    bool scrollOccurred;
-    bool scrollPerformanceMode;
+    bool    scrollOccurred;
+    bool    scrollPerformanceMode;
     uint8_t scrollSettleTicks;
 };
 
-#endif
+#endif // ZONEVIEW_HPP

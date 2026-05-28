@@ -1,6 +1,11 @@
 #include "ui_variables.h"
 #include <string.h>
 
+/* Global source info used by protocol.c (C) and TouchGFX C++ code
+ * Defined here with C linkage. */
+int g_source_count = 0;
+const char* g_source_names[32] = {0};
+
 /* ======================================================================
  * IO Colors
  * ====================================================================== */
