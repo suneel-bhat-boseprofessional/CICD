@@ -1627,7 +1627,7 @@
         "Components": [
           {
             "Type": "Image",
-            "Name": "image1",
+            "Name": "image3",
             "X": 249,
             "Y": 20,
             "Width": 100,
@@ -1636,7 +1636,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image2",
+            "Name": "image1",
             "X": 30,
             "Y": 20,
             "Width": 100,
@@ -1645,7 +1645,7 @@
           },
           {
             "Type": "Image",
-            "Name": "image3",
+            "Name": "image2",
             "X": 140,
             "Y": 20,
             "Width": 100,
@@ -2793,6 +2793,129 @@
             }
           }
         ]
+      },
+      {
+        "Name": "StandBy",
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 197,
+            "Y": 6,
+            "Width": 86,
+            "Height": 19,
+            "TextId": "__SingleUse_84NO",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "Button",
+            "Name": "button1",
+            "X": 92,
+            "Y": 40,
+            "Width": 139,
+            "Height": 49,
+            "Pressed": "cnf.png",
+            "Released": "cnf.png"
+          },
+          {
+            "Type": "Button",
+            "Name": "button2",
+            "X": 246,
+            "Y": 40,
+            "Width": 139,
+            "Height": 49,
+            "Pressed": "Cancel_2.png",
+            "Released": "Cancel_2.png"
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 25,
+            "Width": 50,
+            "Height": 74,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 50,
+                "Height": 74,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "home"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Wink",
+        "Components": [
+          {
+            "Type": "Box",
+            "Name": "box1",
+            "Width": 480,
+            "Height": 128,
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "Screen2",
+        "Components": [],
+        "Interactions": []
       }
     ],
     "CustomContainerDefinitions": [

@@ -43,6 +43,9 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_84NO" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">STAND-BY</Translation>
+      </Text>
       <Text Id="__SingleUse_V0QJ" Alignment="Center" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>

@@ -477,6 +477,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen1_screen/Screen1View.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/Screen2Presenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen2_screen/Screen2Presenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Screen2View.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen2_screen/Screen2View.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/Settings_NetworkPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/settings_network_screen/Settings_NetworkPresenter.cpp</locationURI>
@@ -507,6 +517,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/source_select_screen/Source_SelectView.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/StandByPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/standby_screen/StandByPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/StandByView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/standby_screen/StandByView.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/Studio_GoldPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/studio_gold_screen/Studio_GoldPresenter.cpp</locationURI>
@@ -515,6 +535,16 @@
 			<name>Application/User/gui/Studio_GoldView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/studio_gold_screen/Studio_GoldView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/WinkPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/wink_screen/WinkPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/WinkView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/wink_screen/WinkView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/zone2Presenter.cpp</name>
@@ -797,6 +827,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/Screen2ViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen2_screen/Screen2ViewBase.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Settings_NetworkViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/settings_network_screen/Settings_NetworkViewBase.cpp</locationURI>
@@ -812,9 +847,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/source_select_screen/Source_SelectViewBase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/StandByViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/standby_screen/StandByViewBase.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Studio_GoldViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/studio_gold_screen/Studio_GoldViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/WinkViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/wink_screen/WinkViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/zone2ViewBase.cpp</name>
@@ -895,6 +940,11 @@
 			<name>Application/User/generated/image_CNce.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_CNce.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Cancel_2.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Cancel_2.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Delete.cpp</name>
@@ -1145,6 +1195,11 @@
 			<name>Application/User/generated/image_bt.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_bt.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_cnf.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_cnf.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_devices.cpp</name>
