@@ -2,6 +2,7 @@
 
 const int homeView::PAGE_SIZES[2] = { 4, 3 };
 const int homeView::PAGE_OFFSETS[2] = { 0, 4 };
+int homeView::savedPage = 0;
 
 homeView::homeView() :
     itemSelectedCallback(this, &homeView::itemSelected),
@@ -17,12 +18,13 @@ homeView::homeView() :
 void homeView::setupScreen()
 {
     homeViewBase::setupScreen();
-    currentPage = 0;
-    goToPage(0);
+    currentPage = savedPage;
+    goToPage(savedPage);
 }
 
 void homeView::tearDownScreen()
 {
+    savedPage = currentPage;
     homeViewBase::tearDownScreen();
 }
 
@@ -47,6 +49,10 @@ void homeView::itemSelected(int index)
     {
         application().gotozoneScreenNoTransition();
     }
+    else if(index == 1)
+    {
+        application().gotoInoutScreenNoTransition();
+    }
     else if(index == 2)
     {
         application().gotoMeteringScreenNoTransition();
@@ -54,6 +60,14 @@ void homeView::itemSelected(int index)
     else if(index == 3)
     {
         application().gotoSettingsScreenNoTransition();
+    }
+    else if(index == 4)
+    {
+        application().gotoBluetooth_2ScreenNoTransition();
+    }
+    else if(index == 5)
+    {
+        application().gotoNotificationsScreenNoTransition();
     }
 }
 
@@ -193,5 +207,5 @@ void homeView::updateArrows()
 
 void homeView::goToLaunchScreen()
 {
-    application().gotoScreen1ScreenNoTransition();
+    application().gotolaunchScreenNoTransition();
 }

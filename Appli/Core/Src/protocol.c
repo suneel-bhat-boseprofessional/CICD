@@ -22,6 +22,7 @@
 #include "json_parser.h"
 #include "firmware_updater.h"
 #include "ram_functions.h"
+#include "ui_variables.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -37,6 +38,8 @@ extern void set_selected_source_c(int zoneIdx, int srcIdx);
 extern void set_ready_received_c(void);
 extern void set_go_to_launch_c(void);
 extern void set_lcd_brightness_c(int value);
+extern void set_io_colors_changed_c(void);
+extern void set_device_info_changed_c(void);
 
 #include <stdlib.h> // for atoi, atof
 
@@ -70,6 +73,22 @@ void SendNack(UART_HandleTypeDef *huart, const char *failedAction, const char *e
         "{\"action\":\"nack\",\"payload\":{\"error\":\"%s\",\"index\":%d}}",
         failedAction, index);
     Protocol_SendFramed(buffer, len);
+}
+
+/* Public helper to request device info from server */
+void Protocol_RequestDeviceInfo(void)
+{
+  const char *json = "{\"action\":\"deviceInfo\",\"payload\":{}}";
+  Protocol_SendFramed(json, (uint16_t)strlen(json));
+}
+
+void Protocol_SendAction(const char* action)
+{
+  if (action == NULL) return;
+  char json[128];
+  int len = snprintf(json, sizeof(json), "{\"action\":\"%s\",\"payload\":{}}", action);
+  if (len > 0)
+    Protocol_SendFramed(json, (uint16_t)len);
 }
 
 /* Private typedef -----------------------------------------------------------*/
@@ -334,6 +353,8 @@ static void HandleSetGain(const GenericMessage *msg);
 static void HandleSetMute(const GenericMessage *msg);
 static void HandleSetSource(const GenericMessage *msg);
 static void HandleSetBrightness(const GenericMessage *msg);
+static void HandleSetIOColor(const GenericMessage *msg);
+static void HandleDeviceInfo(const GenericMessage *msg);
 static void HandleReady(const GenericMessage *msg);
 static void HandleNack(const GenericMessage *msg);
 
@@ -678,13 +699,17 @@ static void HandleZone(const GenericMessage *msg)
           if (srcCount > 8) srcCount = 8;
           /* Write all source names BEFORE setting the count,
              so the UI never sees a non-zero count with empty names */
+          extern int g_source_count;
+          extern const char* g_source_names[32];
+          g_source_count = srcCount;
           for (si = 0; si < srcCount && ti < numTokens; si++, ti++) {
             int len = srcTokens[ti].end - srcTokens[ti].start;
-            char srcBuf[32];
+            static char srcBufs[32][32];
             if (len > 31) len = 31;
-            strncpy(srcBuf, msg->payload + srcTokens[ti].start, len);
-            srcBuf[len] = '\0';
-            set_zone_source_name_c(zoneIndex, si, srcBuf);
+            strncpy(srcBufs[si], msg->payload + srcTokens[ti].start, len);
+            srcBufs[si][len] = '\0';
+            g_source_names[si] = srcBufs[si];
+            set_zone_source_name_c(zoneIndex, si, srcBufs[si]);
           }
           set_zone_source_count_c(zoneIndex, srcCount);
         }
@@ -832,6 +857,68 @@ static void HandleSetBrightness(const GenericMessage *msg)
   set_lcd_brightness_c(value);
 }
 
+static void HandleSetIOColor(const GenericMessage *msg)
+{
+  char modeBuf[4], channelBuf[4], colorBuf[4];
+
+  if (!JSON_GetStringValue(msg->payload, "mode", modeBuf, sizeof(modeBuf))) {
+    SendNack(p_huart, "setIOColor", "MISSING MODE", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "channel", channelBuf, sizeof(channelBuf))) {
+    SendNack(p_huart, "setIOColor", "MISSING CHANNEL", -1);
+    return;
+  }
+  if (!JSON_GetStringValue(msg->payload, "color", colorBuf, sizeof(colorBuf))) {
+    SendNack(p_huart, "setIOColor", "MISSING COLOR", -1);
+    return;
+  }
+
+  int mode    = atoi(modeBuf);     /* 0=IN, 1=OUT, 2=GPIO */
+  int channel = atoi(channelBuf);  /* 0-3 */
+  int color   = atoi(colorBuf);    /* 1-5 */
+
+  if (mode < 0 || mode >= IO_MODE_COUNT) {
+    SendNack(p_huart, "setIOColor", "INVALID MODE", mode);
+    return;
+  }
+  if (channel < 0 || channel >= IO_CHANNEL_COUNT) {
+    SendNack(p_huart, "setIOColor", "INVALID CHANNEL", channel);
+    return;
+  }
+  if (color < 1 || color > IO_COLOR_COUNT) {
+    SendNack(p_huart, "setIOColor", "INVALID COLOR", color);
+    return;
+  }
+
+  IOColors_Set((uint8_t)mode, (uint8_t)channel, (uint8_t)color);
+  set_io_colors_changed_c();
+}
+
+static void HandleDeviceInfo(const GenericMessage *msg)
+{
+  char buf[DEVINFO_STR_MAX];
+
+  if (JSON_GetStringValue(msg->payload, "name", buf, sizeof(buf)))
+    DeviceInfo_Set(DEVINFO_NAME, buf);
+  if (JSON_GetStringValue(msg->payload, "model", buf, sizeof(buf)))
+    DeviceInfo_Set(DEVINFO_MODEL, buf);
+  if (JSON_GetStringValue(msg->payload, "firmwareVersion", buf, sizeof(buf)))
+    DeviceInfo_Set(DEVINFO_FIRMWARE_VERSION, buf);
+  if (JSON_GetStringValue(msg->payload, "serialNumber", buf, sizeof(buf)))
+    DeviceInfo_Set(DEVINFO_SERIAL_NUMBER, buf);
+  if (JSON_GetStringValue(msg->payload, "temperature", buf, sizeof(buf)))
+    DeviceInfo_Set(DEVINFO_TEMPERATURE, buf);
+  if (JSON_GetStringValue(msg->payload, "cpuUsage", buf, sizeof(buf)))
+    DeviceInfo_Set(DEVINFO_CPU_USAGE, buf);
+  if (JSON_GetStringValue(msg->payload, "diskUsage", buf, sizeof(buf)))
+    DeviceInfo_Set(DEVINFO_DISK_USAGE, buf);
+  if (JSON_GetStringValue(msg->payload, "clockStatus", buf, sizeof(buf)))
+    DeviceInfo_Set(DEVINFO_CLOCK_STATUS, buf);
+
+  set_device_info_changed_c();
+}
+
 static void HandleReady(const GenericMessage *msg)
 {
   (void)msg;
@@ -915,6 +1002,16 @@ void JSON_ProcessMessage(uint8_t *data, uint16_t length)
 
   if (strcmp(msg.action, "setBrightness") == 0) {
     HandleSetBrightness(&msg);
+    return;
+  }
+
+  if (strcmp(msg.action, "setIOColor") == 0) {
+    HandleSetIOColor(&msg);
+    return;
+  }
+
+  if (strcmp(msg.action, "deviceInfo") == 0) {
+    HandleDeviceInfo(&msg);
     return;
   }
 

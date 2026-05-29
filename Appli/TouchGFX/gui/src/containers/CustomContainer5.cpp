@@ -1,115 +1,310 @@
 #include <gui/containers/CustomContainer5.hpp>
 
 CustomContainer5::CustomContainer5()
-    : tickCounter(0)
+    : tickCounter(0), myItemIndex(0)
 {
     phase[0] = 0;
-    phase[1] = 3;   // offset by 3 phases
-    phase[2] = 6;   // offset by 6 phases
-    phase[3] = 9;   // offset by 9 phases
+    phase[1] = 3;
+    phase[2] = 6;
+    phase[3] = 9;
+
+    for (int i = 0; i < MAX_SLOTS; i++)
+    {
+        slotActive[i] = false;
+        slotMono[i]   = false;
+    }
 }
 
 void CustomContainer5::initialize()
 {
     CustomContainer5Base::initialize();
 
-    touchgfx::Unicode::strncpy(nameBuf1, "Reception", NAME_BUF_SIZE);
-    touchgfx::Unicode::strncpy(nameBuf2, "Gym", NAME_BUF_SIZE);
-    touchgfx::Unicode::strncpy(nameBuf3, "Room", NAME_BUF_SIZE);
-    touchgfx::Unicode::strncpy(nameBuf4, "Hall", NAME_BUF_SIZE);
+    touchgfx::Application::getInstance()->registerTimerWidget(this);
 
     textArea1.setWildcard(nameBuf1);
     textArea2.setWildcard(nameBuf2);
     textArea3.setWildcard(nameBuf3);
     textArea4.setWildcard(nameBuf4);
 
-    // Start with all indicators hidden
-    tickCounter = 0;
-    updateIndicators();
+    nameBuf1[0] = 0; nameBuf2[0] = 0;
+    nameBuf3[0] = 0; nameBuf4[0] = 0;
 
-    touchgfx::Application::getInstance()->registerTimerWidget(this);
+    tickCounter = 0;
+
+    for (int i = 0; i < MAX_SLOTS; i++)
+    {
+        slotActive[i] = false;
+        slotMono[i]   = false;
+        hideSourceSlot(i);   // hides bars + frame image
+    }
+
+    textArea1.setVisible(false); textArea1.invalidate();
+    textArea2.setVisible(false); textArea2.invalidate();
+    textArea3.setVisible(false); textArea3.invalidate();
+    textArea4.setVisible(false); textArea4.invalidate();
 }
 
-void CustomContainer5::handleTickEvent()
+void CustomContainer5::setListElements(int itemIndex, int totalZones, Model* model)
 {
-    tickCounter++;
-    if (tickCounter >= TICKS_PER_STEP)
-    {
-        tickCounter = 0;
+    myItemIndex = itemIndex;
 
-        for (int i = 0; i < 4; i++)
+    touchgfx::Unicode::UnicodeChar* nameBufs[MAX_SLOTS] = {
+        nameBuf1, nameBuf2, nameBuf3, nameBuf4
+    };
+
+    touchgfx::TextArea* textAreas[MAX_SLOTS] = {
+        &textArea1, &textArea2, &textArea3, &textArea4
+    };
+
+    for (int slot = 0; slot < MAX_SLOTS; slot++)
+    {
+        int  zoneIndex = itemIndex * MAX_SLOTS + slot;
+        bool show      = (model != nullptr) && (zoneIndex < totalZones);
+
+        slotActive[slot] = show;
+
+        if (show)
         {
-            phase[i] = (phase[i] + 1) % TOTAL_PHASES;
+            const char* name = model->getZoneName(zoneIndex);
+            if (name == nullptr) name = "";
+            touchgfx::Unicode::fromUTF8(
+                reinterpret_cast<const uint8_t*>(name),
+                nameBufs[slot],
+                NAME_BUF_SIZE);
+
+            // Show the background frame image for this slot
+            switch (slot)
+            {
+                case 0: image1.setVisible(true); image1.invalidate(); break;
+                case 1: image2.setVisible(true); image2.invalidate(); break;
+                case 2: image3.setVisible(true); image3.invalidate(); break;
+                case 3: image4.setVisible(true); image4.invalidate(); break;
+            }
+        }
+        else
+        {
+            nameBufs[slot][0] = 0;
+            hideSourceSlot(slot);  // hides bars + frame image
         }
 
+        textAreas[slot]->setVisible(show);
+        textAreas[slot]->invalidate();
+    }
+
+    updateIndicators();
+}
+
+// ---------------------------------------------------------------
+// Mono / Stereo switching
+// ---------------------------------------------------------------
+void CustomContainer5::setSlotMono(int slot)
+{
+    if (slot < 0 || slot >= MAX_SLOTS) return;
+    slotMono[slot] = true;
+}
+
+void CustomContainer5::setSlotStereo(int slot)
+{
+    if (slot < 0 || slot >= MAX_SLOTS) return;
+    slotMono[slot] = false;
+}
+
+void CustomContainer5::toggleSlotMode(int slot)
+{
+    if (slot < 0 || slot >= MAX_SLOTS) return;
+    slotMono[slot] = !slotMono[slot];
+}
+
+// ---------------------------------------------------------------
+// Timer tick
+// ---------------------------------------------------------------
+void CustomContainer5::handleTickEvent()
+{
+    if (++tickCounter >= TICKS_PER_STEP)
+    {
+        tickCounter = 0;
+        for (int i = 0; i < MAX_SLOTS; i++)
+            phase[i] = (phase[i] + 1) % TOTAL_PHASES;
         updateIndicators();
     }
 }
 
 int CustomContainer5::phaseToLevel(int p) const
 {
-    // phases 0..5 = rising: level -1,0,1,2,3,4,5 -> we map 0=level0, 5=level5
-    // phases 6..11 = falling: level 4,3,2,1,0,-1
-    if (p < NUM_LEVELS)
+    if (p < NUM_LEVELS) return p;
+    return (2 * NUM_LEVELS - 1) - p - 1;
+}
+
+// ---------------------------------------------------------------
+// updateIndicators — picks stereo or mono per slot
+// ---------------------------------------------------------------
+void CustomContainer5::updateIndicators()
+{
+    for (int slot = 0; slot < MAX_SLOTS; slot++)
     {
-        return p;  // rising: 0->0, 1->1, ..., 5->5
+        if (!slotActive[slot]) continue;
+        updateSlot(slot, phaseToLevel(phase[slot]));
     }
-    else
+    invalidate();
+}
+
+void CustomContainer5::updateSlot(int slot, int level)
+{
+    switch (slot)
     {
-        return (2 * NUM_LEVELS - 1) - p - 1; // falling: 6->4, 7->3, 8->2, 9->1, 10->0, 11->-1
+        case 0:
+            hideSource1();
+            slotMono[0] ? showSource1Mono(level) : showSource1Stereo(level);
+            break;
+        case 1:
+            hideSource2();
+            slotMono[1] ? showSource2Mono(level) : showSource2Stereo(level);
+            break;
+        case 2:
+            hideSource3();
+            slotMono[2] ? showSource3Mono(level) : showSource3Stereo(level);
+            break;
+        case 3:
+            hideSource4();
+            slotMono[3] ? showSource4Mono(level) : showSource4Stereo(level);
+            break;
     }
 }
 
-void CustomContainer5::updateIndicators()
+// ---------------------------------------------------------------
+// hideSourceSlot — hides bars AND frame image
+// ---------------------------------------------------------------
+void CustomContainer5::hideSourceSlot(int slot)
 {
-    int l0 = phaseToLevel(phase[0]);
-    int l1 = phaseToLevel(phase[1]);
-    int l2 = phaseToLevel(phase[2]);
-    int l3 = phaseToLevel(phase[3]);
+    switch (slot)
+    {
+        case 0: hideSource1(); image1.setVisible(false); break;
+        case 1: hideSource2(); image2.setVisible(false); break;
+        case 2: hideSource3(); image3.setVisible(false); break;
+        case 3: hideSource4(); image4.setVisible(false); break;
+    }
+}
 
-    // Source 1 (dual)
-    image5.setVisible(l0 >= 0);
-    image6.setVisible(l0 >= 0);
-    image7.setVisible(l0 >= 1);
-    image8.setVisible(l0 >= 1);
-    image9.setVisible(l0 >= 2);
-    image10.setVisible(l0 >= 2);
-    image11.setVisible(l0 >= 3);
-    image12.setVisible(l0 >= 3);
-    extra1.setVisible(l0 >= 4);
-    extra2.setVisible(l0 >= 4);
-    image13.setVisible(l0 >= 5);
-    image14.setVisible(l0 >= 5);
+// ---------------------------------------------------------------
+// Source 1
+// ---------------------------------------------------------------
+void CustomContainer5::hideSource1()
+{
+    L11.setVisible(false); R11.setVisible(false);
+    L12.setVisible(false); R12.setVisible(false);
+    L13.setVisible(false); R13.setVisible(false);
+    L14.setVisible(false); R14.setVisible(false);
+    L15.setVisible(false); R15.setVisible(false);
+    L16.setVisible(false); R16.setVisible(false);
+    Mono11.setVisible(false); Mono12.setVisible(false);
+    Mono13.setVisible(false); Mono14.setVisible(false);
+    Mono15.setVisible(false); Mono16.setVisible(false);
+}
+void CustomContainer5::showSource1Stereo(int l)
+{
+    L11.setVisible(l >= 0); R11.setVisible(l >= 0);
+    L12.setVisible(l >= 1); R12.setVisible(l >= 1);
+    L13.setVisible(l >= 2); R13.setVisible(l >= 2);
+    L14.setVisible(l >= 3); R14.setVisible(l >= 3);
+    L15.setVisible(l >= 4); R15.setVisible(l >= 4);
+    L16.setVisible(l >= 5); R16.setVisible(l >= 5);
+}
+void CustomContainer5::showSource1Mono(int l)
+{
+    Mono11.setVisible(l >= 0); Mono12.setVisible(l >= 1);
+    Mono13.setVisible(l >= 2); Mono14.setVisible(l >= 3);
+    Mono15.setVisible(l >= 4); Mono16.setVisible(l >= 5);
+}
 
-    // Source 2 (single)
-    image15.setVisible(l1 >= 0);
-    image16.setVisible(l1 >= 1);
-    image17.setVisible(l1 >= 2);
-    image18.setVisible(l1 >= 3);
-    extra3.setVisible(l1 >= 4);
-    image19.setVisible(l1 >= 5);
+// ---------------------------------------------------------------
+// Source 2
+// ---------------------------------------------------------------
+void CustomContainer5::hideSource2()
+{
+    L21.setVisible(false); R21.setVisible(false);
+    L22.setVisible(false); R22.setVisible(false);
+    L23.setVisible(false); R23.setVisible(false);
+    L24.setVisible(false); R24.setVisible(false);
+    L25.setVisible(false); R25.setVisible(false);
+    L26.setVisible(false); R26.setVisible(false);
+    Mono21.setVisible(false); Mono22.setVisible(false);
+    Mono23.setVisible(false); Mono24.setVisible(false);
+    Mono25.setVisible(false); Mono26.setVisible(false);
+}
+void CustomContainer5::showSource2Stereo(int l)
+{
+    L21.setVisible(l >= 0); R21.setVisible(l >= 0);
+    L22.setVisible(l >= 1); R22.setVisible(l >= 1);
+    L23.setVisible(l >= 2); R23.setVisible(l >= 2);
+    L24.setVisible(l >= 3); R24.setVisible(l >= 3);
+    L25.setVisible(l >= 4); R25.setVisible(l >= 4);
+    L26.setVisible(l >= 5); R26.setVisible(l >= 5);
+}
+void CustomContainer5::showSource2Mono(int l)
+{
+    Mono21.setVisible(l >= 0); Mono22.setVisible(l >= 1);
+    Mono23.setVisible(l >= 2); Mono24.setVisible(l >= 3);
+    Mono25.setVisible(l >= 4); Mono26.setVisible(l >= 5);
+}
 
-    // Source 3 (single)
-    image20.setVisible(l2 >= 0);
-    image21.setVisible(l2 >= 1);
-    image22.setVisible(l2 >= 2);
-    image23.setVisible(l2 >= 3);
-    extra4.setVisible(l2 >= 4);
-    image24.setVisible(l2 >= 5);
+// ---------------------------------------------------------------
+// Source 3
+// ---------------------------------------------------------------
+void CustomContainer5::hideSource3()
+{
+    L31.setVisible(false); R31.setVisible(false);
+    L32.setVisible(false); R32.setVisible(false);
+    L33.setVisible(false); R33.setVisible(false);
+    L34.setVisible(false); R34.setVisible(false);
+    L35.setVisible(false); R35.setVisible(false);
+    L36.setVisible(false); R36.setVisible(false);
+    Mono31.setVisible(false); Mono32.setVisible(false);
+    Mono33.setVisible(false); Mono34.setVisible(false);
+    Mono35.setVisible(false); Mono36.setVisible(false);
+}
+void CustomContainer5::showSource3Stereo(int l)
+{
+    L31.setVisible(l >= 0); R31.setVisible(l >= 0);
+    L32.setVisible(l >= 1); R32.setVisible(l >= 1);
+    L33.setVisible(l >= 2); R33.setVisible(l >= 2);
+    L34.setVisible(l >= 3); R34.setVisible(l >= 3);
+    L35.setVisible(l >= 4); R35.setVisible(l >= 4);
+    L36.setVisible(l >= 5); R36.setVisible(l >= 5);
+}
+void CustomContainer5::showSource3Mono(int l)
+{
+    Mono31.setVisible(l >= 0); Mono32.setVisible(l >= 1);
+    Mono33.setVisible(l >= 2); Mono34.setVisible(l >= 3);
+    Mono35.setVisible(l >= 4); Mono36.setVisible(l >= 5);
+}
 
-    // Source 4 (dual)
-    image25.setVisible(l3 >= 0);
-    image26.setVisible(l3 >= 0);
-    image27.setVisible(l3 >= 1);
-    image28.setVisible(l3 >= 1);
-    image29.setVisible(l3 >= 2);
-    image30.setVisible(l3 >= 2);
-    image31.setVisible(l3 >= 3);
-    image32.setVisible(l3 >= 3);
-    extra5.setVisible(l3 >= 4);
-    image35.setVisible(l3 >= 4);
-    image33.setVisible(l3 >= 5);
-    image34.setVisible(l3 >= 5);
-
-    invalidate();
+// ---------------------------------------------------------------
+// Source 4
+// ---------------------------------------------------------------
+void CustomContainer5::hideSource4()
+{
+    L41.setVisible(false); R41.setVisible(false);
+    L42.setVisible(false); R42.setVisible(false);
+    L43.setVisible(false); R43.setVisible(false);
+    L44.setVisible(false); R44.setVisible(false);
+    L45.setVisible(false); R45.setVisible(false);
+    L46.setVisible(false); R46.setVisible(false);
+    Mono41.setVisible(false); Mono42.setVisible(false);
+    Mono43.setVisible(false); Mono44.setVisible(false);
+    Mono45.setVisible(false); Mono46.setVisible(false);
+}
+void CustomContainer5::showSource4Stereo(int l)
+{
+    L41.setVisible(l >= 0); R41.setVisible(l >= 0);
+    L42.setVisible(l >= 1); R42.setVisible(l >= 1);
+    L43.setVisible(l >= 2); R43.setVisible(l >= 2);
+    L44.setVisible(l >= 3); R44.setVisible(l >= 3);
+    L45.setVisible(l >= 4); R45.setVisible(l >= 4);
+    L46.setVisible(l >= 5); R46.setVisible(l >= 5);
+}
+void CustomContainer5::showSource4Mono(int l)
+{
+    Mono41.setVisible(l >= 0); Mono42.setVisible(l >= 1);
+    Mono43.setVisible(l >= 2); Mono44.setVisible(l >= 3);
+    Mono45.setVisible(l >= 4); Mono46.setVisible(l >= 5);
 }

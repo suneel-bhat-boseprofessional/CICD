@@ -33,17 +33,53 @@ public:
     void gotoBrightnessScreenNoTransition();
     void gotoMeteringScreenNoTransition();
     void gotoSystem_InformationScreenNoTransition();
+    void gotoBluetooth_2ScreenNoTransition();
+    void gotoStudio_GoldScreenNoTransition();
+    void gotoBT_DevicesScreenNoTransition();
+    void gotoBT_SettingsScreenNoTransition();
+    void gotoSettings_NetworkScreenNoTransition();
+    void gotoInoutScreenNoTransition();
+    void gotoInScreenNoTransition();
+    void gotoNotificationsScreenNoTransition();
+    void gotoNetwork_ConfigScreenNoTransition();
+    void gotoNetwork_Mode_ScreenNoTransition();
+    void gotoIP_AdressScreenNoTransition();
+    void gotoDevice_InformationScreenNoTransition();
 
 private:
     void gotoSettingsScreenNoTransitionImpl();
     void gotoBrightnessScreenNoTransitionImpl();
     void gotoMeteringScreenNoTransitionImpl();
     void gotoSystem_InformationScreenNoTransitionImpl();
+    void gotoBluetooth_2ScreenNoTransitionImpl();
+    void gotoStudio_GoldScreenNoTransitionImpl();
+    void gotoBT_DevicesScreenNoTransitionImpl();
+    void gotoBT_SettingsScreenNoTransitionImpl();
+    void gotoSettings_NetworkScreenNoTransitionImpl();
+    void gotoInoutScreenNoTransitionImpl();
+    void gotoInScreenNoTransitionImpl();
+    void gotoNotificationsScreenNoTransitionImpl();
+    void gotoNetwork_ConfigScreenNoTransitionImpl();
+    void gotoNetwork_Mode_ScreenNoTransitionImpl();
+    void gotoIP_AdressScreenNoTransitionImpl();
+    void gotoDevice_InformationScreenNoTransitionImpl();
 
     touchgfx::Callback<FrontendApplication> settingsTransitionCb;
     touchgfx::Callback<FrontendApplication> brightnessTransitionCb;
     touchgfx::Callback<FrontendApplication> meteringTransitionCb;
     touchgfx::Callback<FrontendApplication> sysInfoTransitionCb;
+    touchgfx::Callback<FrontendApplication> bluetooth2TransitionCb;
+    touchgfx::Callback<FrontendApplication> studioGoldTransitionCb;
+    touchgfx::Callback<FrontendApplication> btDevicesTransitionCb;
+    touchgfx::Callback<FrontendApplication> btSettingsTransitionCb;
+    touchgfx::Callback<FrontendApplication> settingsNetworkTransitionCb;
+    touchgfx::Callback<FrontendApplication> inoutTransitionCb;
+    touchgfx::Callback<FrontendApplication> inTransitionCb;
+    touchgfx::Callback<FrontendApplication> notificationsTransitionCb;
+    touchgfx::Callback<FrontendApplication> networkConfigTransitionCb;
+    touchgfx::Callback<FrontendApplication> networkModeTransitionCb;
+    touchgfx::Callback<FrontendApplication> ipAdressTransitionCb;
+    touchgfx::Callback<FrontendApplication> deviceInfoTransitionCb;
 };
 
 #endif // FRONTENDAPPLICATION_HPP

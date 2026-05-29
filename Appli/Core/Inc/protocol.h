@@ -122,6 +122,11 @@ void Protocol_SendSetMute(int zone, int state);
 void Protocol_SendSetSource(int zone, int index);
 void Protocol_SendSetBrightness(int value);
 
+/* Request device info from server: sends {"action":"deviceInfo","payload":{}} */
+void Protocol_RequestDeviceInfo(void);
+/* Send a generic action with empty payload: {"action":"<action>","payload":{}} */
+void Protocol_SendAction(const char* action);
+
 /* OTA Binary Protocol -------------------------------------------------------*/
 /* OTA binary frame layout (all multi-byte fields are LITTLE-ENDIAN):
  * Request:  | SOF(4) | CMD(1) | LEN_LO(1) LEN_HI(1) | CRC16_LO(1) CRC16_HI(1) | Payload(LEN) |
