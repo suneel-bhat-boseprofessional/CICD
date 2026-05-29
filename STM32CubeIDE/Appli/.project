@@ -937,16 +937,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Brightness_fill.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_CNce.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_CNce.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_Cancel_2.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Cancel_2.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_Delete.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Delete.cpp</locationURI>
@@ -967,19 +957,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Filler_image.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_Frame.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_Frame_1.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_1.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_Frame_4.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_4.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Frame_48.cpp</name>
@@ -987,24 +967,14 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_48.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_Frame_49.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_49.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_Frame_6.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_6.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_Frame_8.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_8.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_Frame_Green.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Frame_Green.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_GPIO.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_GPIO.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Grabber.cpp</name>
@@ -1030,6 +1000,11 @@
 			<name>Application/User/generated/image_IP_Bg.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_IP_Bg.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_In.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_In.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Inout_image.cpp</name>
@@ -1077,11 +1052,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Notifications_image.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_PopUP.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_PopUP.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_Preset.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Preset.cpp</locationURI>
@@ -1092,11 +1062,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Primary.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_Primary1.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Primary1.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_Rectangle_1.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Rectangle_1.cpp</locationURI>
@@ -1105,6 +1070,11 @@
 			<name>Application/User/generated/image_SG.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_SG.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Secondary.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Secondary.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Settings.cpp</name>
@@ -1197,11 +1167,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_bt.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_cnf.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_cnf.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_devices.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_devices.cpp</locationURI>
@@ -1220,6 +1185,11 @@
 			<name>Application/User/generated/image_green_1.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_green_1.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_log-out.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_log-out.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/LanguageGb.cpp</name>

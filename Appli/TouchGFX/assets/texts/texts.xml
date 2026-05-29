@@ -43,6 +43,36 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_2YP2" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Off</Translation>
+      </Text>
+      <Text Id="__SingleUse_1KRG" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">On</Translation>
+      </Text>
+      <Text Id="__SingleUse_3ET5" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Confirm</Translation>
+      </Text>
+      <Text Id="__SingleUse_ICQU" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Cancel</Translation>
+      </Text>
+      <Text Id="__SingleUse_JXMN" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Confirm</Translation>
+      </Text>
+      <Text Id="__SingleUse_9DFQ" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Cancel</Translation>
+      </Text>
+      <Text Id="__SingleUse_XWJM" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Please confirm deletion of paired devices</Translation>
+      </Text>
+      <Text Id="__SingleUse_5379" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">GPIO</Translation>
+      </Text>
+      <Text Id="__SingleUse_WGFK" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Out</Translation>
+      </Text>
+      <Text Id="__SingleUse_0J6L" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">In</Translation>
+      </Text>
       <Text Id="__SingleUse_84NO" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">STAND-BY</Translation>
       </Text>

@@ -18,9 +18,13 @@ void BT_DevicesView::setupScreen()
     image6.setVisible(false);
     button1.setVisible(false);
     button2.setVisible(false);
+    textArea4.setVisible(false);
+    textArea5.setVisible(false);
+    textArea6.setVisible(false);
     image6.invalidate();
     button1.invalidate();
     button2.invalidate();
+
 }
 
 void BT_DevicesView::tearDownScreen()
@@ -44,9 +48,15 @@ void BT_DevicesView::handleClickEvent(const touchgfx::ClickEvent& event)
                 image6.setVisible(false);
                 button1.setVisible(false);
                 button2.setVisible(false);
+                textArea4.setVisible(false);
+                textArea5.setVisible(false);
+                textArea6.setVisible(false);
                 image6.invalidate();
                 button1.invalidate();
                 button2.invalidate();
+                textArea4.invalidate();
+                textArea5.invalidate();
+                textArea6.invalidate();
                 popupVisible = false;
                 return;
             }
@@ -57,9 +67,15 @@ void BT_DevicesView::handleClickEvent(const touchgfx::ClickEvent& event)
                 image6.setVisible(false);
                 button1.setVisible(false);
                 button2.setVisible(false);
+                textArea4.setVisible(false);
+                textArea5.setVisible(false);
+                textArea6.setVisible(false);
                 image6.invalidate();
                 button1.invalidate();
                 button2.invalidate();
+                textArea4.invalidate();
+                textArea5.invalidate();
+                textArea6.invalidate();
                 popupVisible = false;
                 return;
             }
@@ -73,6 +89,9 @@ void BT_DevicesView::handleClickEvent(const touchgfx::ClickEvent& event)
             image6.setVisible(true);
             button1.setVisible(true);
             button2.setVisible(true);
+            textArea4.setVisible(true);
+            textArea5.setVisible(true);
+            textArea6.setVisible(true);
             image6.invalidate();
             button1.invalidate();
             button2.invalidate();

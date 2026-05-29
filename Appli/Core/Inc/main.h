@@ -125,7 +125,7 @@ void LCD_SetBacklight(uint8_t brightness_percent);
 
 /* UART Configuration - Change USE_UART2 to switch between UARTs */
 /* UART1 = Debug port, UART2 = Product port */
-#define USE_UART2                  1  // Set to 1 for UART2 (product), 0 for UART1 (debug)
+#define USE_UART2                  0  // Set to 1 for UART2 (product), 0 for UART1 (debug)
 
 #if USE_UART2
     #define UART_INSTANCE           USART2

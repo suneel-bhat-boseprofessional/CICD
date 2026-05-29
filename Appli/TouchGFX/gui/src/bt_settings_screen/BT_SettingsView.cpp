@@ -29,6 +29,8 @@ void BT_SettingsView::setupScreen()
     textArea4.setVisible(false);
     button1.setVisible(false);
     button2.setVisible(false);
+    textArea8.setVisible(false);
+    textArea9.setVisible(false);
     image4.invalidate();
     textArea4.invalidate();
     button1.invalidate();
@@ -71,6 +73,8 @@ void BT_SettingsView::handleClickEvent(const touchgfx::ClickEvent& event)
                 textArea4.setVisible(false);
                 button1.setVisible(false);
                 button2.setVisible(false);
+                textArea8.setVisible(false);
+                textArea9.setVisible(false);
                 image4.invalidate();
                 textArea4.invalidate();
                 button1.invalidate();
@@ -86,6 +90,8 @@ void BT_SettingsView::handleClickEvent(const touchgfx::ClickEvent& event)
                 textArea4.setVisible(false);
                 button1.setVisible(false);
                 button2.setVisible(false);
+                textArea8.setVisible(false);
+                textArea9.setVisible(false);
                 image4.invalidate();
                 textArea4.invalidate();
                 button1.invalidate();
@@ -179,10 +185,14 @@ void BT_SettingsView::handleClickEvent(const touchgfx::ClickEvent& event)
             textArea4.setVisible(true);
             button1.setVisible(true);
             button2.setVisible(true);
+            textArea8.setVisible(true);
+            textArea9.setVisible(true);
             image4.invalidate();
             textArea4.invalidate();
             button1.invalidate();
             button2.invalidate();
+            textArea8.invalidate();
+            textArea9.invalidate();
             popupVisible = true;
             return;
         }

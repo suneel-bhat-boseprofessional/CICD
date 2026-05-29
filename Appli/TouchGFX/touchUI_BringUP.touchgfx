@@ -55,6 +55,81 @@
             "OverShootPercentage": 75
           },
           {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 4,
+            "Width": 25,
+            "Height": 120,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 25,
+                "Height": 120,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton2",
+            "X": 455,
+            "Y": 5,
+            "Width": 25,
+            "Height": 120,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 25,
+                "Height": 120,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          },
+          {
             "Type": "Image",
             "Name": "image1",
             "X": 12,
@@ -1254,27 +1329,75 @@
             "Y": 33,
             "Width": 373,
             "Height": 87,
-            "RelativeFilename": "PopUP.png"
+            "RelativeFilename": "AT_BG.png"
           },
           {
             "Type": "Button",
             "Name": "button1",
-            "X": 133,
+            "X": 130,
             "Y": 81,
             "Width": 87,
             "Height": 29,
-            "Pressed": "CNce.png",
-            "Released": "CNce.png"
+            "Pressed": "Primary.png",
+            "Released": "Primary.png"
           },
           {
             "Type": "Button",
             "Name": "button2",
-            "X": 236,
+            "X": 230,
             "Y": 81,
             "Width": 109,
             "Height": 29,
-            "Pressed": "Primary1.png",
-            "Released": "Primary1.png"
+            "Pressed": "Secondary.png",
+            "Released": "Secondary.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea4",
+            "X": 74,
+            "Y": 41,
+            "Width": 326,
+            "Height": 19,
+            "TextId": "__SingleUse_XWJM",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea5",
+            "X": 157,
+            "Y": 88,
+            "Width": 33,
+            "Height": 10,
+            "TextId": "__SingleUse_9DFQ",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea6",
+            "X": 264,
+            "Y": 88,
+            "Width": 40,
+            "Height": 10,
+            "TextId": "__SingleUse_JXMN",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
           }
         ],
         "Interactions": [
@@ -1388,8 +1511,8 @@
           {
             "Type": "Image",
             "Name": "image4",
-            "X": 64,
-            "Y": 20,
+            "X": 67,
+            "Y": 25,
             "Width": 373,
             "Height": 87,
             "RelativeFilename": "AT_BG.png"
@@ -1417,8 +1540,8 @@
             "Y": 63,
             "Width": 87,
             "Height": 29,
-            "Pressed": "CNce.png",
-            "Released": "CNce.png"
+            "Pressed": "Primary.png",
+            "Released": "Primary.png"
           },
           {
             "Type": "Button",
@@ -1427,8 +1550,8 @@
             "Y": 63,
             "Width": 109,
             "Height": 29,
-            "Pressed": "Primary1.png",
-            "Released": "Primary1.png"
+            "Pressed": "Secondary.png",
+            "Released": "Secondary.png"
           },
           {
             "Type": "TextArea",
@@ -1448,7 +1571,7 @@
           {
             "Type": "Button",
             "Name": "button3",
-            "X": 100,
+            "X": 122,
             "Y": 57,
             "Width": 140,
             "Height": 48,
@@ -1458,8 +1581,8 @@
           {
             "Type": "Button",
             "Name": "button4",
-            "X": 250,
-            "Y": 57,
+            "X": 265,
+            "Y": 59,
             "Width": 140,
             "Height": 48,
             "Pressed": "green_1.png",
@@ -1468,8 +1591,8 @@
           {
             "Type": "TextArea",
             "Name": "textArea6",
-            "X": 158,
-            "Y": 72,
+            "X": 181,
+            "Y": 69,
             "Width": 23,
             "Height": 19,
             "TextId": "__SingleUse_NT2J",
@@ -1484,11 +1607,43 @@
           {
             "Type": "TextArea",
             "Name": "textArea7",
-            "X": 308,
+            "X": 311,
             "Y": 72,
             "Width": 27,
             "Height": 19,
             "TextId": "__SingleUse_NJKP",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea8",
+            "X": 179,
+            "Y": 73,
+            "Width": 33,
+            "Height": 10,
+            "TextId": "__SingleUse_ICQU",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea9",
+            "X": 284,
+            "Y": 72,
+            "Width": 40,
+            "Height": 10,
+            "TextId": "__SingleUse_3ET5",
             "TextRotation": "0",
             "Color": {
               "Red": 255,
@@ -1632,16 +1787,16 @@
             "Y": 20,
             "Width": 100,
             "Height": 99,
-            "RelativeFilename": "Frame 8.png"
+            "RelativeFilename": "Frame 48.png"
           },
           {
             "Type": "Image",
             "Name": "image1",
-            "X": 30,
+            "X": 28,
             "Y": 20,
             "Width": 100,
             "Height": 99,
-            "RelativeFilename": "Frame 4.png"
+            "RelativeFilename": "Frame 48.png"
           },
           {
             "Type": "Image",
@@ -1650,7 +1805,7 @@
             "Y": 20,
             "Width": 100,
             "Height": 99,
-            "RelativeFilename": "Frame 6.png"
+            "RelativeFilename": "Frame 48.png"
           },
           {
             "Type": "FlexButton",
@@ -1680,6 +1835,81 @@
             "Width": 10,
             "Height": 16,
             "RelativeFilename": "Vector_left.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "In",
+            "X": 60,
+            "Y": 43,
+            "Width": 36,
+            "Height": 29,
+            "RelativeFilename": "In.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "Out",
+            "X": 168,
+            "Y": 35,
+            "Width": 44,
+            "Height": 44,
+            "RelativeFilename": "log-out.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "GPIO",
+            "X": 277,
+            "Y": 35,
+            "Width": 44,
+            "Height": 44,
+            "RelativeFilename": "GPIO.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 69,
+            "Y": 86,
+            "Width": 15,
+            "Height": 19,
+            "TextId": "__SingleUse_0J6L",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 173,
+            "Y": 86,
+            "Width": 30,
+            "Height": 19,
+            "TextId": "__SingleUse_WGFK",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 279,
+            "Y": 86,
+            "Width": 41,
+            "Height": 19,
+            "TextId": "__SingleUse_5379",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
           }
         ],
         "Interactions": [
@@ -2818,20 +3048,20 @@
             "Name": "button1",
             "X": 92,
             "Y": 40,
-            "Width": 139,
-            "Height": 49,
-            "Pressed": "cnf.png",
-            "Released": "cnf.png"
+            "Width": 140,
+            "Height": 48,
+            "Pressed": "green_1.png",
+            "Released": "green_1.png"
           },
           {
             "Type": "Button",
             "Name": "button2",
             "X": 246,
             "Y": 40,
-            "Width": 139,
-            "Height": 49,
-            "Pressed": "Cancel_2.png",
-            "Released": "Cancel_2.png"
+            "Width": 140,
+            "Height": 48,
+            "Pressed": "Grey.png",
+            "Released": "Grey.png"
           },
           {
             "Type": "FlexButton",
@@ -2878,6 +3108,38 @@
             "Width": 10,
             "Height": 16,
             "RelativeFilename": "Vector_left.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 151,
+            "Y": 53,
+            "Width": 23,
+            "Height": 19,
+            "TextId": "__SingleUse_1KRG",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 303,
+            "Y": 53,
+            "Width": 27,
+            "Height": 19,
+            "TextId": "__SingleUse_2YP2",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
           }
         ],
         "Interactions": [
