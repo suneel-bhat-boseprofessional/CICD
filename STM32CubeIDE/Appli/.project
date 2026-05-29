@@ -987,11 +987,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Grey.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_Group_3.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Group_3.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/image_Highlighted.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Highlighted.cpp</locationURI>

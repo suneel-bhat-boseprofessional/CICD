@@ -44,9 +44,9 @@ void CustomContainer1::setListElements(int item)
         "IN/OUT",
         "METER",
         "SETTINGS",
-        "BLUETOOTH",
+        "SETUP",
         "NOTIFICATIONS",
-        "SETUP"
+        "BLUETOOTH"
     };
 
     switch(item)
@@ -68,7 +68,7 @@ void CustomContainer1::setListElements(int item)
             break;
 
         case 4:
-            image2.setBitmap(Bitmap(BITMAP_BLUETOOTH_IMAGE_ID));
+            image2.setBitmap(Bitmap(BITMAP_SETUP_IMAGE_ID));
             break;
 
         case 5:
@@ -76,7 +76,7 @@ void CustomContainer1::setListElements(int item)
             break;
 
         case 6:
-            image2.setBitmap(Bitmap(BITMAP_SETUP_IMAGE_ID));
+            image2.setBitmap(Bitmap(BITMAP_BLUETOOTH_IMAGE_ID));
             break;
     }
 

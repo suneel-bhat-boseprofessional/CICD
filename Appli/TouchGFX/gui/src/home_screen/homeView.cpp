@@ -63,11 +63,15 @@ void homeView::itemSelected(int index)
     }
     else if(index == 4)
     {
-        application().gotoBluetooth_2ScreenNoTransition();
+        application().gotoStudio_GoldScreenNoTransition();
     }
     else if(index == 5)
     {
         application().gotoNotificationsScreenNoTransition();
+    }
+    else if(index == 6)
+    {
+        application().gotoBluetooth_2ScreenNoTransition();
     }
 }
 
