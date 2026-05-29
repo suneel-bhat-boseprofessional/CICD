@@ -20,10 +20,11 @@ void CustomContainer4::setSettingItem(int16_t index)
         "Device Information",
         "Network",
         "Display",
+        "Wink",
         "Factory Reset"
     };
 
-    const char* name = (index >= 0 && index < 4) ? names[index] : "---";
+    const char* name = (index >= 0 && index < 5) ? names[index] : "---";
     touchgfx::Unicode::fromUTF8((const uint8_t*)name, nameBuffer, 32);
     textArea1.setWildcard(nameBuffer);
 

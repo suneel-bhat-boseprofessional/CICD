@@ -32,6 +32,13 @@
 #include <gui/device_information_screen/Device_InformationView.hpp>
 #include <gui/device_information_screen/Device_InformationPresenter.hpp>
 
+#include <gui/setup_screen/SetupView.hpp>
+#include <gui/setup_screen/SetupPresenter.hpp>
+#include <gui/wink_screen/WinkView.hpp>
+#include <gui/wink_screen/WinkPresenter.hpp>
+#include <gui/factory_reset_screen/Factory_ResetView.hpp>
+#include <gui/factory_reset_screen/Factory_ResetPresenter.hpp>
+
 FrontendApplication::FrontendApplication(Model& m, FrontendHeap& heap)
     : FrontendApplicationBase(m, heap)
 {
@@ -211,4 +218,37 @@ void FrontendApplication::gotoDevice_InformationScreenNoTransition()
 void FrontendApplication::gotoDevice_InformationScreenNoTransitionImpl()
 {
     touchgfx::makeTransition<Device_InformationView, Device_InformationPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+void FrontendApplication::gotoSetupScreenNoTransition()
+{
+    setupTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoSetupScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &setupTransitionCb;
+}
+
+void FrontendApplication::gotoSetupScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<SetupView, SetupPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+void FrontendApplication::gotoWinkScreenNoTransition()
+{
+    winkTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoWinkScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &winkTransitionCb;
+}
+
+void FrontendApplication::gotoWinkScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<WinkView, WinkPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+void FrontendApplication::gotoFactory_ResetScreenNoTransition()
+{
+    factoryResetTransitionCb = touchgfx::Callback<FrontendApplication>(this, &FrontendApplication::gotoFactory_ResetScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &factoryResetTransitionCb;
+}
+
+void FrontendApplication::gotoFactory_ResetScreenNoTransitionImpl()
+{
+    touchgfx::makeTransition<Factory_ResetView, Factory_ResetPresenter, touchgfx::NoTransition, Model>(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

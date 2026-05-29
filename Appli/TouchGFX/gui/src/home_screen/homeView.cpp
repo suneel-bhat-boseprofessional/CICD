@@ -63,7 +63,7 @@ void homeView::itemSelected(int index)
     }
     else if(index == 4)
     {
-        application().gotoStudio_GoldScreenNoTransition();
+        application().gotoSetupScreenNoTransition();
     }
     else if(index == 5)
     {

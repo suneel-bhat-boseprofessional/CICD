@@ -2039,6 +2039,23 @@
               "Blue": 255
             },
             "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea5",
+            "X": 40,
+            "Y": -1,
+            "Width": 131,
+            "Height": 19,
+            "TextId": "__SingleUse_NQ4L",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            },
+            "AutoSize": true,
+            "Wildcard1": {}
           }
         ],
         "Interactions": [
@@ -2063,7 +2080,6 @@
             "Type": "TextArea",
             "Name": "textArea1",
             "X": 67,
-            "Y": 4,
             "Width": 131,
             "Height": 19,
             "TextId": "__SingleUse_Q14K",
@@ -2122,122 +2138,19 @@
             "RelativeFilename": "Vector_left.png"
           },
           {
-            "Type": "Image",
-            "Name": "image2",
+            "Type": "ScrollList",
+            "Name": "scrollList1",
             "X": 51,
-            "Y": 25,
+            "Y": 26,
             "Width": 366,
-            "Height": 48,
-            "RelativeFilename": "Highlighted.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "image3",
-            "X": 51,
-            "Y": 77,
-            "Width": 366,
-            "Height": 48,
-            "RelativeFilename": "Highlighted.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "Alert1",
-            "X": 67,
-            "Y": 36,
-            "Width": 26,
-            "Height": 26,
-            "RelativeFilename": "alert-triangle.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "Warning1",
-            "X": 67,
-            "Y": 36,
-            "Width": 26,
-            "Height": 26,
-            "RelativeFilename": "Warning.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "Alert2",
-            "X": 67,
-            "Y": 88,
-            "Width": 26,
-            "Height": 26,
-            "RelativeFilename": "alert-triangle.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "Warning2",
-            "X": 67,
-            "Y": 88,
-            "Width": 26,
-            "Height": 26,
-            "RelativeFilename": "Warning.png"
-          },
-          {
-            "Type": "TextArea",
-            "Name": "Warning_1",
-            "X": 125,
-            "Y": 36,
-            "Width": 302,
-            "Height": 26,
-            "TextId": "__SingleUse_W5LB",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 231,
-              "Green": 75,
-              "Blue": 73
-            },
-            "Wildcard1": {}
-          },
-          {
-            "Type": "TextArea",
-            "Name": "Warning_2",
-            "X": 125,
-            "Y": 88,
-            "Width": 302,
-            "Height": 26,
-            "TextId": "__SingleUse_FMTQ",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 231,
-              "Green": 75,
-              "Blue": 73
-            },
-            "Wildcard1": {}
-          },
-          {
-            "Type": "TextArea",
-            "Name": "Alert_2",
-            "X": 101,
-            "Y": 88,
-            "Width": 302,
-            "Height": 26,
-            "TextId": "__SingleUse_PCHU",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 231,
-              "Green": 128,
-              "Blue": 36
-            },
-            "Wildcard1": {}
-          },
-          {
-            "Type": "TextArea",
-            "Name": "Alert_1",
-            "X": 101,
-            "Y": 36,
-            "Width": 302,
-            "Height": 26,
-            "TextId": "__SingleUse_068W",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 231,
-              "Green": 128,
-              "Blue": 36
-            },
-            "Wildcard1": {}
+            "Height": 102,
+            "ItemTemplateName": "CustomContainer8",
+            "NumberofItems": 10,
+            "Easing": "Back",
+            "EasingOption": "Out",
+            "SwipeAcceleration": 1.0,
+            "DragAcceleration": 1.0,
+            "OverShootPercentage": 75
           }
         ],
         "Interactions": [
@@ -3174,9 +3087,289 @@
         "Interactions": []
       },
       {
-        "Name": "Screen2",
-        "Components": [],
-        "Interactions": []
+        "Name": "Setup",
+        "Components": [
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 64,
+            "Y": 4,
+            "Width": 123,
+            "Height": 19,
+            "TextId": "__SingleUse_D0SU",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 64,
+            "Y": 36,
+            "Width": 77,
+            "Height": 79,
+            "RelativeFilename": "Group.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 156,
+            "Y": 36,
+            "Width": 111,
+            "Height": 19,
+            "TextId": "__SingleUse_QDC4",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 156,
+            "Y": 64,
+            "Width": 237,
+            "Height": 51,
+            "TextId": "__SingleUse_CKCX",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 36,
+            "Width": 50,
+            "Height": 70,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 50,
+                "Height": 70,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "home"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Factory_Reset",
+        "CanvasBufferSize": 7200,
+        "Components": [
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "X": 7,
+            "Y": 26,
+            "Width": 29,
+            "Height": 79,
+            "Alpha": 0,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 29,
+                "Height": 79,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5,
+                "ColorReleased": {
+                  "Green": 102,
+                  "Blue": 153
+                },
+                "ColorPressed": {
+                  "Green": 153,
+                  "Blue": 204
+                },
+                "ColorBorderReleased": {
+                  "Green": 51,
+                  "Blue": 102
+                },
+                "ColorBorderPressed": {
+                  "Red": 51,
+                  "Green": 102,
+                  "Blue": 153
+                }
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 67,
+            "Width": 110,
+            "Height": 19,
+            "TextId": "__SingleUse_4JZQ",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "Button",
+            "Name": "button1",
+            "X": 170,
+            "Y": 64,
+            "Width": 140,
+            "Height": 48,
+            "Pressed": "green_1.png",
+            "Released": "green_1.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 207,
+            "Y": 79,
+            "Width": 66,
+            "Height": 19,
+            "TextId": "__SingleUse_FOVY",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 134,
+            "Y": 38,
+            "Width": 212,
+            "Height": 19,
+            "TextId": "__SingleUse_TS4T",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "AutoSize": true
+          },
+          {
+            "Type": "LineProgress",
+            "Name": "lineProgress1",
+            "X": 36,
+            "Y": 56,
+            "Width": 359,
+            "Height": 30,
+            "FileNameProgress": "Brightness_fill.png",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "StartX": 5.0,
+            "StartY": 15.0,
+            "EndY": 15.0,
+            "EndX": 354.0,
+            "LineWidth": 29.2,
+            "LineEndingStyle": "Round",
+            "FileNameBackground": "Brightness.png",
+            "ProgressRangeMax": 100,
+            "ProgressRangeSteps": 79,
+            "ProgressInitialValue": 49
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea4",
+            "X": 403,
+            "Y": 40,
+            "Width": 77,
+            "Height": 67,
+            "TextId": "__SingleUse_M25Y",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Wildcard1": {}
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Settings"
+            }
+          }
+        ]
       }
     ],
     "CustomContainerDefinitions": [
@@ -4709,6 +4902,64 @@
               "Green": 175,
               "Blue": 166
             },
+            "Wildcard1": {}
+          }
+        ],
+        "Interactions": []
+      },
+      {
+        "Name": "CustomContainer8",
+        "X": 92,
+        "Y": 14,
+        "Width": 366,
+        "Height": 50,
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "Y": 2,
+            "Width": 366,
+            "Height": 48,
+            "RelativeFilename": "Highlighted.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 22,
+            "Y": 13,
+            "Width": 26,
+            "Height": 26,
+            "RelativeFilename": "Warning.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image4",
+            "X": 22,
+            "Y": 13,
+            "Width": 26,
+            "Height": 26,
+            "RelativeFilename": "alert-triangle.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 60,
+            "Y": 13,
+            "Width": 278,
+            "Height": 26,
+            "TextId": "__SingleUse_BVDR",
+            "TextRotation": "0",
+            "Wildcard1": {}
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 66,
+            "Y": 68,
+            "Width": 272,
+            "Height": 26,
+            "TextId": "__SingleUse_ENBE",
+            "TextRotation": "0",
             "Wildcard1": {}
           }
         ],

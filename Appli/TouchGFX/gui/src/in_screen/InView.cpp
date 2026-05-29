@@ -26,22 +26,31 @@ void InView::applyConfig()
     const char** labels;
     uint8_t modeIdx;
 
+    const char* title;
     switch (currentMode)
     {
     case MODE_OUT:
         labels = outLabels;
         modeIdx = 1;
+        title = "OUT";
         break;
     case MODE_GPIO:
         labels = gpioLabels;
         modeIdx = 2;
+        title = "GPIO";
         break;
     case MODE_IN:
     default:
         labels = inLabels;
         modeIdx = 0;
+        title = "IN";
         break;
     }
+
+    // Set title in textArea5
+    touchgfx::Unicode::strncpy(titleBuf, title, LABEL_BUF_SIZE);
+    textArea5.setWildcard(titleBuf);
+    textArea5.invalidate();
 
     // Set labels
     touchgfx::Unicode::strncpy(labelBuf[0], labels[0], LABEL_BUF_SIZE);
