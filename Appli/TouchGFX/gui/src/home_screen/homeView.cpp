@@ -87,9 +87,9 @@ void homeView::handleClickEvent(const touchgfx::ClickEvent& event)
         int16_t x = event.getX();
         int16_t y = event.getY();
 
-        // Check if left arrow (image1) was tapped
-        if (x >= image1.getX() && x < image1.getX() + image1.getWidth() &&
-            y >= image1.getY() && y < image1.getY() + image1.getHeight())
+        // Check if left arrow area (flexButton1) was tapped
+        if (x >= flexButton1.getX() && x < flexButton1.getX() + flexButton1.getWidth() &&
+            y >= flexButton1.getY() && y < flexButton1.getY() + flexButton1.getHeight())
         {
             if (currentPage > 0 && !animating)
             {
@@ -98,9 +98,9 @@ void homeView::handleClickEvent(const touchgfx::ClickEvent& event)
             return;
         }
 
-        // Check if right arrow (image2) was tapped
-        if (x >= image2.getX() && x < image2.getX() + image2.getWidth() &&
-            y >= image2.getY() && y < image2.getY() + image2.getHeight())
+        // Check if right arrow area (flexButton2) was tapped
+        if (x >= flexButton2.getX() && x < flexButton2.getX() + flexButton2.getWidth() &&
+            y >= flexButton2.getY() && y < flexButton2.getY() + flexButton2.getHeight())
         {
             if (currentPage < TOTAL_PAGES - 1 && !animating)
             {

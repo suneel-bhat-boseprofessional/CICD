@@ -256,7 +256,7 @@
           {
             "Type": "FlexButton",
             "Name": "flexButton1",
-            "Y": 10,
+            "Y": 6,
             "Width": 45,
             "Height": 118,
             "ButtonTrigger": {
@@ -1669,115 +1669,6 @@
         ]
       },
       {
-        "Name": "Settings_Network",
-        "Components": [
-          {
-            "Type": "Image",
-            "Name": "image1",
-            "X": 51,
-            "Y": 21,
-            "Width": 366,
-            "Height": 48,
-            "RelativeFilename": "Highlighted.png"
-          },
-          {
-            "Type": "Image",
-            "Name": "image2",
-            "X": 51,
-            "Y": 72,
-            "Width": 366,
-            "Height": 48,
-            "RelativeFilename": "Highlighted.png"
-          },
-          {
-            "Type": "FlexButton",
-            "Name": "flexButton1",
-            "Y": 9,
-            "Width": 49,
-            "Height": 111,
-            "ButtonTrigger": {
-              "Type": "ClickButtonTrigger"
-            },
-            "ButtonStyles": [
-              {
-                "Type": "BoxWithBorderButtonStyle",
-                "Width": 49,
-                "Height": 111,
-                "LockToFlexButtonSize": true,
-                "BorderSize": 5
-              }
-            ]
-          },
-          {
-            "Type": "Image",
-            "Name": "image3",
-            "X": 12,
-            "Y": 57,
-            "Width": 10,
-            "Height": 16,
-            "RelativeFilename": "Vector_left.png"
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textArea1",
-            "X": 67,
-            "Y": 87,
-            "Width": 143,
-            "Height": 19,
-            "TextId": "__SingleUse_VSMN",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textArea2",
-            "X": 67,
-            "Y": 36,
-            "Width": 143,
-            "Height": 19,
-            "TextId": "__SingleUse_QRC7",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            }
-          },
-          {
-            "Type": "TextArea",
-            "Name": "textArea3",
-            "X": 67,
-            "Width": 92,
-            "Height": 17,
-            "TextId": "__SingleUse_EN25",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 180,
-              "Green": 175,
-              "Blue": 166
-            }
-          }
-        ],
-        "Interactions": [
-          {
-            "InteractionName": "Interaction1",
-            "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "flexButton1"
-            },
-            "Action": {
-              "Type": "ActionGotoScreen",
-              "ScreenTransitionType": "ScreenTransitionNone",
-              "ActionComponent": "Settings"
-            }
-          }
-        ]
-      },
-      {
         "Name": "Inout",
         "Components": [
           {
@@ -2365,13 +2256,121 @@
         ]
       },
       {
+        "Name": "Settings_Network",
+        "Components": [
+          {
+            "Type": "Image",
+            "Name": "image1",
+            "X": 51,
+            "Y": 26,
+            "Width": 366,
+            "Height": 48,
+            "RelativeFilename": "Highlighted.png"
+          },
+          {
+            "Type": "Image",
+            "Name": "image2",
+            "X": 51,
+            "Y": 76,
+            "Width": 366,
+            "Height": 48,
+            "RelativeFilename": "Highlighted.png"
+          },
+          {
+            "Type": "FlexButton",
+            "Name": "flexButton1",
+            "Y": 9,
+            "Width": 49,
+            "Height": 111,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "BoxWithBorderButtonStyle",
+                "Width": 49,
+                "Height": 111,
+                "LockToFlexButtonSize": true,
+                "BorderSize": 5
+              }
+            ]
+          },
+          {
+            "Type": "Image",
+            "Name": "image3",
+            "X": 12,
+            "Y": 57,
+            "Width": 10,
+            "Height": 16,
+            "RelativeFilename": "Vector_left.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea1",
+            "X": 67,
+            "Y": 91,
+            "Width": 143,
+            "Height": 19,
+            "TextId": "__SingleUse_VSMN",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea2",
+            "X": 67,
+            "Y": 41,
+            "Width": 143,
+            "Height": 19,
+            "TextId": "__SingleUse_QRC7",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea3",
+            "X": 67,
+            "Width": 92,
+            "Height": 17,
+            "TextId": "__SingleUse_EN25",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            }
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "flexButton1"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Settings"
+            }
+          }
+        ]
+      },
+      {
         "Name": "Network_Config",
         "Components": [
           {
             "Type": "TextArea",
             "Name": "textArea1",
             "X": 67,
-            "Y": 4,
             "Width": 131,
             "Height": 19,
             "TextId": "__SingleUse_SXZW",
