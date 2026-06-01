@@ -45,6 +45,9 @@ public:
     void gotoNetwork_Mode_ScreenNoTransition();
     void gotoIP_AdressScreenNoTransition();
     void gotoDevice_InformationScreenNoTransition();
+    void gotoSetupScreenNoTransition();
+    void gotoWinkScreenNoTransition();
+    void gotoFactory_ResetScreenNoTransition();
 
 private:
     void gotoSettingsScreenNoTransitionImpl();
@@ -63,6 +66,9 @@ private:
     void gotoNetwork_Mode_ScreenNoTransitionImpl();
     void gotoIP_AdressScreenNoTransitionImpl();
     void gotoDevice_InformationScreenNoTransitionImpl();
+    void gotoSetupScreenNoTransitionImpl();
+    void gotoWinkScreenNoTransitionImpl();
+    void gotoFactory_ResetScreenNoTransitionImpl();
 
     touchgfx::Callback<FrontendApplication> settingsTransitionCb;
     touchgfx::Callback<FrontendApplication> brightnessTransitionCb;
@@ -80,6 +86,9 @@ private:
     touchgfx::Callback<FrontendApplication> networkModeTransitionCb;
     touchgfx::Callback<FrontendApplication> ipAdressTransitionCb;
     touchgfx::Callback<FrontendApplication> deviceInfoTransitionCb;
+    touchgfx::Callback<FrontendApplication> setupTransitionCb;
+    touchgfx::Callback<FrontendApplication> winkTransitionCb;
+    touchgfx::Callback<FrontendApplication> factoryResetTransitionCb;
 };
 
 #endif // FRONTENDAPPLICATION_HPP

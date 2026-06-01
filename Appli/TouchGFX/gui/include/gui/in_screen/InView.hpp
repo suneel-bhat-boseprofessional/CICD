@@ -33,6 +33,7 @@ public:
     void applyConfig();
 protected:
     touchgfx::Unicode::UnicodeChar labelBuf[ITEM_COUNT][LABEL_BUF_SIZE];
+    touchgfx::Unicode::UnicodeChar titleBuf[LABEL_BUF_SIZE];
 };
 
 #endif // INVIEW_HPP

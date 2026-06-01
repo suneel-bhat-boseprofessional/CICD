@@ -9,6 +9,7 @@ SettingsView::SettingsView() :
 void SettingsView::setupScreen()
 {
     SettingsViewBase::setupScreen();
+    scrollList1.setNumberOfItems(5);
     scrollList1.setItemSelectedCallback(itemSelectedCallback);
 }
 
@@ -24,16 +25,24 @@ void SettingsView::scrollList1UpdateItem(CustomContainer4& item, int16_t itemInd
 
 void SettingsView::itemSelected(int16_t itemIndex)
 {
-    if (itemIndex == 0) // "Device Information" item
+    if (itemIndex == 0) // "Device Information"
     {
         application().gotoDevice_InformationScreenNoTransition();
     }
-    else if (itemIndex == 1) // "Network" item
+    else if (itemIndex == 1) // "Network"
     {
         application().gotoSettings_NetworkScreenNoTransition();
     }
-    else if (itemIndex == 2) // "Display" item
+    else if (itemIndex == 2) // "Display"
     {
         application().gotoBrightnessScreenNoTransition();
+    }
+    else if (itemIndex == 3) // "Wink"
+    {
+        application().gotoWinkScreenNoTransition();
+    }
+    else if (itemIndex == 4) // "Factory Reset"
+    {
+        application().gotoFactory_ResetScreenNoTransition();
     }
 }

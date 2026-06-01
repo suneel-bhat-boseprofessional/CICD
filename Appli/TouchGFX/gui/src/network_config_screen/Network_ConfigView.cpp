@@ -112,17 +112,19 @@ void Network_ConfigView::handleClickEvent(const touchgfx::ClickEvent& event)
             if (x >= slX && x < slX + slW && y >= slY && y < slY + slH)
             {
                 int16_t localY = y - slY;
-                int itemIndex = localY / 51;
+                int16_t slotIndex = localY / 51;
+                // Use actual model item index (accounts for scroll position)
+                int actualIndex = scrollList1.getItem(slotIndex);
 
                 // Index 0 = Network Mode
-                if (itemIndex == 0)
+                if (actualIndex == 0)
                 {
                     application().gotoNetwork_Mode_ScreenNoTransition();
                     return;
                 }
 
                 // Index 1 = IP Address (only navigate if Static mode)
-                if (itemIndex == 1 && !Network_ModeView::dhcpSelected[static_cast<int>(configSource)])
+                if (actualIndex == 1 && !Network_ModeView::dhcpSelected[static_cast<int>(configSource)])
                 {
                     application().gotoIP_AdressScreenNoTransition();
                     return;

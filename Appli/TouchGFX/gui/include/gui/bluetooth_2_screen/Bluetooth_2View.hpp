@@ -12,6 +12,9 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
     virtual void handleClickEvent(const touchgfx::ClickEvent& event);
+
+    static bool btEnabled;
+
 protected:
     void updateBluetoothWidgetsAlpha();
 };

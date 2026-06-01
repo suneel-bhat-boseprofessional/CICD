@@ -1,5 +1,7 @@
 #include <gui/bluetooth_2_screen/Bluetooth_2View.hpp>
 
+bool Bluetooth_2View::btEnabled = false;
+
 Bluetooth_2View::Bluetooth_2View()
 {
 
@@ -8,6 +10,8 @@ Bluetooth_2View::Bluetooth_2View()
 void Bluetooth_2View::setupScreen()
 {
     Bluetooth_2ViewBase::setupScreen();
+    image4.setVisible(btEnabled);
+    image4.invalidate();
     updateBluetoothWidgetsAlpha();
 }
 
@@ -34,8 +38,9 @@ void Bluetooth_2View::handleClickEvent(const touchgfx::ClickEvent& event)
         if (x >= image4.getX() && x < image4.getX() + image4.getWidth() &&
             y >= image4.getY() && y < image4.getY() + image4.getHeight())
         {
+            btEnabled = !btEnabled;
             touchgfx::Rect area(image4.getX(), image4.getY(), image4.getWidth(), image4.getHeight());
-            image4.setVisible(!image4.isVisible());
+            image4.setVisible(btEnabled);
             invalidateRect(area);
             updateBluetoothWidgetsAlpha();
             return;

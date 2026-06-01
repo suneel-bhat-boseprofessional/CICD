@@ -357,6 +357,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer7.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui/CustomContainer8.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/containers/CustomContainer8.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gui/Device_InformationPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/device_information_screen/Device_InformationPresenter.cpp</locationURI>
@@ -370,6 +375,16 @@
 			<name>Application/User/gui/Ethernet_SettingsView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/ethernet_settings_screen/Ethernet_SettingsView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Factory_ResetPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/factory_reset_screen/Factory_ResetPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/Factory_ResetView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/factory_reset_screen/Factory_ResetView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/homePresenter.cpp</name>
@@ -477,16 +492,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen1_screen/Screen1View.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/gui/Screen2Presenter.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen2_screen/Screen2Presenter.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/gui/Screen2View.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/screen2_screen/Screen2View.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/gui/Settings_NetworkPresenter.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/settings_network_screen/Settings_NetworkPresenter.cpp</locationURI>
@@ -505,6 +510,16 @@
 			<name>Application/User/gui/SettingsView.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/settings_screen/SettingsView.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/SetupPresenter.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/setup_screen/SetupPresenter.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gui/SetupView.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/gui/src/setup_screen/SetupView.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gui/Source_SelectPresenter.cpp</name>
@@ -607,9 +622,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_EaseStandard_Bold_32_4bpp_0.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Font_EaseStandard_Regular_16_4bpp_0.cpp</name>
+			<name>Application/User/generated/Font_EaseStandard_Regular_13_4bpp_0.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_EaseStandard_Regular_16_4bpp_0.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Font_EaseStandard_Regular_13_4bpp_0.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Font_verdana_10_4bpp_0.cpp</name>
@@ -647,9 +662,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_EaseStandard_Bold_32_4bpp.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Kerning_EaseStandard_Regular_16_4bpp.cpp</name>
+			<name>Application/User/generated/Kerning_EaseStandard_Regular_13_4bpp.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_EaseStandard_Regular_16_4bpp.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Kerning_EaseStandard_Regular_13_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Kerning_verdana_10_4bpp.cpp</name>
@@ -682,9 +697,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_EaseStandard_Bold_32_4bpp.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Table_EaseStandard_Regular_16_4bpp.cpp</name>
+			<name>Application/User/generated/Table_EaseStandard_Regular_13_4bpp.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_EaseStandard_Regular_16_4bpp.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/fonts/src/Table_EaseStandard_Regular_13_4bpp.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Table_verdana_10_4bpp.cpp</name>
@@ -772,9 +787,19 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer7Base.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/CustomContainer8Base.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/containers/CustomContainer8Base.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/Device_InformationViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/device_information_screen/Device_InformationViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/Factory_ResetViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/factory_reset_screen/Factory_ResetViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/homeViewBase.cpp</name>
@@ -827,11 +852,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/Screen2ViewBase.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/screen2_screen/Screen2ViewBase.cpp</locationURI>
-		</link>
-		<link>
 			<name>Application/User/generated/Settings_NetworkViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/settings_network_screen/Settings_NetworkViewBase.cpp</locationURI>
@@ -840,6 +860,11 @@
 			<name>Application/User/generated/SettingsViewBase.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/settings_screen/SettingsViewBase.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/SetupViewBase.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/gui_generated/src/setup_screen/SetupViewBase.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/Source_SelectViewBase.cpp</name>
@@ -987,9 +1012,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Grey.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_Group_3.cpp</name>
+			<name>Application/User/generated/image_Group.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Group_3.cpp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Appli/TouchGFX/generated/images/src/image_Group.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/image_Highlighted.cpp</name>

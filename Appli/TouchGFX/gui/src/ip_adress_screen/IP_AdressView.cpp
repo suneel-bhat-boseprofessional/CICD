@@ -129,6 +129,13 @@ void IP_AdressView::handleClickEvent(const touchgfx::ClickEvent& event)
         int hit = hitTestOctet(x, y);
         if (hit >= 0)
         {
+            if (visibleOctet == hit)
+            {
+                // Same octet tapped again — close the popup
+                hideAllUD();
+                activeOctet = -1;
+                return;
+            }
             activeOctet = hit;
             dragStartY = y;
             dragAnchorValue = octetValues[activeSource][hit];

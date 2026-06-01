@@ -43,6 +43,39 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_QCE8" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">ZONES</Translation>
+      </Text>
+      <Text Id="__SingleUse_M25Y" Alignment="Left" TypographyId="Typography2">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_TS4T" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">This will reset your device!</Translation>
+      </Text>
+      <Text Id="__SingleUse_FOVY" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Confirm</Translation>
+      </Text>
+      <Text Id="__SingleUse_4JZQ" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Factory Reset</Translation>
+      </Text>
+      <Text Id="__SingleUse_NQ4L" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_ENBE" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_BVDR" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">&lt;value&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_CKCX" Alignment="Left" TypographyId="Typography4">
+        <Translation Language="GB">Scan for virtual control using your &#10;mobile device to begin the setup &#10;process.</Translation>
+      </Text>
+      <Text Id="__SingleUse_QDC4" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Device Set-up</Translation>
+      </Text>
+      <Text Id="__SingleUse_D0SU" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">DEVICE SET-UP</Translation>
+      </Text>
       <Text Id="__SingleUse_2YP2" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">Off</Translation>
       </Text>
@@ -158,7 +191,7 @@
         <Translation Language="GB">DHCP</Translation>
       </Text>
       <Text Id="__SingleUse_4PCZ" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Network Mode</Translation>
+        <Translation Language="GB">NETWORK MODE</Translation>
       </Text>
       <Text Id="__SingleUse_3XC1" Alignment="Right" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
@@ -192,18 +225,6 @@
       </Text>
       <Text Id="__SingleUse_7SHX" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">FORGET ALL DEVICES</Translation>
-      </Text>
-      <Text Id="__SingleUse_068W" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">&lt;value&gt;</Translation>
-      </Text>
-      <Text Id="__SingleUse_PCHU" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">&lt;value&gt;</Translation>
-      </Text>
-      <Text Id="__SingleUse_FMTQ" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">&lt;value&gt;</Translation>
-      </Text>
-      <Text Id="__SingleUse_W5LB" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_Q14K" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">NOTIFICATIONS</Translation>
@@ -283,7 +304,7 @@
       <Text Id="__SingleUse_CALN" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">SETTINGS</Translation>
       </Text>
-      <Text Id="__SingleUse_U3CF" Alignment="Center" TypographyId="Default">
+      <Text Id="__SingleUse_U3CF" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">DEVICE INFORMATION</Translation>
       </Text>
       <Text Id="__SingleUse_I5DK" Alignment="Center" TypographyId="Default">
@@ -316,7 +337,7 @@
       <Text Id="__SingleUse_39TF" Alignment="Left" TypographyId="Typography1">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_JK4L" Alignment="Left" TypographyId="ver">
+      <Text Id="__SingleUse_JK4L" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_2HRC" Alignment="Center" TypographyId="Typography2">
@@ -353,12 +374,12 @@
   </Texts>
   <Typographies>
     <Typography Id="Default" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters=".-:%°" WildcardCharacterRanges="0-9,A-Z,a-z" />
-    <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacterRanges="A-Z,a-z,0-9" />
     <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Typography1" Font="EaseStandard-Bold.ttf" Size="18" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters="/" WildcardCharacterRanges="A-Z,a-z,0-9" />
     <Typography Id="ver" Font="EaseStandard-Bold.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="a-z,A-Z" />
     <Typography Id="Typography2" Font="EaseStandard-Bold.ttf" Size="32" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacterRanges="0-9" />
     <Typography Id="Typography3" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Typography4" Font="EaseStandard-Regular.ttf" Size="16" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters=".-:%°" WildcardCharacterRanges="A-Z,a-z,0-9" />
+    <Typography Id="Typography4" Font="EaseStandard-Regular.ttf" Size="13" Bpp="4" IsVector="no" Direction="LTR" WildcardCharacters=".-:%°" WildcardCharacterRanges="A-Z,a-z,0-9" />
   </Typographies>
 </TextDatabase>
