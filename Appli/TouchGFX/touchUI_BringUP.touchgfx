@@ -305,7 +305,7 @@
           {
             "Type": "TextArea",
             "Name": "textArea3",
-            "X": 70,
+            "X": 67,
             "Width": 366,
             "Height": 21,
             "TextId": "__SingleUse_JK4L",
@@ -676,7 +676,7 @@
             "Type": "ScrollList",
             "Name": "scrollList1",
             "X": 43,
-            "Y": 16,
+            "Y": 19,
             "Width": 419,
             "Height": 99,
             "ItemTemplateName": "CustomContainer5",
@@ -715,6 +715,21 @@
             "Height": 16,
             "Pressed": "Vector_left.png",
             "Released": "Vector_left.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "textArea5",
+            "X": 67,
+            "Width": 57,
+            "Height": 19,
+            "TextId": "__SingleUse_QCE8",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 180,
+              "Green": 175,
+              "Blue": 166
+            },
+            "AutoSize": true
           }
         ],
         "Interactions": [
@@ -1153,7 +1168,6 @@
             "Type": "TextArea",
             "Name": "textArea8",
             "X": 180,
-            "Y": 6,
             "Width": 120,
             "Height": 19,
             "TextId": "__SingleUse_NMUI",
@@ -1224,7 +1238,6 @@
             "Type": "TextArea",
             "Name": "textArea1",
             "X": 67,
-            "Y": 4,
             "Width": 183,
             "Height": 18,
             "TextId": "__SingleUse_ZCTZ",
@@ -2380,9 +2393,8 @@
             "Type": "TextArea",
             "Name": "textArea1",
             "X": 67,
-            "Y": 4,
-            "Width": 134,
-            "Height": 19,
+            "Width": 147,
+            "Height": 21,
             "TextId": "__SingleUse_4PCZ",
             "TextRotation": "0",
             "Color": {
@@ -2943,7 +2955,6 @@
             "Type": "TextArea",
             "Name": "textArea1",
             "X": 197,
-            "Y": 6,
             "Width": 86,
             "Height": 19,
             "TextId": "__SingleUse_84NO",

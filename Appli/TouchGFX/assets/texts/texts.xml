@@ -43,6 +43,9 @@
       </Text>
     </TextGroup>
     <TextGroup Id="Unsorted">
+      <Text Id="__SingleUse_QCE8" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">ZONES</Translation>
+      </Text>
       <Text Id="__SingleUse_M25Y" Alignment="Left" TypographyId="Typography2">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
@@ -188,7 +191,7 @@
         <Translation Language="GB">DHCP</Translation>
       </Text>
       <Text Id="__SingleUse_4PCZ" Alignment="Left" TypographyId="Default">
-        <Translation Language="GB">Network Mode</Translation>
+        <Translation Language="GB">NETWORK MODE</Translation>
       </Text>
       <Text Id="__SingleUse_3XC1" Alignment="Right" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
@@ -301,7 +304,7 @@
       <Text Id="__SingleUse_CALN" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">SETTINGS</Translation>
       </Text>
-      <Text Id="__SingleUse_U3CF" Alignment="Center" TypographyId="Default">
+      <Text Id="__SingleUse_U3CF" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">DEVICE INFORMATION</Translation>
       </Text>
       <Text Id="__SingleUse_I5DK" Alignment="Center" TypographyId="Default">
@@ -334,7 +337,7 @@
       <Text Id="__SingleUse_39TF" Alignment="Left" TypographyId="Typography1">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
-      <Text Id="__SingleUse_JK4L" Alignment="Left" TypographyId="ver">
+      <Text Id="__SingleUse_JK4L" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">&lt;value&gt;</Translation>
       </Text>
       <Text Id="__SingleUse_2HRC" Alignment="Center" TypographyId="Typography2">

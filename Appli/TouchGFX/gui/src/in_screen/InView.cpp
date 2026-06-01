@@ -50,6 +50,7 @@ void InView::applyConfig()
     // Set title in textArea5
     touchgfx::Unicode::strncpy(titleBuf, title, LABEL_BUF_SIZE);
     textArea5.setWildcard(titleBuf);
+    textArea5.setPosition(40, 0, 80, 20);
     textArea5.invalidate();
 
     // Set labels
