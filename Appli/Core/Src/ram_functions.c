@@ -22,7 +22,7 @@
 #include "ram_functions.h"
 #include "firmware_updater.h"
 #include <string.h>  /* For memcmp */
-
+#include <stdio.h>
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
